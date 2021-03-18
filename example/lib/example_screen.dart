@@ -15,10 +15,10 @@ class ExampleScreenState extends State<ExampleScreen> {
     super.initState();
 
     AppHud.startManually(
-      apiKey: "app_DZzKAkuBWhe9nz3qeofJMU9PJezkxn",
-      userID: "test_ren6_10_2",
-      deviceID: "a356ca94-e3e2-4a1f-8096-b75af8ab7411",
-      observerMode: true,
+      apiKey: "YOUR_API_KEY",
+      userID: "YOUR_USER_ID",
+      deviceID: "YOUR_USER_ID",
+      observerMode: false,
     );
   }
 
