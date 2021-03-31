@@ -1,144 +1,59 @@
-# Flutter SDK
+<img src="https://cdn.siter.io/assets/ast_kSk43nA4wqPNF8sfBtWdJsL1Z/85cc5c6c-43dd-44a2-90cf-2ae17cd6a25d.svg" alt="Apphud"/>
 
-Apphud SDK for Flutter
+## Apphud Flutter SDK
+
+Apphud Flutter SDK is a lightweight open-source library to manage auto-renewable subscriptions and other in-app purchases in your iOS/Android app. No backend required.
+
+Visit our website for details: https://apphud.com
+
+## Features
+
+👍 Integrating subscriptions using our SDK is very easy.<br/>Apphud takes care of a subscription purchase process. Integrate SDK in just a few lines of code.
+
+🧾 App Store receipts validation.<br/>Apphud validates and periodically refreshes App Store receipts to give you real-time data.
+
+🧾 Google Play purchases validation.<br/>Apphud validates and periodically refreshes Google Play purchases to give you real-time data.
+
+🕗 View subscription details and transactions history.<br/>Get expiration date, autorenew status in our SDK.
+
+🕗 View non-renewing purchase details and transactions history.
+
+🔍 Determine for trial, introductory and promotional offer eligibility in your iOS app using our SDK. 
+
+🔔 Receive a real-time notification when a user gets billed.<br/>We will send you a message to Slack and Telegram immediately when a user gets billed or started trial.
+
+📊 View key in-app purchases metrics in our [dashboard](https://docs.apphud.com/analyze/dashboard) and [charts](https://docs.apphud.com/analyze/charts).
+
+🔌 Integrations. Are available on all plans. Send subscription renewal events to other mobile analytics.<br/>Apphud reduces pain in sending all subscription events to external mobile analytics: Amplitude, Mixpanel, AppsFlyer, etc.
+
+🎨 Create subscription purchase screens without coding in our visual web editor.<br/>You don't need to develop purchase screens. Just pick a template and modify it. So easy!
+
+✔ Promotional [subscription offers](https://docs.apphud.com/getting-started/promo-offers) support.<br/>Use Apphud to easily give a discount for existing and lapsed customers. No backend required.
+
+💱 User local currency real-time conversion.
+
+🏆 Increase iOS app revenue using our [Rules](https://docs.apphud.com/rules-and-screens/rules).<br/>Apphud will automatically offer a promotional discount based subscription events.
+
+🕵️ Subscription cancellation insights tool.<br/>Understand why you customers cancel a subscription to make right product decisions.
+
+💸 Handle billing grace period and billing issues.<br/>Apphud will automatically ask a user to update his billing details in case of billing issue during renewal.
+
+👏 Great [documentation](https://docs.apphud.com/).
+
+🏃‍♂️ Fast [support](https://apphud.com/contacts ). We are online.
 
 ## Installation
-##Usage
 
-### Initialize SDK
+Please feel free to read our [SDK Integration Guide](https://docs.apphud.com/getting-started/sdk-integration).
 
-To initialize Apphud SDK you will need SDK Token. It is a unique identifier of your Apphud application. You can get it in your Apphud application settings under General tab
+## Having troubles?
 
-Basic initialization looks like this:
+If you have any questions or troubles with SDK integration feel free to contact us. We are online.
 
-```js
-await AppHud.start(
-          apiKey: "apiKey");
-```
+https://apphud.com/contacts
 
-Initialization Options
-
-|property|type|platform|required
-|---|---|---|---|
-|apiKey|String|iOS, Android|yes
-|userId|String|iOS, Android|no
-|deviceId|String|Android|no
-|observerMode|Bool|iOS|no
-
-You can also initialize SDK with custom Device ID. This should be used if you plan to use logout / login features. You can pass the same identifier to Device ID and User ID:
-```js
-await AppHud.startManually(
-          apiKey: "apiKey",
-          userID: "userID",
-          deviceID: "deviceID",
-          observerMode: true,
-        );
-```
-
-Log out method will clear all saved data and reset SDK to uninitialised state:
-
-```js
-await AppHud.logout();
-```
-
-### Purchase using Apphud Billing Client
-
-To make a purchase call:
-
-```js
-await AppHud.purchase("productId");
-```
-
-### Check Subscription Status
-
-```js
-await AppHud.hasActiveSubscription();
-```
-
-Returns true if user has active subscription. Use this method to determine whether to unlock premium functionality to the user.
-
-### Get Products
-
-Apphud automatically fetches SKProduct/SKDetails objects upon launch. Make sure products identifiers are added in Apphud products. To get your products call:
-
-```js
-await Apphud.products();
-```
-
-### Get Subscription Details
-
-To get subscription object (which contains expiration date, autorenewal status, etc.) use the following method:
-```js
-await Apphud.subscription();
-```
-
-### Check Non-renewing Purchase Status
-
-Use this method to check whether the user has purchased in-app purchase and it's not refunded. Returns false if was never purchased or is refunded.
-
-```js
-await Apphud.isNonRenewingPurchaseActive("productIdentifier")
-```
-
-### Get Non-renewing Purchase Details
-
-To get non-renewing purchases, which contain purchase date, product identifier and cancellation date, use the following method:
-
-```js
-await Apphud.nonRenewingPurchases();
-```
-
-### Get User ID
-
-To get user id you can use this method:
-
-```js
-await Apphud.userId();
-```
-
-### Integrations
-
-Submit attribution data to Apphud from your attribution network provider.
-
-```js
- Map<String,dynamic> data = {"key":"value"};
- ApphudAttributionProvider provider = ApphudAttributionProvider.appsFlyer;
-
-await AppHud.addAttribution(data: data, provider: provider);
-```
-
-### Restore Purchases (only iOS)
-
-If your app doesn't have a login system, which identifies a premium user by his credentials, then you need a "restore" mechanism.
-
-```js
-await AppHud.restorePurchases();
-```
-Basically it just sends App Store Receipt to Apphud and returns subscriptions (or nil, if subscriptions are never purchased), non-renewing purchases (or nil, if there are no any) and an optional error.
-
-### Observer Mode (Android)
-
-If you use your own billing then you should sync purchases each time user makes any purchase or restoration. Just call after purchase or restore:
-
-```js
-await Apphud.syncPurchases();
-```
-Keep in mind, that you are responsible for acknowledging or consuming all purchases in observer mode!
-
-### Migrate existing purchases (Android)
-
-If you need to migrate existing purchases in case you already have a live app or if you need to restore purchases when user hits Restore button, just call syncPurchases() method.
-
-```js
-await Apphud.syncPurchases();
-```
-Do not migrate purchases on every app launch. One successful time is enough. Store flag in your app if purchases were successfully migrated
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+*Like Apphud? Place a star at the top 😊*
 
 ## License
 
 MIT
-
