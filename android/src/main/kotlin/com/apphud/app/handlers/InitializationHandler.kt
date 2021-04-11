@@ -59,7 +59,7 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
           try {
               args ?: throw IllegalArgumentException("apiKey is required argument")
               val apiKey = args["apiKey"] as? String  ?: throw IllegalArgumentException("apiKey is required argument")
-              val userId = args["userId"] as? String
+              val userId = args["userID"] as? String
 
               callback(apiKey, userId)
           } catch (e: IllegalArgumentException) {
