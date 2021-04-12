@@ -59,7 +59,7 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
           try {
               args ?: throw IllegalArgumentException("apiKey is required argument")
               val apiKey = args["apiKey"] as? String  ?: throw IllegalArgumentException("apiKey is required argument")
-              val userId = args["userId"] as? String
+              val userId = args["userID"] as? String
 
               callback(apiKey, userId)
           } catch (e: IllegalArgumentException) {
@@ -86,8 +86,8 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
     class UpdateUserIDParser(val result: MethodChannel.Result) {
         fun parse(args: Map<String, Any>?, callback: (userId: String) -> Unit) {
             try {
-                args ?: throw IllegalArgumentException("userId is required argument")
-                val userId = args["userId"] as? String ?: throw IllegalArgumentException("userId is required argument")
+                args ?: throw IllegalArgumentException("userID is required argument")
+                val userId = args["userID"] as? String ?: throw IllegalArgumentException("userID is required argument")
 
                 callback(userId)
             } catch (e: IllegalArgumentException) {

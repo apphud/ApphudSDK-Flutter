@@ -40,8 +40,8 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
                     "startedAt" to subscription.startedAt,
                     "canceledAt" to subscription.cancelledAt,
                     "isInRetryBilling" to subscription.isInRetryBilling,
-                    "isAutorenewEnabled" to subscription.isInRetryBilling,
-                    "isIntroductoryActivated" to subscription.isInRetryBilling
+                    "isAutorenewEnabled" to subscription.isAutoRenewEnabled,
+                    "isIntroductoryActivated" to subscription.isIntroductoryActivated
             )
 
             result.success(dict)
@@ -59,8 +59,8 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
                     "startedAt" to it.startedAt,
                     "canceledAt" to it.cancelledAt,
                     "isInRetryBilling" to it.isInRetryBilling,
-                    "isAutorenewEnabled" to it.isInRetryBilling,
-                    "isIntroductoryActivated" to it.isInRetryBilling)
+                    "isAutorenewEnabled" to it.isAutoRenewEnabled,
+                    "isIntroductoryActivated" to it.isIntroductoryActivated)
         }
 
         result.success(jsonList)
