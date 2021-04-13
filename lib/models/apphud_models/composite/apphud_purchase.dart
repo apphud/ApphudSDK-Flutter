@@ -6,8 +6,8 @@ import 'package:apphud/models/apphud_models/ios/apphud_purchase_result_ios.dart'
 import '../../mapper.dart';
 
 class ApphudPurchase {
-  ApphudPurchaseResultIos iosResult;
-  List<ApphudPurchaseResultAndroid> androidResult;
+  ApphudPurchaseResultIos? iosResult;
+  List<ApphudPurchaseResultAndroid?>? androidResult;
 
   ApphudPurchase.fromJson(dynamic json) {
     if (Platform.isAndroid) {

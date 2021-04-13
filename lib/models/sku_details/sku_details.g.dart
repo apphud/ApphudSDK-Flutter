@@ -8,21 +8,22 @@ part of 'sku_details.dart';
 
 SkuDetailsWrapper _$SkuDetailsWrapperFromJson(Map<String, dynamic> json) {
   return SkuDetailsWrapper(
-    description: json['description'] as String,
-    freeTrialPeriod: json['freeTrialPeriod'] as String,
-    introductoryPrice: json['introductoryPrice'] as String,
-    introductoryPriceAmountMicros: json['introductoryPriceAmountMicros'] as int,
-    introductoryPriceCycles: json['introductoryPriceCycles'] as int,
-    introductoryPricePeriod: json['introductoryPricePeriod'] as String,
-    price: json['price'] as String,
-    priceAmountMicros: json['priceAmountMicros'] as int,
-    priceCurrencyCode: json['priceCurrencyCode'] as String,
-    sku: json['sku'] as String,
-    subscriptionPeriod: json['subscriptionPeriod'] as String,
-    title: json['title'] as String,
+    description: json['description'] as String?,
+    freeTrialPeriod: json['freeTrialPeriod'] as String?,
+    introductoryPrice: json['introductoryPrice'] as String?,
+    introductoryPriceAmountMicros:
+        json['introductoryPriceAmountMicros'] as int?,
+    introductoryPriceCycles: json['introductoryPriceCycles'] as int?,
+    introductoryPricePeriod: json['introductoryPricePeriod'] as String?,
+    price: json['price'] as String?,
+    priceAmountMicros: json['priceAmountMicros'] as int?,
+    priceCurrencyCode: json['priceCurrencyCode'] as String?,
+    sku: json['sku'] as String?,
+    subscriptionPeriod: json['subscriptionPeriod'] as String?,
+    title: json['title'] as String?,
     type: _$enumDecodeNullable(_$SkuTypeEnumMap, json['type']),
-    originalPrice: json['originalPrice'] as String,
-    originalPriceAmountMicros: json['originalPriceAmountMicros'] as int,
+    originalPrice: json['originalPrice'] as String?,
+    originalPriceAmountMicros: json['originalPriceAmountMicros'] as int?,
   );
 }
 
@@ -45,36 +46,41 @@ Map<String, dynamic> _$SkuDetailsWrapperToJson(SkuDetailsWrapper instance) =>
       'originalPriceAmountMicros': instance.originalPriceAmountMicros,
     };
 
-T _$enumDecode<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T unknownValue,
+K _$enumDecode<K, V>(
+  Map<K, V> enumValues,
+  Object? source, {
+  K? unknownValue,
 }) {
   if (source == null) {
-    throw ArgumentError('A value must be provided. Supported values: '
-        '${enumValues.values.join(', ')}');
+    throw ArgumentError(
+      'A value must be provided. Supported values: '
+      '${enumValues.values.join(', ')}',
+    );
   }
 
-  final value = enumValues.entries
-      .singleWhere((e) => e.value == source, orElse: () => null)
-      ?.key;
-
-  if (value == null && unknownValue == null) {
-    throw ArgumentError('`$source` is not one of the supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-  return value ?? unknownValue;
+  return enumValues.entries.singleWhere(
+    (e) => e.value == source,
+    orElse: () {
+      if (unknownValue == null) {
+        throw ArgumentError(
+          '`$source` is not one of the supported values: '
+          '${enumValues.values.join(', ')}',
+        );
+      }
+      return MapEntry(unknownValue, enumValues.values.first);
+    },
+  ).key;
 }
 
-T _$enumDecodeNullable<T>(
-  Map<T, dynamic> enumValues,
+K? _$enumDecodeNullable<K, V>(
+  Map<K, V> enumValues,
   dynamic source, {
-  T unknownValue,
+  K? unknownValue,
 }) {
   if (source == null) {
     return null;
   }
-  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
+  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$SkuTypeEnumMap = {

@@ -9,9 +9,9 @@ part of 'apphud_non_renewing_purchase.dart';
 ApphudNonRenewingPurchase _$ApphudNonRenewingPurchaseFromJson(
     Map<String, dynamic> json) {
   return ApphudNonRenewingPurchase(
-    productId: json['productId'] as String,
-    purchasedAt: (json['purchasedAt'] as num)?.toDouble(),
-    canceledAt: (json['canceledAt'] as num)?.toDouble(),
+    productId: json['productId'] as String?,
+    purchasedAt: (json['purchasedAt'] as num?)?.toDouble(),
+    canceledAt: (json['canceledAt'] as num?)?.toDouble(),
   );
 }
 

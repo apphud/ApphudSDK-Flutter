@@ -9,14 +9,14 @@ part of 'apphud_purchase_result_android.dart';
 ApphudPurchaseResultAndroid _$ApphudPurchaseResultAndroidFromJson(
     Map<String, dynamic> json) {
   return ApphudPurchaseResultAndroid(
-    json['orderId'] as String,
-    json['packageName'] as String,
-    json['purchaseState'] as int,
-    json['purchaseToken'] as String,
-    json['signature'] as String,
-    json['sku'] as String,
-    json['originalJson'] as String,
-    json['purchaseTime'] as int,
+    json['orderId'] as String?,
+    json['packageName'] as String?,
+    json['purchaseState'] as int?,
+    json['purchaseToken'] as String?,
+    json['signature'] as String?,
+    json['sku'] as String?,
+    json['originalJson'] as String?,
+    json['purchaseTime'] as int?,
   );
 }
 

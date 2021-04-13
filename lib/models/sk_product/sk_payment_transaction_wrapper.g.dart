@@ -9,8 +9,8 @@ part of 'sk_payment_transaction_wrapper.dart';
 SKPaymentTransactionWrapper _$SKPaymentTransactionWrapperFromJson(
     Map<String, dynamic> json) {
   return SKPaymentTransactionWrapper(
-    transactionIdentifier: json['transactionIdentifier'] as String,
-    transactionDate: (json['transactionDate'] as num)?.toDouble(),
+    transactionIdentifier: json['transactionIdentifier'] as String?,
+    transactionDate: (json['transactionDate'] as num?)?.toDouble(),
     payment: Mapper.skPaymentWrapperFromJson(json['payment']),
   );
 }
@@ -25,10 +25,10 @@ Map<String, dynamic> _$SKPaymentTransactionWrapperToJson(
 
 SKPaymentWrapper _$SKPaymentWrapperFromJson(Map<String, dynamic> json) {
   return SKPaymentWrapper(
-    productIdentifier: json['productIdentifier'] as String,
-    description: json['description'] as String,
-    applicationUsername: json['applicationUsername'] as String,
-    quantity: json['quantity'] as int,
+    productIdentifier: json['productIdentifier'] as String?,
+    description: json['description'] as String?,
+    applicationUsername: json['applicationUsername'] as String?,
+    quantity: json['quantity'] as int?,
   );
 }
 

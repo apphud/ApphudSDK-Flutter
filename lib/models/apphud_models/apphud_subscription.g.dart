@@ -9,13 +9,13 @@ part of 'apphud_subscription.dart';
 ApphudSubscriptionWrapper _$ApphudSubscriptionWrapperFromJson(
     Map<String, dynamic> json) {
   return ApphudSubscriptionWrapper(
-    productId: json['productId'] as String,
-    expiresDate: (json['expiresDate'] as num)?.toDouble(),
-    startedAt: (json['startedAt'] as num)?.toDouble(),
-    canceledAt: (json['canceledAt'] as num)?.toDouble(),
-    isInRetryBilling: json['isInRetryBilling'] as bool,
-    isAutorenewEnabled: json['isAutorenewEnabled'] as bool,
-    isIntroductoryActivated: json['isIntroductoryActivated'] as bool,
+    productId: json['productId'] as String?,
+    expiresDate: (json['expiresDate'] as num?)?.toDouble(),
+    startedAt: (json['startedAt'] as num?)?.toDouble(),
+    canceledAt: (json['canceledAt'] as num?)?.toDouble(),
+    isInRetryBilling: json['isInRetryBilling'] as bool?,
+    isAutorenewEnabled: json['isAutorenewEnabled'] as bool?,
+    isIntroductoryActivated: json['isIntroductoryActivated'] as bool?,
   );
 }
 

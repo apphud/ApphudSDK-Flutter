@@ -4,14 +4,14 @@ part 'apphud_purchase_result_android.g.dart';
 
 @JsonSerializable()
 class ApphudPurchaseResultAndroid {
-  String orderId;
-  String packageName;
-  String purchaseToken;
-  String signature;
-  String sku;
-  String originalJson;
-  int purchaseState;
-  int purchaseTime;
+  String? orderId;
+  String? packageName;
+  String? purchaseToken;
+  String? signature;
+  String? sku;
+  String? originalJson;
+  int? purchaseState;
+  int? purchaseTime;
 
   ApphudPurchaseResultAndroid(
     this.orderId,
@@ -24,8 +24,7 @@ class ApphudPurchaseResultAndroid {
     this.purchaseTime,
   );
 
-  factory ApphudPurchaseResultAndroid.fromJson(Map map) {
-    assert(map != null, 'Map must not be null.');
+  factory ApphudPurchaseResultAndroid.fromJson(Map<String, dynamic> map) {
     return _$ApphudPurchaseResultAndroidFromJson(map);
   }
 }

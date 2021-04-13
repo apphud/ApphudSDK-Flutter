@@ -6,9 +6,8 @@ import 'package:apphud/models/sku_details/sku_details.dart';
 import '../../mapper.dart';
 
 class ApphudProduct {
-
-  SKProductWrapper skProductWrapper;
-  SkuDetailsWrapper skuDetailsWrapper;
+  SKProductWrapper? skProductWrapper;
+  SkuDetailsWrapper? skuDetailsWrapper;
 
   ApphudProduct.fromJson(Map<String, dynamic> json) {
     if (Platform.isAndroid) {

@@ -7,37 +7,34 @@ import 'discount_wrapper.dart';
 
 part 'sk_product_wrapper.g.dart';
 
-@JsonSerializable(nullable: true)
+@JsonSerializable()
 class SKProductWrapper {
-
-  final String productIdentifier;
-  final String localizedTitle;
-  final String localizedDescription;
-  final String subscriptionGroupIdentifier;
-  final String price;
+  final String? productIdentifier;
+  final String? localizedTitle;
+  final String? localizedDescription;
+  final String? subscriptionGroupIdentifier;
+  final String? price;
 
   @JsonKey(fromJson: Mapper.skPriceLocaleFromJson)
-  final SKPriceLocaleWrapper priceLocale;
+  final SKPriceLocaleWrapper? priceLocale;
   @JsonKey(fromJson: Mapper.skProductSubscriptionPeriodFromJson)
-  final SKProductSubscriptionPeriodWrapper subscriptionPeriod;
+  final SKProductSubscriptionPeriodWrapper? subscriptionPeriod;
   @JsonKey(fromJson: Mapper.skProductDiscountFromJson)
-  final SKProductDiscountWrapper introductoryPrice;
+  final SKProductDiscountWrapper? introductoryPrice;
 
   SKProductWrapper({
-    @required this.productIdentifier,
-    @required this.localizedTitle,
-    @required this.localizedDescription,
-    @required this.subscriptionGroupIdentifier,
-    @required this.price,
-    @required this.priceLocale,
-    @required this.subscriptionPeriod,
-    @required this.introductoryPrice,
+    required this.productIdentifier,
+    required this.localizedTitle,
+    required this.localizedDescription,
+    required this.subscriptionGroupIdentifier,
+    required this.price,
+    required this.priceLocale,
+    required this.subscriptionPeriod,
+    required this.introductoryPrice,
   });
 
-  factory SKProductWrapper.fromJson(Map<String, dynamic> map) {
-    assert(map != null, 'Map must not be null.');
-    return _$SKProductWrapperFromJson(map);
-  }
+  factory SKProductWrapper.fromJson(Map<String, dynamic> map) =>
+      _$SKProductWrapperFromJson(map);
 
   @override
   bool operator ==(Object other) {
@@ -47,7 +44,7 @@ class SKProductWrapper {
     if (other.runtimeType != runtimeType) {
       return false;
     }
-    final SKProductWrapper typedOther = other;
+    final SKProductWrapper typedOther = other as SKProductWrapper;
     return typedOther.productIdentifier == productIdentifier &&
         typedOther.localizedTitle == localizedTitle &&
         typedOther.localizedDescription == localizedDescription &&
@@ -72,18 +69,16 @@ class SKProductWrapper {
 
 @JsonSerializable()
 class SKPriceLocaleWrapper {
-  final String currencySymbol;
-  final String currencyCode;
+  final String? currencySymbol;
+  final String? currencyCode;
 
   SKPriceLocaleWrapper({
-    @required this.currencySymbol,
-    @required this.currencyCode,
+    required this.currencySymbol,
+    required this.currencyCode,
   });
 
-  factory SKPriceLocaleWrapper.fromJson(Map map) {
-    assert(map != null, 'Map must not be null.');
-    return _$SKPriceLocaleWrapperFromJson(map);
-  }
+  factory SKPriceLocaleWrapper.fromJson(Map<String, dynamic> map) =>
+      _$SKPriceLocaleWrapperFromJson(map);
 
   @override
   bool operator ==(Object other) {
@@ -93,7 +88,7 @@ class SKPriceLocaleWrapper {
     if (other.runtimeType != runtimeType) {
       return false;
     }
-    final SKPriceLocaleWrapper typedOther = other;
+    final SKPriceLocaleWrapper typedOther = other as SKPriceLocaleWrapper;
     return typedOther.currencySymbol == currencySymbol &&
         typedOther.currencyCode == currencyCode;
   }
