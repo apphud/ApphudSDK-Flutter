@@ -24,10 +24,10 @@ class MigratePurchasesIfNeededAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<ApphudComposite>(
+    return FutureBuilder<ApphudComposite?>(
         future: AppHud.migratePurchasesIfNeeded(),
         builder:
-            (BuildContext context, AsyncSnapshot<ApphudComposite> snapshot) {
+            (BuildContext context, AsyncSnapshot<ApphudComposite?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Text("Waiting...");
           } else if (snapshot.connectionState == ConnectionState.done) {
@@ -42,8 +42,8 @@ class MigratePurchasesIfNeededAction extends ActionFlow {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("subscriptions length: ${snapshot.data.subscriptions.length}"),
-                      Text("purchases length: ${snapshot.data.purchases.length}"),
+                      Text("subscriptions length: ${snapshot.data!.subscriptions!.length}"),
+                      Text("purchases length: ${snapshot.data!.purchases!.length}"),
                       Text(snapshot.error.toString()),
                     ],
                   )

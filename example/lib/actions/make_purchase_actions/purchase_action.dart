@@ -37,12 +37,12 @@ class PurchaseAction extends ActionFlow {
             (BuildContext context, AsyncSnapshot<ApphudPurchase> snapshot) {
           if (snapshot.hasData) {
             if (Platform.isIOS) {
-              return fromApphudPurchaseResultIos(snapshot.data.iosResult);
+              return fromApphudPurchaseResultIos(snapshot.data!.iosResult!);
             } else {
               return Expanded(
                 child: ListView(children: [
-                  ...snapshot.data.androidResult
-                      .map((result) => fromApphudPurchaseResultAndroid(result))
+                  ...snapshot.data!.androidResult!
+                      .map((result) => fromApphudPurchaseResultAndroid(result!))
                       .toList()
                 ]),
               );

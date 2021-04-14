@@ -60,7 +60,7 @@ class MainScreenWidgetCell extends StatelessWidget {
       ),
       onTap: model.isEnable
           ? () {
-              navigatorKey.currentState.pushNamed(model.name);
+              navigatorKey.currentState!.pushNamed(model.name);
             }
           : null,
     );

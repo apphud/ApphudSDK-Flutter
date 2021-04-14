@@ -23,11 +23,11 @@ class RefreshStoreKitProductsAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<List<SKProductWrapper>>(
+    return FutureBuilder<List<SKProductWrapper?>>(
         future: AppHud.refreshStoreKitProducts(),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context,
-            AsyncSnapshot<List<SKProductWrapper>> snapshot) {
+            AsyncSnapshot<List<SKProductWrapper?>> snapshot) {
           if (snapshot.hasData) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,13 +36,13 @@ class RefreshStoreKitProductsAction extends ActionFlow {
                     style: TextStyle(
                       fontSize: 20,
                     )),
-                ...snapshot.data
+                ...snapshot.data!
                     .map((product) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(product.productIdentifier),
-                    Text(product.price),
-                    Text(product.localizedTitle),
+                    Text(product!.productIdentifier!),
+                    Text(product.price!),
+                    Text(product.localizedTitle!),
                   ],
                 ))
                     .toList()

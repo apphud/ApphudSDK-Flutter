@@ -26,20 +26,20 @@ class ProductsDidFetchCallbackAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<List<ApphudProduct>>(
+    return FutureBuilder<List<ApphudProduct?>>(
         future: AppHud.productsDidFetchCallback(),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context,
-            AsyncSnapshot<List<ApphudProduct>> snapshot) {
+            AsyncSnapshot<List<ApphudProduct?>> snapshot) {
           if (snapshot.hasData) {
             return Expanded(
               child: ListView(
                 children: [
-                  ...snapshot.data.map((compositeProduct) {
+                  ...snapshot.data!.map((compositeProduct) {
                     if (Platform.isIOS) {
-                      return fromSKProduct(compositeProduct.skProductWrapper);
+                      return fromSKProduct(compositeProduct!.skProductWrapper!);
                     } else if (Platform.isAndroid) {
-                      return fromSKUProduct(compositeProduct.skuDetailsWrapper);
+                      return fromSKUProduct(compositeProduct!.skuDetailsWrapper!);
                     }
                   }).toList()
                 ],

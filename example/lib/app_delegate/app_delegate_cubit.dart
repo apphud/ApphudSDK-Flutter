@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppDelegateCubit extends Cubit<AppState> {
 
-  AppDelegateCubit({@required AppState state}) : super(AppState.initialState());
+  AppDelegateCubit({required AppState state}) : super(AppState.initialState());
 
   void dispose() {}
 }
@@ -15,11 +15,11 @@ class AppState {
 
 
   AppState({
-    @required this.products,
+    required this.products,
   });
 
   AppState copyWith({
-    List<SKProductWrapper> products
+    List<SKProductWrapper>? products
   }) {
     return AppState(
      products: products ?? this.products

@@ -32,17 +32,17 @@ class ProductAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<ApphudProduct>(
+    return FutureBuilder<ApphudProduct?>(
         future: AppHud.product(Platform.isIOS ? iOSValue : androidValue),
-        builder: (BuildContext context, AsyncSnapshot<ApphudProduct> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<ApphudProduct?> snapshot) {
           if (snapshot.hasData) {
             if (Platform.isIOS) {
-              return fromSKProduct(snapshot.data.skProductWrapper);
+              return fromSKProduct(snapshot.data!.skProductWrapper!);
             } else {
-              return fromSKUProduct(snapshot.data.skuDetailsWrapper);
+              return fromSKUProduct(snapshot.data!.skuDetailsWrapper!);
             }
           } else if (snapshot.hasError) {
-            return Text(snapshot.error);
+            return Text(snapshot.error as String);
           } else if (snapshot.connectionState == ConnectionState.done) {
             return Text("Done without data");
           } else {

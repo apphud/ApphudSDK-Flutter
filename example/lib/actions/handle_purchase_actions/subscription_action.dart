@@ -24,11 +24,11 @@ class SubscriptionAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<ApphudSubscriptionWrapper>(
+    return FutureBuilder<ApphudSubscriptionWrapper?>(
         future: AppHud.subscription(),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context,
-            AsyncSnapshot<ApphudSubscriptionWrapper> snapshot) {
+            AsyncSnapshot<ApphudSubscriptionWrapper?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Text("Waiting...");
           } else if (snapshot.connectionState == ConnectionState.done) {
@@ -38,33 +38,33 @@ class SubscriptionAction extends ActionFlow {
                 children: [
                   ListTile(
                     title: Text("productId"),
-                    subtitle: Text(snapshot.data.productId),
+                    subtitle: Text(snapshot.data!.productId!),
                     tileColor: Colors.green,
                   ),
                   ListTile(
                     title: Text("expiresDate"),
-                    subtitle: Text(snapshot.data.expiresDate.toString()),
+                    subtitle: Text(snapshot.data!.expiresDate.toString()),
                   ),
                   ListTile(
                     title: Text("startedAt"),
-                    subtitle: Text(snapshot.data.startedAt.toString()),
+                    subtitle: Text(snapshot.data!.startedAt.toString()),
                   ),
                   ListTile(
                     title: Text("canceledAt"),
-                    subtitle: Text(snapshot.data.canceledAt.toString()),
+                    subtitle: Text(snapshot.data!.canceledAt.toString()),
                   ),
                   ListTile(
                     title: Text("isInRetryBilling"),
-                    subtitle: Text(snapshot.data.isInRetryBilling.toString()),
+                    subtitle: Text(snapshot.data!.isInRetryBilling.toString()),
                   ),
                   ListTile(
                     title: Text("isAutorenewEnabled"),
-                    subtitle: Text(snapshot.data.isAutorenewEnabled.toString()),
+                    subtitle: Text(snapshot.data!.isAutorenewEnabled.toString()),
                   ),
                   ListTile(
                     title: Text("isIntroductoryActivated"),
                     subtitle:
-                        Text(snapshot.data.isIntroductoryActivated.toString()),
+                        Text(snapshot.data!.isIntroductoryActivated.toString()),
                   )
                 ],
                 shrinkWrap: true,

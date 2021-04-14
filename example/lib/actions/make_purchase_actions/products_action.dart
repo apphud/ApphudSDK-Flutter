@@ -27,24 +27,25 @@ class ProductsAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<List<ApphudProduct>>(
+    return FutureBuilder<List<ApphudProduct?>>(
         future: AppHud.products(),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context,
-            AsyncSnapshot<List<ApphudProduct>> snapshot) {
+            AsyncSnapshot<List<ApphudProduct?>> snapshot) {
           if (snapshot.hasData) {
+            final List<Widget>? widgets =
+                snapshot.data?.map((ApphudProduct? compositeProduct) {
+              if (Platform.isIOS) {
+                return fromSKProduct(compositeProduct?.skProductWrapper);
+              } else {
+                return fromSKUProduct(compositeProduct?.skuDetailsWrapper);
+              }
+            }).toList();
+
             return Expanded(
-              child: ListView(
-                children: [
-                  ...snapshot.data.map((compositeProduct) {
-                    if (Platform.isIOS) {
-                      return fromSKProduct(compositeProduct.skProductWrapper);
-                    } else if (Platform.isAndroid) {
-                      return fromSKUProduct(compositeProduct.skuDetailsWrapper);
-                    }
-                  }).toList()
-                ],
-              ),
+              child: widgets != null
+                  ? ListView(children: widgets)
+                  : Center(child: Text('no items')),
             );
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());
@@ -54,13 +55,14 @@ class ProductsAction extends ActionFlow {
         });
   }
 
-  ListView fromSKProduct(SKProductWrapper productWrapper) {
+  Widget fromSKProduct(SKProductWrapper? productWrapper) {
+    if (productWrapper == null) return Container();
     return ListView(
       physics: NeverScrollableScrollPhysics(),
       children: [
         ListTile(
           title: Text("productIdentifier"),
-          subtitle: Text(productWrapper.productIdentifier ?? "null") ,
+          subtitle: Text(productWrapper.productIdentifier ?? "null"),
           tileColor: Colors.green,
         ),
         ListTile(
@@ -85,18 +87,20 @@ class ProductsAction extends ActionFlow {
         ),
         ListTile(
           title: Text("subscriptionPeriod"),
-          subtitle: Text(productWrapper.subscriptionPeriod.toString() ?? "null"),
+          subtitle:
+              Text(productWrapper.subscriptionPeriod?.toString() ?? "null"),
         ),
         ListTile(
           title: Text("introductoryPrice"),
-          subtitle: Text(productWrapper.introductoryPrice.toString() ?? "null"),
+          subtitle: Text(productWrapper.introductoryPrice?.toString() ?? "null"),
         ),
       ],
       shrinkWrap: true,
     );
   }
 
-  ListView fromSKUProduct(SkuDetailsWrapper skuProduct) {
+  Widget fromSKUProduct(SkuDetailsWrapper? skuProduct) {
+    if (skuProduct == null) return Container();
     return ListView(
       physics: NeverScrollableScrollPhysics(),
       children: [
@@ -119,7 +123,8 @@ class ProductsAction extends ActionFlow {
         ),
         ListTile(
           title: Text("originalPriceAmountMicros"),
-          subtitle: Text(skuProduct.originalPriceAmountMicros.toString() ?? "null"),
+          subtitle:
+              Text(skuProduct.originalPriceAmountMicros?.toString() ?? "null"),
         ),
         ListTile(
           title: Text("description"),
@@ -135,11 +140,13 @@ class ProductsAction extends ActionFlow {
         ),
         ListTile(
           title: Text("introductoryPriceAmountMicros"),
-          subtitle: Text(skuProduct.introductoryPriceAmountMicros.toString() ?? "null"),
+          subtitle: Text(
+              skuProduct.introductoryPriceAmountMicros?.toString() ?? "null"),
         ),
         ListTile(
           title: Text("introductoryPriceCycles"),
-          subtitle: Text(skuProduct.introductoryPriceCycles.toString() ?? "null"),
+          subtitle:
+              Text(skuProduct.introductoryPriceCycles?.toString() ?? "null"),
         ),
         ListTile(
           title: Text("introductoryPricePeriod"),
@@ -147,7 +154,7 @@ class ProductsAction extends ActionFlow {
         ),
         ListTile(
           title: Text("priceAmountMicros"),
-          subtitle: Text(skuProduct.priceAmountMicros.toString() ?? "null"),
+          subtitle: Text(skuProduct.priceAmountMicros?.toString() ?? "null"),
         ),
         ListTile(
           title: Text("priceCurrencyCode"),
@@ -159,7 +166,7 @@ class ProductsAction extends ActionFlow {
         ),
         ListTile(
           title: Text("type"),
-          subtitle: Text(skuProduct.type.toString() ?? "null"),
+          subtitle: Text(skuProduct.type?.toString() ?? "null"),
         ),
       ],
       shrinkWrap: true,

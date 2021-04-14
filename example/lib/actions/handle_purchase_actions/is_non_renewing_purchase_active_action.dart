@@ -26,10 +26,10 @@ class IsNonRenewingPurchaseAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<bool>(
+    return FutureBuilder<bool?>(
         future: AppHud.isNonRenewingPurchaseActive(parameterValue),
         builder:
-            (BuildContext context, AsyncSnapshot<bool> snapshot) {
+            (BuildContext context, AsyncSnapshot<bool?> snapshot) {
           if (snapshot.hasData) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +42,7 @@ class IsNonRenewingPurchaseAction extends ActionFlow {
               ],
             );
           } else if (snapshot.hasError) {
-            return Text(snapshot.error);
+            return Text(snapshot.error as String);
           } else {
             return Text("Waiting...");
           }

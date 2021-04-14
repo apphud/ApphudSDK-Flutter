@@ -26,10 +26,10 @@ class DidFetchProductsNotificationAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<String>(
+    return FutureBuilder<String?>(
         future: AppHud.didFetchProductsNotification(),
         builder:
-            (BuildContext context, AsyncSnapshot<String> snapshot) {
+            (BuildContext context, AsyncSnapshot<String?> snapshot) {
           if (snapshot.hasData) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,11 +38,11 @@ class DidFetchProductsNotificationAction extends ActionFlow {
                     style: TextStyle(
                       fontSize: 20,
                     )),
-                Text(snapshot.data),
+                Text(snapshot.data!),
               ],
             );
           } else if (snapshot.hasError) {
-            return Text(snapshot.error);
+            return Text(snapshot.error as String);
           } else {
             return Text("Waiting...");
           }

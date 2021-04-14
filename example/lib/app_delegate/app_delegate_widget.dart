@@ -46,7 +46,7 @@ class AppDelegateWidget extends StatefulWidget {
 
 class AppDelegateWidgetState extends State<AppDelegateWidget>
     with WidgetsBindingObserver {
-  AppDelegateCubit appDelegateCubit;
+  late AppDelegateCubit appDelegateCubit;
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class AppDelegateWidgetState extends State<AppDelegateWidget>
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     appDelegateCubit.dispose();
     super.dispose();
   }

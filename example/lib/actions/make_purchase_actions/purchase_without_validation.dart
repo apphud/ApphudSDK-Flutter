@@ -25,11 +25,11 @@ class PurchaseWithoutValidationAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<ApphudPurchaseResultIos>(
+    return FutureBuilder<ApphudPurchaseResultIos?>(
         future: AppHud.purchaseWithoutValidation(parameterValue),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context,
-            AsyncSnapshot<ApphudPurchaseResultIos> snapshot) {
+            AsyncSnapshot<ApphudPurchaseResultIos?> snapshot) {
           if (snapshot.hasData) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,17 +42,17 @@ class PurchaseWithoutValidationAction extends ActionFlow {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        "transaction.transactionIdentifier: ${snapshot.data.transaction?.transactionIdentifier ?? "null"}"),
+                        "transaction.transactionIdentifier: ${snapshot.data!.transaction?.transactionIdentifier ?? "null"}"),
                     Text(
-                        "nonRenewingPurchase.productId: ${snapshot.data.nonRenewingPurchase?.productId ?? "null"}" ),
+                        "nonRenewingPurchase.productId: ${snapshot.data!.nonRenewingPurchase?.productId ?? "null"}" ),
                     Text(
-                        "subscription.productId ${snapshot.data.subscription?.productId ?? "null"}"),
+                        "subscription.productId ${snapshot.data!.subscription?.productId ?? "null"}"),
                   ],
                 ),
               ],
             );
           } else if (snapshot.hasError) {
-            return Text(snapshot.error);
+            return Text(snapshot.error as String);
           } else {
             return Text("Waiting...");
           }

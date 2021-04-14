@@ -23,27 +23,27 @@ class NonRenewingPurchasesAction extends ActionFlow {
         style: TextStyle(fontSize: 20, color: Colors.green));
   }
 
-  String productId;
-  double purchasedAt;
-  double canceledAt;
+  String? productId;
+  double? purchasedAt;
+  double? canceledAt;
 
   Widget actionResponse() {
-    return FutureBuilder<List<ApphudNonRenewingPurchase>>(
+    return FutureBuilder<List<ApphudNonRenewingPurchase?>>(
         future: AppHud.nonRenewingPurchases(),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context,
-            AsyncSnapshot<List<ApphudNonRenewingPurchase>> snapshot) {
+            AsyncSnapshot<List<ApphudNonRenewingPurchase?>> snapshot) {
           if (snapshot.hasData) {
             return Expanded(
               child: ListView(
                 children: [
-                  ...snapshot.data
+                  ...snapshot.data!
                       .map((purchase) => ListView(
                             physics: NeverScrollableScrollPhysics(),
                             children: [
                               ListTile(
                                 title: Text("productId"),
-                                subtitle: Text(purchase.productId),
+                                subtitle: Text(purchase!.productId!),
                                 tileColor: Colors.green,
                               ),
                               ListTile(

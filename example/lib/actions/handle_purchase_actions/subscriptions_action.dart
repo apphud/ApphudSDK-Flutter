@@ -23,23 +23,23 @@ class SubscriptionsAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<List<ApphudSubscriptionWrapper>>(
+    return FutureBuilder<List<ApphudSubscriptionWrapper?>>(
         future: AppHud.subscriptions(),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context,
-            AsyncSnapshot<List<ApphudSubscriptionWrapper>> snapshot) {
+            AsyncSnapshot<List<ApphudSubscriptionWrapper?>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
               return Expanded(
                 child: ListView(
                   children: [
-                    ...snapshot.data
+                    ...snapshot.data!
                         .map((subscription) => ListView(
                               physics: NeverScrollableScrollPhysics(),
                               children: [
                                 ListTile(
                                   title: Text("productId"),
-                                  subtitle: Text(subscription.productId),
+                                  subtitle: Text(subscription!.productId!),
                                   tileColor: Colors.green,
                                 ),
                                 ListTile(
