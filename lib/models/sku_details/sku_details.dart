@@ -93,4 +93,9 @@ class SkuDetailsWrapper {
         originalPrice,
         originalPriceAmountMicros);
   }
+
+  @override
+  String toString() {
+    return 'SkuDetailsWrapper{description: $description, freeTrialPeriod: $freeTrialPeriod, introductoryPrice: $introductoryPrice, introductoryPriceAmountMicros: $introductoryPriceAmountMicros, introductoryPriceCycles: $introductoryPriceCycles, introductoryPricePeriod: $introductoryPricePeriod, price: $price, priceAmountMicros: $priceAmountMicros, priceCurrencyCode: $priceCurrencyCode, sku: $sku, subscriptionPeriod: $subscriptionPeriod, title: $title, type: $type, originalPrice: $originalPrice, originalPriceAmountMicros: $originalPriceAmountMicros}';
+  }
 }

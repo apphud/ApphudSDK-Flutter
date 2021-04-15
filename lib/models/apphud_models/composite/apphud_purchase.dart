@@ -3,19 +3,33 @@ import 'dart:io';
 import 'package:apphud/models/apphud_models/android/apphud_purchase_result_android.dart';
 import 'package:apphud/models/apphud_models/ios/apphud_purchase_result_ios.dart';
 
-import '../../mapper.dart';
-
 class ApphudPurchase {
-  ApphudPurchaseResultIos? iosResult;
-  List<ApphudPurchaseResultAndroid?>? androidResult;
+  final ApphudPurchaseResultIos? iosResult;
+  final List<ApphudPurchaseResultAndroid>? androidResult;
 
-  ApphudPurchase.fromJson(dynamic json) {
-    if (Platform.isAndroid) {
-      final listJson = List<dynamic>.from(json);
-      androidResult = listJson
-          .map((json) => Mapper.ApphudPurchaseResultAndroidFromJson(json)).toList();
-    } else if (Platform.isIOS) {
-      iosResult = Mapper.ApphudPurchaseResultIosFromJson(json);
+  ApphudPurchase({
+    this.iosResult,
+    this.androidResult,
+  });
+
+  factory ApphudPurchase.fromJson(dynamic? json) {
+    if (json != null) {
+      final dynamic localJson = json!;
+      if (Platform.isAndroid) {
+        final List<Map<dynamic, dynamic>> purchaseList =
+            List<Map<dynamic, dynamic>>.from(localJson);
+
+        final List<ApphudPurchaseResultAndroid>? androidResult = purchaseList
+            .map((jsonItem) => ApphudPurchaseResultAndroid.fromJson(jsonItem))
+            .toList();
+        return ApphudPurchase(androidResult: androidResult);
+      } else {
+        final ApphudPurchaseResultIos? iosResult =
+            ApphudPurchaseResultIos.fromJson(
+                Map<dynamic, dynamic>.from(localJson));
+        return ApphudPurchase(iosResult: iosResult);
+      }
     }
+    return ApphudPurchase();
   }
 }

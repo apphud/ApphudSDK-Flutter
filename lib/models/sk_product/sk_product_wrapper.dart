@@ -11,21 +11,21 @@ class SKProductWrapper {
   final String productIdentifier;
   final String localizedTitle;
   final String localizedDescription;
-  final String? subscriptionGroupIdentifier;
   final String price;
   final SKPriceLocaleWrapper priceLocale;
   final SKProductSubscriptionPeriodWrapper? subscriptionPeriod;
   final SKProductDiscountWrapper? introductoryPrice;
+  final String? subscriptionGroupIdentifier;
 
   SKProductWrapper({
     required this.productIdentifier,
     required this.localizedTitle,
     required this.localizedDescription,
-    required this.subscriptionGroupIdentifier,
     required this.price,
     required this.priceLocale,
-    required this.subscriptionPeriod,
-    required this.introductoryPrice,
+    this.subscriptionPeriod,
+    this.introductoryPrice,
+    this.subscriptionGroupIdentifier,
   });
 
   factory SKProductWrapper.fromJson(Map<dynamic, dynamic> map) =>
@@ -60,6 +60,11 @@ class SKProductWrapper {
       this.price,
       this.subscriptionPeriod,
       this.introductoryPrice);
+
+  @override
+  String toString() {
+    return 'SKProductWrapper{productIdentifier: $productIdentifier, localizedTitle: $localizedTitle, localizedDescription: $localizedDescription, price: $price, priceLocale: $priceLocale, subscriptionPeriod: $subscriptionPeriod, introductoryPrice: $introductoryPrice, subscriptionGroupIdentifier: $subscriptionGroupIdentifier}';
+  }
 }
 
 @JsonSerializable(anyMap: true)

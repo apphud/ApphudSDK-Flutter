@@ -6,17 +6,16 @@ part of 'apphud_purchase_result_android.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApphudPurchaseResultAndroid _$ApphudPurchaseResultAndroidFromJson(
-    Map<String, dynamic> json) {
+ApphudPurchaseResultAndroid _$ApphudPurchaseResultAndroidFromJson(Map json) {
   return ApphudPurchaseResultAndroid(
-    json['orderId'] as String?,
-    json['packageName'] as String?,
-    json['purchaseState'] as int?,
-    json['purchaseToken'] as String?,
-    json['signature'] as String?,
-    json['sku'] as String?,
-    json['originalJson'] as String?,
-    json['purchaseTime'] as int?,
+    orderId: json['orderId'] as String,
+    packageName: json['packageName'] as String,
+    purchaseState: json['purchaseState'] as int,
+    purchaseToken: json['purchaseToken'] as String,
+    signature: json['signature'] as String,
+    sku: json['sku'] as String,
+    originalJson: json['originalJson'] as String,
+    purchaseTime: json['purchaseTime'] as int,
   );
 }
 

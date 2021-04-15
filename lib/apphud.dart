@@ -93,15 +93,14 @@ class AppHud {
     return products?.map((json) => ApphudProduct.fromJson(json)).toList();
   }
 
-//
-// static Future<ApphudPurchase> purchase(String productId) async {
-//   var json = await _channel.invokeMethod(
-//     'purchase',
-//     {"productId": productId},
-//   );
-//   ApphudPurchase result = ApphudPurchase.fromJson(json);
-//   return result;
-// }
+  static Future<ApphudPurchase> purchase(String productId) async {
+    final dynamic? json = await _channel.invokeMethod(
+      'purchase',
+      {"productId": productId},
+    );
+    return ApphudPurchase.fromJson(json);
+  }
+
 //
 // static Future<ApphudPurchaseResultIos?> purchaseWithoutValidation(
 //     String productId) async {

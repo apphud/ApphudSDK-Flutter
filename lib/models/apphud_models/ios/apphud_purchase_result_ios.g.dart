@@ -6,15 +6,18 @@ part of 'apphud_purchase_result_ios.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApphudPurchaseResultIos _$ApphudPurchaseResultIosFromJson(
-    Map<String, dynamic> json) {
+ApphudPurchaseResultIos _$ApphudPurchaseResultIosFromJson(Map json) {
   return ApphudPurchaseResultIos(
-    subscription:
-        Mapper.apphudSubscriptionWrapperFromJson(json['subscription']),
-    nonRenewingPurchase:
-        Mapper.apphudNonRenewingPurchaseFromJson(json['nonRenewingPurchase']),
-    transaction:
-        Mapper.skPaymentTransactionWrapperFromJson(json['transaction']),
+    subscription: json['subscription'] == null
+        ? null
+        : ApphudSubscriptionWrapper.fromJson(json['subscription'] as Map),
+    nonRenewingPurchase: json['nonRenewingPurchase'] == null
+        ? null
+        : ApphudNonRenewingPurchase.fromJson(
+            json['nonRenewingPurchase'] as Map),
+    transaction: json['transaction'] == null
+        ? null
+        : SKPaymentTransactionWrapper.fromJson(json['transaction'] as Map),
   );
 }
 

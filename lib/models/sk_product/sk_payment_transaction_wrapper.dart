@@ -4,37 +4,46 @@ import '../mapper.dart';
 
 part 'sk_payment_transaction_wrapper.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true)
 class SKPaymentTransactionWrapper {
-  String? transactionIdentifier;
-  double? transactionDate;
-  @JsonKey(fromJson: Mapper.skPaymentWrapperFromJson)
-  SKPaymentWrapper? payment;
+  final String? transactionIdentifier;
+  final double? transactionDate;
+  final SKPaymentWrapper? payment;
 
   SKPaymentTransactionWrapper({
-    required this.transactionIdentifier,
-    required this.transactionDate,
-    required this.payment,
+    this.transactionIdentifier,
+    this.transactionDate,
+    this.payment,
   });
 
-  factory SKPaymentTransactionWrapper.fromJson(Map<String, dynamic> map) =>
+  factory SKPaymentTransactionWrapper.fromJson(Map<dynamic, dynamic> map) =>
       _$SKPaymentTransactionWrapperFromJson(map);
+
+  @override
+  String toString() {
+    return 'SKPaymentTransactionWrapper{transactionIdentifier: $transactionIdentifier, transactionDate: $transactionDate, payment: $payment}';
+  }
 }
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true)
 class SKPaymentWrapper {
-  String? productIdentifier;
-  String? description;
+  String productIdentifier;
+  String description;
+  int quantity;
   String? applicationUsername;
-  int? quantity;
 
   SKPaymentWrapper({
     required this.productIdentifier,
     required this.description,
-    required this.applicationUsername,
     required this.quantity,
+    this.applicationUsername,
   });
 
-  factory SKPaymentWrapper.fromJson(Map<String, dynamic> map) =>
+  factory SKPaymentWrapper.fromJson(Map<dynamic, dynamic> map) =>
       _$SKPaymentWrapperFromJson(map);
+
+  @override
+  String toString() {
+    return 'SKPaymentWrapper{productIdentifier: $productIdentifier, description: $description, quantity: $quantity, applicationUsername: $applicationUsername}';
+  }
 }
