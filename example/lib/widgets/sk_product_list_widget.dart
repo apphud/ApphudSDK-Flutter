@@ -16,11 +16,9 @@ class SKProductListWidget extends StatelessWidget {
         AsyncSnapshot<List<SKProductWrapper>> snapshot,
       ) {
         if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          } else {
-            return Expanded(child: _buildProductList(snapshot));
-          }
+          if (snapshot.hasError) return Text(snapshot.error.toString());
+
+          return Expanded(child: _buildProductList(snapshot));
         }
         return Text('Waiting...');
       },

@@ -77,16 +77,16 @@ class AppHud {
     return products.map((json) => SKProductWrapper.fromJson(json)).toList();
   }
 
-  //
-  // static Future<ApphudProduct?> product(String productIdentifier) async {
-  //   var json = await _channel.invokeMethod(
-  //     'product',
-  //     {"productIdentifier": productIdentifier},
-  //   );
-  //   ApphudProduct? product = Mapper.apphudProductFromJson(json);
-  //   return product;
-  // }
-  //
+  static Future<ApphudProduct?> product(String productIdentifier) async {
+    final Map<dynamic, dynamic>? json =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>(
+      'product',
+      {"productIdentifier": productIdentifier},
+    );
+
+    return json != null ? ApphudProduct.fromJson(json) : null;
+  }
+
   static Future<List<ApphudProduct>?> products() async {
     List<Map<dynamic, dynamic>>? products =
         (await _channel.invokeMethod<List<dynamic>>('products'))?.toMapList;
