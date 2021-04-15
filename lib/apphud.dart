@@ -66,17 +66,17 @@ class AppHud {
     List<Map<dynamic, dynamic>> products = (await _channel
             .invokeMethod<List<dynamic>>('productsDidFetchCallback'))!
         .toMapList;
-    return products.map((item) => ApphudProduct.fromJson(item)).toList();
+    return products.map((json) => ApphudProduct.fromJson(json)).toList();
   }
 
-  // static Future<List<SKProductWrapper?>> refreshStoreKitProducts() async {
-  //   List<dynamic> productsJson = await (_channel.invokeMethod(
-  //     'refreshStoreKitProducts',
-  //   ) as FutureOr<List<dynamic>>);
-  //   var products =
-  //       productsJson.map((e) => Mapper.skProductFromJson(e)).toList();
-  //   return products;
-  // }
+  static Future<List<SKProductWrapper>> refreshStoreKitProducts() async {
+    List<Map<dynamic, dynamic>> products =
+        (await _channel.invokeMethod<List<dynamic>>('refreshStoreKitProducts'))!
+            .toMapList;
+
+    return products.map((json) => SKProductWrapper.fromJson(json)).toList();
+  }
+
   //
   // static Future<ApphudProduct?> product(String productIdentifier) async {
   //   var json = await _channel.invokeMethod(
@@ -90,8 +90,9 @@ class AppHud {
   static Future<List<ApphudProduct>?> products() async {
     List<Map<dynamic, dynamic>>? products =
         (await _channel.invokeMethod<List<dynamic>>('products'))?.toMapList;
-    return products?.map((item) => ApphudProduct.fromJson(item)).toList();
+    return products?.map((json) => ApphudProduct.fromJson(json)).toList();
   }
+
 //
 // static Future<ApphudPurchase> purchase(String productId) async {
 //   var json = await _channel.invokeMethod(
@@ -228,5 +229,6 @@ class AppHud {
 //   return isAdded;
 // }
 
-  static Future<void> enableDebugLogs() => _channel.invokeMethod("enableDebugLogs");
+  static Future<void> enableDebugLogs() =>
+      _channel.invokeMethod("enableDebugLogs");
 }
