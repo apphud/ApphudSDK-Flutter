@@ -38,8 +38,8 @@ Map<String, dynamic> _$SKProductWrapperToJson(SKProductWrapper instance) =>
 
 SKPriceLocaleWrapper _$SKPriceLocaleWrapperFromJson(Map json) {
   return SKPriceLocaleWrapper(
-    currencySymbol: json['currencySymbol'] as String,
-    currencyCode: json['currencyCode'] as String,
+    currencySymbol: json['currencySymbol'] as String?,
+    currencyCode: json['currencyCode'] as String?,
   );
 }
 

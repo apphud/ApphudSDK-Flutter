@@ -64,8 +64,8 @@ class SKProductWrapper {
 
 @JsonSerializable(anyMap: true)
 class SKPriceLocaleWrapper {
-  final String currencySymbol;
-  final String currencyCode;
+  final String? currencySymbol;
+  final String? currencyCode;
 
   SKPriceLocaleWrapper({
     required this.currencySymbol,
