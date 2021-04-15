@@ -1,4 +1,4 @@
-import 'package:appHud_example/widgets/product_list_widget.dart';
+import 'package:appHud_example/widgets/apphud_product_list_widget.dart';
 import 'package:apphud/apphud.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -22,5 +22,5 @@ class ProductsAction extends ActionFlow {
     );
   }
 
-  Widget actionResponse() => ProductListWidget(future: AppHud.products());
+  Widget actionResponse() => ApphudProductListWidget(future: AppHud.products());
 }

@@ -1,14 +1,15 @@
 import 'dart:io';
 
 import 'package:apphud/models/apphud_models/composite/apphud_product.dart';
-import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
 import 'package:apphud/models/sku_details/sku_details.dart';
 import 'package:flutter/material.dart';
 
-class ProductListWidget extends StatelessWidget {
+import 'sk_product_widget.dart';
+
+class ApphudProductListWidget extends StatelessWidget {
   final Future<List<ApphudProduct>?> future;
 
-  const ProductListWidget({Key? key, required this.future}) : super(key: key);
+  const ApphudProductListWidget({Key? key, required this.future}) : super(key: key);
 
   Widget build(BuildContext context) {
     return FutureBuilder<List<ApphudProduct>?>(
@@ -39,72 +40,12 @@ class ProductListWidget extends StatelessWidget {
     return ListView(
       children: products.map((ApphudProduct compositeProduct) {
         if (Platform.isIOS) {
-          return _fromSKProduct(compositeProduct.skProductWrapper);
+          return SKProductWidget(skProduct: compositeProduct.skProductWrapper);
         } else if (Platform.isAndroid) {
           return _fromSKUProduct(compositeProduct.skuDetailsWrapper);
         }
         return Container();
       }).toList(),
-    );
-  }
-
-  Widget _fromSKProduct(SKProductWrapper? productWrapper) {
-    if (productWrapper == null) return Container();
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-              ),
-              child: ListTile(
-                title: Text('productIdentifier'),
-                subtitle: Text(productWrapper.productIdentifier),
-              ),
-            ),
-            ListTile(
-              title: Text('localizedTitle'),
-              subtitle: Text(productWrapper.localizedTitle),
-            ),
-            ListTile(
-              title: Text('localizedDescription'),
-              subtitle: Text(productWrapper.localizedDescription),
-            ),
-            ListTile(
-              title: Text('priceLocale'),
-              subtitle: Text(productWrapper.priceLocale.toString()),
-            ),
-            ListTile(
-              title: Text('subscriptionGroupIdentifier'),
-              subtitle:
-                  Text(productWrapper.subscriptionGroupIdentifier ?? 'null'),
-            ),
-            ListTile(
-              title: Text('price'),
-              subtitle: Text('${productWrapper.price}'),
-            ),
-            ListTile(
-              title: Text('subscriptionPeriod'),
-              subtitle:
-                  Text(productWrapper.subscriptionPeriod?.toString() ?? 'null'),
-            ),
-            ListTile(
-              title: Text('introductoryPrice'),
-              subtitle:
-                  Text(productWrapper.introductoryPrice?.toString() ?? 'null'),
-            ),
-          ],
-        ),
-      ),
     );
   }
 

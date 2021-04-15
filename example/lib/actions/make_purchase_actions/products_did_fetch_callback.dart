@@ -1,4 +1,4 @@
-import 'package:appHud_example/widgets/product_list_widget.dart';
+import 'package:appHud_example/widgets/apphud_product_list_widget.dart';
 import 'package:apphud/apphud.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,5 +23,5 @@ class ProductsDidFetchCallbackAction extends ActionFlow {
   }
 
   Widget actionResponse() =>
-      ProductListWidget(future: AppHud.productsDidFetchCallback());
+      ApphudProductListWidget(future: AppHud.productsDidFetchCallback());
 }
