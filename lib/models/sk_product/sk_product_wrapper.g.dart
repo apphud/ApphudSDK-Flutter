@@ -12,7 +12,7 @@ SKProductWrapper _$SKProductWrapperFromJson(Map json) {
     localizedTitle: json['localizedTitle'] as String,
     localizedDescription: json['localizedDescription'] as String,
     subscriptionGroupIdentifier: json['subscriptionGroupIdentifier'] as String?,
-    price: (json['price'] as num).toDouble(),
+    price: json['price'] as String,
     priceLocale: SKPriceLocaleWrapper.fromJson(json['priceLocale'] as Map),
     subscriptionPeriod: json['subscriptionPeriod'] == null
         ? null
@@ -38,8 +38,8 @@ Map<String, dynamic> _$SKProductWrapperToJson(SKProductWrapper instance) =>
 
 SKPriceLocaleWrapper _$SKPriceLocaleWrapperFromJson(Map json) {
   return SKPriceLocaleWrapper(
-    currencySymbol: json['currencySymbol'] as String?,
-    currencyCode: json['currencyCode'] as String?,
+    currencySymbol: json['currencySymbol'] as String,
+    currencyCode: json['currencyCode'] as String,
   );
 }
 

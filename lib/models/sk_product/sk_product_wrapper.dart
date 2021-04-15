@@ -12,7 +12,7 @@ class SKProductWrapper {
   final String localizedTitle;
   final String localizedDescription;
   final String? subscriptionGroupIdentifier;
-  final double price;
+  final String price;
   final SKPriceLocaleWrapper priceLocale;
   final SKProductSubscriptionPeriodWrapper? subscriptionPeriod;
   final SKProductDiscountWrapper? introductoryPrice;
@@ -64,12 +64,12 @@ class SKProductWrapper {
 
 @JsonSerializable(anyMap: true)
 class SKPriceLocaleWrapper {
-  final String? currencySymbol;
-  final String? currencyCode;
+  final String currencySymbol;
+  final String currencyCode;
 
   SKPriceLocaleWrapper({
-    this.currencySymbol,
-    this.currencyCode,
+    required this.currencySymbol,
+    required this.currencyCode,
   });
 
   factory SKPriceLocaleWrapper.fromJson(Map<dynamic, dynamic> map) =>
