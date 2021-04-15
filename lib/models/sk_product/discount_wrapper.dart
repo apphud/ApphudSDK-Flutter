@@ -47,4 +47,9 @@ class SKProductDiscountWrapper {
   @override
   int get hashCode => hashValues(this.price, this.priceLocale,
       this.numberOfPeriods, this.paymentMode, this.subscriptionPeriod);
+
+  @override
+  String toString() {
+    return 'SKProductDiscountWrapper{price: $price, numberOfPeriods: $numberOfPeriods, paymentMode: $paymentMode, priceLocale: $priceLocale, subscriptionPeriod: $subscriptionPeriod}';
+  }
 }
