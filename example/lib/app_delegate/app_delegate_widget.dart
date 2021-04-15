@@ -13,6 +13,7 @@ import 'package:appHud_example/actions/handle_purchase_actions/restore_purchases
 import 'package:appHud_example/actions/handle_purchase_actions/subscription_action.dart';
 import 'package:appHud_example/actions/handle_purchase_actions/subscriptions_action.dart';
 import 'package:appHud_example/actions/initialization_actions/device_id_action.dart';
+import 'package:appHud_example/actions/initialization_actions/enable_debug_logs.dart';
 import 'package:appHud_example/actions/initialization_actions/logout_action.dart';
 import 'package:appHud_example/actions/initialization_actions/start_action.dart';
 import 'package:appHud_example/actions/initialization_actions/start_manually_action.dart';
@@ -395,6 +396,16 @@ class AppDelegateWidgetState extends State<AppDelegateWidget> {
             return PageRouteBuilder(
               pageBuilder: (_, __, ___) => () {
                 return ActionScreen(AddAttributionAction());
+              }(),
+              settings: routeSettings,
+              transitionsBuilder: (_, anim, __, child) {
+                return FadeTransition(opacity: anim, child: child);
+              },
+            );
+          case InitializationRoutes.enableDebugLogs:
+            return PageRouteBuilder(
+              pageBuilder: (_, __, ___) => () {
+                return ActionScreen(EnableDebugLogsAction());
               }(),
               settings: routeSettings,
               transitionsBuilder: (_, anim, __, child) {

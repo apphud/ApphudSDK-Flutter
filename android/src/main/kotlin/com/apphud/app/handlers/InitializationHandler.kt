@@ -21,11 +21,11 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
             InitializationRoutes.userID.name -> userID(result)
             InitializationRoutes.deviceID.name -> result.notImplemented()
             InitializationRoutes.logout.name -> logout(result)
+            InitializationRoutes.enableDebugLogs.name -> enableDebugLogs(result)
         }
     }
 
     private fun start(apiKey: String, userId: String?, result: MethodChannel.Result) {
-        Apphud.enableDebugLogs()
         Apphud.start(context = context, apiKey = apiKey, userId = userId)
         result.success(null)
     }
@@ -54,18 +54,24 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
         result.success(null)
     }
 
+    private fun enableDebugLogs(result: MethodChannel.Result) {
+        Apphud.enableDebugLogs()
+        result.success(null)
+    }
+
     class StartParser(val result: MethodChannel.Result) {
 
         fun parse(args: Map<String, Any>?, callback: (apiKey: String, userId: String?) -> Unit) {
-          try {
-              args ?: throw IllegalArgumentException("apiKey is required argument")
-              val apiKey = args["apiKey"] as? String  ?: throw IllegalArgumentException("apiKey is required argument")
-              val userId = args["userID"] as? String
+            try {
+                args ?: throw IllegalArgumentException("apiKey is required argument")
+                val apiKey = args["apiKey"] as? String
+                        ?: throw IllegalArgumentException("apiKey is required argument")
+                val userId = args["userID"] as? String
 
-              callback(apiKey, userId)
-          } catch (e: IllegalArgumentException) {
-                result.error("400", e.message,"")
-          }
+                callback(apiKey, userId)
+            } catch (e: IllegalArgumentException) {
+                result.error("400", e.message, "")
+            }
         }
     }
 
@@ -73,13 +79,14 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
         fun parse(args: Map<String, Any>?, callback: (apiKey: String, userId: String?, deviceId: String?) -> Unit) {
             try {
                 args ?: throw IllegalArgumentException("apiKey is required argument")
-                val apiKey = args["apiKey"] as? String ?: throw IllegalArgumentException("apiKey is required argument")
+                val apiKey = args["apiKey"] as? String
+                        ?: throw IllegalArgumentException("apiKey is required argument")
                 val userId = args["userID"] as? String
                 val deviceId = args["deviceID"] as? String
 
                 callback(apiKey, userId, deviceId)
             } catch (e: IllegalArgumentException) {
-                result.error("400", e.message,"")
+                result.error("400", e.message, "")
             }
         }
     }
@@ -88,11 +95,12 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
         fun parse(args: Map<String, Any>?, callback: (userId: String) -> Unit) {
             try {
                 args ?: throw IllegalArgumentException("userID is required argument")
-                val userId = args["userID"] as? String ?: throw IllegalArgumentException("userID is required argument")
+                val userId = args["userID"] as? String
+                        ?: throw IllegalArgumentException("userID is required argument")
 
                 callback(userId)
             } catch (e: IllegalArgumentException) {
-                result.error("400", e.message,"")
+                result.error("400", e.message, "")
             }
         }
     }
@@ -106,7 +114,8 @@ enum class InitializationRoutes {
     deviceID,
     logout,
     setDelegate,
-    setUIDelegate;
+    setUIDelegate,
+    enableDebugLogs;
 
     companion object Mapper {
         fun stringValues(): List<String> {

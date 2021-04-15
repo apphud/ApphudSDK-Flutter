@@ -11,6 +11,7 @@ class InitializationRoutes extends BaseRoute {
   static const logout = "/initialization/logout";
   static const setDelegate = "/initialization/setDelegate";
   static const setUIDelegate = "/initialization/setUIDelegate";
+  static const enableDebugLogs = "/initialization/enableDebugLogs";
 
   InitializationRoutes();
 
@@ -24,6 +25,7 @@ class InitializationRoutes extends BaseRoute {
       logout,
       setDelegate,
       setUIDelegate,
+      enableDebugLogs,
     ];
   }
 

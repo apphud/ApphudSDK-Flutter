@@ -227,4 +227,6 @@ class AppHud {
 //   });
 //   return isAdded;
 // }
+
+  static Future<void> enableDebugLogs() => _channel.invokeMethod("enableDebugLogs");
 }
