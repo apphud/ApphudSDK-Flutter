@@ -27,7 +27,8 @@ class IsNonRenewingPurchaseAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<bool?>(
-        future: AppHud.isNonRenewingPurchaseActive(parameterValue),
+       // future: AppHud.isNonRenewingPurchaseActive(parameterValue),
+        future: Future.error('error'),
         builder:
             (BuildContext context, AsyncSnapshot<bool?> snapshot) {
           if (snapshot.hasData) {

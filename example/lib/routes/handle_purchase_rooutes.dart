@@ -45,5 +45,6 @@ class HandlePurchaseRoutes extends BaseRoute {
           return false;
       }
     }
+    return false;
   }
 }

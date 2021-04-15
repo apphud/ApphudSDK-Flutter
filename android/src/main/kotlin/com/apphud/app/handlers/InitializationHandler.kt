@@ -25,6 +25,7 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
     }
 
     private fun start(apiKey: String, userId: String?, result: MethodChannel.Result) {
+        Apphud.enableDebugLogs()
         Apphud.start(context = context, apiKey = apiKey, userId = userId)
         result.success(null)
     }

@@ -12,41 +12,41 @@ import 'apphud_models/apphud_non_renewing_purchase.dart';
 import 'apphud_models/ios/apphud_purchase_result_ios.dart';
 
 class Mapper {
-  static ApphudProduct? apphudProductFromJson(dynamic json) {
-    if (json == null) return null;
+  // static ApphudProduct? apphudProductFromJson(dynamic json) {
+  //   if (json == null) return null;
+  //
+  //   final map = Map<String, dynamic>.from(json);
+  //   try {
+  //     return ApphudProduct.fromJson(map);
+  //   } catch (e) {
+  //     print('Could not parse ApphudProduct: $e');
+  //     return null;
+  //   }
+  // }
 
-    final map = Map<String, dynamic>.from(json);
-    try {
-      return ApphudProduct.fromJson(map);
-    } catch (e) {
-      print('Could not parse ApphudProduct: $e');
-      return null;
-    }
-  }
+  // static SKProductWrapper? skProductFromJson(dynamic json) {
+  //   if (json == null) return null;
+  //
+  //   final map = Map<String, dynamic>.from(json);
+  //   try {
+  //     return SKProductWrapper.fromJson(map);
+  //   } catch (e) {
+  //     print('Could not parse SKProductWrapper: $e');
+  //     return null;
+  //   }
+  // }
 
-  static SKProductWrapper? skProductFromJson(dynamic json) {
-    if (json == null) return null;
-
-    final map = Map<String, dynamic>.from(json);
-    try {
-      return SKProductWrapper.fromJson(map);
-    } catch (e) {
-      print('Could not parse SKProductWrapper: $e');
-      return null;
-    }
-  }
-
-  static SkuDetailsWrapper? skuDetailsFromJson(dynamic json) {
-    if (json == null) return null;
-
-    final map = Map<String, dynamic>.from(json);
-    try {
-      return SkuDetailsWrapper.fromJson(map);
-    } catch (e) {
-      print('Could not parse SkuDetailsWrapper: $e');
-      return null;
-    }
-  }
+  // static SkuDetailsWrapper? skuDetailsFromJson(dynamic json) {
+  //   if (json == null) return null;
+  //
+  //   final map = Map<String, dynamic>.from(json);
+  //   try {
+  //     return SkuDetailsWrapper.fromJson(map);
+  //   } catch (e) {
+  //     print('Could not parse SkuDetailsWrapper: $e');
+  //     return null;
+  //   }
+  // }
 
   static ApphudPurchaseResultIos? ApphudPurchaseResultIosFromJson(
       dynamic json) {

@@ -27,10 +27,11 @@ class PurchasePromoAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<ApphudPurchaseResultIos?>(
-        future: AppHud.purchasePromo(
-          parameterValue,
-          parameterValue2,
-        ),
+        // future: AppHud.purchasePromo(
+        //   parameterValue,
+        //   parameterValue2,
+        // ),
+        future: Future.error('error'),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context,
             AsyncSnapshot<ApphudPurchaseResultIos?> snapshot) {

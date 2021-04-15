@@ -23,7 +23,8 @@ class HasActiveSubscriptionAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<bool?>(
-        future: AppHud.hasActiveSubscription(),
+       // future: AppHud.hasActiveSubscription(),
+        future: Future.error('error'),
         builder:
             (BuildContext context, AsyncSnapshot<bool?> snapshot) {
           if (snapshot.hasData) {

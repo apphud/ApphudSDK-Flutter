@@ -48,5 +48,6 @@ class MakePurchaseRoutes extends BaseRoute {
           return false;
       }
     }
+    return false;
   }
 }

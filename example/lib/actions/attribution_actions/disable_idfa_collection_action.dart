@@ -23,7 +23,8 @@ class DisableIDFACollectionAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<void>(
-        future: AppHud.disableIDFACollection(),
+     //   future: AppHud.disableIDFACollection(),
+        future: Future.error('error'),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {

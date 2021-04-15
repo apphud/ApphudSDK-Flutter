@@ -26,7 +26,8 @@ class PurchaseWithoutValidationAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<ApphudPurchaseResultIos?>(
-        future: AppHud.purchaseWithoutValidation(parameterValue),
+        //future: AppHud.purchaseWithoutValidation(parameterValue),
+        future: Future.error('error'),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context,
             AsyncSnapshot<ApphudPurchaseResultIos?> snapshot) {

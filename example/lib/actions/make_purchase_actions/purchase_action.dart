@@ -32,7 +32,8 @@ class PurchaseAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<ApphudPurchase>(
-        future: AppHud.purchase(Platform.isIOS ? iOSValue : androidValue),
+       // future: AppHud.purchase(Platform.isIOS ? iOSValue : androidValue),
+        future: Future.error('error'),
         builder:
             (BuildContext context, AsyncSnapshot<ApphudPurchase> snapshot) {
           if (snapshot.hasData) {

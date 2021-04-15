@@ -6,24 +6,23 @@ part of 'sku_details.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SkuDetailsWrapper _$SkuDetailsWrapperFromJson(Map<String, dynamic> json) {
+SkuDetailsWrapper _$SkuDetailsWrapperFromJson(Map json) {
   return SkuDetailsWrapper(
-    description: json['description'] as String?,
-    freeTrialPeriod: json['freeTrialPeriod'] as String?,
-    introductoryPrice: json['introductoryPrice'] as String?,
-    introductoryPriceAmountMicros:
-        json['introductoryPriceAmountMicros'] as int?,
-    introductoryPriceCycles: json['introductoryPriceCycles'] as int?,
-    introductoryPricePeriod: json['introductoryPricePeriod'] as String?,
-    price: json['price'] as String?,
-    priceAmountMicros: json['priceAmountMicros'] as int?,
-    priceCurrencyCode: json['priceCurrencyCode'] as String?,
-    sku: json['sku'] as String?,
-    subscriptionPeriod: json['subscriptionPeriod'] as String?,
-    title: json['title'] as String?,
-    type: _$enumDecodeNullable(_$SkuTypeEnumMap, json['type']),
-    originalPrice: json['originalPrice'] as String?,
-    originalPriceAmountMicros: json['originalPriceAmountMicros'] as int?,
+    description: json['description'] as String,
+    freeTrialPeriod: json['freeTrialPeriod'] as String,
+    introductoryPrice: json['introductoryPrice'] as String,
+    introductoryPriceAmountMicros: json['introductoryPriceAmountMicros'] as int,
+    introductoryPriceCycles: json['introductoryPriceCycles'] as int,
+    introductoryPricePeriod: json['introductoryPricePeriod'] as String,
+    price: json['price'] as String,
+    priceAmountMicros: json['priceAmountMicros'] as int,
+    priceCurrencyCode: json['priceCurrencyCode'] as String,
+    sku: json['sku'] as String,
+    subscriptionPeriod: json['subscriptionPeriod'] as String,
+    title: json['title'] as String,
+    type: _$enumDecode(_$SkuTypeEnumMap, json['type']),
+    originalPrice: json['originalPrice'] as String,
+    originalPriceAmountMicros: json['originalPriceAmountMicros'] as int,
   );
 }
 
@@ -70,17 +69,6 @@ K _$enumDecode<K, V>(
       return MapEntry(unknownValue, enumValues.values.first);
     },
   ).key;
-}
-
-K? _$enumDecodeNullable<K, V>(
-  Map<K, V> enumValues,
-  dynamic source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$SkuTypeEnumMap = {

@@ -25,7 +25,8 @@ class RestorePurchasesAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<ApphudComposite?>(
-        future: AppHud.restorePurchases(),
+        //future: AppHud.restorePurchases(),
+        future: Future.error('error'),
         builder:
             (BuildContext context, AsyncSnapshot<ApphudComposite?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

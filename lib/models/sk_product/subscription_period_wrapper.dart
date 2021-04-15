@@ -5,18 +5,20 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'subscription_period_wrapper.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true)
 class SKProductSubscriptionPeriodWrapper {
-  final int? numberOfUnits;
-  final SKSubscriptionPeriodTime? time;
+  final int numberOfUnits;
+  final SKSubscriptionPeriodTime unit;
 
   SKProductSubscriptionPeriodWrapper({
     required this.numberOfUnits,
-    required this.time,
+    required this.unit,
   });
 
-  factory SKProductSubscriptionPeriodWrapper.fromJson(Map map) =>
-      _$SKProductSubscriptionPeriodWrapperFromJson(map as Map<String, dynamic>);
+  factory SKProductSubscriptionPeriodWrapper.fromJson(
+    Map<dynamic, dynamic> map,
+  ) =>
+      _$SKProductSubscriptionPeriodWrapperFromJson(map);
 
   @override
   bool operator ==(Object other) {
@@ -28,9 +30,14 @@ class SKProductSubscriptionPeriodWrapper {
     }
     final SKProductSubscriptionPeriodWrapper typedOther =
         other as SKProductSubscriptionPeriodWrapper;
-    return typedOther.numberOfUnits == numberOfUnits && typedOther.time == time;
+    return typedOther.numberOfUnits == numberOfUnits && typedOther.unit == unit;
   }
 
   @override
-  int get hashCode => hashValues(this.numberOfUnits, this.time);
+  int get hashCode => hashValues(this.numberOfUnits, this.unit);
+
+  @override
+  String toString() {
+    return 'SKProductSubscriptionPeriodWrapper{numberOfUnits: $numberOfUnits, unit: $unit}';
+  }
 }

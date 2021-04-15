@@ -31,5 +31,6 @@ class AttributionRoutes extends BaseRoute {
           return false;
       }
     }
+    return false;
   }
 }

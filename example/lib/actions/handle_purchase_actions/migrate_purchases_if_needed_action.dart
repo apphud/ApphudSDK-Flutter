@@ -25,7 +25,8 @@ class MigratePurchasesIfNeededAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<ApphudComposite?>(
-        future: AppHud.migratePurchasesIfNeeded(),
+       // future: AppHud.migratePurchasesIfNeeded(),
+        future: Future.error('error'),
         builder:
             (BuildContext context, AsyncSnapshot<ApphudComposite?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

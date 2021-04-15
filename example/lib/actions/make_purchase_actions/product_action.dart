@@ -33,7 +33,8 @@ class ProductAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<ApphudProduct?>(
-        future: AppHud.product(Platform.isIOS ? iOSValue : androidValue),
+       // future: AppHud.product(Platform.isIOS ? iOSValue : androidValue),
+      future: Future.error('error'),
         builder: (BuildContext context, AsyncSnapshot<ApphudProduct?> snapshot) {
           if (snapshot.hasData) {
             if (Platform.isIOS) {
@@ -76,10 +77,10 @@ class ProductAction extends ActionFlow {
           title: Text("subscriptionGroupIdentifier"),
           subtitle: Text(productWrapper.subscriptionGroupIdentifier ?? "null"),
         ),
-        ListTile(
-          title: Text("price"),
-          subtitle: Text(productWrapper.price ?? "null"),
-        ),
+        // ListTile(
+        //   title: Text("price"),
+        //   subtitle: Text(productWrapper.price ?? "null"),
+        // ),
         ListTile(
           title: Text("subscriptionPeriod"),
           subtitle:

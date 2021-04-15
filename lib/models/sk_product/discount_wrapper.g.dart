@@ -6,16 +6,15 @@ part of 'discount_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SKProductDiscountWrapper _$SKProductDiscountWrapperFromJson(
-    Map<String, dynamic> json) {
+SKProductDiscountWrapper _$SKProductDiscountWrapperFromJson(Map json) {
   return SKProductDiscountWrapper(
-    price: json['price'] as String?,
-    numberOfPeriods: json['numberOfPeriods'] as int?,
-    paymentMode: _$enumDecodeNullable(
+    price: (json['price'] as num).toDouble(),
+    numberOfPeriods: json['numberOfPeriods'] as int,
+    paymentMode: _$enumDecode(
         _$SKProductDiscountPaymentModeEnumMap, json['paymentMode']),
-    priceLocale: Mapper.skPriceLocaleFromJson(json['priceLocale']),
-    subscriptionPeriod:
-        Mapper.skProductSubscriptionPeriodFromJson(json['subscriptionPeriod']),
+    priceLocale: SKPriceLocaleWrapper.fromJson(json['priceLocale'] as Map),
+    subscriptionPeriod: SKProductSubscriptionPeriodWrapper.fromJson(
+        json['subscriptionPeriod'] as Map),
   );
 }
 
@@ -54,17 +53,6 @@ K _$enumDecode<K, V>(
       return MapEntry(unknownValue, enumValues.values.first);
     },
   ).key;
-}
-
-K? _$enumDecodeNullable<K, V>(
-  Map<K, V> enumValues,
-  dynamic source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$SKProductDiscountPaymentModeEnumMap = {

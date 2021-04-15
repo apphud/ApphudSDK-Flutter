@@ -22,7 +22,8 @@ class FetchRawReceiptInfoAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<dynamic>(
-        future: AppHud.fetchRawReceiptInfo(),
+        //future: AppHud.fetchRawReceiptInfo(),
+        future: Future.error('error'),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             final map = Map<String, dynamic>.from(snapshot.data);

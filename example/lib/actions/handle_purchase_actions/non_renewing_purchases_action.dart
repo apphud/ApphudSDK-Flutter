@@ -29,7 +29,8 @@ class NonRenewingPurchasesAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<List<ApphudNonRenewingPurchase?>>(
-        future: AppHud.nonRenewingPurchases(),
+        //future: AppHud.nonRenewingPurchases(),
+        future: Future.error('error'),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context,
             AsyncSnapshot<List<ApphudNonRenewingPurchase?>> snapshot) {

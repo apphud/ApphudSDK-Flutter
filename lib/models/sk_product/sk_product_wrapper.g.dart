@@ -6,18 +6,21 @@ part of 'sk_product_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SKProductWrapper _$SKProductWrapperFromJson(Map<String, dynamic> json) {
+SKProductWrapper _$SKProductWrapperFromJson(Map json) {
   return SKProductWrapper(
-    productIdentifier: json['productIdentifier'] as String?,
-    localizedTitle: json['localizedTitle'] as String?,
-    localizedDescription: json['localizedDescription'] as String?,
+    productIdentifier: json['productIdentifier'] as String,
+    localizedTitle: json['localizedTitle'] as String,
+    localizedDescription: json['localizedDescription'] as String,
     subscriptionGroupIdentifier: json['subscriptionGroupIdentifier'] as String?,
-    price: json['price'] as String?,
-    priceLocale: Mapper.skPriceLocaleFromJson(json['priceLocale']),
-    subscriptionPeriod:
-        Mapper.skProductSubscriptionPeriodFromJson(json['subscriptionPeriod']),
-    introductoryPrice:
-        Mapper.skProductDiscountFromJson(json['introductoryPrice']),
+    price: (json['price'] as num).toDouble(),
+    priceLocale: SKPriceLocaleWrapper.fromJson(json['priceLocale'] as Map),
+    subscriptionPeriod: json['subscriptionPeriod'] == null
+        ? null
+        : SKProductSubscriptionPeriodWrapper.fromJson(
+            json['subscriptionPeriod'] as Map),
+    introductoryPrice: json['introductoryPrice'] == null
+        ? null
+        : SKProductDiscountWrapper.fromJson(json['introductoryPrice'] as Map),
   );
 }
 
@@ -33,7 +36,7 @@ Map<String, dynamic> _$SKProductWrapperToJson(SKProductWrapper instance) =>
       'introductoryPrice': instance.introductoryPrice,
     };
 
-SKPriceLocaleWrapper _$SKPriceLocaleWrapperFromJson(Map<String, dynamic> json) {
+SKPriceLocaleWrapper _$SKPriceLocaleWrapperFromJson(Map json) {
   return SKPriceLocaleWrapper(
     currencySymbol: json['currencySymbol'] as String?,
     currencyCode: json['currencyCode'] as String?,

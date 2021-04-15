@@ -8,15 +8,13 @@ import 'discount_payment_mode_wrapper.dart';
 
 part 'discount_wrapper.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true)
 class SKProductDiscountWrapper {
-  final String? price;
-  final int? numberOfPeriods;
-  final SKProductDiscountPaymentMode? paymentMode;
-  @JsonKey(fromJson: Mapper.skPriceLocaleFromJson)
-  final SKPriceLocaleWrapper? priceLocale;
-  @JsonKey(fromJson: Mapper.skProductSubscriptionPeriodFromJson)
-  final SKProductSubscriptionPeriodWrapper? subscriptionPeriod;
+  final double price;
+  final int numberOfPeriods;
+  final SKProductDiscountPaymentMode paymentMode;
+  final SKPriceLocaleWrapper priceLocale;
+  final SKProductSubscriptionPeriodWrapper subscriptionPeriod;
 
   SKProductDiscountWrapper({
     required this.price,
@@ -26,7 +24,7 @@ class SKProductDiscountWrapper {
     required this.subscriptionPeriod,
   });
 
-  factory SKProductDiscountWrapper.fromJson(Map<String, dynamic> map) =>
+  factory SKProductDiscountWrapper.fromJson(Map<dynamic, dynamic> map) =>
       _$SKProductDiscountWrapperFromJson(map);
 
   @override

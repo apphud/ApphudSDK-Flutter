@@ -6,7 +6,7 @@ import '../action_screen.dart';
 
 class StartAction extends ActionFlow {
   String apiKey = "app_DZzKAkuBWhe9nz3qeofJMU9PJezkxn";
-  String userID = "2c24e68f-f334-4eb0-ac64-72f89b258a2a";
+  String userID = "ivanov_test_april_14";
   bool observerMode = true;
 
   Widget actionName() {

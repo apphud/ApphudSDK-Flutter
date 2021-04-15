@@ -25,7 +25,8 @@ class SubscriptionAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<ApphudSubscriptionWrapper?>(
-        future: AppHud.subscription(),
+        //future: AppHud.subscription(),
+        future: Future.error('error'),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context,
             AsyncSnapshot<ApphudSubscriptionWrapper?> snapshot) {

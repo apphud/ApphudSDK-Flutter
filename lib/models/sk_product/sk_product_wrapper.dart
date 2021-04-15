@@ -2,24 +2,19 @@ import 'package:apphud/models/sk_product/subscription_period_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../mapper.dart';
 import 'discount_wrapper.dart';
 
 part 'sk_product_wrapper.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true)
 class SKProductWrapper {
-  final String? productIdentifier;
-  final String? localizedTitle;
-  final String? localizedDescription;
+  final String productIdentifier;
+  final String localizedTitle;
+  final String localizedDescription;
   final String? subscriptionGroupIdentifier;
-  final String? price;
-
-  @JsonKey(fromJson: Mapper.skPriceLocaleFromJson)
-  final SKPriceLocaleWrapper? priceLocale;
-  @JsonKey(fromJson: Mapper.skProductSubscriptionPeriodFromJson)
+  final double price;
+  final SKPriceLocaleWrapper priceLocale;
   final SKProductSubscriptionPeriodWrapper? subscriptionPeriod;
-  @JsonKey(fromJson: Mapper.skProductDiscountFromJson)
   final SKProductDiscountWrapper? introductoryPrice;
 
   SKProductWrapper({
@@ -33,7 +28,7 @@ class SKProductWrapper {
     required this.introductoryPrice,
   });
 
-  factory SKProductWrapper.fromJson(Map<String, dynamic> map) =>
+  factory SKProductWrapper.fromJson(Map<dynamic, dynamic> map) =>
       _$SKProductWrapperFromJson(map);
 
   @override
@@ -67,17 +62,17 @@ class SKProductWrapper {
       this.introductoryPrice);
 }
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true)
 class SKPriceLocaleWrapper {
   final String? currencySymbol;
   final String? currencyCode;
 
   SKPriceLocaleWrapper({
-    required this.currencySymbol,
-    required this.currencyCode,
+    this.currencySymbol,
+    this.currencyCode,
   });
 
-  factory SKPriceLocaleWrapper.fromJson(Map<String, dynamic> map) =>
+  factory SKPriceLocaleWrapper.fromJson(Map<dynamic, dynamic> map) =>
       _$SKPriceLocaleWrapperFromJson(map);
 
   @override
@@ -95,4 +90,9 @@ class SKPriceLocaleWrapper {
 
   @override
   int get hashCode => hashValues(this.currencySymbol, this.currencyCode);
+
+  @override
+  String toString() {
+    return 'SKPriceLocaleWrapper{currencySymbol: $currencySymbol, currencyCode: $currencyCode}';
+  }
 }

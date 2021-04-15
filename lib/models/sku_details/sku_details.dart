@@ -11,23 +11,23 @@ enum SkuType {
   subs,
 }
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true)
 class SkuDetailsWrapper {
-  final String? description;
-  final String? freeTrialPeriod;
-  final String? introductoryPrice;
-  final int? introductoryPriceAmountMicros;
-  final int? introductoryPriceCycles;
-  final String? introductoryPricePeriod;
-  final String? price;
-  final int? priceAmountMicros;
-  final String? priceCurrencyCode;
-  final String? sku;
-  final String? subscriptionPeriod;
-  final String? title;
-  final SkuType? type;
-  final String? originalPrice;
-  final int? originalPriceAmountMicros;
+  final String description;
+  final String freeTrialPeriod;
+  final String introductoryPrice;
+  final int introductoryPriceAmountMicros;
+  final int introductoryPriceCycles;
+  final String introductoryPricePeriod;
+  final String price;
+  final int priceAmountMicros;
+  final String priceCurrencyCode;
+  final String sku;
+  final String subscriptionPeriod;
+  final String title;
+  final SkuType type;
+  final String originalPrice;
+  final int originalPriceAmountMicros;
 
   SkuDetailsWrapper({
     required this.description,
@@ -47,8 +47,8 @@ class SkuDetailsWrapper {
     required this.originalPriceAmountMicros,
   });
 
-  factory SkuDetailsWrapper.fromJson(Map map) =>
-      _$SkuDetailsWrapperFromJson(map as Map<String, dynamic>);
+  factory SkuDetailsWrapper.fromJson(Map<dynamic, dynamic> map) =>
+      _$SkuDetailsWrapperFromJson(map);
 
   @override
   bool operator ==(dynamic other) {

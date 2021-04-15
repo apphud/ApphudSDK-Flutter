@@ -9,11 +9,11 @@ class ApphudProduct {
   SKProductWrapper? skProductWrapper;
   SkuDetailsWrapper? skuDetailsWrapper;
 
-  ApphudProduct.fromJson(Map<String, dynamic> json) {
+  ApphudProduct.fromJson(Map<dynamic, dynamic> json) {
     if (Platform.isAndroid) {
-      skuDetailsWrapper = Mapper.skuDetailsFromJson(json);
+      skuDetailsWrapper = SkuDetailsWrapper.fromJson(json);
     } else if (Platform.isIOS) {
-      skProductWrapper = Mapper.skProductFromJson(json);
+      skProductWrapper = SKProductWrapper.fromJson(json);
     }
   }
 }

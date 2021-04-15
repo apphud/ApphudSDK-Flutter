@@ -7,10 +7,10 @@ part of 'subscription_period_wrapper.dart';
 // **************************************************************************
 
 SKProductSubscriptionPeriodWrapper _$SKProductSubscriptionPeriodWrapperFromJson(
-    Map<String, dynamic> json) {
+    Map json) {
   return SKProductSubscriptionPeriodWrapper(
-    numberOfUnits: json['numberOfUnits'] as int?,
-    time: _$enumDecodeNullable(_$SKSubscriptionPeriodTimeEnumMap, json['time']),
+    numberOfUnits: json['numberOfUnits'] as int,
+    unit: _$enumDecode(_$SKSubscriptionPeriodTimeEnumMap, json['unit']),
   );
 }
 
@@ -18,7 +18,7 @@ Map<String, dynamic> _$SKProductSubscriptionPeriodWrapperToJson(
         SKProductSubscriptionPeriodWrapper instance) =>
     <String, dynamic>{
       'numberOfUnits': instance.numberOfUnits,
-      'time': _$SKSubscriptionPeriodTimeEnumMap[instance.time],
+      'unit': _$SKSubscriptionPeriodTimeEnumMap[instance.unit],
     };
 
 K _$enumDecode<K, V>(
@@ -45,17 +45,6 @@ K _$enumDecode<K, V>(
       return MapEntry(unknownValue, enumValues.values.first);
     },
   ).key;
-}
-
-K? _$enumDecodeNullable<K, V>(
-  Map<K, V> enumValues,
-  dynamic source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$SKSubscriptionPeriodTimeEnumMap = {

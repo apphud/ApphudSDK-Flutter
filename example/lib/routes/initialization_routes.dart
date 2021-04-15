@@ -45,6 +45,7 @@ class InitializationRoutes extends BaseRoute {
           return true;
       }
     }
+    return false;
   }
 }
 

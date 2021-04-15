@@ -26,7 +26,8 @@ class SetAdvertisingIdentifierAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<void>(
-        future: AppHud.setAdvertisingIdentifier(parameterValue),
+       // future: AppHud.setAdvertisingIdentifier(parameterValue),
+        future: Future.error('error'),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {

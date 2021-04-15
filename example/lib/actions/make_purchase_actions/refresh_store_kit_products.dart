@@ -24,7 +24,8 @@ class RefreshStoreKitProductsAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<List<SKProductWrapper?>>(
-        future: AppHud.refreshStoreKitProducts(),
+        //future: AppHud.refreshStoreKitProducts(),
+        future: Future.error('error'),
         // a previously-obtained Future<String> or null
         builder: (BuildContext context,
             AsyncSnapshot<List<SKProductWrapper?>> snapshot) {
@@ -41,7 +42,7 @@ class RefreshStoreKitProductsAction extends ActionFlow {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(product!.productIdentifier!),
-                    Text(product.price!),
+                   // Text(product.price!),
                     Text(product.localizedTitle!),
                   ],
                 ))

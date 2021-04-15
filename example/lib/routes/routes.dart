@@ -5,9 +5,9 @@ final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 abstract class BaseRoute {
-  List<String> get allRoute {}
+  List<String> get allRoute;
 
-  bool isRouteEnabled(String route) {}
+  bool isRouteEnabled(String route);
 }
 
 class Routes extends BaseRoute {
