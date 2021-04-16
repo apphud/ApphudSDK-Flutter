@@ -101,7 +101,7 @@ class AppHud {
     return ApphudPurchase.fromJson(json);
   }
 
-  static Future<ApphudPurchaseResultIos?> purchaseWithoutValidation(
+  static Future<ApphudPurchaseResultIos> purchaseWithoutValidation(
       String productId) async {
     final dynamic? json = await _channel.invokeMethod(
       'purchaseWithoutValidation',
