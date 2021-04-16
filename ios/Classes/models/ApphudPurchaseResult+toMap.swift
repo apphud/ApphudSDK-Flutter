@@ -32,6 +32,30 @@ extension ApphudSubscription {
     }
 }
 
+extension ApphudSubscriptionStatus {
+    func toString() -> String {
+
+        switch self {
+        case .trial:
+            return "trial"
+        case .intro:
+            return "intro"
+        case .promo:
+            return "promo"
+        case .grace:
+            return "grace"
+        case .regular:
+            return "regular"
+        case .refunded:
+            return "refunded"
+        case .expired:
+            return "expired"
+        default:
+            return ""
+        }
+    }
+}
+
 extension ApphudNonRenewingPurchase {
     func toMap() -> [String: Any?] {
         return ["productId": productId as Any,
