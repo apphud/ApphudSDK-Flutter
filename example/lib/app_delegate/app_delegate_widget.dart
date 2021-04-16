@@ -27,6 +27,7 @@ import 'package:appHud_example/actions/make_purchase_actions/purchase_action.dar
 import 'package:appHud_example/actions/make_purchase_actions/purchase_promo.dart';
 import 'package:appHud_example/actions/make_purchase_actions/purchase_without_validation.dart';
 import 'package:appHud_example/actions/make_purchase_actions/refresh_store_kit_products.dart';
+import 'package:appHud_example/actions/make_purchase_actions/sync_purchases.dart';
 import 'package:appHud_example/main_screen.dart';
 import 'package:appHud_example/routes/attribution_routes.dart';
 import 'package:appHud_example/routes/handle_purchase_rooutes.dart';
@@ -406,6 +407,17 @@ class AppDelegateWidgetState extends State<AppDelegateWidget> {
             return PageRouteBuilder(
               pageBuilder: (_, __, ___) => () {
                 return ActionScreen(EnableDebugLogsAction());
+              }(),
+              settings: routeSettings,
+              transitionsBuilder: (_, anim, __, child) {
+                return FadeTransition(opacity: anim, child: child);
+              },
+            );
+
+          case MakePurchaseRoutes.syncPurchases:
+            return PageRouteBuilder(
+              pageBuilder: (_, __, ___) => () {
+                return ActionScreen(SyncPurchasesAction());
               }(),
               settings: routeSettings,
               transitionsBuilder: (_, anim, __, child) {

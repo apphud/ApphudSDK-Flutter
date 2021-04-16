@@ -25,6 +25,7 @@ class MakePurchaseRoutes extends BaseRoute {
       purchase,
       purchaseWithoutValidation,
       purchasePromo,
+      syncPurchases,
     ];
   }
 
