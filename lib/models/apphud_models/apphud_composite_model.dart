@@ -3,32 +3,30 @@ import 'apphud_non_renewing_purchase.dart';
 import 'apphud_subscription.dart';
 
 class ApphudComposite {
-  List<ApphudNonRenewingPurchase?>? purchases;
-  List<ApphudSubscriptionWrapper?>? subscriptions;
+  final List<ApphudNonRenewingPurchase> purchases;
+  final List<ApphudSubscriptionWrapper> subscriptions;
 
-  ApphudComposite({this.purchases, this.subscriptions});
+  ApphudComposite({required this.purchases, required this.subscriptions});
 
-  factory ApphudComposite.fromJson(Map map) {
-    List<dynamic>? purchasesJsons = map["nrPurchases"];
-    List<dynamic>? subscriptionsJsons = map["subscriptions"];
+  factory ApphudComposite.fromJson(Map<dynamic, dynamic> map) {
+    final List<Map<dynamic, dynamic>>? purchasesJson =
+        map["nrPurchases"]?.toMapList;
 
-    List<ApphudNonRenewingPurchase?> purchases;
-    if (purchasesJsons != null) {
-      purchases = purchasesJsons
-          .map((json) => Mapper.apphudNonRenewingPurchaseFromJson(json))
-          .toList();
-    } else {
-      purchases = List<ApphudNonRenewingPurchase>.of([]);
-    }
+    final List<Map<dynamic, dynamic>>? subscriptionsJson =
+        map["subscriptions"]?.toMapList;
 
-    List<ApphudSubscriptionWrapper?> subscriptions;
-    if (subscriptionsJsons != null) {
-      subscriptions = subscriptionsJsons
-          .map((json) => Mapper.apphudSubscriptionWrapperFromJson(json))
-          .toList();
-    } else {
-      subscriptions = List<ApphudSubscriptionWrapper>.of([]);
-    }
+    final List<ApphudNonRenewingPurchase> purchases = purchasesJson != null
+        ? purchasesJson
+            .map((p) => ApphudNonRenewingPurchase.fromJson(p))
+            .toList()
+        : List<ApphudNonRenewingPurchase>.of([]);
+
+    final List<ApphudSubscriptionWrapper> subscriptions =
+        subscriptionsJson != null
+            ? subscriptionsJson
+                .map((s) => ApphudSubscriptionWrapper.fromJson(s))
+                .toList()
+            : List<ApphudSubscriptionWrapper>.of([]);
 
     return ApphudComposite(purchases: purchases, subscriptions: subscriptions);
   }

@@ -163,19 +163,20 @@ class AppHud {
   static Future<bool> isNonRenewingPurchaseActive(
     String productIdentifier,
   ) async {
-    return (await _channel.invokeMethod(
+    return (await _channel.invokeMethod<bool>(
           'isNonRenewingPurchaseActive',
           {"productIdentifier": productIdentifier},
         )) ??
         false;
   }
 
-// static Future<ApphudComposite?> restorePurchases() async {
-//   var json = await _channel.invokeMethod(
-//     'restorePurchases',
-//   );
-//   return Mapper.apphudCompositeFromJson(json);
-// }
+  static Future<ApphudComposite?> restorePurchases() async {
+    final Map<dynamic, dynamic> json = (await _channel
+        .invokeMethod<Map<dynamic, dynamic>>('restorePurchases'))!;
+
+    return ApphudComposite.fromJson(json);
+  }
+
 //
 // // Android only
 // static Future<void> syncPurchases() async {
