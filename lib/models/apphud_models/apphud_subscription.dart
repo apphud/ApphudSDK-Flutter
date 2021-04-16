@@ -31,8 +31,16 @@ class ApphudSubscriptionWrapper {
 
   @override
   String toString() {
-    return 'ApphudSubscriptionWrapper{productId: $productId, expiresDate: $expiresDate, startedAt: $startedAt, isInRetryBilling: $isInRetryBilling, isAutorenewEnabled: $isAutorenewEnabled, isIntroductoryActivated: $isIntroductoryActivated, canceledAt: $canceledAt}';
+    return 'ApphudSubscriptionWrapper{productId: $productId, expiresAt: $expiresAt, isInRetryBilling: $isInRetryBilling, isAutorenewEnabled: $isAutorenewEnabled, isIntroductoryActivated: $isIntroductoryActivated, isActive: $isActive, status: $status, canceledAt: $canceledAt, startedAt: $startedAt}';
   }
 }
 
-enum ApphudSubscriptionStatus {trial, intro, promo, grace, regular, refunded, expired }
+enum ApphudSubscriptionStatus {
+  trial,
+  intro,
+  promo,
+  grace,
+  regular,
+  refunded,
+  expired,
+}
