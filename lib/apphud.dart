@@ -110,21 +110,21 @@ class AppHud {
     return ApphudPurchaseResultIos.fromJson(json!);
   }
 
-//
-// //@available(iOS 12.2, *)
-// static Future<ApphudPurchaseResultIos?> purchasePromo(
-//     String productId, String discountID) async {
-//   var json = await _channel.invokeMethod(
-//     'purchasePromo',
-//     {
-//       "productId": productId,
-//       "discountID": discountID,
-//     },
-//   );
-//   ApphudPurchaseResultIos? result =
-//       Mapper.ApphudPurchaseResultIosFromJson(json);
-//   return result;
-// }
+//@available(iOS 12.2, *)
+  static Future<ApphudPurchaseResultIos> purchasePromo({
+    required String productId,
+    required String discountID,
+  }) async {
+    final dynamic? json = await _channel.invokeMethod(
+      'purchasePromo',
+      {
+        "productId": productId,
+        "discountID": discountID,
+      },
+    );
+    return ApphudPurchaseResultIos.fromJson(json!);
+  }
+
 //
 // static Future<bool?> hasActiveSubscription() async {
 //   return _channel.invokeMethod('hasActiveSubscription');
