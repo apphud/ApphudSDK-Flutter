@@ -1,6 +1,7 @@
+import 'package:appHud_example/widgets/apphud_non_renewing_purchase_widget.dart';
+import 'package:appHud_example/widgets/apphud_subscription_widget.dart';
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
-import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -24,40 +25,38 @@ class RestorePurchasesAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<ApphudComposite?>(
-        //future: AppHud.restorePurchases(),
-        future: Future.error('error'),
-        builder:
-            (BuildContext context, AsyncSnapshot<ApphudComposite?> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Waiting...");
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Response: ",
-                      style: TextStyle(
-                        fontSize: 20,
-                      )),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("subscriptions length: ${snapshot.data!.subscriptions!.length}"),
-                      Text("purchases length: ${snapshot.data!.purchases!.length}"),
-                      Text(snapshot.error.toString()),
-                    ],
-                  )
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else {
-              return Text("Completed without data");
-            }
-          } else {
-            return Text("Something wrong");
-          }
-        });
+    return FutureBuilder<ApphudComposite>(
+      future: AppHud.restorePurchases(),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<ApphudComposite> snapshot,
+      ) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) return Text(snapshot.error.toString());
+
+          if ((snapshot.data?.purchases.isEmpty ?? true) &&
+              (snapshot.data?.subscriptions.isEmpty ?? true))
+            return Center(child: Text('No restored purchases'));
+
+          final List<Widget> purchaseWidgets = snapshot.data!.purchases
+              .map((p) => ApphudNonRenewingPurchaseWidget(purchase: p))
+              .toList();
+
+          final List<Widget> subscriptionWidgets = snapshot.data!.subscriptions
+              .map((s) => ApphudSubscriptionWidget(subscription: s))
+              .toList();
+
+          return Expanded(
+            child: ListView(
+              children: [
+                ...purchaseWidgets,
+                ...subscriptionWidgets,
+              ],
+            ),
+          );
+        }
+        return Text('Waiting...');
+      },
+    );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:appHud_example/widgets/non_renewing_purchase_widget.dart';
+import 'package:appHud_example/widgets/apphud_non_renewing_purchase_widget.dart';
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class NonRenewingPurchasesAction extends ActionFlow {
           return Expanded(
             child: ListView(
               children: purchases
-                  .map((p) => NonRenewingPurchaseWidget(purchase: p))
+                  .map((p) => ApphudNonRenewingPurchaseWidget(purchase: p))
                   .toList(),
             ),
           );

@@ -3,10 +3,10 @@ import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
 import 'package:flutter/material.dart';
 
-class NonRenewingPurchaseWidget extends StatelessWidget {
+class ApphudNonRenewingPurchaseWidget extends StatelessWidget {
   final ApphudNonRenewingPurchase purchase;
 
-  const NonRenewingPurchaseWidget({Key? key, required this.purchase})
+  const ApphudNonRenewingPurchaseWidget({Key? key, required this.purchase})
       : super(key: key);
 
   @override

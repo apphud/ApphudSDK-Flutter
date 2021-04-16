@@ -170,20 +170,18 @@ class AppHud {
         false;
   }
 
-  static Future<ApphudComposite?> restorePurchases() async {
+  static Future<ApphudComposite> restorePurchases() async {
     final Map<dynamic, dynamic> json = (await _channel
         .invokeMethod<Map<dynamic, dynamic>>('restorePurchases'))!;
 
     return ApphudComposite.fromJson(json);
   }
 
-//
-// // Android only
-// static Future<void> syncPurchases() async {
-//   await _channel.invokeMethod(
-//     'syncPurchases',
-//   );
-// }
+// Android only
+  static Future<void> syncPurchases() async {
+    await _channel.invokeMethod('syncPurchases');
+  }
+
 //
 // static Future<ApphudComposite?> migratePurchasesIfNeeded() async {
 //   List<dynamic>? json = await _channel.invokeMethod(
