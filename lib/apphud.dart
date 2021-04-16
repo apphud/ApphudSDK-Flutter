@@ -101,17 +101,15 @@ class AppHud {
     return ApphudPurchase.fromJson(json);
   }
 
-//
-// static Future<ApphudPurchaseResultIos?> purchaseWithoutValidation(
-//     String productId) async {
-//   var json = await _channel.invokeMethod(
-//     'purchaseWithoutValidation',
-//     {"productId": productId},
-//   );
-//   ApphudPurchaseResultIos? result =
-//       Mapper.ApphudPurchaseResultIosFromJson(json);
-//   return result;
-// }
+  static Future<ApphudPurchaseResultIos?> purchaseWithoutValidation(
+      String productId) async {
+    final dynamic? json = await _channel.invokeMethod(
+      'purchaseWithoutValidation',
+      {"productId": productId},
+    );
+    return ApphudPurchaseResultIos.fromJson(json!);
+  }
+
 //
 // //@available(iOS 12.2, *)
 // static Future<ApphudPurchaseResultIos?> purchasePromo(
