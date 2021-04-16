@@ -1,6 +1,6 @@
-import '../mapper.dart';
 import 'apphud_non_renewing_purchase.dart';
 import 'apphud_subscription.dart';
+import 'package:apphud/extensions.dart';
 
 class ApphudComposite {
   final List<ApphudNonRenewingPurchase> purchases;
@@ -10,10 +10,10 @@ class ApphudComposite {
 
   factory ApphudComposite.fromJson(Map<dynamic, dynamic> map) {
     final List<Map<dynamic, dynamic>>? purchasesJson =
-        map["nrPurchases"]?.toMapList;
+        (map["nrPurchases"] as List<dynamic>?)?.toMapList;
 
     final List<Map<dynamic, dynamic>>? subscriptionsJson =
-        map["subscriptions"]?.toMapList;
+        (map["subscriptions"] as List<dynamic>?)?.toMapList;
 
     final List<ApphudNonRenewingPurchase> purchases = purchasesJson != null
         ? purchasesJson
