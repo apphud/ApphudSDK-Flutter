@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../action_screen.dart';
 
 class IsNonRenewingPurchaseAction extends ActionFlow {
-
   String parameterName = "productIdentifier";
   String parameterValue = "productMonthly2";
   String parameterValue2 = "promo_2_months_15_rub";
@@ -26,27 +25,25 @@ class IsNonRenewingPurchaseAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<bool?>(
-       // future: AppHud.isNonRenewingPurchaseActive(parameterValue),
-        future: Future.error('error'),
-        builder:
-            (BuildContext context, AsyncSnapshot<bool?> snapshot) {
-          if (snapshot.hasData) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Response: ",
-                    style: TextStyle(
-                      fontSize: 20,
-                    )),
-                Text(snapshot.data.toString()),
-              ],
-            );
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error as String);
-          } else {
-            return Text("Waiting...");
-          }
-        });
+    return FutureBuilder<bool>(
+      future: AppHud.isNonRenewingPurchaseActive(parameterValue),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<bool> snapshot,
+      ) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) return Text(snapshot.error.toString());
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Response: ", style: TextStyle(fontSize: 20)),
+              Text(snapshot.data.toString()),
+            ],
+          );
+        }
+        return Text("Waiting...");
+      },
+    );
   }
 }
