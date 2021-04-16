@@ -147,17 +147,19 @@ class AppHud {
     return List<ApphudSubscriptionWrapper>.of([]);
   }
 
-// static Future<List<ApphudNonRenewingPurchase?>> nonRenewingPurchases() async {
-//   List<dynamic>? purchasesJson =
-//       await _channel.invokeMethod('nonRenewingPurchases');
-//   if (purchasesJson != null) {
-//     List<ApphudNonRenewingPurchase?> purchases = purchasesJson
-//         .map((json) => Mapper.apphudNonRenewingPurchaseFromJson(json))
-//         .toList();
-//     return purchases;
-//   }
-//   return List<ApphudNonRenewingPurchase?>.of([]);
-// }
+  static Future<List<ApphudNonRenewingPurchase>> nonRenewingPurchases() async {
+    final List<Map<dynamic, dynamic>>? purchases =
+        (await _channel.invokeMethod<List<dynamic>>('nonRenewingPurchases'))
+            ?.toMapList;
+
+    if (purchases != null) {
+      return purchases
+          .map((json) => ApphudNonRenewingPurchase.fromJson(json))
+          .toList();
+    }
+    return List<ApphudNonRenewingPurchase>.of([]);
+  }
+
 //
 // static Future<bool?> isNonRenewingPurchaseActive(String productIdentifier) {
 //   return _channel.invokeMethod(
