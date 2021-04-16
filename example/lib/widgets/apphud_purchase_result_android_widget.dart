@@ -37,10 +37,18 @@ class ApphudPurchaseResultAndroidWidget extends StatelessWidget {
   Widget _buildResultAndroid(ApphudPurchaseResultAndroid resultAndroid) {
     return Column(
       children: [
-        ListTile(
-          title: Text("sku"),
-          subtitle: Text(resultAndroid.sku),
-          tileColor: Colors.green,
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.green,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+          child: ListTile(
+            title: Text("sku"),
+            subtitle: Text(resultAndroid.sku),
+          ),
         ),
         ListTile(
           title: Text("packageName"),

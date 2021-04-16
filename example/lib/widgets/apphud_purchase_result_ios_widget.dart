@@ -26,10 +26,18 @@ class ApphudPurchaseResultIosWidget extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          ListTile(
-            title: Text("Subscription"),
-            subtitle: Text(resultIos.subscription?.toString() ?? "null"),
-            tileColor: Colors.green,
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.green,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+            child: ListTile(
+              title: Text("Subscription"),
+              subtitle: Text(resultIos.subscription?.toString() ?? "null"),
+            ),
           ),
           ListTile(
             title: Text("Transaction"),
