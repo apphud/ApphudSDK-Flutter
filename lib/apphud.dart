@@ -125,10 +125,10 @@ class AppHud {
     return ApphudPurchaseResultIos.fromJson(json!);
   }
 
-//
-// static Future<bool?> hasActiveSubscription() async {
-//   return _channel.invokeMethod('hasActiveSubscription');
-// }
+  static Future<bool> hasActiveSubscription() async {
+    return (await _channel.invokeMethod('hasActiveSubscription')) ?? false;
+  }
+
 //
 // static Future<ApphudSubscriptionWrapper?> subscription() async {
 //   var subscriptionJson = await _channel.invokeMethod('subscription');
