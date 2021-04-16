@@ -5,20 +5,24 @@ part 'apphud_subscription.g.dart';
 @JsonSerializable(anyMap: true)
 class ApphudSubscriptionWrapper {
   final String productId;
-  final double expiresDate;
-  final double startedAt;
+  final double expiresAt;
   final bool isInRetryBilling;
   final bool isAutorenewEnabled;
   final bool isIntroductoryActivated;
+  final bool isActive;
+  final ApphudSubscriptionStatus status;
   final double? canceledAt;
+  final double? startedAt;
 
   ApphudSubscriptionWrapper({
     required this.productId,
-    required this.expiresDate,
-    required this.startedAt,
+    required this.expiresAt,
     required this.isInRetryBilling,
     required this.isAutorenewEnabled,
     required this.isIntroductoryActivated,
+    required this.isActive,
+    required this.status,
+    this.startedAt,
     this.canceledAt,
   });
 
@@ -30,3 +34,5 @@ class ApphudSubscriptionWrapper {
     return 'ApphudSubscriptionWrapper{productId: $productId, expiresDate: $expiresDate, startedAt: $startedAt, isInRetryBilling: $isInRetryBilling, isAutorenewEnabled: $isAutorenewEnabled, isIntroductoryActivated: $isIntroductoryActivated, canceledAt: $canceledAt}';
   }
 }
+
+enum ApphudSubscriptionStatus {trial, intro, promo, grace, regular, refunded, expired }

@@ -21,12 +21,14 @@ extension ApphudPurchaseResult {
 extension ApphudSubscription {
     func toMap() -> [String: Any?] {
         return ["productId": productId,
-                "expiresDate": expiresDate.timeIntervalSince1970,
+                "expiresAt": expiresDate.timeIntervalSince1970,
                 "startedAt": startedAt.timeIntervalSince1970,
                 "canceledAt": canceledAt?.timeIntervalSince1970,
                 "isInRetryBilling": isInRetryBilling,
                 "isAutorenewEnabled": isInRetryBilling,
-                "isIntroductoryActivated": isInRetryBilling]
+                "isIntroductoryActivated": isInRetryBilling,
+                "isActive" : isActive(),
+                "status" : status ]
     }
 }
 

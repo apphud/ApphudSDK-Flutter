@@ -40,12 +40,20 @@ class ApphudSubscriptionWidget extends StatelessWidget {
           ),
         ),
         ListTile(
+          title: Text("status"),
+          subtitle: Text(subscriptionLocal.status.toString()),
+        ),
+        ListTile(
+          title: Text("isActive"),
+          subtitle: Text(subscriptionLocal.isActive.toString()),
+        ),
+        ListTile(
           title: Text("expiresDate"),
-          subtitle: Text(subscriptionLocal.expiresDate.toString()),
+          subtitle: Text(subscriptionLocal.expiresAt.toString()),
         ),
         ListTile(
           title: Text("startedAt"),
-          subtitle: Text(subscriptionLocal.startedAt.toString()),
+          subtitle: Text(subscriptionLocal.startedAt?.toString() ?? 'null'),
         ),
         ListTile(
           title: Text("canceledAt"),

@@ -46,7 +46,7 @@ class SubscriptionsAction extends ActionFlow {
                                 ListTile(
                                   title: Text("expiresDate"),
                                   subtitle:
-                                      Text(subscription.expiresDate.toString()),
+                                      Text(subscription.expiresAt.toString()),
                                 ),
                                 ListTile(
                                   title: Text("startedAt"),
