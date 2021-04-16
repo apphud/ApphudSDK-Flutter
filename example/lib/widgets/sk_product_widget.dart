@@ -1,3 +1,4 @@
+import 'package:appHud_example/widgets/card_wrapper.dart';
 import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
 import 'package:flutter/material.dart';
 
@@ -17,14 +18,7 @@ class SKProductWidget extends StatelessWidget {
           )
         : _buildProduct(skProduct!);
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: content,
-      ),
-    );
+    return CardWrapper(child: content);
   }
 
   Widget _buildProduct(SKProductWrapper skProductLocal) {

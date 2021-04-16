@@ -2,6 +2,8 @@ import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
 import 'package:apphud/models/sku_details/sku_details.dart';
 import 'package:flutter/material.dart';
 
+import 'card_wrapper.dart';
+
 class SKUDetailsWidget extends StatelessWidget {
   final SkuDetailsWrapper? skuDetails;
 
@@ -18,14 +20,7 @@ class SKUDetailsWidget extends StatelessWidget {
           )
         : _buildProduct(skuDetails!);
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: content,
-      ),
-    );
+    return CardWrapper(child: content);
   }
 
   Widget _buildProduct(SkuDetailsWrapper skuDetailsLocal) {

@@ -129,13 +129,12 @@ class AppHud {
     return (await _channel.invokeMethod('hasActiveSubscription')) ?? false;
   }
 
-//
-// static Future<ApphudSubscriptionWrapper?> subscription() async {
-//   var subscriptionJson = await _channel.invokeMethod('subscription');
-//   ApphudSubscriptionWrapper? subscription =
-//       Mapper.apphudSubscriptionWrapperFromJson(subscriptionJson);
-//   return subscription;
-// }
+  static Future<ApphudSubscriptionWrapper?> subscription() async {
+    final Map<dynamic, dynamic>? json =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('subscription');
+    return json != null ? ApphudSubscriptionWrapper.fromJson(json) : null;
+  }
+
 //
 // static Future<List<ApphudSubscriptionWrapper?>> subscriptions() async {
 //   List<dynamic>? subscriptionsJson =
