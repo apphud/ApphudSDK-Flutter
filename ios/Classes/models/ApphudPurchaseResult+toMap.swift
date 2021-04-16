@@ -28,7 +28,7 @@ extension ApphudSubscription {
                 "isAutorenewEnabled": isInRetryBilling,
                 "isIntroductoryActivated": isInRetryBilling,
                 "isActive" : isActive(),
-                "status" : status ]
+                "status" : status.rawValue]
     }
 }
 
