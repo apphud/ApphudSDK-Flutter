@@ -25,8 +25,10 @@ class SubscriptionAction extends ActionFlow {
   Widget actionResponse() {
     return FutureBuilder<ApphudSubscriptionWrapper?>(
       future: AppHud.subscription(),
-      builder: (BuildContext context,
-          AsyncSnapshot<ApphudSubscriptionWrapper?> snapshot) {
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<ApphudSubscriptionWrapper?> snapshot,
+      ) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) return Text(snapshot.error.toString());
 

@@ -135,22 +135,18 @@ class AppHud {
     return json != null ? ApphudSubscriptionWrapper.fromJson(json) : null;
   }
 
-//
-// static Future<List<ApphudSubscriptionWrapper?>> subscriptions() async {
-//   List<dynamic>? subscriptionsJson =
-//       await _channel.invokeMethod('subscriptions');
-//
-//   if (subscriptionsJson != null) {
-//     List<ApphudSubscriptionWrapper?> subscriptions = subscriptionsJson
-//         .map((json) => Mapper.apphudSubscriptionWrapperFromJson(json))
-//         .toList();
-//
-//     return subscriptions;
-//   }
-//
-//   return List<ApphudSubscriptionWrapper?>.of([]);
-// }
-//
+  static Future<List<ApphudSubscriptionWrapper>> subscriptions() async {
+    final List<Map<dynamic, dynamic>>? subscriptions =
+        (await _channel.invokeMethod<List<dynamic>>('subscriptions'))
+            ?.toMapList;
+    if (subscriptions != null) {
+      return subscriptions
+          .map((json) => ApphudSubscriptionWrapper.fromJson(json))
+          .toList();
+    }
+    return List<ApphudSubscriptionWrapper>.of([]);
+  }
+
 // static Future<List<ApphudNonRenewingPurchase?>> nonRenewingPurchases() async {
 //   List<dynamic>? purchasesJson =
 //       await _channel.invokeMethod('nonRenewingPurchases');
