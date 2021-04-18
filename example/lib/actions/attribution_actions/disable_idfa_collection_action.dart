@@ -23,14 +23,17 @@ class DisableIDFACollectionAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<void>(
-     //   future: AppHud.disableIDFACollection(),
-        future: Future.error('error'),
-        // a previously-obtained Future<String> or null
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Text("Completed");
-          }
+      future: AppHud.disableIDFACollection(),
+      builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            !snapshot.hasError) {
+          return Text("done");
+        } else if (snapshot.hasError) {
+          return Text(snapshot.error as String);
+        } else {
           return Text("Waiting...");
-        });
+        }
+      },
+    );
   }
 }

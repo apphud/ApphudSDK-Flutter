@@ -196,19 +196,17 @@ class AppHud {
     return json != null ? Map<String, dynamic>.from(json) : null;
   }
 
-//
-// static Future<void> disableIDFACollection() async {
-//   await _channel.invokeMethod(
-//     'disableIDFACollection',
-//   );
-// }
-//
-// static Future<void> setAdvertisingIdentifier(String idfa) async {
-//   await _channel.invokeMethod(
-//     'setAdvertisingIdentifier',
-//     {"idfa": idfa},
-//   );
-// }
+  static Future<void> disableIDFACollection() async {
+    await _channel.invokeMethod('disableIDFACollection');
+  }
+
+  static Future<void> setAdvertisingIdentifier(String idfa) async {
+    await _channel.invokeMethod(
+      'setAdvertisingIdentifier',
+      {"idfa": idfa},
+    );
+  }
+
 //
 // static Future<bool?> addAttribution(
 //     {required Map<String, dynamic> data,
