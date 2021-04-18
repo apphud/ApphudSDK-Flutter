@@ -189,13 +189,13 @@ class AppHud {
     return ApphudComposite.fromJson(json);
   }
 
-// static Future<dynamic> fetchRawReceiptInfo() async {
-//   var json = await _channel.invokeMethod(
-//     'fetchRawReceiptInfo',
-//   );
-//
-//   return json;
-// }
+  static Future<Map<String, dynamic>?> fetchRawReceiptInfo() async {
+    final Map<dynamic, dynamic>? json = await _channel.invokeMethod(
+      'fetchRawReceiptInfo',
+    );
+    return json != null ? Map<String, dynamic>.from(json) : null;
+  }
+
 //
 // static Future<void> disableIDFACollection() async {
 //   await _channel.invokeMethod(
