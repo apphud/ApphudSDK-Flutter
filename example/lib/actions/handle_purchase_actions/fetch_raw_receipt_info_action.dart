@@ -39,7 +39,7 @@ class FetchRawReceiptInfoAction extends ActionFlow {
                   (String key) => CardWrapper(
                     child: ListTile(
                       title: Text(key),
-                      trailing: Text(map[key]?.toString() ?? 'null'),
+                      subtitle: Text(map[key].toString()),
                     ),
                   ),
                 )
