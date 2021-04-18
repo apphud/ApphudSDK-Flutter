@@ -182,14 +182,13 @@ class AppHud {
     await _channel.invokeMethod('syncPurchases');
   }
 
-//
-// static Future<ApphudComposite?> migratePurchasesIfNeeded() async {
-//   List<dynamic>? json = await _channel.invokeMethod(
-//     'migratePurchasesIfNeeded',
-//   );
-//   return Mapper.apphudCompositeFromJson(json);
-// }
-//
+  static Future<ApphudComposite> migratePurchasesIfNeeded() async {
+    final Map<dynamic, dynamic> json = (await _channel
+        .invokeMethod<Map<dynamic, dynamic>>('migratePurchasesIfNeeded'))!;
+
+    return ApphudComposite.fromJson(json);
+  }
+
 // static Future<dynamic> fetchRawReceiptInfo() async {
 //   var json = await _channel.invokeMethod(
 //     'fetchRawReceiptInfo',

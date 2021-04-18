@@ -1,7 +1,5 @@
+import 'package:appHud_example/widgets/apphud_composite_widget.dart';
 import 'package:apphud/apphud.dart';
-import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
-import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -23,41 +21,7 @@ class MigratePurchasesIfNeededAction extends ActionFlow {
         style: TextStyle(fontSize: 20, color: Colors.green));
   }
 
-  Widget actionResponse() {
-    return FutureBuilder<ApphudComposite?>(
-       // future: AppHud.migratePurchasesIfNeeded(),
-        future: Future.error('error'),
-        builder:
-            (BuildContext context, AsyncSnapshot<ApphudComposite?> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Waiting...");
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Response: ",
-                      style: TextStyle(
-                        fontSize: 20,
-                      )),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("subscriptions length: ${snapshot.data!.subscriptions!.length}"),
-                      Text("purchases length: ${snapshot.data!.purchases!.length}"),
-                      Text(snapshot.error.toString()),
-                    ],
-                  )
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else {
-              return Text("Completed without data");
-            }
-          } else {
-            return Text("Something wrong");
-          }
-        });
-  }
+  Widget actionResponse() => ApphudCompositeWidget(
+        future: AppHud.migratePurchasesIfNeeded(),
+      );
 }
