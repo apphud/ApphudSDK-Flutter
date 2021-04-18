@@ -207,19 +207,18 @@ class AppHud {
     );
   }
 
-//
-// static Future<bool?> addAttribution(
-//     {required Map<String, dynamic> data,
-//     required ApphudAttributionProvider provider,
-//     String? identifer}) async {
-//   bool? isAdded = await _channel.invokeMethod("addAttribution", {
-//     "data": data,
-//     "from":
-//         ApphudAttributionProviderToStringConventer.convertToString(provider),
-//     "identifer": identifer
-//   });
-//   return isAdded;
-// }
+  static Future<bool> addAttribution({
+    required Map<String, dynamic> data,
+    required ApphudAttributionProvider provider,
+    String? identifer,
+  }) async {
+    final bool isAdded = await _channel.invokeMethod("addAttribution", {
+      "data": data,
+      "from": provider.convertToString,
+      "identifer": identifer
+    });
+    return isAdded;
+  }
 
   static Future<void> enableDebugLogs() =>
       _channel.invokeMethod("enableDebugLogs");
