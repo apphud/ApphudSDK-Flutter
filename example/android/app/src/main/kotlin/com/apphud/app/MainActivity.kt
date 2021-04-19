@@ -1,4 +1,4 @@
-package com.example.appHud_example
+package com.apphud.app
 
 import io.flutter.embedding.android.FlutterActivity
 
