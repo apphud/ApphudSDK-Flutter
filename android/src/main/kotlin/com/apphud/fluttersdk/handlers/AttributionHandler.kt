@@ -1,4 +1,4 @@
-package com.apphud.app.handlers
+package com.apphud.fluttersdk.handlers
 
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudAttributionProvider

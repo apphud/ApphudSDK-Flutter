@@ -1,9 +1,9 @@
-package com.apphud.app
+package com.apphud.fluttersdk
 
 import android.app.Activity
 import android.content.Context
 import androidx.annotation.NonNull
-import com.apphud.app.handlers.*
+import com.apphud.fluttersdk.handlers.*
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall

@@ -1,4 +1,4 @@
-package com.apphud.app.handlers
+package com.apphud.fluttersdk.handlers
 
 import io.flutter.plugin.common.MethodChannel
 

@@ -1,4 +1,4 @@
-package com.apphud.app.handlers
+package com.apphud.fluttersdk.handlers
 
 import android.app.Activity
 import com.apphud.sdk.Apphud
