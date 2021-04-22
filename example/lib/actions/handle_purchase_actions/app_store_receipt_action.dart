@@ -26,8 +26,15 @@ class AppStoreReceiptAction extends ActionFlow {
       builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) return Text(snapshot.error.toString());
-          return SingleChildScrollView(
-            child: CardWrapper(child: Text(snapshot.data ?? 'null')),
+          return Expanded(
+            child: SingleChildScrollView(
+              child: CardWrapper(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(snapshot.data ?? 'null'),
+                ),
+              ),
+            ),
           );
         }
         return Text("Waiting...");
