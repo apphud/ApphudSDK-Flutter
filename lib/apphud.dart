@@ -237,4 +237,10 @@ class AppHud {
   static Future<String?> appStoreReceipt() async {
     return (await _channel.invokeMethod('appStoreReceipt'))!;
   }
+
+  static Future<bool> isSandbox() async {
+    final bool? value = await _channel.invokeMethod<bool>('isSandbox');
+    assert(value != null, 'Error getting isSandbox, value = null');
+    return value!;
+  }
 }

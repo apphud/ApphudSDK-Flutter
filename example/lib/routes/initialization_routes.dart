@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:appHud_example/routes/routes.dart';
 
 class InitializationRoutes extends BaseRoute {
-  static const start = "/start";
-  static const startManually = "/startManually";
-  static const updateUserID = "/updateUserID";
-  static const userID = "/userID";
-  static const deviceID = "/deviceID";
-  static const logout = "/logout";
-  static const setDelegate = "/setDelegate";
-  static const setUIDelegate = "/setUIDelegate";
+  static const start = "start";
+  static const startManually = "startManually";
+  static const updateUserID = "updateUserID";
+  static const userID = "userID";
+  static const deviceID = "deviceID";
+  static const logout = "logout";
+  static const setDelegate = "setDelegate";
+  static const setUIDelegate = "setUIDelegate";
 
   InitializationRoutes();
 

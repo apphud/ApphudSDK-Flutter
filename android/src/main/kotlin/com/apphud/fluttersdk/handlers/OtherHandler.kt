@@ -10,6 +10,7 @@ class OtherHandler(override val routes: List<String>, val context: Context) : Ha
     override fun tryToHandle(method: String, args: Map<String, Any>?, result: MethodChannel.Result) {
         when (method) {
             OtherRoutes.enableDebugLogs.name -> enableDebugLogs(result)
+            OtherRoutes.isSandbox.name -> result.notImplemented()
         }
     }
 
@@ -21,7 +22,8 @@ class OtherHandler(override val routes: List<String>, val context: Context) : Ha
 }
 
 enum class OtherRoutes {
-    enableDebugLogs;
+    enableDebugLogs,
+    isSandbox;
 
     companion object Mapper {
         fun stringValues(): List<String> {
