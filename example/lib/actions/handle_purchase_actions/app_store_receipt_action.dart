@@ -1,3 +1,4 @@
+import 'package:appHud_example/widgets/card_wrapper.dart';
 import 'package:apphud/apphud.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,9 @@ class AppStoreReceiptAction extends ActionFlow {
       builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) return Text(snapshot.error.toString());
-          return Text(snapshot.data ?? 'null');
+          return SingleChildScrollView(
+            child: CardWrapper(child: Text(snapshot.data ?? 'null')),
+          );
         }
         return Text("Waiting...");
       },
