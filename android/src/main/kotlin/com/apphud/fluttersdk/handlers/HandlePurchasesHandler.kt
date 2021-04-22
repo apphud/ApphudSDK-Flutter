@@ -23,6 +23,7 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             HandlePurchasesRoutes.restorePurchases.name -> result.notImplemented()
             HandlePurchasesRoutes.migratePurchasesIfNeeded.name -> result.notImplemented()
             HandlePurchasesRoutes.fetchRawReceiptInfo.name -> result.notImplemented()
+            HandlePurchasesRoutes.validateReceipt.name -> result.notImplemented()
         }
     }
 
@@ -118,7 +119,8 @@ enum class HandlePurchasesRoutes {
     isNonRenewingPurchaseActive,
     restorePurchases,
     migratePurchasesIfNeeded,
-    fetchRawReceiptInfo;
+    fetchRawReceiptInfo,
+    validateReceipt;
 
     companion object Mapper {
         fun stringValues(): List<String> {

@@ -226,4 +226,11 @@ class AppHud {
   static Future<void> presentOfferCodeRedemptionSheet() async {
     await _channel.invokeMethod('presentOfferCodeRedemptionSheet');
   }
+
+  static Future<ApphudComposite> validateReceipt() async {
+    final Map<dynamic, dynamic> json = (await _channel
+        .invokeMethod<Map<dynamic, dynamic>>('validateReceipt'))!;
+
+    return ApphudComposite.fromJson(json);
+  }
 }

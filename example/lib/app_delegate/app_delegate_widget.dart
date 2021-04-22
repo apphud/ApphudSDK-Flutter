@@ -12,6 +12,7 @@ import 'package:appHud_example/actions/handle_purchase_actions/non_renewing_purc
 import 'package:appHud_example/actions/handle_purchase_actions/restore_purchases_action.dart';
 import 'package:appHud_example/actions/handle_purchase_actions/subscription_action.dart';
 import 'package:appHud_example/actions/handle_purchase_actions/subscriptions_action.dart';
+import 'package:appHud_example/actions/handle_purchase_actions/validate_receipt_action.dart';
 import 'package:appHud_example/actions/initialization_actions/device_id_action.dart';
 import 'package:appHud_example/actions/initialization_actions/enable_debug_logs.dart';
 import 'package:appHud_example/actions/initialization_actions/logout_action.dart';
@@ -429,6 +430,16 @@ class AppDelegateWidgetState extends State<AppDelegateWidget> {
             return PageRouteBuilder(
               pageBuilder: (_, __, ___) => () {
                 return ActionScreen(PresentOfferCodeRedemptionSheetAction());
+              }(),
+              settings: routeSettings,
+              transitionsBuilder: (_, anim, __, child) {
+                return FadeTransition(opacity: anim, child: child);
+              },
+            );
+          case HandlePurchaseRoutes.validateReceipt:
+            return PageRouteBuilder(
+              pageBuilder: (_, __, ___) => () {
+                return ActionScreen(ValidateReceiptAction());
               }(),
               settings: routeSettings,
               transitionsBuilder: (_, anim, __, child) {
