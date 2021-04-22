@@ -12,6 +12,8 @@ class MakePurchaseRoutes extends BaseRoute {
   static const purchaseWithoutValidation = "purchaseWithoutValidation";
   static const purchasePromo = "purchasePromo";
   static const syncPurchases = "syncPurchases";
+  static const presentOfferCodeRedemptionSheet =
+      "presentOfferCodeRedemptionSheet";
 
   MakePurchaseRoutes();
 
@@ -26,6 +28,7 @@ class MakePurchaseRoutes extends BaseRoute {
       purchaseWithoutValidation,
       purchasePromo,
       syncPurchases,
+      presentOfferCodeRedemptionSheet,
     ];
   }
 

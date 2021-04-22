@@ -22,6 +22,7 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             MakePurchaseRoutes.purchaseWithoutValidation.name -> result.notImplemented()
             MakePurchaseRoutes.purchasePromo.name -> result.notImplemented()
             MakePurchaseRoutes.syncPurchases.name -> syncPurchases(result)
+            MakePurchaseRoutes.presentOfferCodeRedemptionSheet.name -> result.notImplemented()
         }
     }
 
@@ -180,7 +181,8 @@ enum class MakePurchaseRoutes {
     purchase,
     purchaseWithoutValidation,
     purchasePromo,
-    syncPurchases;
+    syncPurchases,
+    presentOfferCodeRedemptionSheet;
 
     companion object Mapper {
         fun stringValues(): List<String> {

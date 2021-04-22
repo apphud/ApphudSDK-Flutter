@@ -20,6 +20,7 @@ import 'package:appHud_example/actions/initialization_actions/start_manually_act
 import 'package:appHud_example/actions/initialization_actions/update_user_id_action.dart';
 import 'package:appHud_example/actions/initialization_actions/user_id_action.dart';
 import 'package:appHud_example/actions/make_purchase_actions/did_fetch_products_notification.dart';
+import 'package:appHud_example/actions/make_purchase_actions/present_offer_code_redemption_sheet.dart';
 import 'package:appHud_example/actions/make_purchase_actions/product_action.dart';
 import 'package:appHud_example/actions/make_purchase_actions/products_action.dart';
 import 'package:appHud_example/actions/make_purchase_actions/products_did_fetch_callback.dart';
@@ -418,6 +419,16 @@ class AppDelegateWidgetState extends State<AppDelegateWidget> {
             return PageRouteBuilder(
               pageBuilder: (_, __, ___) => () {
                 return ActionScreen(SyncPurchasesAction());
+              }(),
+              settings: routeSettings,
+              transitionsBuilder: (_, anim, __, child) {
+                return FadeTransition(opacity: anim, child: child);
+              },
+            );
+          case MakePurchaseRoutes.presentOfferCodeRedemptionSheet:
+            return PageRouteBuilder(
+              pageBuilder: (_, __, ___) => () {
+                return ActionScreen(PresentOfferCodeRedemptionSheetAction());
               }(),
               settings: routeSettings,
               transitionsBuilder: (_, anim, __, child) {

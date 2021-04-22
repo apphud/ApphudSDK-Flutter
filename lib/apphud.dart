@@ -222,4 +222,8 @@ class AppHud {
 
   static Future<void> enableDebugLogs() =>
       _channel.invokeMethod("enableDebugLogs");
+
+  static Future<void> presentOfferCodeRedemptionSheet() async {
+    await _channel.invokeMethod('presentOfferCodeRedemptionSheet');
+  }
 }
