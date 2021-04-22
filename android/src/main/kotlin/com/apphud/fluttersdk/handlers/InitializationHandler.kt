@@ -21,7 +21,6 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
             InitializationRoutes.userID.name -> userID(result)
             InitializationRoutes.deviceID.name -> result.notImplemented()
             InitializationRoutes.logout.name -> logout(result)
-            InitializationRoutes.enableDebugLogs.name -> enableDebugLogs(result)
         }
     }
 
@@ -114,8 +113,7 @@ enum class InitializationRoutes {
     deviceID,
     logout,
     setDelegate,
-    setUIDelegate,
-    enableDebugLogs;
+    setUIDelegate;
 
     companion object Mapper {
         fun stringValues(): List<String> {

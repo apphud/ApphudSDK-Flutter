@@ -15,7 +15,7 @@ import 'package:appHud_example/actions/handle_purchase_actions/subscription_acti
 import 'package:appHud_example/actions/handle_purchase_actions/subscriptions_action.dart';
 import 'package:appHud_example/actions/handle_purchase_actions/validate_receipt_action.dart';
 import 'package:appHud_example/actions/initialization_actions/device_id_action.dart';
-import 'package:appHud_example/actions/initialization_actions/enable_debug_logs.dart';
+import 'package:appHud_example/actions/other_actions/enable_debug_logs.dart';
 import 'package:appHud_example/actions/initialization_actions/logout_action.dart';
 import 'package:appHud_example/actions/initialization_actions/start_action.dart';
 import 'package:appHud_example/actions/initialization_actions/start_manually_action.dart';
@@ -36,6 +36,7 @@ import 'package:appHud_example/routes/attribution_routes.dart';
 import 'package:appHud_example/routes/handle_purchase_routes.dart';
 import 'package:appHud_example/routes/initialization_routes.dart';
 import 'package:appHud_example/routes/make_purchase_routes.dart';
+import 'package:appHud_example/routes/other_routes.dart';
 import 'package:appHud_example/routes/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -146,16 +147,18 @@ class AppDelegateWidgetState extends State<AppDelegateWidget> {
                 },
               );
             }
-          case Routes.others:
+
+          case Routes.other:
             {
               return PageRouteBuilder(
-                pageBuilder: (_, __, ___) => _makeScreen(),
+                pageBuilder: (_, __, ___) => _makeMainScreen(OtherRoutes()),
                 settings: routeSettings,
                 transitionsBuilder: (_, anim, __, child) {
                   return FadeTransition(opacity: anim, child: child);
                 },
               );
             }
+
           case InitializationRoutes.start:
             return PageRouteBuilder(
               pageBuilder: (_, __, ___) => () {
@@ -406,7 +409,7 @@ class AppDelegateWidgetState extends State<AppDelegateWidget> {
                 return FadeTransition(opacity: anim, child: child);
               },
             );
-          case InitializationRoutes.enableDebugLogs:
+          case OtherRoutes.enableDebugLogs:
             return PageRouteBuilder(
               pageBuilder: (_, __, ___) => () {
                 return ActionScreen(EnableDebugLogsAction());
