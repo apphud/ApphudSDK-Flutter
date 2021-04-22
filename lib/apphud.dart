@@ -233,4 +233,8 @@ class AppHud {
 
     return ApphudComposite.fromJson(json);
   }
+
+  static Future<String?> appStoreReceipt() async {
+    return (await _channel.invokeMethod('appStoreReceipt'))!;
+  }
 }

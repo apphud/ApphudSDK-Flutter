@@ -99,6 +99,7 @@ enum AppHudMethod {
         case migratePurchasesIfNeeded
         case fetchRawReceiptInfo
         case validateReceipt
+        case appStoreReceipt
     }
 
     enum UserProperties: String, CaseIterable {

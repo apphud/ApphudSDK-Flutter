@@ -4,6 +4,7 @@ import 'package:appHud_example/actions/action_screen.dart';
 import 'package:appHud_example/actions/attribution_actions/add_attribution_action.dart';
 import 'package:appHud_example/actions/attribution_actions/disable_idfa_collection_action.dart';
 import 'package:appHud_example/actions/attribution_actions/set_advertising_identifier_action.dart';
+import 'package:appHud_example/actions/handle_purchase_actions/app_store_receipt_action.dart';
 import 'package:appHud_example/actions/handle_purchase_actions/fetch_raw_receipt_info_action.dart';
 import 'package:appHud_example/actions/handle_purchase_actions/has_active_subscription_action.dart';
 import 'package:appHud_example/actions/handle_purchase_actions/is_non_renewing_purchase_active_action.dart';
@@ -32,7 +33,7 @@ import 'package:appHud_example/actions/make_purchase_actions/refresh_store_kit_p
 import 'package:appHud_example/actions/make_purchase_actions/sync_purchases.dart';
 import 'package:appHud_example/main_screen.dart';
 import 'package:appHud_example/routes/attribution_routes.dart';
-import 'package:appHud_example/routes/handle_purchase_rooutes.dart';
+import 'package:appHud_example/routes/handle_purchase_routes.dart';
 import 'package:appHud_example/routes/initialization_routes.dart';
 import 'package:appHud_example/routes/make_purchase_routes.dart';
 import 'package:appHud_example/routes/routes.dart';
@@ -440,6 +441,16 @@ class AppDelegateWidgetState extends State<AppDelegateWidget> {
             return PageRouteBuilder(
               pageBuilder: (_, __, ___) => () {
                 return ActionScreen(ValidateReceiptAction());
+              }(),
+              settings: routeSettings,
+              transitionsBuilder: (_, anim, __, child) {
+                return FadeTransition(opacity: anim, child: child);
+              },
+            );
+          case HandlePurchaseRoutes.appStoreReceipt:
+            return PageRouteBuilder(
+              pageBuilder: (_, __, ___) => () {
+                return ActionScreen(AppStoreReceiptAction());
               }(),
               settings: routeSettings,
               transitionsBuilder: (_, anim, __, child) {

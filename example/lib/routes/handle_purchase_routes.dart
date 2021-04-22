@@ -12,6 +12,7 @@ class HandlePurchaseRoutes extends BaseRoute {
   static const migratePurchasesIfNeeded = "migratePurchasesIfNeeded";
   static const fetchRawReceiptInfo = "fetchRawReceiptInfo";
   static const validateReceipt = "validateReceipt";
+  static const appStoreReceipt = "appStoreReceipt";
 
   HandlePurchaseRoutes();
 
@@ -26,6 +27,7 @@ class HandlePurchaseRoutes extends BaseRoute {
       migratePurchasesIfNeeded,
       fetchRawReceiptInfo,
       validateReceipt,
+      appStoreReceipt,
     ];
   }
 

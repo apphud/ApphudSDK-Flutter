@@ -24,6 +24,7 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             HandlePurchasesRoutes.migratePurchasesIfNeeded.name -> result.notImplemented()
             HandlePurchasesRoutes.fetchRawReceiptInfo.name -> result.notImplemented()
             HandlePurchasesRoutes.validateReceipt.name -> result.notImplemented()
+            HandlePurchasesRoutes.appStoreReceipt.name -> result.notImplemented()
         }
     }
 
@@ -120,7 +121,8 @@ enum class HandlePurchasesRoutes {
     restorePurchases,
     migratePurchasesIfNeeded,
     fetchRawReceiptInfo,
-    validateReceipt;
+    validateReceipt,
+    appStoreReceipt;
 
     companion object Mapper {
         fun stringValues(): List<String> {
