@@ -45,6 +45,7 @@ class Routes extends BaseRoute {
       case Routes.handlePurchases:
       case Routes.attribution:
       case Routes.other:
+      case Routes.userProperties:
         return true;
       default:
         return false;

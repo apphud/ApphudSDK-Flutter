@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
+import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
 import 'package:apphud/models/mapper.dart';
 import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
 import 'package:flutter/services.dart';
@@ -242,5 +243,20 @@ class AppHud {
     final bool? value = await _channel.invokeMethod<bool>('isSandbox');
     assert(value != null, 'Error getting isSandbox, value = null');
     return value!;
+  }
+
+  static Future<void> setUserProperty({
+    required ApphudUserPropertyKey key,
+    dynamic? value,
+    bool setOnce = false,
+  }) async {
+    await _channel.invokeMethod(
+      'setUserProperty',
+      {
+        "key": key.keyName,
+        "value": value,
+        "setOnce": setOnce,
+      },
+    );
   }
 }

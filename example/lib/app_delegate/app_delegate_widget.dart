@@ -32,6 +32,7 @@ import 'package:appHud_example/actions/make_purchase_actions/purchase_without_va
 import 'package:appHud_example/actions/make_purchase_actions/refresh_store_kit_products.dart';
 import 'package:appHud_example/actions/make_purchase_actions/sync_purchases.dart';
 import 'package:appHud_example/actions/other_actions/is_sandbox_action.dart';
+import 'package:appHud_example/actions/user_properties_actions/set_user_propery_action.dart';
 import 'package:appHud_example/main_screen.dart';
 import 'package:appHud_example/routes/attribution_routes.dart';
 import 'package:appHud_example/routes/handle_purchase_routes.dart';
@@ -39,6 +40,7 @@ import 'package:appHud_example/routes/initialization_routes.dart';
 import 'package:appHud_example/routes/make_purchase_routes.dart';
 import 'package:appHud_example/routes/other_routes.dart';
 import 'package:appHud_example/routes/routes.dart';
+import 'package:appHud_example/routes/user_properties_routes.dart';
 import 'package:flutter/material.dart';
 
 class AppDelegateWidget extends StatefulWidget {
@@ -100,7 +102,8 @@ class AppDelegateWidgetState extends State<AppDelegateWidget> {
           case Routes.userProperties:
             {
               return PageRouteBuilder(
-                pageBuilder: (_, __, ___) => _makeScreen(),
+                pageBuilder: (_, __, ___) =>
+                    _makeMainScreen(UserPropertiesRoutes()),
                 settings: routeSettings,
                 transitionsBuilder: (_, anim, __, child) {
                   return FadeTransition(opacity: anim, child: child);
@@ -465,6 +468,16 @@ class AppDelegateWidgetState extends State<AppDelegateWidget> {
             return PageRouteBuilder(
               pageBuilder: (_, __, ___) => () {
                 return ActionScreen(IsSandboxAction());
+              }(),
+              settings: routeSettings,
+              transitionsBuilder: (_, anim, __, child) {
+                return FadeTransition(opacity: anim, child: child);
+              },
+            );
+          case UserPropertiesRoutes.setUserProperty:
+            return PageRouteBuilder(
+              pageBuilder: (_, __, ___) => () {
+                return ActionScreen(SetUserPropertyAction());
               }(),
               settings: routeSettings,
               transitionsBuilder: (_, anim, __, child) {

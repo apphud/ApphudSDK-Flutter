@@ -58,7 +58,8 @@ class AppHudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 MakePurchaseHandler(MakePurchaseRoutes.stringValues(), activity = sActivity),
                 HandlePurchasesHandler(HandlePurchasesRoutes.stringValues(), context = this.context),
                 AttributionHandler(AttributionRoutes.stringValues()),
-                OtherHandler(OtherRoutes.stringValues(), context = this.context)
+                OtherHandler(OtherRoutes.stringValues(), context = this.context),
+                UserPropertiesHandler(UserPropertiesRoutes.stringValues(), context = this.context)
         )
     }
 
