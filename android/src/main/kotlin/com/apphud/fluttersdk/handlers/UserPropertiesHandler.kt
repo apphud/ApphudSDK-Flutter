@@ -13,11 +13,20 @@ class UserPropertiesHandler(override val routes: List<String>, val context: Cont
             UserPropertiesRoutes.setUserProperty.name -> SetUserPropertyParser(result).parse(args) { key, value, setOnce ->
                 setUserProperty(key, value, setOnce, result)
             }
+
+            UserPropertiesRoutes.incrementUserProperty.name -> IncrementUserPropertyParser(result).parse(args) { key, by ->
+                incrementUserProperty(key, by, result)
+            }
         }
     }
 
     private fun setUserProperty(key: ApphudUserPropertyKey, value: Any?, setOnce: Boolean, result: MethodChannel.Result) {
         Apphud.setUserProperty(key = key, value = value, setOnce = setOnce)
+        result.success(null)
+    }
+
+    private fun incrementUserProperty(key: ApphudUserPropertyKey, by: Any, result: MethodChannel.Result) {
+        Apphud.incrementUserProperty(key = key, by = by)
         result.success(null)
     }
 
@@ -42,6 +51,26 @@ class UserPropertiesHandler(override val routes: List<String>, val context: Cont
         }
     }
 
+    class IncrementUserPropertyParser(val result: MethodChannel.Result) : ApphudUserPropertyKeyParser() {
+
+        fun parse(args: Map<String, Any>?, callback: (key: ApphudUserPropertyKey, by: Any) -> Unit) {
+            try {
+                args ?: throw IllegalArgumentException("key is required argument")
+                val keyString = args["key"] as? String
+                        ?: throw IllegalArgumentException("key is required argument")
+
+                val key = parseApphudUserPropertyKey(keyString)
+
+                val by = args["by"] as? Any
+                        ?: throw IllegalArgumentException("by is required argument")
+
+                callback(key, by)
+            } catch (e: IllegalArgumentException) {
+                result.error("400", e.message, "")
+            }
+        }
+    }
+
     open class ApphudUserPropertyKeyParser() {
         fun parseApphudUserPropertyKey(keyString: String): ApphudUserPropertyKey {
             when (keyString) {
@@ -58,7 +87,8 @@ class UserPropertiesHandler(override val routes: List<String>, val context: Cont
 }
 
 enum class UserPropertiesRoutes {
-    setUserProperty;
+    setUserProperty,
+    incrementUserProperty;
 
     companion object Mapper {
         fun stringValues(): List<String> {

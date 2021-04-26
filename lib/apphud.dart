@@ -12,7 +12,7 @@ import 'models/apphud_models/apphud_attribution_provider.dart';
 import 'models/apphud_models/composite/apphud_product.dart';
 import 'models/apphud_models/composite/apphud_purchase.dart';
 import 'models/apphud_models/ios/apphud_purchase_result_ios.dart';
-import 'extensions.dart';
+import 'models/extensions.dart';
 
 class AppHud {
   static const MethodChannel _channel = const MethodChannel('appHud');
@@ -256,6 +256,19 @@ class AppHud {
         "key": key.keyName,
         "value": value,
         "setOnce": setOnce,
+      },
+    );
+  }
+
+  static Future<void> incrementUserProperty({
+    required ApphudUserPropertyKey key,
+    required dynamic by,
+  }) async {
+    await _channel.invokeMethod(
+      'incrementUserProperty',
+      {
+        "key": key.keyName,
+        "by": by,
       },
     );
   }

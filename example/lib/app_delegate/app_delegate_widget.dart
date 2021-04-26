@@ -32,6 +32,7 @@ import 'package:appHud_example/actions/make_purchase_actions/purchase_without_va
 import 'package:appHud_example/actions/make_purchase_actions/refresh_store_kit_products.dart';
 import 'package:appHud_example/actions/make_purchase_actions/sync_purchases.dart';
 import 'package:appHud_example/actions/other_actions/is_sandbox_action.dart';
+import 'package:appHud_example/actions/user_properties_actions/increment_user_propery_action.dart';
 import 'package:appHud_example/actions/user_properties_actions/set_user_propery_action.dart';
 import 'package:appHud_example/main_screen.dart';
 import 'package:appHud_example/routes/attribution_routes.dart';
@@ -478,6 +479,16 @@ class AppDelegateWidgetState extends State<AppDelegateWidget> {
             return PageRouteBuilder(
               pageBuilder: (_, __, ___) => () {
                 return ActionScreen(SetUserPropertyAction());
+              }(),
+              settings: routeSettings,
+              transitionsBuilder: (_, anim, __, child) {
+                return FadeTransition(opacity: anim, child: child);
+              },
+            );
+          case UserPropertiesRoutes.incrementUserProperty:
+            return PageRouteBuilder(
+              pageBuilder: (_, __, ___) => () {
+                return ActionScreen(IncrementUserPropertyAction());
               }(),
               settings: routeSettings,
               transitionsBuilder: (_, anim, __, child) {

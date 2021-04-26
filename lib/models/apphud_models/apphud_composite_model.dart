@@ -1,6 +1,6 @@
 import 'apphud_non_renewing_purchase.dart';
 import 'apphud_subscription.dart';
-import 'package:apphud/extensions.dart';
+import 'package:apphud/models/extensions.dart';
 
 class ApphudComposite {
   final List<ApphudNonRenewingPurchase> purchases;
