@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:appHud_example/actions/action_screen.dart';
 import 'package:appHud_example/actions/attribution_actions/add_attribution_action.dart';
+import 'package:appHud_example/actions/attribution_actions/disable_ad_tracking_action.dart';
 import 'package:appHud_example/actions/attribution_actions/disable_idfa_collection_action.dart';
 import 'package:appHud_example/actions/attribution_actions/set_advertising_identifier_action.dart';
 import 'package:appHud_example/actions/handle_purchase_actions/app_store_receipt_action.dart';
@@ -489,6 +490,16 @@ class AppDelegateWidgetState extends State<AppDelegateWidget> {
             return PageRouteBuilder(
               pageBuilder: (_, __, ___) => () {
                 return ActionScreen(IncrementUserPropertyAction());
+              }(),
+              settings: routeSettings,
+              transitionsBuilder: (_, anim, __, child) {
+                return FadeTransition(opacity: anim, child: child);
+              },
+            );
+          case AttributionRoutes.disableAdTracking:
+            return PageRouteBuilder(
+              pageBuilder: (_, __, ___) => () {
+                return ActionScreen(DisableAdTrackingAction());
               }(),
               settings: routeSettings,
               transitionsBuilder: (_, anim, __, child) {

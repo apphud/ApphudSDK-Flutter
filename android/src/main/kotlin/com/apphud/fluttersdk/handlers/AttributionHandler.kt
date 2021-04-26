@@ -10,6 +10,7 @@ class AttributionHandler(override val routes: List<String>) : Handler {
             AttributionRoutes.addAttribution.name -> AttributionParser(result).parse(args) { provider, data, identifier ->
                 addAttribution(provider, data, identifier, result)
             }
+            AttributionRoutes.disableAdTracking.name -> disableAdTracking(result)
         }
     }
 
@@ -20,6 +21,12 @@ class AttributionHandler(override val routes: List<String>) : Handler {
         //TODO: В Android SDK было бы неплохо добавить флаг выполненности запроса
         result.success(true)
     }
+
+    private fun disableAdTracking(result: MethodChannel.Result) {
+        Apphud.disableAdTracking()
+        result.success(null)
+    }
+
 
     class AttributionParser(val result: MethodChannel.Result) {
         fun parse(args: Map<String, Any>?, callback: (provider: ApphudAttributionProvider,
@@ -57,7 +64,8 @@ class AttributionHandler(override val routes: List<String>) : Handler {
 
 enum class AttributionRoutes {
 
-    addAttribution;
+    addAttribution,
+    disableAdTracking;
 
     companion object Mapper {
         fun stringValues(): List<String> {

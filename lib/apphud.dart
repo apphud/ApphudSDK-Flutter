@@ -272,4 +272,7 @@ class AppHud {
       },
     );
   }
+
+  static Future<void> disableAdTracking() =>
+      _channel.invokeMethod("disableAdTracking");
 }
