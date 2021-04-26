@@ -7,7 +7,13 @@ import 'package:flutter/material.dart';
 import '../action_screen.dart';
 
 class SetUserPropertyAction extends ActionFlow {
-  final String parameterValue = 'SomeUserName';
+  final String nameParameterValue = 'SomeUserName';
+  final String emailParameterValue = 'mail@site.com';
+  final String phoneParameterValue = '123456789';
+  final int ageParameterValue = 20;
+  final String genderParameterValue = 'male';
+  final String customParameterValue = 'custom value';
+  final String customParameterName = 'some_custom_property';
 
   @override
   Widget actionName() {
@@ -20,14 +26,47 @@ class SetUserPropertyAction extends ActionFlow {
   }
 
   Widget actionParameters() {
-    return Text("Parameters: ${ApphudUserPropertyKey.name} - $parameterValue",
-        style: TextStyle(fontSize: 20, color: Colors.green));
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _buildParameterValueText(
+          ApphudUserPropertyKey.name,
+          nameParameterValue,
+        ),
+        _buildParameterValueText(
+          ApphudUserPropertyKey.email,
+          emailParameterValue,
+        ),
+        _buildParameterValueText(
+          ApphudUserPropertyKey.phone,
+          phoneParameterValue,
+        ),
+        _buildParameterValueText(
+          ApphudUserPropertyKey.age,
+          ageParameterValue,
+        ),
+        _buildParameterValueText(
+          ApphudUserPropertyKey.gender,
+          genderParameterValue,
+        ),
+        _buildParameterValueText(
+          ApphudUserPropertyKey.customProperty(customParameterName),
+          customParameterValue,
+        ),
+      ],
+    );
+  }
+
+  Text _buildParameterValueText(ApphudUserPropertyKey key, dynamic value) {
+    return Text(
+      "Parameters: $key - $value",
+      style: TextStyle(fontSize: 20, color: Colors.green),
+    );
   }
 
   Widget actionResponse() {
     return FutureBuilder<void>(
-      future: AppHud.setUserProperty(
-          key: ApphudUserPropertyKey.name, value: parameterValue),
+      future: _setUserProperties(),
       builder: (
         BuildContext context,
         AsyncSnapshot<void> snapshot,
@@ -39,6 +78,35 @@ class SetUserPropertyAction extends ActionFlow {
         }
         return Text("Waiting...");
       },
+    );
+  }
+
+  Future<void> _setUserProperties() async {
+    await AppHud.setUserProperty(
+      key: ApphudUserPropertyKey.name,
+      value: nameParameterValue,
+    );
+
+    await AppHud.setUserProperty(
+      key: ApphudUserPropertyKey.email,
+      value: emailParameterValue,
+    );
+
+    await AppHud.setUserProperty(
+      key: ApphudUserPropertyKey.phone,
+      value: phoneParameterValue,
+    );
+    await AppHud.setUserProperty(
+      key: ApphudUserPropertyKey.age,
+      value: ageParameterValue,
+    );
+    await AppHud.setUserProperty(
+      key: ApphudUserPropertyKey.gender,
+      value: genderParameterValue,
+    );
+    await AppHud.setUserProperty(
+      key: ApphudUserPropertyKey.customProperty(customParameterName),
+      value: customParameterValue,
     );
   }
 }
