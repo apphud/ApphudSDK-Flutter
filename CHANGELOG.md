@@ -1,3 +1,14 @@
+## 2.0.1
+- Add methods:
+    - presentOfferCodeRedemptionSheet [iOS]
+    - validateReceipt [iOS]
+    - appStoreReceipt [iOS]
+    - setUserProperty [iOS], [Android] 
+    - incrementUserProperty [iOS], [Android] 
+    - enableDebugLogs [iOS]
+    - isSandbox [iOS]
+    - disableAdTracking [Android]
+    
 ## 2.0.0
 - **BREAKING**: refactor: migrate to null safety
     - upgrade Dart SDK constraints to >=2.12.0-0 <3.0.0
