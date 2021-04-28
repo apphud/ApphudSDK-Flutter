@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import '../action_screen.dart';
 
 class StartManuallyAction extends ActionFlow {
-
-  String apiKey = "app_DZzKAkuBWhe9nz3qeofJMU9PJezkxn";
-  String userID = "2c24e68f-f334-4eb0-ac64-72f89b258a2a";
+  String apiKey = "app_4sY9cLggXpMDDQMmvc5wXUPGReMp8G";
+  String userID = "d7f08a1a-a807-11eb-bcbc-0242ac130002";
   String deviceID = "a356ca94-e3e2-4a1f-8096-b75af8ab7411";
   bool observerMode = true;
 
