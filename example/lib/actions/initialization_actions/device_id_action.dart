@@ -23,14 +23,14 @@ class DeviceIdAction extends ActionFlow {
 
 
   Widget actionResponse() {
-    return FutureBuilder<String>(
+    return FutureBuilder<String?>(
         future: AppHud.deviceID(),
         // a previously-obtained Future<String> or null
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
           if (snapshot.hasData) {
-            return Text(snapshot.data);
+            return Text(snapshot.data!);
           } else if (snapshot.hasError) {
-            return Text(snapshot.error);
+            return Text(snapshot.error as String);
           } else {
             return Text("Waiting...");
           }

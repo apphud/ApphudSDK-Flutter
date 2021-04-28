@@ -11,6 +11,8 @@ class HandlePurchaseRoutes extends BaseRoute {
   static const restorePurchases = "restorePurchases";
   static const migratePurchasesIfNeeded = "migratePurchasesIfNeeded";
   static const fetchRawReceiptInfo = "fetchRawReceiptInfo";
+  static const validateReceipt = "validateReceipt";
+  static const appStoreReceipt = "appStoreReceipt";
 
   HandlePurchaseRoutes();
 
@@ -24,6 +26,8 @@ class HandlePurchaseRoutes extends BaseRoute {
       restorePurchases,
       migratePurchasesIfNeeded,
       fetchRawReceiptInfo,
+      validateReceipt,
+      appStoreReceipt,
     ];
   }
 
@@ -45,5 +49,6 @@ class HandlePurchaseRoutes extends BaseRoute {
           return false;
       }
     }
+    return false;
   }
 }

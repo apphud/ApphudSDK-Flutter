@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:appHud_example/routes/routes.dart';
 
 class InitializationRoutes extends BaseRoute {
-  static const start = "/initialization/start";
-  static const startManually = "/initialization/startManually";
-  static const updateUserID = "/initialization/updateUserID";
-  static const userID = "/initialization/userID";
-  static const deviceID = "/initialization/deviceID";
-  static const logout = "/initialization/logout";
-  static const setDelegate = "/initialization/setDelegate";
-  static const setUIDelegate = "/initialization/setUIDelegate";
+  static const start = "start";
+  static const startManually = "startManually";
+  static const updateUserID = "updateUserID";
+  static const userID = "userID";
+  static const deviceID = "deviceID";
+  static const logout = "logout";
+  static const setDelegate = "setDelegate";
+  static const setUIDelegate = "setUIDelegate";
 
   InitializationRoutes();
 
@@ -45,14 +45,6 @@ class InitializationRoutes extends BaseRoute {
           return true;
       }
     }
+    return false;
   }
 }
-
-// case start
-// case startManually
-// case updateUserID
-// case userID
-// case deviceID
-// case logout
-// case setDelegate
-// case setUIDelegate

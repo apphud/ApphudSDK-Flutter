@@ -28,6 +28,10 @@ class HandlePurchasesHandler: Handler {
             Action<MigratePurchasesIfNeededRequest,MigratePurchasesIfNeededArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.fetchRawReceiptInfo.rawValue:
             Action<FetchRawReceiptInfoRequest,FetchRawReceiptInfoArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.validateReceipt.rawValue:
+            Action<ValidateReceiptRequest,ValidateReceiptArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.appStoreReceipt.rawValue:
+            Action<AppStoreReceiptRequest,AppStoreReceiptArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

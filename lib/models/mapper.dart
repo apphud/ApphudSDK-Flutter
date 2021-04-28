@@ -12,43 +12,44 @@ import 'apphud_models/apphud_non_renewing_purchase.dart';
 import 'apphud_models/ios/apphud_purchase_result_ios.dart';
 
 class Mapper {
-  static ApphudProduct apphudProductFromJson(dynamic json) {
-    if (json == null) return null;
+  // static ApphudProduct? apphudProductFromJson(dynamic json) {
+  //   if (json == null) return null;
+  //
+  //   final map = Map<String, dynamic>.from(json);
+  //   try {
+  //     return ApphudProduct.fromJson(map);
+  //   } catch (e) {
+  //     print('Could not parse ApphudProduct: $e');
+  //     return null;
+  //   }
+  // }
 
-    final map = Map<String, dynamic>.from(json);
-    try {
-      return ApphudProduct.fromJson(map);
-    } catch (e) {
-      print('Could not parse ApphudProduct: $e');
-      return null;
-    }
-  }
+  // static SKProductWrapper? skProductFromJson(dynamic json) {
+  //   if (json == null) return null;
+  //
+  //   final map = Map<String, dynamic>.from(json);
+  //   try {
+  //     return SKProductWrapper.fromJson(map);
+  //   } catch (e) {
+  //     print('Could not parse SKProductWrapper: $e');
+  //     return null;
+  //   }
+  // }
 
-  static SKProductWrapper skProductFromJson(dynamic json) {
-    if (json == null) return null;
+  // static SkuDetailsWrapper? skuDetailsFromJson(dynamic json) {
+  //   if (json == null) return null;
+  //
+  //   final map = Map<String, dynamic>.from(json);
+  //   try {
+  //     return SkuDetailsWrapper.fromJson(map);
+  //   } catch (e) {
+  //     print('Could not parse SkuDetailsWrapper: $e');
+  //     return null;
+  //   }
+  // }
 
-    final map = Map<String, dynamic>.from(json);
-    try {
-      return SKProductWrapper.fromJson(map);
-    } catch (e) {
-      print('Could not parse SKProductWrapper: $e');
-      return null;
-    }
-  }
-
-  static SkuDetailsWrapper skuDetailsFromJson(dynamic json) {
-    if (json == null) return null;
-
-    final map = Map<String, dynamic>.from(json);
-    try {
-      return SkuDetailsWrapper.fromJson(map);
-    } catch (e) {
-      print('Could not parse SkuDetailsWrapper: $e');
-      return null;
-    }
-  }
-
-  static ApphudPurchaseResultIos ApphudPurchaseResultIosFromJson(dynamic json) {
+  static ApphudPurchaseResultIos? ApphudPurchaseResultIosFromJson(
+      dynamic json) {
     if (json == null) return null;
 
     final map = Map<String, dynamic>.from(json);
@@ -60,7 +61,7 @@ class Mapper {
     }
   }
 
-  static ApphudPurchaseResultAndroid ApphudPurchaseResultAndroidFromJson(
+  static ApphudPurchaseResultAndroid? ApphudPurchaseResultAndroidFromJson(
       dynamic json) {
     if (json == null) return null;
 
@@ -73,7 +74,7 @@ class Mapper {
     }
   }
 
-  static SKPriceLocaleWrapper skPriceLocaleFromJson(dynamic json) {
+  static SKPriceLocaleWrapper? skPriceLocaleFromJson(dynamic json) {
     if (json == null) return null;
 
     final map = Map<String, dynamic>.from(json);
@@ -85,8 +86,8 @@ class Mapper {
     }
   }
 
-  static SKProductSubscriptionPeriodWrapper skProductSubscriptionPeriodFromJson(
-      dynamic json) {
+  static SKProductSubscriptionPeriodWrapper?
+      skProductSubscriptionPeriodFromJson(dynamic json) {
     if (json == null) return null;
 
     final map = Map<String, dynamic>.from(json);
@@ -99,7 +100,7 @@ class Mapper {
     }
   }
 
-  static SKProductDiscountWrapper skProductDiscountFromJson(dynamic json) {
+  static SKProductDiscountWrapper? skProductDiscountFromJson(dynamic json) {
     if (json == null) return null;
 
     final map = Map<String, dynamic>.from(json);
@@ -111,7 +112,7 @@ class Mapper {
     }
   }
 
-  static SKPaymentWrapper skPaymentWrapperFromJson(dynamic json) {
+  static SKPaymentWrapper? skPaymentWrapperFromJson(dynamic json) {
     if (json == null) return null;
 
     final map = Map<String, dynamic>.from(json);
@@ -123,7 +124,7 @@ class Mapper {
     }
   }
 
-  static SKPaymentTransactionWrapper skPaymentTransactionWrapperFromJson(
+  static SKPaymentTransactionWrapper? skPaymentTransactionWrapperFromJson(
       dynamic json) {
     if (json == null) return null;
 
@@ -136,7 +137,7 @@ class Mapper {
     }
   }
 
-  static ApphudSubscriptionWrapper apphudSubscriptionWrapperFromJson(
+  static ApphudSubscriptionWrapper? apphudSubscriptionWrapperFromJson(
       dynamic json) {
     if (json == null) return null;
 
@@ -149,7 +150,7 @@ class Mapper {
     }
   }
 
-  static ApphudNonRenewingPurchase apphudNonRenewingPurchaseFromJson(
+  static ApphudNonRenewingPurchase? apphudNonRenewingPurchaseFromJson(
       dynamic json) {
     if (json == null) return null;
 
@@ -162,7 +163,7 @@ class Mapper {
     }
   }
 
-  static ApphudComposite apphudCompositeFromJson(dynamic json) {
+  static ApphudComposite? apphudCompositeFromJson(dynamic json) {
     if (json == null) return null;
 
     final map = Map<String, dynamic>.from(json);
@@ -176,8 +177,6 @@ class Mapper {
   }
 
   static DateTime dateTimeFromSecondsTimestamp(num timestamp) {
-    if (timestamp == null) return null;
-
     final intAbsTimestamp = timestamp.toInt().abs();
     return DateTime.fromMillisecondsSinceEpoch(intAbsTimestamp);
   }

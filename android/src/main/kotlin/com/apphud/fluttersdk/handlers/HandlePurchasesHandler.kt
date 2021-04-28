@@ -1,9 +1,10 @@
-package com.apphud.app.handlers
+package com.apphud.fluttersdk.handlers
 
 import android.content.Context
 import com.apphud.sdk.Apphud
 import com.google.gson.Gson
 import io.flutter.plugin.common.MethodChannel
+import com.apphud.sdk.domain.ApphudSubscription
 
 
 class HandlePurchasesHandler(override val routes: List<String>, val context: Context) : Handler {
@@ -22,6 +23,8 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             HandlePurchasesRoutes.restorePurchases.name -> result.notImplemented()
             HandlePurchasesRoutes.migratePurchasesIfNeeded.name -> result.notImplemented()
             HandlePurchasesRoutes.fetchRawReceiptInfo.name -> result.notImplemented()
+            HandlePurchasesRoutes.validateReceipt.name -> result.notImplemented()
+            HandlePurchasesRoutes.appStoreReceipt.name -> result.notImplemented()
         }
     }
 
@@ -33,17 +36,7 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
     private fun subscription(result: MethodChannel.Result) {
         val subscription = Apphud.subscription()
         if (subscription != null) {
-
-            val dict: HashMap<String, Any?> = hashMapOf(
-                    "productId" to subscription.productId,
-                    "expiresDate" to subscription.expiresAt,
-                    "startedAt" to subscription.startedAt,
-                    "canceledAt" to subscription.cancelledAt,
-                    "isInRetryBilling" to subscription.isInRetryBilling,
-                    "isAutorenewEnabled" to subscription.isAutoRenewEnabled,
-                    "isIntroductoryActivated" to subscription.isIntroductoryActivated
-            )
-
+            val dict:HashMap<String, Any?> = getSubscriptionMap(subscription)
             result.success(dict)
         } else {
             result.success(null)
@@ -53,17 +46,23 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
     private fun subscriptions(result: MethodChannel.Result) {
         val subscriptions = Apphud.subscriptions()
         val jsonList: List<HashMap<String, Any?>> = subscriptions.map {
-            hashMapOf(
-                    "productId" to it.productId,
-                    "expiresDate" to it.expiresAt,
-                    "startedAt" to it.startedAt,
-                    "canceledAt" to it.cancelledAt,
-                    "isInRetryBilling" to it.isInRetryBilling,
-                    "isAutorenewEnabled" to it.isAutoRenewEnabled,
-                    "isIntroductoryActivated" to it.isIntroductoryActivated)
+            getSubscriptionMap(it)
         }
 
         result.success(jsonList)
+    }
+
+    private fun getSubscriptionMap(subscription: ApphudSubscription): HashMap<String, Any?> {
+        return hashMapOf(
+                "productId" to subscription.productId,
+                "expiresAt" to subscription.expiresAt,
+                "startedAt" to subscription.startedAt,
+                "canceledAt" to subscription.cancelledAt,
+                "isInRetryBilling" to subscription.isInRetryBilling,
+                "isAutorenewEnabled" to subscription.isAutoRenewEnabled,
+                "isIntroductoryActivated" to subscription.isIntroductoryActivated,
+                "isActive" to subscription.isActive(),
+                "status" to subscription.status.name.toLowerCase())
     }
 
     private fun nonRenewingPurchases(result: MethodChannel.Result) {
@@ -121,7 +120,9 @@ enum class HandlePurchasesRoutes {
     isNonRenewingPurchaseActive,
     restorePurchases,
     migratePurchasesIfNeeded,
-    fetchRawReceiptInfo;
+    fetchRawReceiptInfo,
+    validateReceipt,
+    appStoreReceipt;
 
     companion object Mapper {
         fun stringValues(): List<String> {

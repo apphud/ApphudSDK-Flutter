@@ -13,9 +13,9 @@ class UserPropertiesHandler: Handler {
     func tryToHandle(method: String, args: [String : Any]?, result: @escaping FlutterResult) {
         switch method {
         case AssociatedEnum.setUserProperty.rawValue:
-            break
+            Action<SetUserPropertyRequest,SetUserPropertyArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.incrementUserProperty.rawValue:
-            break
+            Action<IncrementUserPropertyRequest,IncrementUserPropertyArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

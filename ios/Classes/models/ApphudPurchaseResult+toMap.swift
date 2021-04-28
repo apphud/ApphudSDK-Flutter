@@ -21,12 +21,38 @@ extension ApphudPurchaseResult {
 extension ApphudSubscription {
     func toMap() -> [String: Any?] {
         return ["productId": productId,
-                "expiresDate": expiresDate.timeIntervalSince1970,
+                "expiresAt": expiresDate.timeIntervalSince1970,
                 "startedAt": startedAt.timeIntervalSince1970,
                 "canceledAt": canceledAt?.timeIntervalSince1970,
                 "isInRetryBilling": isInRetryBilling,
                 "isAutorenewEnabled": isInRetryBilling,
-                "isIntroductoryActivated": isInRetryBilling]
+                "isIntroductoryActivated": isInRetryBilling,
+                "isActive" : isActive(),
+                "status" : status.toString()]
+    }
+}
+
+extension ApphudSubscriptionStatus {
+    func toString() -> String {
+
+        switch self {
+        case .trial:
+            return "trial"
+        case .intro:
+            return "intro"
+        case .promo:
+            return "promo"
+        case .grace:
+            return "grace"
+        case .regular:
+            return "regular"
+        case .refunded:
+            return "refunded"
+        case .expired:
+            return "expired"
+        default:
+            return ""
+        }
     }
 }
 

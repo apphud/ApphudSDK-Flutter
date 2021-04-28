@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import '../action_screen.dart';
 
 class AddAttributionAction extends ActionFlow {
-
   String parameterName = "data";
-  Map<String,dynamic> parameterValue = {"test":"testValue"};
+  Map<String, dynamic> parameterValue = {"test": "testValue"};
   String parameterName2 = "provider";
-  ApphudAttributionProvider parameterValue2 = ApphudAttributionProvider.appsFlyer;
+  ApphudAttributionProvider parameterValue2 =
+      ApphudAttributionProvider.appsFlyer;
   String parameterName3 = "identifer";
   String parameterValue3 = "productMonthly2";
 
@@ -31,25 +31,27 @@ class AddAttributionAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<bool>(
-        future: AppHud.addAttribution(data: parameterValue,provider: parameterValue2,identifer: parameterValue3),
-        builder:
-            (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasData) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Response: ",
-                    style: TextStyle(
-                      fontSize: 20,
-                    )),
-                Text(snapshot.data.toString()),
-              ],
-            );
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error);
-          } else {
-            return Text("Waiting...");
-          }
-        });
+      future: AppHud.addAttribution(
+          data: parameterValue,
+          provider: parameterValue2,
+          identifer: parameterValue3),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<bool> snapshot,
+      ) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) return Text(snapshot.error.toString());
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Response: ", style: TextStyle(fontSize: 20)),
+              Text(snapshot.data.toString()),
+            ],
+          );
+        }
+        return Text("Waiting...");
+      },
+    );
   }
 }

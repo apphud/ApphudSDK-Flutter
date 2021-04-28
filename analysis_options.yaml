@@ -1,0 +1,12 @@
+analyzer:
+  exclude:
+  - "build/**"
+  - "**/*.g.dart"
+  - "**/*.freezed.dart"
+
+  strong-mode:
+    implicit-casts: true
+
+linter:
+  rules:
+    - camel_case_types

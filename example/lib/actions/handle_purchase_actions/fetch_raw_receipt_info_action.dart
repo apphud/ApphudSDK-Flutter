@@ -1,3 +1,4 @@
+import 'package:appHud_example/widgets/card_wrapper.dart';
 import 'package:apphud/apphud.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,34 +22,32 @@ class FetchRawReceiptInfoAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<dynamic>(
-        future: AppHud.fetchRawReceiptInfo(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            final map = Map<String, dynamic>.from(snapshot.data);
+    return FutureBuilder<Map<String, dynamic>?>(
+      future: AppHud.fetchRawReceiptInfo(),
+      builder: (BuildContext context,
+          AsyncSnapshot<Map<String, dynamic>?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) return Text(snapshot.error.toString());
+          if (snapshot.data == null) return Text('No ReceiptInfo fetched');
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Response: ",
-                    style: TextStyle(
-                      fontSize: 20,
-                    )),
-                ...map.keys.map((key) {
-                  return Text(
-                    map[key].toString(),
-                    style: TextStyle(
-                      fontSize: 20,
+          final Map<String, dynamic> map = snapshot.data!;
+
+          return Expanded(
+              child: ListView(
+            children: map.keys
+                .map(
+                  (String key) => CardWrapper(
+                    child: ListTile(
+                      title: Text(key),
+                      subtitle: Text(map[key].toString()),
                     ),
-                  );
-                }).toList(),
-              ],
-            );
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          } else {
-            return Text("Waiting...");
-          }
-        });
+                  ),
+                )
+                .toList(),
+          ));
+        }
+        return Text('Waiting...');
+      },
+    );
   }
 }

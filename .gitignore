@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+upd_json_serialization.sh
 
 # IntelliJ related
 *.iml

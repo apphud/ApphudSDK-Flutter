@@ -1,7 +1,6 @@
+import 'package:appHud_example/widgets/apphud_non_renewing_purchase_widget.dart';
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
-import 'package:apphud/models/apphud_models/apphud_subscription.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -23,49 +22,28 @@ class NonRenewingPurchasesAction extends ActionFlow {
         style: TextStyle(fontSize: 20, color: Colors.green));
   }
 
-  String productId;
-  double purchasedAt;
-  double canceledAt;
-
   Widget actionResponse() {
     return FutureBuilder<List<ApphudNonRenewingPurchase>>(
-        future: AppHud.nonRenewingPurchases(),
-        // a previously-obtained Future<String> or null
-        builder: (BuildContext context,
-            AsyncSnapshot<List<ApphudNonRenewingPurchase>> snapshot) {
-          if (snapshot.hasData) {
-            return Expanded(
-              child: ListView(
-                children: [
-                  ...snapshot.data
-                      .map((purchase) => ListView(
-                            physics: NeverScrollableScrollPhysics(),
-                            children: [
-                              ListTile(
-                                title: Text("productId"),
-                                subtitle: Text(purchase.productId),
-                                tileColor: Colors.green,
-                              ),
-                              ListTile(
-                                title: Text("expiresDate"),
-                                subtitle: Text(purchase.purchasedAt.toString()),
-                              ),
-                              ListTile(
-                                title: Text("startedAt"),
-                                subtitle: Text(purchase.canceledAt.toString()),
-                              ),
-                            ],
-                            shrinkWrap: true,
-                          ))
-                      .toList()
-                ],
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          } else {
-            return Text("Waiting...");
-          }
-        });
+      future: AppHud.nonRenewingPurchases(),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<List<ApphudNonRenewingPurchase>> snapshot,
+      ) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) return Text(snapshot.error.toString());
+          if (snapshot.data?.isEmpty ?? true)
+            return Center(child: Text('No nonRenewingPurchases'));
+          final List<ApphudNonRenewingPurchase> purchases = snapshot.data!;
+          return Expanded(
+            child: ListView(
+              children: purchases
+                  .map((p) => ApphudNonRenewingPurchaseWidget(purchase: p))
+                  .toList(),
+            ),
+          );
+        }
+        return Text('Waiting...');
+      },
+    );
   }
 }

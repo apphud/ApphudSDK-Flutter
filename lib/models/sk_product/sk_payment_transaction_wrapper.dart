@@ -1,46 +1,49 @@
-import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../mapper.dart';
 
 part 'sk_payment_transaction_wrapper.g.dart';
 
-@JsonSerializable(nullable: true)
+@JsonSerializable(anyMap: true)
 class SKPaymentTransactionWrapper {
-  String transactionIdentifier;
-  double transactionDate;
-  @JsonKey(fromJson: Mapper.skPaymentWrapperFromJson)
-  SKPaymentWrapper payment;
+  final String? transactionIdentifier;
+  final double? transactionDate;
+  final SKPaymentWrapper? payment;
 
   SKPaymentTransactionWrapper({
-    @required this.transactionIdentifier,
-    @required this.transactionDate,
-    @required this.payment,
+    this.transactionIdentifier,
+    this.transactionDate,
+    this.payment,
   });
 
-  factory SKPaymentTransactionWrapper.fromJson(Map map) {
-    assert(map != null, 'Map must not be null.');
-    return _$SKPaymentTransactionWrapperFromJson(map);
-  }
+  factory SKPaymentTransactionWrapper.fromJson(Map<dynamic, dynamic> map) =>
+      _$SKPaymentTransactionWrapperFromJson(map);
 
+  @override
+  String toString() {
+    return 'SKPaymentTransactionWrapper{transactionIdentifier: $transactionIdentifier, transactionDate: $transactionDate, payment: $payment}';
+  }
 }
 
-@JsonSerializable(nullable: true)
+@JsonSerializable(anyMap: true)
 class SKPaymentWrapper {
   String productIdentifier;
   String description;
-  String applicationUsername;
   int quantity;
+  String? applicationUsername;
 
   SKPaymentWrapper({
-    @required this.productIdentifier,
-    @required this.description,
-    @required this.applicationUsername,
-    @required this.quantity,
+    required this.productIdentifier,
+    required this.description,
+    required this.quantity,
+    this.applicationUsername,
   });
 
-  factory SKPaymentWrapper.fromJson(Map map) {
-    assert(map != null, 'Map must not be null.');
-    return _$SKPaymentWrapperFromJson(map);
+  factory SKPaymentWrapper.fromJson(Map<dynamic, dynamic> map) =>
+      _$SKPaymentWrapperFromJson(map);
+
+  @override
+  String toString() {
+    return 'SKPaymentWrapper{productIdentifier: $productIdentifier, description: $description, quantity: $quantity, applicationUsername: $applicationUsername}';
   }
 }

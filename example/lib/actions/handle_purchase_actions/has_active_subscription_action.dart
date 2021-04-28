@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../action_screen.dart';
 
 class HasActiveSubscriptionAction extends ActionFlow {
-
   @override
   Widget actionName() {
     return Text(
@@ -23,25 +22,24 @@ class HasActiveSubscriptionAction extends ActionFlow {
 
   Widget actionResponse() {
     return FutureBuilder<bool>(
-        future: AppHud.hasActiveSubscription(),
-        builder:
-            (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasData) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Response: ",
-                    style: TextStyle(
-                      fontSize: 20,
-                    )),
-                Text(snapshot.data.toString()),
-              ],
-            );
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error);
-          } else {
-            return Text("Waiting...");
-          }
-        });
+      future: AppHud.hasActiveSubscription(),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<bool> snapshot,
+      ) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) return Text(snapshot.error.toString());
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Response: ", style: TextStyle(fontSize: 20)),
+              Text(snapshot.data.toString()),
+            ],
+          );
+        }
+        return Text("Waiting...");
+      },
+    );
   }
 }

@@ -28,7 +28,7 @@ class LogoutAction extends ActionFlow {
               !snapshot.hasError) {
             return Text("done");
           } else if (snapshot.hasError) {
-            return Text(snapshot.error);
+            return Text(snapshot.error as String);
           } else {
             return Text("Waiting...");
           }

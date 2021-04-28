@@ -1,22 +1,18 @@
 import 'dart:ui' show hashValues;
 
-import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'sku_details.g.dart';
 
-
 enum SkuType {
-
-@JsonValue('inapp')
-inapp,
-@JsonValue('subs')
-subs,
+  @JsonValue('inapp')
+  inapp,
+  @JsonValue('subs')
+  subs,
 }
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true)
 class SkuDetailsWrapper {
-
   final String description;
   final String freeTrialPeriod;
   final String introductoryPrice;
@@ -34,24 +30,24 @@ class SkuDetailsWrapper {
   final int originalPriceAmountMicros;
 
   SkuDetailsWrapper({
-    @required this.description,
-    @required this.freeTrialPeriod,
-    @required this.introductoryPrice,
-    @required this.introductoryPriceAmountMicros,
-    @required this.introductoryPriceCycles,
-    @required this.introductoryPricePeriod,
-    @required this.price,
-    @required this.priceAmountMicros,
-    @required this.priceCurrencyCode,
-    @required this.sku,
-    @required this.subscriptionPeriod,
-    @required this.title,
-    @required this.type,
-    @required this.originalPrice,
-    @required this.originalPriceAmountMicros,
+    required this.description,
+    required this.freeTrialPeriod,
+    required this.introductoryPrice,
+    required this.introductoryPriceAmountMicros,
+    required this.introductoryPriceCycles,
+    required this.introductoryPricePeriod,
+    required this.price,
+    required this.priceAmountMicros,
+    required this.priceCurrencyCode,
+    required this.sku,
+    required this.subscriptionPeriod,
+    required this.title,
+    required this.type,
+    required this.originalPrice,
+    required this.originalPriceAmountMicros,
   });
 
-  factory SkuDetailsWrapper.fromJson(Map map) =>
+  factory SkuDetailsWrapper.fromJson(Map<dynamic, dynamic> map) =>
       _$SkuDetailsWrapperFromJson(map);
 
   @override
@@ -96,5 +92,10 @@ class SkuDetailsWrapper {
         type.hashCode,
         originalPrice,
         originalPriceAmountMicros);
+  }
+
+  @override
+  String toString() {
+    return 'SkuDetailsWrapper{description: $description, freeTrialPeriod: $freeTrialPeriod, introductoryPrice: $introductoryPrice, introductoryPriceAmountMicros: $introductoryPriceAmountMicros, introductoryPriceCycles: $introductoryPriceCycles, introductoryPricePeriod: $introductoryPricePeriod, price: $price, priceAmountMicros: $priceAmountMicros, priceCurrencyCode: $priceCurrencyCode, sku: $sku, subscriptionPeriod: $subscriptionPeriod, title: $title, type: $type, originalPrice: $originalPrice, originalPriceAmountMicros: $originalPriceAmountMicros}';
   }
 }

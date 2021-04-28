@@ -28,6 +28,8 @@ class MakePurchaseHandler: Handler {
             Action<PurchaseWithoutValidationRequest,PurchaseWithoutValidationArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.purchasePromo.rawValue:
             Action<PurchasePromoRequest,PurchasePromoArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.presentOfferCodeRedemptionSheet.rawValue:
+            Action<PresentOfferCodeRedemptionSheetRequest,PresentOfferCodeRedemptionSheetArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

@@ -8,28 +8,24 @@ import 'discount_payment_mode_wrapper.dart';
 
 part 'discount_wrapper.g.dart';
 
-@JsonSerializable(nullable: true)
+@JsonSerializable(anyMap: true)
 class SKProductDiscountWrapper {
   final String price;
   final int numberOfPeriods;
   final SKProductDiscountPaymentMode paymentMode;
-  @JsonKey(fromJson: Mapper.skPriceLocaleFromJson)
   final SKPriceLocaleWrapper priceLocale;
-  @JsonKey(fromJson: Mapper.skProductSubscriptionPeriodFromJson)
   final SKProductSubscriptionPeriodWrapper subscriptionPeriod;
 
   SKProductDiscountWrapper({
-    @required this.price,
-    @required this.numberOfPeriods,
-    @required this.paymentMode,
-    @required this.priceLocale,
-    @required this.subscriptionPeriod,
+    required this.price,
+    required this.numberOfPeriods,
+    required this.paymentMode,
+    required this.priceLocale,
+    required this.subscriptionPeriod,
   });
 
-  factory SKProductDiscountWrapper.fromJson(Map map) {
-    assert(map != null, 'Map must not be null.');
-    return _$SKProductDiscountWrapperFromJson(map);
-  }
+  factory SKProductDiscountWrapper.fromJson(Map<dynamic, dynamic> map) =>
+      _$SKProductDiscountWrapperFromJson(map);
 
   @override
   bool operator ==(Object other) {
@@ -39,7 +35,8 @@ class SKProductDiscountWrapper {
     if (other.runtimeType != runtimeType) {
       return false;
     }
-    final SKProductDiscountWrapper typedOther = other;
+    final SKProductDiscountWrapper typedOther =
+        other as SKProductDiscountWrapper;
     return typedOther.price == price &&
         typedOther.priceLocale == priceLocale &&
         typedOther.numberOfPeriods == numberOfPeriods &&
@@ -50,4 +47,9 @@ class SKProductDiscountWrapper {
   @override
   int get hashCode => hashValues(this.price, this.priceLocale,
       this.numberOfPeriods, this.paymentMode, this.subscriptionPeriod);
+
+  @override
+  String toString() {
+    return 'SKProductDiscountWrapper{price: $price, numberOfPeriods: $numberOfPeriods, paymentMode: $paymentMode, priceLocale: $priceLocale, subscriptionPeriod: $subscriptionPeriod}';
+  }
 }

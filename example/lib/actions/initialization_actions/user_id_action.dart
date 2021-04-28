@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../action_screen.dart';
 
 class UserIdAction extends ActionFlow {
-  String response;
+  String? response;
 
   @override
   Widget actionName() {
@@ -22,13 +22,13 @@ class UserIdAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<String>(
+    return FutureBuilder<String?>(
         future: AppHud.userID(),
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
           if (snapshot.hasData) {
-            return Text(snapshot.data);
+            return Text(snapshot.data!);
           } else if (snapshot.hasError) {
-            return Text(snapshot.error);
+            return Text(snapshot.error as String);
           } else {
             return Text("Waiting...");
           }

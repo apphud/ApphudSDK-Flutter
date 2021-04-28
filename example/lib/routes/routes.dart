@@ -5,9 +5,9 @@ final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 abstract class BaseRoute {
-  List<String> get allRoute {}
+  List<String> get allRoute;
 
-  bool isRouteEnabled(String route) {}
+  bool isRouteEnabled(String route);
 }
 
 class Routes extends BaseRoute {
@@ -20,7 +20,7 @@ class Routes extends BaseRoute {
   static const pushNotifications = '/pushNotifications';
   static const attribution = '/attribution';
   static const eligibilityChecks = '/eligibilityChecks';
-  static const others = '/others';
+  static const other = '/other';
 
   Routes();
 
@@ -34,7 +34,7 @@ class Routes extends BaseRoute {
       pushNotifications,
       attribution,
       eligibilityChecks,
-      others,
+      other,
     ];
   }
 
@@ -44,6 +44,8 @@ class Routes extends BaseRoute {
       case Routes.makePurchase:
       case Routes.handlePurchases:
       case Routes.attribution:
+      case Routes.other:
+      case Routes.userProperties:
         return true;
       default:
         return false;

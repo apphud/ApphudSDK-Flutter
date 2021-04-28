@@ -3,215 +3,202 @@ import 'dart:async';
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
+import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
 import 'package:apphud/models/mapper.dart';
 import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import 'models/apphud_models/apphud_attribution_provider.dart';
 import 'models/apphud_models/composite/apphud_product.dart';
 import 'models/apphud_models/composite/apphud_purchase.dart';
 import 'models/apphud_models/ios/apphud_purchase_result_ios.dart';
+import 'models/extensions.dart';
 
 class AppHud {
   static const MethodChannel _channel = const MethodChannel('appHud');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
+  static Future<String?> get platformVersion async {
+    final String? version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
 
-  static Future<void> start(
-      {@required String apiKey, String userID, bool observerMode}) async {
-    await _channel.invokeMethod('start', {
-      "apiKey": apiKey,
-      "userID": userID,
-      "observerMode": observerMode ?? false,
-    });
-  }
+  static Future<void> start({
+    required String apiKey,
+    String? userID,
+    bool? observerMode,
+  }) =>
+      _channel.invokeMethod('start', {
+        "apiKey": apiKey,
+        "userID": userID,
+        "observerMode": observerMode ?? false,
+      });
 
-  static Future<void> startManually(
-      {@required String apiKey,
-      String userID,
-      String deviceID,
-      bool observerMode}) async {
-    return _channel.invokeMethod('startManually', {
-      "apiKey": apiKey,
-      "deviceID": deviceID,
-      "userID": userID,
-      "observerMode": observerMode ?? false,
-    });
-  }
+  static Future<void> startManually({
+    required String apiKey,
+    String? userID,
+    String? deviceID,
+    bool? observerMode,
+  }) =>
+      _channel.invokeMethod('startManually', {
+        "apiKey": apiKey,
+        "deviceID": deviceID,
+        "userID": userID,
+        "observerMode": observerMode ?? false,
+      });
 
-  static Future<void> updateUserID(String userID) {
-    return _channel.invokeMethod("updateUserID", {"userID": userID});
-  }
+  static Future<void> updateUserID(String userID) =>
+      _channel.invokeMethod("updateUserID", {"userID": userID});
 
-  static Future<String> userID() {
-    return _channel.invokeMethod('userID');
+  static Future<String> userID() async {
+    return (await _channel.invokeMethod<String>('userID'))!;
   }
 
   static Future<String> deviceID() async {
-    return _channel.invokeMethod('deviceID');
+    return (await _channel.invokeMethod('deviceID'))!;
   }
 
-  static Future<void> logout() {
-    return _channel.invokeMethod("logout");
-  }
+  static Future<void> logout() => _channel.invokeMethod("logout");
 
   static Future<String> didFetchProductsNotification() async {
-    var notificationName =
-        await _channel.invokeMethod('didFetchProductsNotification');
-    return notificationName;
+    return (await _channel.invokeMethod('didFetchProductsNotification'))!;
   }
 
   static Future<List<ApphudProduct>> productsDidFetchCallback() async {
-    List<dynamic> productsJson = await _channel.invokeMethod(
-      'productsDidFetchCallback',
-    );
-    var products =
-        productsJson.map((e) => Mapper.apphudProductFromJson(e)).toList();
-    return products;
+    List<Map<dynamic, dynamic>> products = (await _channel
+            .invokeMethod<List<dynamic>>('productsDidFetchCallback'))!
+        .toMapList;
+    return products.map((json) => ApphudProduct.fromJson(json)).toList();
   }
 
   static Future<List<SKProductWrapper>> refreshStoreKitProducts() async {
-    List<dynamic> productsJson = await _channel.invokeMethod(
-      'refreshStoreKitProducts',
-    );
-    var products =
-        productsJson.map((e) => Mapper.skProductFromJson(e)).toList();
-    return products;
+    List<Map<dynamic, dynamic>> products =
+        (await _channel.invokeMethod<List<dynamic>>('refreshStoreKitProducts'))!
+            .toMapList;
+
+    return products.map((json) => SKProductWrapper.fromJson(json)).toList();
   }
 
-  static Future<ApphudProduct> product(String productIdentifier) async {
-    var json = await _channel.invokeMethod(
+  static Future<ApphudProduct?> product(String productIdentifier) async {
+    final Map<dynamic, dynamic>? json =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>(
       'product',
       {"productIdentifier": productIdentifier},
     );
-    ApphudProduct product = Mapper.apphudProductFromJson(json);
-    return product;
+
+    return json != null ? ApphudProduct.fromJson(json) : null;
   }
 
-  static Future<List<ApphudProduct>> products() async {
-    List<dynamic> productsJson = await _channel.invokeMethod('products');
-    var products =
-        productsJson.map((e) => Mapper.apphudProductFromJson(e)).toList();
-    return products;
+  static Future<List<ApphudProduct>?> products() async {
+    List<Map<dynamic, dynamic>>? products =
+        (await _channel.invokeMethod<List<dynamic>>('products'))?.toMapList;
+    return products?.map((json) => ApphudProduct.fromJson(json)).toList();
   }
 
   static Future<ApphudPurchase> purchase(String productId) async {
-    var json = await _channel.invokeMethod(
+    final dynamic? json = await _channel.invokeMethod(
       'purchase',
       {"productId": productId},
     );
-    ApphudPurchase result = ApphudPurchase.fromJson(json);
-    return result;
+    return ApphudPurchase.fromJson(json);
   }
 
   static Future<ApphudPurchaseResultIos> purchaseWithoutValidation(
       String productId) async {
-    var json = await _channel.invokeMethod(
+    final dynamic? json = await _channel.invokeMethod(
       'purchaseWithoutValidation',
       {"productId": productId},
     );
-    ApphudPurchaseResultIos result =
-        Mapper.ApphudPurchaseResultIosFromJson(json);
-    return result;
+    return ApphudPurchaseResultIos.fromJson(json!);
   }
 
-  //@available(iOS 12.2, *)
-  static Future<ApphudPurchaseResultIos> purchasePromo(
-      String productId, String discountID) async {
-    var json = await _channel.invokeMethod(
+//@available(iOS 12.2, *)
+  static Future<ApphudPurchaseResultIos> purchasePromo({
+    required String productId,
+    required String discountID,
+  }) async {
+    final dynamic? json = await _channel.invokeMethod(
       'purchasePromo',
       {
         "productId": productId,
         "discountID": discountID,
       },
     );
-    ApphudPurchaseResultIos result =
-        Mapper.ApphudPurchaseResultIosFromJson(json);
-    return result;
+    return ApphudPurchaseResultIos.fromJson(json!);
   }
 
   static Future<bool> hasActiveSubscription() async {
-    return _channel.invokeMethod('hasActiveSubscription');
+    return (await _channel.invokeMethod('hasActiveSubscription')) ?? false;
   }
 
-  static Future<ApphudSubscriptionWrapper> subscription() async {
-    var subscriptionJson = await _channel.invokeMethod('subscription');
-    ApphudSubscriptionWrapper subscription =
-        Mapper.apphudSubscriptionWrapperFromJson(subscriptionJson);
-    return subscription;
+  static Future<ApphudSubscriptionWrapper?> subscription() async {
+    final Map<dynamic, dynamic>? json =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('subscription');
+    return json != null ? ApphudSubscriptionWrapper.fromJson(json) : null;
   }
 
   static Future<List<ApphudSubscriptionWrapper>> subscriptions() async {
-    List<dynamic> subscriptionsJson =
-        await _channel.invokeMethod('subscriptions');
-
-    if (subscriptionsJson != null) {
-      List<ApphudSubscriptionWrapper> subscriptions = subscriptionsJson
-          .map((json) => Mapper.apphudSubscriptionWrapperFromJson(json))
+    final List<Map<dynamic, dynamic>>? subscriptions =
+        (await _channel.invokeMethod<List<dynamic>>('subscriptions'))
+            ?.toMapList;
+    if (subscriptions != null) {
+      return subscriptions
+          .map((json) => ApphudSubscriptionWrapper.fromJson(json))
           .toList();
-
-      return subscriptions;
     }
-
-    return List<ApphudSubscriptionWrapper>();
+    return List<ApphudSubscriptionWrapper>.of([]);
   }
 
   static Future<List<ApphudNonRenewingPurchase>> nonRenewingPurchases() async {
-    List<dynamic> purchasesJson =
-        await _channel.invokeMethod('nonRenewingPurchases');
-    if (purchasesJson != null) {
-      List<ApphudNonRenewingPurchase> purchases = purchasesJson
-          .map((json) => Mapper.apphudNonRenewingPurchaseFromJson(json))
+    final List<Map<dynamic, dynamic>>? purchases =
+        (await _channel.invokeMethod<List<dynamic>>('nonRenewingPurchases'))
+            ?.toMapList;
+
+    if (purchases != null) {
+      return purchases
+          .map((json) => ApphudNonRenewingPurchase.fromJson(json))
           .toList();
-      return purchases;
     }
-    return List<ApphudNonRenewingPurchase>();
+    return List<ApphudNonRenewingPurchase>.of([]);
   }
 
-  static Future<bool> isNonRenewingPurchaseActive(String productIdentifier) {
-    return _channel.invokeMethod(
-      'isNonRenewingPurchaseActive',
-      {"productIdentifier": productIdentifier},
-    );
+  static Future<bool> isNonRenewingPurchaseActive(
+    String productIdentifier,
+  ) async {
+    return (await _channel.invokeMethod<bool>(
+          'isNonRenewingPurchaseActive',
+          {"productIdentifier": productIdentifier},
+        )) ??
+        false;
   }
 
   static Future<ApphudComposite> restorePurchases() async {
-    var json = await _channel.invokeMethod(
-      'restorePurchases',
-    );
-    return Mapper.apphudCompositeFromJson(json);
+    final Map<dynamic, dynamic> json = (await _channel
+        .invokeMethod<Map<dynamic, dynamic>>('restorePurchases'))!;
+
+    return ApphudComposite.fromJson(json);
   }
 
-  // Android only
+// Android only
   static Future<void> syncPurchases() async {
-    await _channel.invokeMethod(
-      'syncPurchases',
-    );
+    await _channel.invokeMethod('syncPurchases');
   }
 
   static Future<ApphudComposite> migratePurchasesIfNeeded() async {
-    List<dynamic> json = await _channel.invokeMethod(
-      'migratePurchasesIfNeeded',
-    );
-    return Mapper.apphudCompositeFromJson(json);
+    final Map<dynamic, dynamic> json = (await _channel
+        .invokeMethod<Map<dynamic, dynamic>>('migratePurchasesIfNeeded'))!;
+
+    return ApphudComposite.fromJson(json);
   }
 
-  static Future<dynamic> fetchRawReceiptInfo() async {
-    var json = await _channel.invokeMethod(
+  static Future<Map<String, dynamic>?> fetchRawReceiptInfo() async {
+    final Map<dynamic, dynamic>? json = await _channel.invokeMethod(
       'fetchRawReceiptInfo',
     );
-
-    return json;
+    return json != null ? Map<String, dynamic>.from(json) : null;
   }
 
   static Future<void> disableIDFACollection() async {
-    await _channel.invokeMethod(
-      'disableIDFACollection',
-    );
+    await _channel.invokeMethod('disableIDFACollection');
   }
 
   static Future<void> setAdvertisingIdentifier(String idfa) async {
@@ -221,16 +208,71 @@ class AppHud {
     );
   }
 
-  static Future<bool> addAttribution(
-      {@required Map<String, dynamic> data,
-      @required ApphudAttributionProvider provider,
-      String identifer}) async {
-    bool isAdded = await _channel.invokeMethod("addAttribution", {
+  static Future<bool> addAttribution({
+    required Map<String, dynamic> data,
+    required ApphudAttributionProvider provider,
+    String? identifer,
+  }) async {
+    final bool isAdded = await _channel.invokeMethod("addAttribution", {
       "data": data,
-      "from":
-          ApphudAttributionProviderToStringConventer.convertToString(provider),
+      "from": provider.convertToString,
       "identifer": identifer
     });
     return isAdded;
   }
+
+  static Future<void> enableDebugLogs() =>
+      _channel.invokeMethod("enableDebugLogs");
+
+  static Future<void> presentOfferCodeRedemptionSheet() async {
+    await _channel.invokeMethod('presentOfferCodeRedemptionSheet');
+  }
+
+  static Future<ApphudComposite> validateReceipt() async {
+    final Map<dynamic, dynamic> json = (await _channel
+        .invokeMethod<Map<dynamic, dynamic>>('validateReceipt'))!;
+
+    return ApphudComposite.fromJson(json);
+  }
+
+  static Future<String?> appStoreReceipt() async {
+    return (await _channel.invokeMethod('appStoreReceipt'))!;
+  }
+
+  static Future<bool> isSandbox() async {
+    final bool? value = await _channel.invokeMethod<bool>('isSandbox');
+    assert(value != null, 'Error getting isSandbox, value = null');
+    return value!;
+  }
+
+  static Future<void> setUserProperty({
+    required ApphudUserPropertyKey key,
+    dynamic? value,
+    bool setOnce = false,
+  }) async {
+    await _channel.invokeMethod(
+      'setUserProperty',
+      {
+        "key": key.keyName,
+        "value": value,
+        "setOnce": setOnce,
+      },
+    );
+  }
+
+  static Future<void> incrementUserProperty({
+    required ApphudUserPropertyKey key,
+    required dynamic by,
+  }) async {
+    await _channel.invokeMethod(
+      'incrementUserProperty',
+      {
+        "key": key.keyName,
+        "by": by,
+      },
+    );
+  }
+
+  static Future<void> disableAdTracking() =>
+      _channel.invokeMethod("disableAdTracking");
 }
