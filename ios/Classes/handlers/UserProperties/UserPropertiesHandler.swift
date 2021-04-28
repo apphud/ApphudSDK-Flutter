@@ -15,7 +15,7 @@ class UserPropertiesHandler: Handler {
         case AssociatedEnum.setUserProperty.rawValue:
             Action<SetUserPropertyRequest,SetUserPropertyArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.incrementUserProperty.rawValue:
-            break
+            Action<IncrementUserPropertyRequest,IncrementUserPropertyArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }
