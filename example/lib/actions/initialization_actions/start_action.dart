@@ -5,8 +5,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import '../action_screen.dart';
 
 class StartAction extends ActionFlow {
-  String apiKey = "app_DZzKAkuBWhe9nz3qeofJMU9PJezkxn";
-  String userID = "flutter_test_april_19";
+  String apiKey = "app_4sY9cLggXpMDDQMmvc5wXUPGReMp8G";
+  String userID = "d7f08a1a-a807-11eb-bcbc-0242ac130002";
   bool observerMode = true;
 
   Widget actionName() {
