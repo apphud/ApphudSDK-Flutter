@@ -15,24 +15,32 @@ import 'models/apphud_models/ios/apphud_purchase_result_ios.dart';
 import 'models/extensions.dart';
 
 class AppHud {
-  static const MethodChannel _channel = const MethodChannel('appHud');
+  static const MethodChannel _channel = MethodChannel('appHud');
 
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
+// Initialization
 
+  /// Initializes Apphud SDK. You should call it during app launch.
+  ///
+  /// - parameter [apiKey] is required. Your api key.
+  /// - parameter [userID] is optional. You can provide your own unique user identifier. If null passed then UUID will be generated instead.
+  /// - parameter [observerMode] is optional, iOS only. Sets SDK to Observer (i.e. Analytics) mode. If you purchase products by other code, then pass `true`. If you purchase products using `Apphud.purchase(..)` method, then pass `false`. Default value is `false`.
   static Future<void> start({
     required String apiKey,
     String? userID,
     bool? observerMode,
   }) =>
       _channel.invokeMethod('start', {
-        "apiKey": apiKey,
-        "userID": userID,
-        "observerMode": observerMode ?? false,
+        'apiKey': apiKey,
+        'userID': userID,
+        'observerMode': observerMode ?? false,
       });
 
+  /// Initializes Apphud SDK with User ID & Device ID pair. Not recommended for use unless you know what you are doing.
+  ///
+  /// - parameter [apiKey] is required. Your api key.
+  /// - parameter [userID] is optional. You can provide your own unique user identifier. If null passed then UUID will be generated instead.
+  /// - parameter [deviceID] is optional. You can provide your own unique device identifier. If null passed then UUID will be generated instead.
+  /// - parameter [observerMode] is optional, iOS only. Sets SDK to Observer (Analytics) mode. If you purchase products by your own code, then pass `true`. If you purchase products using `Apphud.purchase(product)` method, then pass `false`. Default value is `false`.
   static Future<void> startManually({
     required String apiKey,
     String? userID,
@@ -40,36 +48,64 @@ class AppHud {
     bool? observerMode,
   }) =>
       _channel.invokeMethod('startManually', {
-        "apiKey": apiKey,
-        "deviceID": deviceID,
-        "userID": userID,
-        "observerMode": observerMode ?? false,
+        'apiKey': apiKey,
+        'deviceID': deviceID,
+        'userID': userID,
+        'observerMode': observerMode ?? false,
       });
 
+  /// Updates user ID value.
+  ///
+  /// - parameter [userID] is required. New user ID value.
   static Future<void> updateUserID(String userID) =>
-      _channel.invokeMethod("updateUserID", {"userID": userID});
+      _channel.invokeMethod('updateUserID', {'userID': userID});
 
+  /// Returns current userID that identifies user across his multiple devices.
+  ///
+  /// This value may change in runtime.
   static Future<String> userID() async {
     return (await _channel.invokeMethod<String>('userID'))!;
   }
 
+  /// iOS only. Returns current device ID.
+  ///
+  /// You should use it only if you want to implement custom logout/login flow by saving User ID & Device ID pair for each app user.
   static Future<String> deviceID() async {
     return (await _channel.invokeMethod('deviceID'))!;
   }
 
-  static Future<void> logout() => _channel.invokeMethod("logout");
+  /// Logs out current user, clears all saved data and resets SDK to uninitialized state.
+  ///
+  /// You will need to call `Apphud.start()` or `Apphud.startManually()` again to initialize SDK with a new user.
+  /// This might be useful if you have your custom logout/login flow and you want to take control of each logged-in user's subscription status.
+  /// If previous user had active subscription, the new logged-in user can still restore purchases on this device and both users will be merged under the previous paid one, because Apple ID is tied to a device.
+  static Future<void> logout() => _channel.invokeMethod('logout');
 
+  // Make Purchase
+
+  /// iOS only. This notification is sent when SKProducts are fetched from StoreKit.
+  ///
+  /// Note that you have to add all product identifiers in Apphud.
+  /// You can use `productsDidFetchCallback` callback or observe for `didFetchProductsNotification()`. Use whatever you like most.
   static Future<String> didFetchProductsNotification() async {
     return (await _channel.invokeMethod('didFetchProductsNotification'))!;
   }
 
+  /// This callback is called when SKProducts are fetched from StoreKit (iOS) or Google Play Billing (Android).
+  ///
+  /// Note that you have to add all product identifiers in Apphud.
+  /// You can use `productsDidFetchCallback` (iOS) callback or observe for `didFetchProductsNotification()`. Use whatever you like most.
   static Future<List<ApphudProduct>> productsDidFetchCallback() async {
-    List<Map<dynamic, dynamic>> products = (await _channel
+    final List<Map<dynamic, dynamic>> products = (await _channel
             .invokeMethod<List<dynamic>>('productsDidFetchCallback'))!
         .toMapList;
     return products.map((json) => ApphudProduct.fromJson(json)).toList();
   }
 
+  /// iOS only. Refreshes SKProducts from the App Store.
+  ///
+  /// You have to add all product identifiers in Apphud.
+  /// You shouldn't call this method at app launch, because Apphud SDK automatically fetches products during initialization. Only use this method as a fallback.
   static Future<List<SKProductWrapper>> refreshStoreKitProducts() async {
     List<Map<dynamic, dynamic>> products =
         (await _channel.invokeMethod<List<dynamic>>('refreshStoreKitProducts'))!
@@ -78,16 +114,23 @@ class AppHud {
     return products.map((json) => SKProductWrapper.fromJson(json)).toList();
   }
 
+  /// Returns [ApphudProduct] object by [productIdentifier].
+  ///
+  /// Note that you have to add this product identifier in Apphud.
+  /// Will return `null` if product is not yet fetched from Google Play Billing (Android) or StoreKit (iOS).
   static Future<ApphudProduct?> product(String productIdentifier) async {
     final Map<dynamic, dynamic>? json =
         await _channel.invokeMethod<Map<dynamic, dynamic>>(
       'product',
-      {"productIdentifier": productIdentifier},
+      {'productIdentifier': productIdentifier},
     );
 
     return json != null ? ApphudProduct.fromJson(json) : null;
   }
 
+  /// Returns array of [ApphudProduct] objects that you added in Apphud.
+  ///
+  /// Note that this method will return `null` if products are not yet fetched. You should observe for `Apphud.didFetchProductsNotification()` notification (iOS) or use `productsDidFetchCallback` (iOS, Android).
   static Future<List<ApphudProduct>?> products() async {
     List<Map<dynamic, dynamic>>? products =
         (await _channel.invokeMethod<List<dynamic>>('products'))?.toMapList;

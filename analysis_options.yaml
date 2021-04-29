@@ -1,3 +1,5 @@
+include: package:pedantic/analysis_options.yaml
+
 analyzer:
   exclude:
   - "build/**"
@@ -9,4 +11,6 @@ analyzer:
 
 linter:
   rules:
-    - camel_case_types
+    camel_case_types: true
+    package_api_docs: true
+    omit_local_variable_types: false
