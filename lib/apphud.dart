@@ -81,7 +81,7 @@ class AppHud {
   /// If previous user had active subscription, the new logged-in user can still restore purchases on this device and both users will be merged under the previous paid one, because Apple ID is tied to a device.
   static Future<void> logout() => _channel.invokeMethod('logout');
 
-  // Make Purchase
+// Make Purchase
 
   /// iOS only. This notification is sent when SKProducts are fetched from StoreKit.
   ///
@@ -137,24 +137,40 @@ class AppHud {
     return products?.map((json) => ApphudProduct.fromJson(json)).toList();
   }
 
+  ///  Purchase product and automatically submits App Store Receipt (iOS) or Google Play purchase token (Android) to Apphud.
+  ///
+  /// iOS:  You are not required to purchase product using Apphud SDK methods. You can purchase subscription or any in-app purchase using your own code. App Store receipt will be sent to Apphud anyway.
+  /// - parameter [productId] ir required. Identifier of the product that user wants to purchase.
+  /// Returns [ApphudPurchase] object
   static Future<ApphudPurchase> purchase(String productId) async {
     final dynamic? json = await _channel.invokeMethod(
       'purchase',
-      {"productId": productId},
+      {'productId': productId},
     );
     return ApphudPurchase.fromJson(json);
   }
 
+  /// Purchase product and automatically submits App Store Receipt (iOS) or Google Play purchase token (Android) to Apphud.
+  ///
+  /// This method doesn't wait until Apphud validates receipt from Apple (iOS) or Google Play (Android) and immediately returns result object.
+  //  This method may be useful if you don't care about purchases validation in callback.
+  /// - parameter [productId] ir required. Identifier of the product that user wants to purchase.
+  /// Returns [ApphudPurchase] object
   static Future<ApphudPurchaseResultIos> purchaseWithoutValidation(
       String productId) async {
     final dynamic? json = await _channel.invokeMethod(
       'purchaseWithoutValidation',
-      {"productId": productId},
+      {'productId': productId},
     );
     return ApphudPurchaseResultIos.fromJson(json!);
   }
 
-//@available(iOS 12.2, *)
+  /// iOS >=12.2 only. Purchases subscription (promotional) offer and automatically submits App Store Receipt to Apphud.
+  ///
+  /// This method automatically sends in-app purchase receipt to Apphud, so you don't need to call `submitReceipt` method.
+  /// - parameter [productId] is required. This is an [productId] that user wants to purchase.
+  /// - parameter [discountID] is required. This is a Identifier String object that you would like to apply.
+  /// Returns [ApphudPurchaseResultIos] object.
   static Future<ApphudPurchaseResultIos> purchasePromo({
     required String productId,
     required String discountID,
@@ -162,23 +178,41 @@ class AppHud {
     final dynamic? json = await _channel.invokeMethod(
       'purchasePromo',
       {
-        "productId": productId,
-        "discountID": discountID,
+        'productId': productId,
+        'discountID': discountID,
       },
     );
     return ApphudPurchaseResultIos.fromJson(json!);
   }
 
+  ///  Displays an offer code redemption sheet.
+  static Future<void> presentOfferCodeRedemptionSheet() async {
+    await _channel.invokeMethod('presentOfferCodeRedemptionSheet');
+  }
+
+// Handle Purchases
+
+  /// Returns true if user has active subscription.
+  //
+  //  Use this method to determine whether or not to unlock premium functionality to the user.
   static Future<bool> hasActiveSubscription() async {
     return (await _channel.invokeMethod('hasActiveSubscription')) ?? false;
   }
 
+  ///  Returns [ApphudSubscriptionWrapper] subscription object that current user has ever purchased. Subscriptions are cached on device.
+  ///
+  ///  If returned object is not null, it doesn't mean that subsription is active.
+  ///  You should check `Apphud.hasActiveSubscription()` method or `subscription.isActive()` value to determine whether or not to unlock premium functionality to the user.
+  ///  If you have more than one subscription group in your app, use `subscriptions()` method and get `isActive` value for your desired subscription.
   static Future<ApphudSubscriptionWrapper?> subscription() async {
     final Map<dynamic, dynamic>? json =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('subscription');
     return json != null ? ApphudSubscriptionWrapper.fromJson(json) : null;
   }
 
+  /// Returns an array of all subscriptions that this user has ever purchased. Subscriptions are cached on device.
+  ///
+  /// Use this method if you have more than one subscription group in your app.
   static Future<List<ApphudSubscriptionWrapper>> subscriptions() async {
     final List<Map<dynamic, dynamic>>? subscriptions =
         (await _channel.invokeMethod<List<dynamic>>('subscriptions'))
@@ -191,6 +225,9 @@ class AppHud {
     return List<ApphudSubscriptionWrapper>.of([]);
   }
 
+  ///  Returns an array of all standard in-app purchases (consumables, non-consumables or non-renewing subscriptions) that this user has ever purchased.
+  ///
+  ///  Purchases are cached on device. This array is sorted by purchase date. Apphud only tracks consumables if they were purchased after integrating Apphud SDK.
   static Future<List<ApphudNonRenewingPurchase>> nonRenewingPurchases() async {
     final List<Map<dynamic, dynamic>>? purchases =
         (await _channel.invokeMethod<List<dynamic>>('nonRenewingPurchases'))
@@ -204,73 +241,21 @@ class AppHud {
     return List<ApphudNonRenewingPurchase>.of([]);
   }
 
+  /// Returns `true` if current user has purchased standard in-app purchase with given [productIdentifier].
+  ///
+  /// Returns `false` if this product is refunded or never purchased. Includes consumables, non-consumables or non-renewing subscriptions. Apphud only tracks consumables if they were purchased after integrating Apphud SDK.
+  /// Purchases are sorted by purchase date, so it returns Bool value for the most recent purchase by given product identifier.
   static Future<bool> isNonRenewingPurchaseActive(
     String productIdentifier,
   ) async {
     return (await _channel.invokeMethod<bool>(
           'isNonRenewingPurchaseActive',
-          {"productIdentifier": productIdentifier},
+          {'productIdentifier': productIdentifier},
         )) ??
         false;
   }
 
-  static Future<ApphudComposite> restorePurchases() async {
-    final Map<dynamic, dynamic> json = (await _channel
-        .invokeMethod<Map<dynamic, dynamic>>('restorePurchases'))!;
-
-    return ApphudComposite.fromJson(json);
-  }
-
-// Android only
-  static Future<void> syncPurchases() async {
-    await _channel.invokeMethod('syncPurchases');
-  }
-
-  static Future<ApphudComposite> migratePurchasesIfNeeded() async {
-    final Map<dynamic, dynamic> json = (await _channel
-        .invokeMethod<Map<dynamic, dynamic>>('migratePurchasesIfNeeded'))!;
-
-    return ApphudComposite.fromJson(json);
-  }
-
-  static Future<Map<String, dynamic>?> fetchRawReceiptInfo() async {
-    final Map<dynamic, dynamic>? json = await _channel.invokeMethod(
-      'fetchRawReceiptInfo',
-    );
-    return json != null ? Map<String, dynamic>.from(json) : null;
-  }
-
-  static Future<void> disableIDFACollection() async {
-    await _channel.invokeMethod('disableIDFACollection');
-  }
-
-  static Future<void> setAdvertisingIdentifier(String idfa) async {
-    await _channel.invokeMethod(
-      'setAdvertisingIdentifier',
-      {"idfa": idfa},
-    );
-  }
-
-  static Future<bool> addAttribution({
-    required Map<String, dynamic> data,
-    required ApphudAttributionProvider provider,
-    String? identifer,
-  }) async {
-    final bool isAdded = await _channel.invokeMethod("addAttribution", {
-      "data": data,
-      "from": provider.convertToString,
-      "identifer": identifer
-    });
-    return isAdded;
-  }
-
-  static Future<void> enableDebugLogs() =>
-      _channel.invokeMethod("enableDebugLogs");
-
-  static Future<void> presentOfferCodeRedemptionSheet() async {
-    await _channel.invokeMethod('presentOfferCodeRedemptionSheet');
-  }
-
+  /// iOS only. Basically the same as restoring purchases.
   static Future<ApphudComposite> validateReceipt() async {
     final Map<dynamic, dynamic> json = (await _channel
         .invokeMethod<Map<dynamic, dynamic>>('validateReceipt'))!;
@@ -278,16 +263,79 @@ class AppHud {
     return ApphudComposite.fromJson(json);
   }
 
+  /// iOS only. Implements `Restore Purchases` mechanism. Basically it just sends current App Store Receipt to Apphud and returns subscriptions info.
+  ///
+  /// Even if callback returns some subscription, it doesn't mean that subscription is active. You should check `subscription.isActive()` value.
+  /// Returns [ApphudComposite] contain array of subscription (or subscriptions in case you have more than one subscription group), array of standard in-app purchases.
+  static Future<ApphudComposite> restorePurchases() async {
+    final Map<dynamic, dynamic> json = (await _channel
+        .invokeMethod<Map<dynamic, dynamic>>('restorePurchases'))!;
+
+    return ApphudComposite.fromJson(json);
+  }
+
+  /// Android only. This method will send all the purchases to the Apphud server.
+  ///
+  /// Call this when using your own implementation for subscriptions anytime a sync is needed, like after a successful purchase.
+  static Future<void> syncPurchases() async {
+    await _channel.invokeMethod('syncPurchases');
+  }
+
+  /// iOS only. If you already have a live app with paying users and you want Apphud to track their purchases, you should import their App Store receipts into Apphud. Call this method at launch of your app for your paying users. This method should be used only to migrate existing paying users that are not yet tracked by Apphud.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// // hasPurchases - is your own `bool` value indicating that current user is paying user.
+  /// if (hasPurchases) {
+  ///     final ApphudComposite apphudComposite = await Apphud.migratePurchasesIfNeeded();
+  /// }
+  /// ```
+  ///
+  /// You can remove this method after a some period of time, i.e. when you are sure that all paying users are already synced with Apphud.
+  static Future<ApphudComposite> migratePurchasesIfNeeded() async {
+    final Map<dynamic, dynamic> json = (await _channel
+        .invokeMethod<Map<dynamic, dynamic>>('migratePurchasesIfNeeded'))!;
+
+    return ApphudComposite.fromJson(json);
+  }
+
+  /// iOS only. Returns base64 encoded App Store receipt string, if available.
   static Future<String?> appStoreReceipt() async {
     return (await _channel.invokeMethod('appStoreReceipt'))!;
   }
 
-  static Future<bool> isSandbox() async {
-    final bool? value = await _channel.invokeMethod<bool>('isSandbox');
-    assert(value != null, 'Error getting isSandbox, value = null');
-    return value!;
+  /// iOS only. Fetches raw receipt info. This might be useful to get `original_application_version` value.
+  static Future<Map<String, dynamic>?> fetchRawReceiptInfo() async {
+    final Map<dynamic, dynamic>? json = await _channel.invokeMethod(
+      'fetchRawReceiptInfo',
+    );
+    return json != null ? Map<String, dynamic>.from(json) : null;
   }
 
+// User Properties
+
+  /// Set custom user property. Value must be one of: `int`, `float`, `bool`, `String`, `null`.
+
+  /// Example:
+  /// ```dart
+  /// // use built-in property key
+  /// Apphud.setUserProperty(key: ApphudUserPropertyKey.email, value: 'user4@example.com', setOnce: true)
+  /// // use custom property key
+  /// Apphud.setUserProperty(key: ApphudUserPropertyKey.customProperty('custom_test_property_1'), value: 0.5)
+  /// ```
+  ///
+  /// You can use several built-in keys with their value types:
+  /// `ApphudUserPropertyKey.email`: User email. Value must be String.
+  /// `ApphudUserPropertyKey.name`: User name. Value must be String.
+  /// `ApphudUserPropertyKey.phone`: User phone number. Value must be String.
+  /// `ApphudUserPropertyKey.age`: User age. Value must be Int.
+  /// `ApphudUserPropertyKey.gender`: User gender. Value must be one of: 'male', 'female', 'other'.
+  /// `ApphudUserPropertyKey.cohort`: User install cohort. Value must be String.
+  ///
+  /// - parameter [key] is required. Initialize class with custom string or using built-in keys. See example above.
+  /// - parameter [value] is required/optional. Pass `null` to remove given property from Apphud.
+  /// - parameter [setOnce] is optional. Pass `true` to make this property non-updatable.
   static Future<void> setUserProperty({
     required ApphudUserPropertyKey key,
     dynamic? value,
@@ -296,13 +344,21 @@ class AppHud {
     await _channel.invokeMethod(
       'setUserProperty',
       {
-        "key": key.keyName,
-        "value": value,
-        "setOnce": setOnce,
+        'key': key.keyName,
+        'value': value,
+        'setOnce': setOnce,
       },
     );
   }
 
+  /// Increment custom user property. Value must be one of: `int`, `float`
+  ///
+  /// Example:
+  /// ```dart
+  /// Apphud.incrementUserProperty(key: ApphudUserPropertyKey.customProperty('progress'), by: 0.5)
+  /// ```
+  /// - parameter [key] is required. Use your custom string key or some of built-in keys.
+  /// - parameter by is required. You can pass negative value to decrement.
   static Future<void> incrementUserProperty({
     required ApphudUserPropertyKey key,
     required dynamic by,
@@ -310,12 +366,65 @@ class AppHud {
     await _channel.invokeMethod(
       'incrementUserProperty',
       {
-        "key": key.keyName,
-        "by": by,
+        'key': key.keyName,
+        'by': by,
       },
     );
   }
 
+// Attribution
+
+  /// iOS only. Submit Advertising Identifier (IDFA) to Apphud.
+  ///
+  /// This is used to properly match user with attribution platforms (AppsFlyer, Facebook, etc.)
+  static Future<void> setAdvertisingIdentifier(String idfa) async {
+    await _channel.invokeMethod(
+      'setAdvertisingIdentifier',
+      {'idfa': idfa},
+    );
+  }
+
+  /// iOS only. Opt out of IDFA collection.
+  ///
+  /// Currently we collect IDFA to match users between Apphud and attribution platforms (AppsFlyer, Branch). If you don't use and not planning to use such services, you can call this method.
+  /// This method must be called before Apphud SDK initialization.
+  static Future<void> disableIDFACollection() async {
+    await _channel.invokeMethod('disableIDFACollection');
+  }
+
+  ///  Submit attribution data to Apphud from your attribution network provider.
+  ///
+  /// - parameter [data] is required. Attribution 'map'.
+  /// - parameter [provider] is required. Attribution provider name. Available values: `ApphudAttributionProvider.appsFlyer`, `ApphudAttributionProvider.adjust`, `ApphudAttributionProvider.appleSearchAds`, `ApphudAttributionProvider.facebook`.
+  /// - parameter [identifier] is optional. Identifier that matches Apphud and Attrubution provider. Required for AppsFlyer.
+  /// Returns true if successfully sent.
+  static Future<bool> addAttribution({
+    required Map<String, dynamic> data,
+    required ApphudAttributionProvider provider,
+    String? identifier,
+  }) async {
+    final bool isAdded = await _channel.invokeMethod('addAttribution', {
+      'data': data,
+      'from': provider.convertToString,
+      'identifer': identifier
+    });
+    return isAdded;
+  }
+
+  /// Android only. Disables Ad tracking.
   static Future<void> disableAdTracking() =>
-      _channel.invokeMethod("disableAdTracking");
+      _channel.invokeMethod('disableAdTracking');
+
+// Other
+
+  /// Enables debug logs. You should call this method before SDK initialization.
+  static Future<void> enableDebugLogs() =>
+      _channel.invokeMethod('enableDebugLogs');
+
+  ///  iOS only. Returns `true` if current build is running on simulator or Debug/TestFlight modes. Returns `false` if current build is App Store build.
+  static Future<bool> isSandbox() async {
+    final bool? value = await _channel.invokeMethod<bool>('isSandbox');
+    assert(value != null, 'Error getting isSandbox, value = null');
+    return value!;
+  }
 }
