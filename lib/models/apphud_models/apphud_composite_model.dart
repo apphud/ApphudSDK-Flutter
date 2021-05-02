@@ -10,10 +10,10 @@ class ApphudComposite {
 
   factory ApphudComposite.fromJson(Map<dynamic, dynamic> map) {
     final List<Map<dynamic, dynamic>>? purchasesJson =
-        (map["nrPurchases"] as List<dynamic>?)?.toMapList;
+        (map['nrPurchases'] as List<dynamic>?)?.toMapList;
 
     final List<Map<dynamic, dynamic>>? subscriptionsJson =
-        (map["subscriptions"] as List<dynamic>?)?.toMapList;
+        (map['subscriptions'] as List<dynamic>?)?.toMapList;
 
     final List<ApphudNonRenewingPurchase> purchases = purchasesJson != null
         ? purchasesJson

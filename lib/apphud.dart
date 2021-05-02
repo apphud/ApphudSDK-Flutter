@@ -155,7 +155,7 @@ class AppHud {
   /// This method doesn't wait until Apphud validates receipt from Apple (iOS) or Google Play (Android) and immediately returns result object.
   //  This method may be useful if you don't care about purchases validation in callback.
   /// - parameter [productId] ir required. Identifier of the product that user wants to purchase.
-  /// Returns [ApphudPurchase] object
+  /// Returns [ApphudPurchaseResultIos] object
   static Future<ApphudPurchaseResultIos> purchaseWithoutValidation(
       String productId) async {
     final dynamic? json = await _channel.invokeMethod(
