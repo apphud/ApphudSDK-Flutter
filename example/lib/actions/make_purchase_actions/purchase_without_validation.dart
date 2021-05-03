@@ -7,7 +7,7 @@ import '../action_screen.dart';
 
 class PurchaseWithoutValidationAction extends ActionFlow {
   String parameterName = "productIdentifier";
-  String parameterValue = "productMonthly";
+  String parameterValue = "com.apphud.weekly";
 
   @override
   Widget actionName() {
