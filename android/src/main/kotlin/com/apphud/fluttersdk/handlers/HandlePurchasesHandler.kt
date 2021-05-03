@@ -36,7 +36,7 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
     private fun subscription(result: MethodChannel.Result) {
         val subscription = Apphud.subscription()
         if (subscription != null) {
-            val dict:HashMap<String, Any?> = getSubscriptionMap(subscription)
+            val dict: HashMap<String, Any?> = DataTransformer.subscription(subscription)
             result.success(dict)
         } else {
             result.success(null)
@@ -46,34 +46,18 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
     private fun subscriptions(result: MethodChannel.Result) {
         val subscriptions = Apphud.subscriptions()
         val jsonList: List<HashMap<String, Any?>> = subscriptions.map {
-            getSubscriptionMap(it)
+            DataTransformer.subscription(it)
         }
 
         result.success(jsonList)
     }
 
-    private fun getSubscriptionMap(subscription: ApphudSubscription): HashMap<String, Any?> {
-        return hashMapOf(
-                "productId" to subscription.productId,
-                "expiresAt" to subscription.expiresAt,
-                "startedAt" to subscription.startedAt,
-                "canceledAt" to subscription.cancelledAt,
-                "isInRetryBilling" to subscription.isInRetryBilling,
-                "isAutorenewEnabled" to subscription.isAutoRenewEnabled,
-                "isIntroductoryActivated" to subscription.isIntroductoryActivated,
-                "isActive" to subscription.isActive(),
-                "status" to subscription.status.name.toLowerCase())
-    }
 
     private fun nonRenewingPurchases(result: MethodChannel.Result) {
         val nonRenewingPurchases = Apphud.nonRenewingPurchases()
 
         val jsonList: List<HashMap<String, Any?>> = nonRenewingPurchases.map {
-            hashMapOf(
-                    "productId" to it.productId,
-                    "purchasedAt" to it.purchasedAt,
-                    "canceledAt" to it.canceledAt,
-                    "isActive" to it.isActive())
+            DataTransformer.nonRenewingPurchase(it)
         }
 
         result.success(jsonList)

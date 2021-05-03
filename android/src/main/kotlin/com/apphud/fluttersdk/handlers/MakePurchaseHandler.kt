@@ -32,28 +32,10 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
 
     private fun productsDidFetchCallback(result: MethodChannel.Result) {
         Apphud.productsFetchCallback { skuProducts ->
-
             val jsonList: List<HashMap<String, Any?>> = skuProducts.map {
-                hashMapOf(
-                        "description" to it.description,
-                        "freeTrialPeriod" to it.freeTrialPeriod,
-                        "introductoryPrice" to it.introductoryPrice,
-                        "introductoryPriceAmountMicros" to it.introductoryPriceAmountMicros,
-                        "introductoryPriceCycles" to it.introductoryPriceCycles,
-                        "introductoryPricePeriod" to it.introductoryPricePeriod,
-                        "price" to it.price,
-                        "priceAmountMicros" to it.priceAmountMicros,
-                        "priceCurrencyCode" to it.priceCurrencyCode,
-                        "sku" to it.sku,
-                        "subscriptionPeriod" to it.subscriptionPeriod,
-                        "title" to it.title,
-                        "type" to it.type,
-                        "originalPrice" to it.originalPrice,
-                        "originalPriceAmountMicros" to it.originalPriceAmountMicros
-                )
+                DataTransformer.skuDetails(it)
             }
             result.success(jsonList)
-
         }
     }
 
@@ -61,23 +43,7 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
         val skuProducts = Apphud.products()
         if (skuProducts != null) {
             val jsonList: List<HashMap<String, Any?>> = skuProducts.map {
-                hashMapOf(
-                        "description" to it.description,
-                        "freeTrialPeriod" to it.freeTrialPeriod,
-                        "introductoryPrice" to it.introductoryPrice,
-                        "introductoryPriceAmountMicros" to it.introductoryPriceAmountMicros,
-                        "introductoryPriceCycles" to it.introductoryPriceCycles,
-                        "introductoryPricePeriod" to it.introductoryPricePeriod,
-                        "price" to it.price,
-                        "priceAmountMicros" to it.priceAmountMicros,
-                        "priceCurrencyCode" to it.priceCurrencyCode,
-                        "sku" to it.sku,
-                        "subscriptionPeriod" to it.subscriptionPeriod,
-                        "title" to it.title,
-                        "type" to it.type,
-                        "originalPrice" to it.originalPrice,
-                        "originalPriceAmountMicros" to it.originalPriceAmountMicros
-                )
+                DataTransformer.skuDetails(it)
             }
             result.success(jsonList)
         } else {
@@ -86,47 +52,35 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
     }
 
     private fun product(productIdentifier: String, result: MethodChannel.Result) {
-        val skuProduct = Apphud.product(productIdentifier = productIdentifier)
-
-        if (skuProduct != null) {
-            val dict = hashMapOf(
-                    "description" to skuProduct.description,
-                    "freeTrialPeriod" to skuProduct.freeTrialPeriod,
-                    "introductoryPrice" to skuProduct.introductoryPrice,
-                    "introductoryPriceAmountMicros" to skuProduct.introductoryPriceAmountMicros,
-                    "introductoryPriceCycles" to skuProduct.introductoryPriceCycles,
-                    "introductoryPricePeriod" to skuProduct.introductoryPricePeriod,
-                    "price" to skuProduct.price,
-                    "priceAmountMicros" to skuProduct.priceAmountMicros,
-                    "priceCurrencyCode" to skuProduct.priceCurrencyCode,
-                    "sku" to skuProduct.sku,
-                    "subscriptionPeriod" to skuProduct.subscriptionPeriod,
-                    "title" to skuProduct.title,
-                    "type" to skuProduct.type,
-                    "originalPrice" to skuProduct.originalPrice,
-                    "originalPriceAmountMicros" to skuProduct.originalPriceAmountMicros
-            )
-            result.success(dict)
+        val skuDetails = Apphud.product(productIdentifier = productIdentifier)
+        if (skuDetails != null) {
+            result.success(DataTransformer.skuDetails(skuDetails))
         } else {
             result.success(null)
         }
     }
 
     private fun purchase(productId: String, result: MethodChannel.Result) {
-        Apphud.purchase(activity, productId) { purchases ->
-            val jsonList: List<HashMap<String, Any?>> = purchases.map {
-                hashMapOf(
-                        "orderId" to it.orderId,
-                        "originalJson" to it.originalJson,
-                        "packageName" to it.packageName,
-                        "purchaseState" to it.purchaseState,
-                        "purchaseTime" to it.purchaseTime,
-                        "purchaseToken" to it.purchaseToken,
-                        "signature" to it.signature,
-                        "sku" to it.sku
-                )
+        Apphud.purchase(activity, productId) { purchaseResult ->
+            val resultMap = hashMapOf<String, Any?>()
+
+            purchaseResult.subscription?.let {
+                resultMap["subscription"] = DataTransformer.subscription(it)
             }
-            result.success(jsonList)
+
+            purchaseResult.nonRenewingPurchase?.let {
+                resultMap["nonRenewingPurchase"] = DataTransformer.nonRenewingPurchase(it)
+            }
+
+            purchaseResult.purchase?.let {
+                resultMap["purchase"] = DataTransformer.purchase(it)
+            }
+
+            purchaseResult.purchase?.let {
+                resultMap["error"] = it.toString()
+            }
+
+            result.success(resultMap)
         }
     }
 
