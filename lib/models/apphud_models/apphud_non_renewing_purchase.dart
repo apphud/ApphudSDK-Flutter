@@ -7,10 +7,12 @@ class ApphudNonRenewingPurchase {
   final String productId;
   final double purchasedAt;
   final double? canceledAt;
+  final bool isActive;
 
   ApphudNonRenewingPurchase({
     required this.productId,
     required this.purchasedAt,
+    required this.isActive,
     this.canceledAt,
   });
 
@@ -19,6 +21,6 @@ class ApphudNonRenewingPurchase {
 
   @override
   String toString() {
-    return 'ApphudNonRenewingPurchase{productId: $productId, purchasedAt: $purchasedAt, canceledAt: $canceledAt}';
+    return 'ApphudNonRenewingPurchase{productId: $productId, purchasedAt: $purchasedAt, canceledAt: $canceledAt, isActive: $isActive}';
   }
 }

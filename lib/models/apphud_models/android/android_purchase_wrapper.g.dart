@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'apphud_purchase_result_android.dart';
+part of 'android_purchase_wrapper.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApphudPurchaseResultAndroid _$ApphudPurchaseResultAndroidFromJson(Map json) {
-  return ApphudPurchaseResultAndroid(
+AndroidPurchaseWrapper _$AndroidPurchaseWrapperFromJson(Map json) {
+  return AndroidPurchaseWrapper(
     orderId: json['orderId'] as String,
     packageName: json['packageName'] as String,
     purchaseState: json['purchaseState'] as int,
@@ -19,8 +19,8 @@ ApphudPurchaseResultAndroid _$ApphudPurchaseResultAndroidFromJson(Map json) {
   );
 }
 
-Map<String, dynamic> _$ApphudPurchaseResultAndroidToJson(
-        ApphudPurchaseResultAndroid instance) =>
+Map<String, dynamic> _$AndroidPurchaseWrapperToJson(
+        AndroidPurchaseWrapper instance) =>
     <String, dynamic>{
       'orderId': instance.orderId,
       'packageName': instance.packageName,

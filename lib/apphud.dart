@@ -4,14 +4,12 @@ import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
-import 'package:apphud/models/mapper.dart';
 import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
 import 'package:flutter/services.dart';
 
 import 'models/apphud_models/apphud_attribution_provider.dart';
 import 'models/apphud_models/composite/apphud_product.dart';
-import 'models/apphud_models/composite/apphud_purchase.dart';
-import 'models/apphud_models/ios/apphud_purchase_result_ios.dart';
+import 'models/apphud_models/composite/apphud_purchase_result.dart';
 import 'models/extensions.dart';
 
 class AppHud {
@@ -142,12 +140,12 @@ class AppHud {
   /// iOS:  You are not required to purchase product using Apphud SDK methods. You can purchase subscription or any in-app purchase using your own code. App Store receipt will be sent to Apphud anyway.
   /// - parameter [productId] ir required. Identifier of the product that user wants to purchase.
   /// Returns [ApphudPurchase] object
-  static Future<ApphudPurchase> purchase(String productId) async {
+  static Future<ApphudPurchaseResult> purchase(String productId) async {
     final dynamic? json = await _channel.invokeMethod(
       'purchase',
       {'productId': productId},
     );
-    return ApphudPurchase.fromJson(json);
+    return ApphudPurchaseResult.fromJson(json);
   }
 
   /// Purchase product and automatically submits App Store Receipt (iOS) or Google Play purchase token (Android) to Apphud.
@@ -155,14 +153,14 @@ class AppHud {
   /// This method doesn't wait until Apphud validates receipt from Apple (iOS) or Google Play (Android) and immediately returns result object.
   //  This method may be useful if you don't care about purchases validation in callback.
   /// - parameter [productId] ir required. Identifier of the product that user wants to purchase.
-  /// Returns [ApphudPurchaseResultIos] object
-  static Future<ApphudPurchaseResultIos> purchaseWithoutValidation(
+  /// Returns [ApphudPurchaseResult] object
+  static Future<ApphudPurchaseResult> purchaseWithoutValidation(
       String productId) async {
     final dynamic? json = await _channel.invokeMethod(
       'purchaseWithoutValidation',
       {'productId': productId},
     );
-    return ApphudPurchaseResultIos.fromJson(json!);
+    return ApphudPurchaseResult.fromJson(json!);
   }
 
   /// iOS >=12.2 only. Purchases subscription (promotional) offer and automatically submits App Store Receipt to Apphud.
@@ -170,8 +168,8 @@ class AppHud {
   /// This method automatically sends in-app purchase receipt to Apphud, so you don't need to call `submitReceipt` method.
   /// - parameter [productId] is required. This is an [productId] that user wants to purchase.
   /// - parameter [discountID] is required. This is a Identifier String object that you would like to apply.
-  /// Returns [ApphudPurchaseResultIos] object.
-  static Future<ApphudPurchaseResultIos> purchasePromo({
+  /// Returns [ApphudPurchaseResult] object.
+  static Future<ApphudPurchaseResult> purchasePromo({
     required String productId,
     required String discountID,
   }) async {
@@ -182,7 +180,7 @@ class AppHud {
         'discountID': discountID,
       },
     );
-    return ApphudPurchaseResultIos.fromJson(json!);
+    return ApphudPurchaseResult.fromJson(json!);
   }
 
   ///  Displays an offer code redemption sheet.

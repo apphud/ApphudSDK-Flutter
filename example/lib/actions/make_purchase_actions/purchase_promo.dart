@@ -1,9 +1,7 @@
-import 'package:appHud_example/widgets/apphud_purchase_result_ios_widget.dart';
+import 'package:appHud_example/widgets/apphud_purchase_result_widget.dart';
 import 'package:apphud/apphud.dart';
-import 'package:apphud/models/apphud_models/ios/apphud_purchase_result_ios.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:apphud/models/apphud_models/composite/apphud_purchase_result.dart';
 import 'package:flutter/material.dart';
-
 import '../action_screen.dart';
 
 class PurchasePromoAction extends ActionFlow {
@@ -27,20 +25,20 @@ class PurchasePromoAction extends ActionFlow {
   }
 
   Widget actionResponse() {
-    return FutureBuilder<ApphudPurchaseResultIos>(
+    return FutureBuilder<ApphudPurchaseResult>(
       future: AppHud.purchasePromo(
         productId: parameterValue,
         discountID: parameterValue2,
       ),
       builder: (
         BuildContext context,
-        AsyncSnapshot<ApphudPurchaseResultIos> snapshot,
+        AsyncSnapshot<ApphudPurchaseResult> snapshot,
       ) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) return Text(snapshot.error.toString());
 
           return Expanded(
-            child: ApphudPurchaseResultIosWidget(resultIos: snapshot.data),
+            child: ApphudPurchaseResultWidget(result: snapshot.data),
           );
         }
         return Text("Waiting...");
