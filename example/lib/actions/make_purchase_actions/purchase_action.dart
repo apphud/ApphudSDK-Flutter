@@ -9,7 +9,7 @@ import '../action_screen.dart';
 
 class PurchaseAction extends ActionFlow {
   String parameterName = "productIdentifier";
-  String iOSValue = "productWeekly";
+  String iOSValue = "com.apphud.weekly";
   String androidValue = "com.apphud.test.weekly1";
 
   @override
