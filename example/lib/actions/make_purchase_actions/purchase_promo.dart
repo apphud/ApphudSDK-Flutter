@@ -6,7 +6,7 @@ import '../action_screen.dart';
 
 class PurchasePromoAction extends ActionFlow {
   String parameterName = "productIdentifier";
-  String parameterValue = "productMonthly";
+  String parameterValue = "com.apphud.weekly";
   String parameterValue2 = "promo_1_month_free";
 
   @override
