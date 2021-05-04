@@ -15,7 +15,8 @@ final class ValidateReceiptRequest: Request {
                 
                 result(["subscriptions": subscriptionsJson,
                         "nrPurchases": nrPurchasesJson,
-                        "error" : error?.debugDescription)])
+                        "error" : error?.localizedDescription
+                        ])
         }
     }
 }

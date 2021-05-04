@@ -25,8 +25,7 @@ class SKPaymentTransactionWidget extends StatelessWidget {
   }
 
   _buildResult(SKPaymentTransactionWrapper transaction) {
-    return CardWrapper(
-      child: Column(
+    return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
@@ -51,7 +50,6 @@ class SKPaymentTransactionWidget extends StatelessWidget {
             subtitle: Text(transaction.payment?.toString() ?? 'null'),
           ),
         ],
-      ),
     );
   }
 }

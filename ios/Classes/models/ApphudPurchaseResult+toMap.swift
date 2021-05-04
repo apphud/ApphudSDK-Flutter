@@ -12,7 +12,7 @@ extension ApphudPurchaseResult {
     func toMap() -> [String: Any?] {
         return ["subscription" : subscription?.toMap(),
                 "nonRenewingPurchase" : nonRenewingPurchase?.toMap(),
-                "error": error?.debugDescription,
+                "error": error?.localizedDescription,
                 "transaction": transaction?.toMap()
         ]
     }
