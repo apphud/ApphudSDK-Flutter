@@ -261,7 +261,7 @@ class AppHud {
     return ApphudComposite.fromJson(json);
   }
 
-  /// iOS only. Implements `Restore Purchases` mechanism. Basically it just sends current App Store Receipt to Apphud and returns subscriptions info.
+  /// Implements `Restore Purchases` mechanism. Basically it just sends current App Store Receipt (iOS) or  Play Market Purchase Tokens (Android) to Apphud and returns subscriptions info.
   ///
   /// Even if callback returns some subscription, it doesn't mean that subscription is active. You should check `subscription.isActive()` value.
   /// Returns [ApphudComposite] contain array of subscription (or subscriptions in case you have more than one subscription group), array of standard in-app purchases.
