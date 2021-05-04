@@ -5,7 +5,7 @@ import com.apphud.sdk.Apphud
 import com.google.gson.Gson
 import io.flutter.plugin.common.MethodChannel
 import com.apphud.sdk.domain.ApphudSubscription
-
+import android.util.Log
 
 class HandlePurchasesHandler(override val routes: List<String>, val context: Context) : Handler {
 
@@ -20,7 +20,7 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             HandlePurchasesRoutes.isNonRenewingPurchaseActive.name -> IsNonRenewingPurchaseActiveParser(result).parse(args) { productId ->
                 isNonRenewingPurchaseActive(productId, result)
             }
-            HandlePurchasesRoutes.restorePurchases.name -> result.notImplemented()
+            HandlePurchasesRoutes.restorePurchases.name -> restorePurchases(result)
             HandlePurchasesRoutes.migratePurchasesIfNeeded.name -> result.notImplemented()
             HandlePurchasesRoutes.fetchRawReceiptInfo.name -> result.notImplemented()
             HandlePurchasesRoutes.validateReceipt.name -> result.notImplemented()
@@ -69,7 +69,35 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
     }
 
     private fun restorePurchases(result: MethodChannel.Result) {
-        // not implemented
+        Apphud.restorePurchases { apphudSubscriptionList, apphudNonRenewingPurchaseList, error ->
+            Log.d("Apphud", "Flutter restorePurchases was called")
+            try {
+
+                val resultMap = hashMapOf<String, Any?>()
+
+                apphudSubscriptionList?.let {
+                    val subscriptionJsonList: List<HashMap<String, Any?>> = it.map { s ->
+                        DataTransformer.subscription(s)
+                    }
+                    resultMap["subscriptions"] = subscriptionJsonList
+                }
+
+                apphudNonRenewingPurchaseList?.let {
+                    val nrPurchasesJsonList: List<HashMap<String, Any?>> = it.map { p ->
+                        DataTransformer.nonRenewingPurchase(p)
+                    }
+                    resultMap["nrPurchases"] = nrPurchasesJsonList
+                }
+
+                error?.let {
+                    resultMap["error"] = it.toString()
+                }
+
+                result.success(resultMap)
+            } catch (e: Exception) {
+                Log.e("Apphud", "Flutter restorePurchases error: ${e.toString()}")
+            }
+        }
     }
 
     private fun migratePurchasesIfNeeded(result: MethodChannel.Result) {

@@ -5,8 +5,10 @@ import 'package:apphud/models/extensions.dart';
 class ApphudComposite {
   final List<ApphudNonRenewingPurchase> purchases;
   final List<ApphudSubscriptionWrapper> subscriptions;
+  final String? error;
 
-  ApphudComposite({required this.purchases, required this.subscriptions});
+  ApphudComposite(
+      {required this.purchases, required this.subscriptions, this.error});
 
   factory ApphudComposite.fromJson(Map<dynamic, dynamic> map) {
     final List<Map<dynamic, dynamic>>? purchasesJson =
@@ -28,6 +30,10 @@ class ApphudComposite {
                 .toList()
             : List<ApphudSubscriptionWrapper>.of([]);
 
-    return ApphudComposite(purchases: purchases, subscriptions: subscriptions);
+    return ApphudComposite(
+      purchases: purchases,
+      subscriptions: subscriptions,
+      error: map['error'],
+    );
   }
 }

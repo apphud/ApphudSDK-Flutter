@@ -53,6 +53,14 @@ class ApphudNonRenewingPurchaseWidget extends StatelessWidget {
             title: Text("isActive"),
             subtitle: Text(purchase.isActive.toString()),
           ),
+          ListTile(
+            title: Text("isSandbox"),
+            subtitle: Text(purchase.isSandbox?.toString() ?? 'null'),
+          ),
+          ListTile(
+            title: Text("isLocal"),
+            subtitle: Text(purchase.isLocal?.toString() ?? 'null'),
+          ),
         ],
       ),
     );

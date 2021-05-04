@@ -1,3 +1,4 @@
+import 'package:appHud_example/widgets/card_wrapper.dart';
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,12 @@ class ApphudCompositeWidget extends StatelessWidget {
           return Expanded(
             child: ListView(
               children: [
+                CardWrapper(
+                  child: ListTile(
+                    title: Text('Error'),
+                    subtitle: Text(snapshot.data?.error ?? 'No error'),
+                  ),
+                ),
                 ...purchaseWidgets,
                 ...subscriptionWidgets,
               ],

@@ -19,7 +19,7 @@ class AndroidPurchaseWidget extends StatelessWidget {
         ),
       );
 
-    return _buildResultAndroidList(purchase!);
+    return CardWrapper(child: _buildResultAndroidList(purchase!));
   }
 
   _buildResultAndroidList(AndroidPurchaseWrapper purchase) {

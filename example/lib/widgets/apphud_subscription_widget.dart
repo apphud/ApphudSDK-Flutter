@@ -15,7 +15,7 @@ class ApphudSubscriptionWidget extends StatelessWidget {
         ? Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Not existing subscription'),
+              child: Text('ApphudSubscriptionWrapper not present'),
             ),
           )
         : _buildSubscription(subscription!);
@@ -70,7 +70,15 @@ class ApphudSubscriptionWidget extends StatelessWidget {
         ListTile(
           title: Text("isIntroductoryActivated"),
           subtitle: Text(subscriptionLocal.isIntroductoryActivated.toString()),
-        )
+        ),
+        ListTile(
+          title: Text("isSandbox"),
+          subtitle: Text(subscriptionLocal.isSandbox?.toString() ?? 'null'),
+        ),
+        ListTile(
+          title: Text("isLocal"),
+          subtitle: Text(subscriptionLocal.isLocal?.toString() ?? 'null'),
+        ),
       ],
     );
   }

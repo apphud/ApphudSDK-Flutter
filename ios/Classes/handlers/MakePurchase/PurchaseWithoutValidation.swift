@@ -13,11 +13,7 @@ final class PurchaseWithoutValidationRequest: Request {
 
     func startRequest(arguments: (String), result: @escaping FlutterResult) {
         Apphud.purchaseWithoutValidation(arguments) { (response) in
-            if (response.error != nil) {
-                result(FlutterError(code: "500", message: response.error.debugDescription, details: nil))
-            } else {
-                result(response.toMap())
-            }
+            result(response.toMap())
         }
     }
 }
