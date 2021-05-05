@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'apphud_purchase_result_ios.dart';
+part of 'apphud_purchase_result.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApphudPurchaseResultIos _$ApphudPurchaseResultIosFromJson(Map json) {
-  return ApphudPurchaseResultIos(
+ApphudPurchaseResult _$ApphudPurchaseResultFromJson(Map json) {
+  return ApphudPurchaseResult(
     subscription: json['subscription'] == null
         ? null
         : ApphudSubscriptionWrapper.fromJson(json['subscription'] as Map),
@@ -18,13 +18,19 @@ ApphudPurchaseResultIos _$ApphudPurchaseResultIosFromJson(Map json) {
     transaction: json['transaction'] == null
         ? null
         : SKPaymentTransactionWrapper.fromJson(json['transaction'] as Map),
+    purchase: json['purchase'] == null
+        ? null
+        : AndroidPurchaseWrapper.fromJson(json['purchase'] as Map),
+    error: json['error'] as String?,
   );
 }
 
-Map<String, dynamic> _$ApphudPurchaseResultIosToJson(
-        ApphudPurchaseResultIos instance) =>
+Map<String, dynamic> _$ApphudPurchaseResultToJson(
+        ApphudPurchaseResult instance) =>
     <String, dynamic>{
       'subscription': instance.subscription,
       'nonRenewingPurchase': instance.nonRenewingPurchase,
       'transaction': instance.transaction,
+      'purchase': instance.purchase,
+      'error': instance.error,
     };

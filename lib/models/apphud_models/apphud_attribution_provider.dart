@@ -4,13 +4,13 @@ extension ApphudAttributionProviderConverter on ApphudAttributionProvider {
   String get convertToString {
     switch (this) {
       case ApphudAttributionProvider.appsFlyer:
-        return "appsFlyer";
+        return 'appsFlyer';
       case ApphudAttributionProvider.adjust:
-        return "adjust";
+        return 'adjust';
       case ApphudAttributionProvider.appleSearchAds:
-        return "appleSearchAds";
+        return 'appleSearchAds';
       case ApphudAttributionProvider.facebook:
-        return "facebook";
+        return 'facebook';
     }
   }
 }

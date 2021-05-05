@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'apphud_purchase_result_android.g.dart';
+part 'android_purchase_wrapper.g.dart';
 
 @JsonSerializable(anyMap: true)
-class ApphudPurchaseResultAndroid {
+class AndroidPurchaseWrapper {
   final String orderId;
   final String packageName;
   final String purchaseToken;
@@ -13,7 +13,7 @@ class ApphudPurchaseResultAndroid {
   final int purchaseState;
   final int purchaseTime;
 
-  ApphudPurchaseResultAndroid({
+  AndroidPurchaseWrapper({
     required this.orderId,
     required this.packageName,
     required this.purchaseState,
@@ -24,8 +24,8 @@ class ApphudPurchaseResultAndroid {
     required this.purchaseTime,
   });
 
-  factory ApphudPurchaseResultAndroid.fromJson(Map<dynamic, dynamic> map) {
-    return _$ApphudPurchaseResultAndroidFromJson(map);
+  factory AndroidPurchaseWrapper.fromJson(Map<dynamic, dynamic> map) {
+    return _$AndroidPurchaseWrapperFromJson(map);
   }
 
   @override

@@ -1,7 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../mapper.dart';
-
 part 'sk_payment_transaction_wrapper.g.dart';
 
 @JsonSerializable(anyMap: true)

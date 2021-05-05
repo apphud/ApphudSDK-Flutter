@@ -34,7 +34,7 @@ class AddAttributionAction extends ActionFlow {
       future: AppHud.addAttribution(
           data: parameterValue,
           provider: parameterValue2,
-          identifer: parameterValue3),
+          identifier: parameterValue3),
       builder: (
         BuildContext context,
         AsyncSnapshot<bool> snapshot,

@@ -44,6 +44,7 @@ class HandlePurchaseRoutes extends BaseRoute {
         case HandlePurchaseRoutes.subscriptions:
         case HandlePurchaseRoutes.nonRenewingPurchases:
         case HandlePurchaseRoutes.isNonRenewingPurchaseActive:
+        case HandlePurchaseRoutes.restorePurchases:
           return true;
         default:
           return false;

@@ -1,3 +1,11 @@
+## 2.0.2
+- Add method documentation in apphud.dart
+- [Android] Upgrade to use ApphudSDK-Android:1.0.0:
+    - Add method restorePurchases
+    - Modify purchase method to return ApphudPurchaseResult
+- [iOS] Upgrade to use ApphudSDK 1.2.3
+- Some improvements of example application 
+    
 ## 2.0.1
 - Add methods:
     - presentOfferCodeRedemptionSheet [iOS]
