@@ -15,7 +15,7 @@ final class PurchasePromoRequest: Request {
         if #available(iOS 12.2, *) {
             if Apphud.products() != nil {
                 guard let product = Apphud.product(productIdentifier: arguments.productId) else {
-                    result(FlutterError(code: "500", message: "product with id \(arguments.productId) does not exist", details: nil))
+                    result(["error" : "product with id \(arguments.productId) does not exist"])
                     return
                 }
                 Apphud.purchasePromo(product, discountID: arguments.discountID) { (response) in
@@ -23,11 +23,11 @@ final class PurchasePromoRequest: Request {
                 }
             }
             else {
-                result(FlutterError(code: "500", message: "product with id \(arguments.productId) have not loaded yet or does not exist", details: nil))
+                result(["error" : "product with id \(arguments.productId) have not loaded yet or does not exist"])
             }
         }
         else {
-            result(FlutterError(code: "500", message: "Apphud.purchasePromo is available on iOS >= 12.2", details: nil))
+            result(["error" : "Apphud.purchasePromo is available only on iOS >= 12.2"])
         }
     }
 }
