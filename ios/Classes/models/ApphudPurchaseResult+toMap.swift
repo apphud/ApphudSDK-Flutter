@@ -12,7 +12,7 @@ extension ApphudPurchaseResult {
     func toMap() -> [String: Any?] {
         return ["subscription" : subscription?.toMap(),
                 "nonRenewingPurchase" : nonRenewingPurchase?.toMap(),
-                "error": error?.localizedDescription,
+                "error": ["message": error?.localizedDescription],
                 "transaction": transaction?.toMap()
         ]
     }
@@ -25,8 +25,8 @@ extension ApphudSubscription {
                 "startedAt": startedAt.timeIntervalSince1970,
                 "canceledAt": canceledAt?.timeIntervalSince1970,
                 "isInRetryBilling": isInRetryBilling,
-                "isAutorenewEnabled": isInRetryBilling,
-                "isIntroductoryActivated": isInRetryBilling,
+                "isAutorenewEnabled": isAutorenewEnabled,
+                "isIntroductoryActivated": isIntroductoryActivated,
                 "isActive" : isActive(),
                 "status" : status.toString(),
                 "isSandbox" : isSandbox,

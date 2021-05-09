@@ -2,6 +2,7 @@ package com.apphud.fluttersdk.handlers
 
 import com.apphud.sdk.domain.ApphudSubscription
 import com.apphud.sdk.domain.ApphudNonRenewingPurchase
+import com.apphud.sdk.ApphudError
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.SkuDetails
 
@@ -61,6 +62,14 @@ class DataTransformer {
                     "type" to skuDetails.type,
                     "originalPrice" to skuDetails.originalPrice,
                     "originalPriceAmountMicros" to skuDetails.originalPriceAmountMicros)
+        }
+
+        @kotlin.jvm.JvmStatic
+        fun apphudError(error: ApphudError): HashMap<String, Any?> {
+            return hashMapOf(
+                    "message" to error?.message,
+                    "errorCode" to error?.errorCode
+            )
         }
     }
 }

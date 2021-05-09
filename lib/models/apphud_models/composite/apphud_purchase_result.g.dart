@@ -21,7 +21,9 @@ ApphudPurchaseResult _$ApphudPurchaseResultFromJson(Map json) {
     purchase: json['purchase'] == null
         ? null
         : AndroidPurchaseWrapper.fromJson(json['purchase'] as Map),
-    error: json['error'] as String?,
+    error: json['error'] == null
+        ? null
+        : ApphudError.fromJson(json['error'] as Map),
   );
 }
 
