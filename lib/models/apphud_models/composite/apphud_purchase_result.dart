@@ -1,4 +1,5 @@
 import 'package:apphud/models/apphud_models/android/android_purchase_wrapper.dart';
+import 'package:apphud/models/apphud_models/apphud_error.dart';
 import 'package:apphud/models/sk_product/sk_payment_transaction_wrapper.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -13,7 +14,7 @@ class ApphudPurchaseResult {
   final ApphudNonRenewingPurchase? nonRenewingPurchase;
   final SKPaymentTransactionWrapper? transaction;
   final AndroidPurchaseWrapper? purchase;
-  final String? error;
+  final ApphudError? error;
 
   ApphudPurchaseResult({
     this.subscription,

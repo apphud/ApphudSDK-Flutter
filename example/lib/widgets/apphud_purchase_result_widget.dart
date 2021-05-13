@@ -1,4 +1,5 @@
 import 'package:appHud_example/widgets/android_purchase_widget.dart';
+import 'package:appHud_example/widgets/apphud_error_widget.dart';
 import 'package:appHud_example/widgets/apphud_non_renewing_purchase_widget.dart';
 import 'package:appHud_example/widgets/card_wrapper.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_purchase_result.dart';
@@ -36,7 +37,7 @@ class ApphudPurchaseResultWidget extends StatelessWidget {
           ApphudNonRenewingPurchaseWidget(purchase: result.nonRenewingPurchase),
           AndroidPurchaseWidget(purchase: result.purchase),
           SKPaymentTransactionWidget(transaction: result.transaction),
-          TextCardWidget(title: 'Error', value: result.error),
+          ApphudErrorWidget(error: result.error),
         ],
       ),
     );

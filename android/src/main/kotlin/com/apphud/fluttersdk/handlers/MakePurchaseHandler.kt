@@ -76,8 +76,8 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
                 resultMap["purchase"] = DataTransformer.purchase(it)
             }
 
-            purchaseResult.purchase?.let {
-                resultMap["error"] = it.toString()
+            purchaseResult.error?.let {
+                resultMap["error"] = DataTransformer.apphudError(it)
             }
 
             result.success(resultMap)

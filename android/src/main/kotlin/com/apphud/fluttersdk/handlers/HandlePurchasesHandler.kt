@@ -70,33 +70,27 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
 
     private fun restorePurchases(result: MethodChannel.Result) {
         Apphud.restorePurchases { apphudSubscriptionList, apphudNonRenewingPurchaseList, error ->
-            Log.d("Apphud", "Flutter restorePurchases was called")
-            try {
+            val resultMap = hashMapOf<String, Any?>()
 
-                val resultMap = hashMapOf<String, Any?>()
-
-                apphudSubscriptionList?.let {
-                    val subscriptionJsonList: List<HashMap<String, Any?>> = it.map { s ->
-                        DataTransformer.subscription(s)
-                    }
-                    resultMap["subscriptions"] = subscriptionJsonList
+            apphudSubscriptionList?.let {
+                val subscriptionJsonList: List<HashMap<String, Any?>> = it.map { s ->
+                    DataTransformer.subscription(s)
                 }
-
-                apphudNonRenewingPurchaseList?.let {
-                    val nrPurchasesJsonList: List<HashMap<String, Any?>> = it.map { p ->
-                        DataTransformer.nonRenewingPurchase(p)
-                    }
-                    resultMap["nrPurchases"] = nrPurchasesJsonList
-                }
-
-                error?.let {
-                    resultMap["error"] = it.toString()
-                }
-
-                result.success(resultMap)
-            } catch (e: Exception) {
-                Log.e("Apphud", "Flutter restorePurchases error: ${e.toString()}")
+                resultMap["subscriptions"] = subscriptionJsonList
             }
+
+            apphudNonRenewingPurchaseList?.let {
+                val nrPurchasesJsonList: List<HashMap<String, Any?>> = it.map { p ->
+                    DataTransformer.nonRenewingPurchase(p)
+                }
+                resultMap["nrPurchases"] = nrPurchasesJsonList
+            }
+
+            error?.let {
+                resultMap["error"] = DataTransformer.apphudError(it)
+            }
+
+            result.success(resultMap)
         }
     }
 
