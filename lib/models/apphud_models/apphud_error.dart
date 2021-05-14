@@ -15,6 +15,8 @@ class ApphudError {
   factory ApphudError.fromJson(Map<dynamic, dynamic> map) =>
       _$ApphudErrorFromJson(map);
 
+  Map<String, dynamic> toJson() => _$ApphudErrorToJson(this);
+
   @override
   String toString() {
     return 'ApphudError{message: $message, errorCode: $errorCode}';

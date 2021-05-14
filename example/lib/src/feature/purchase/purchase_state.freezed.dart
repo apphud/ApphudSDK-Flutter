@@ -19,6 +19,20 @@ class _$PurchaseStateTearOff {
   Init init() {
     return const Init();
   }
+
+  InProgress inProgress() {
+    return const InProgress();
+  }
+
+  PurchaseSuccess purchaseSuccess() {
+    return const PurchaseSuccess();
+  }
+
+  PurchaseFailure purchaseFailure(ApphudError error) {
+    return PurchaseFailure(
+      error,
+    );
+  }
 }
 
 /// @nodoc
@@ -29,22 +43,34 @@ mixin _$PurchaseState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function() inProgress,
+    required TResult Function() purchaseSuccess,
+    required TResult Function(ApphudError error) purchaseFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(InProgress value) inProgress,
+    required TResult Function(PurchaseSuccess value) purchaseSuccess,
+    required TResult Function(PurchaseFailure value) purchaseFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -105,6 +131,9 @@ class _$Init extends Init {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function() inProgress,
+    required TResult Function() purchaseSuccess,
+    required TResult Function(ApphudError error) purchaseFailure,
   }) {
     return init();
   }
@@ -113,6 +142,9 @@ class _$Init extends Init {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -125,6 +157,9 @@ class _$Init extends Init {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(InProgress value) inProgress,
+    required TResult Function(PurchaseSuccess value) purchaseSuccess,
+    required TResult Function(PurchaseFailure value) purchaseFailure,
   }) {
     return init(this);
   }
@@ -133,6 +168,9 @@ class _$Init extends Init {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -145,4 +183,317 @@ class _$Init extends Init {
 abstract class Init extends PurchaseState {
   const factory Init() = _$Init;
   const Init._() : super._();
+}
+
+/// @nodoc
+abstract class $InProgressCopyWith<$Res> {
+  factory $InProgressCopyWith(
+          InProgress value, $Res Function(InProgress) then) =
+      _$InProgressCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$InProgressCopyWithImpl<$Res> extends _$PurchaseStateCopyWithImpl<$Res>
+    implements $InProgressCopyWith<$Res> {
+  _$InProgressCopyWithImpl(InProgress _value, $Res Function(InProgress) _then)
+      : super(_value, (v) => _then(v as InProgress));
+
+  @override
+  InProgress get _value => super._value as InProgress;
+}
+
+/// @nodoc
+
+class _$InProgress extends InProgress {
+  const _$InProgress() : super._();
+
+  @override
+  String toString() {
+    return 'PurchaseState.inProgress()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is InProgress);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() inProgress,
+    required TResult Function() purchaseSuccess,
+    required TResult Function(ApphudError error) purchaseFailure,
+  }) {
+    return inProgress();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    required TResult orElse(),
+  }) {
+    if (inProgress != null) {
+      return inProgress();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(InProgress value) inProgress,
+    required TResult Function(PurchaseSuccess value) purchaseSuccess,
+    required TResult Function(PurchaseFailure value) purchaseFailure,
+  }) {
+    return inProgress(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
+    required TResult orElse(),
+  }) {
+    if (inProgress != null) {
+      return inProgress(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InProgress extends PurchaseState {
+  const factory InProgress() = _$InProgress;
+  const InProgress._() : super._();
+}
+
+/// @nodoc
+abstract class $PurchaseSuccessCopyWith<$Res> {
+  factory $PurchaseSuccessCopyWith(
+          PurchaseSuccess value, $Res Function(PurchaseSuccess) then) =
+      _$PurchaseSuccessCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$PurchaseSuccessCopyWithImpl<$Res>
+    extends _$PurchaseStateCopyWithImpl<$Res>
+    implements $PurchaseSuccessCopyWith<$Res> {
+  _$PurchaseSuccessCopyWithImpl(
+      PurchaseSuccess _value, $Res Function(PurchaseSuccess) _then)
+      : super(_value, (v) => _then(v as PurchaseSuccess));
+
+  @override
+  PurchaseSuccess get _value => super._value as PurchaseSuccess;
+}
+
+/// @nodoc
+
+class _$PurchaseSuccess extends PurchaseSuccess {
+  const _$PurchaseSuccess() : super._();
+
+  @override
+  String toString() {
+    return 'PurchaseState.purchaseSuccess()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is PurchaseSuccess);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() inProgress,
+    required TResult Function() purchaseSuccess,
+    required TResult Function(ApphudError error) purchaseFailure,
+  }) {
+    return purchaseSuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    required TResult orElse(),
+  }) {
+    if (purchaseSuccess != null) {
+      return purchaseSuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(InProgress value) inProgress,
+    required TResult Function(PurchaseSuccess value) purchaseSuccess,
+    required TResult Function(PurchaseFailure value) purchaseFailure,
+  }) {
+    return purchaseSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
+    required TResult orElse(),
+  }) {
+    if (purchaseSuccess != null) {
+      return purchaseSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PurchaseSuccess extends PurchaseState {
+  const factory PurchaseSuccess() = _$PurchaseSuccess;
+  const PurchaseSuccess._() : super._();
+}
+
+/// @nodoc
+abstract class $PurchaseFailureCopyWith<$Res> {
+  factory $PurchaseFailureCopyWith(
+          PurchaseFailure value, $Res Function(PurchaseFailure) then) =
+      _$PurchaseFailureCopyWithImpl<$Res>;
+  $Res call({ApphudError error});
+}
+
+/// @nodoc
+class _$PurchaseFailureCopyWithImpl<$Res>
+    extends _$PurchaseStateCopyWithImpl<$Res>
+    implements $PurchaseFailureCopyWith<$Res> {
+  _$PurchaseFailureCopyWithImpl(
+      PurchaseFailure _value, $Res Function(PurchaseFailure) _then)
+      : super(_value, (v) => _then(v as PurchaseFailure));
+
+  @override
+  PurchaseFailure get _value => super._value as PurchaseFailure;
+
+  @override
+  $Res call({
+    Object? error = freezed,
+  }) {
+    return _then(PurchaseFailure(
+      error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as ApphudError,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$PurchaseFailure extends PurchaseFailure {
+  const _$PurchaseFailure(this.error) : super._();
+
+  @override
+  final ApphudError error;
+
+  @override
+  String toString() {
+    return 'PurchaseState.purchaseFailure(error: $error)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is PurchaseFailure &&
+            (identical(other.error, error) ||
+                const DeepCollectionEquality().equals(other.error, error)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(error);
+
+  @JsonKey(ignore: true)
+  @override
+  $PurchaseFailureCopyWith<PurchaseFailure> get copyWith =>
+      _$PurchaseFailureCopyWithImpl<PurchaseFailure>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() inProgress,
+    required TResult Function() purchaseSuccess,
+    required TResult Function(ApphudError error) purchaseFailure,
+  }) {
+    return purchaseFailure(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    required TResult orElse(),
+  }) {
+    if (purchaseFailure != null) {
+      return purchaseFailure(error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(InProgress value) inProgress,
+    required TResult Function(PurchaseSuccess value) purchaseSuccess,
+    required TResult Function(PurchaseFailure value) purchaseFailure,
+  }) {
+    return purchaseFailure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
+    required TResult orElse(),
+  }) {
+    if (purchaseFailure != null) {
+      return purchaseFailure(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PurchaseFailure extends PurchaseState {
+  const factory PurchaseFailure(ApphudError error) = _$PurchaseFailure;
+  const PurchaseFailure._() : super._();
+
+  ApphudError get error => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PurchaseFailureCopyWith<PurchaseFailure> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -17,6 +17,8 @@ class SKPaymentTransactionWrapper {
   factory SKPaymentTransactionWrapper.fromJson(Map<dynamic, dynamic> map) =>
       _$SKPaymentTransactionWrapperFromJson(map);
 
+  Map<String, dynamic> toJson() => _$SKPaymentTransactionWrapperToJson(this);
+
   @override
   String toString() {
     return 'SKPaymentTransactionWrapper{transactionIdentifier: $transactionIdentifier, transactionDate: $transactionDate, payment: $payment}';
@@ -39,6 +41,8 @@ class SKPaymentWrapper {
 
   factory SKPaymentWrapper.fromJson(Map<dynamic, dynamic> map) =>
       _$SKPaymentWrapperFromJson(map);
+
+  Map<String, dynamic> toJson() => _$SKPaymentWrapperToJson(this);
 
   @override
   String toString() {

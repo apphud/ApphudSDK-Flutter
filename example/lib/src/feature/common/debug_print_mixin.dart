@@ -9,13 +9,16 @@ mixin DebugPrintMixin {
       '\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}';
   static const int _width = 80;
 
-  void printAsJson(String methodName, Object? object) {
+  void printAsJson(String methodName, Object? object,
+      {bool printOnlyMethodName = false}) {
     try {
+      final String title =
+          printOnlyMethodName ? methodName : 'The result of $methodName';
       final JsonEncoder encoder = JsonEncoder.withIndent('  ');
       final String prettyPrint = encoder.convert(object);
       _printUpDivider();
       final String borderedString = _addBorders(prettyPrint);
-      debugPrint(_addBorders('The result of $methodName'));
+      debugPrint(_addBorders(title));
       _printMiddleDivider();
       debugPrint(borderedString);
       _printDownDivider();
