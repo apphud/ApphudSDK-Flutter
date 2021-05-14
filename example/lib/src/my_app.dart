@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (_) => InitializationBloc(
                   appSecrets: AppSecrets(),
-                  navigationBloc: BlocProvider.of(context),
+                  navigationBloc: _navigationBloc,
                 )..add(InitializationEvent.initializeTrying()),
             lazy: false),
       ],
