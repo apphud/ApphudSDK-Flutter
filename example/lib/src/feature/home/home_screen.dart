@@ -1,5 +1,6 @@
 import 'package:apphud_example/src/feature/initialization/initialization_bloc.dart';
 import 'package:apphud_example/src/feature/initialization/initialization_state.dart';
+import 'package:apphud_example/src/feature/purchase/purchase_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,7 +12,11 @@ class HomeScreenPage extends Page {
     return MaterialPageRoute(
       settings: this,
       builder: (BuildContext context) {
-        return HomeScreen();
+        return BlocProvider(
+          create: (context) => PurchaseBloc(),
+          lazy: false,
+          child: HomeScreen(),
+        );
       },
     );
   }
@@ -23,8 +28,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<InitializationBloc, InitializationState>(
-        builder: _buildBody,
+      appBar: AppBar(title: Text('Product list')),
+      body: SafeArea(
+        child: BlocBuilder<InitializationBloc, InitializationState>(
+          builder: _buildBody,
+        ),
       ),
     );
   }
@@ -37,11 +45,9 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildProductList(Success value) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ProductListWidget(productList: value.products),
-      ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ProductListWidget(productList: value.products),
     );
   }
 }

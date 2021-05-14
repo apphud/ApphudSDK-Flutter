@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:apphud/models/apphud_models/composite/apphud_product.dart';
 import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
 import 'package:apphud/models/sku_details/sku_details.dart';
+import 'package:apphud_example/src/feature/common/widgets/ink_well_stack.dart';
 import 'package:flutter/material.dart';
 
 class ProductWidget extends StatelessWidget {
@@ -32,15 +33,18 @@ class ProductWidget extends StatelessWidget {
       return _buildError('skProduct is null');
     }
     final SKProductWrapper skProduct = product.skProductWrapper!;
-    return Card(
-      child: ListTile(
-        title: Text(
-          '${skProduct.localizedTitle} '
-          '(${skProduct.productIdentifier})',
+    return InkWellStack(
+      onTap: () {},
+      child: Card(
+        child: ListTile(
+          title: Text(
+            '${skProduct.localizedTitle} '
+            '(${skProduct.productIdentifier})',
+          ),
+          leading:
+              Text('${skProduct.price} ${skProduct.priceLocale.currencyCode}'),
+          subtitle: Text(skProduct.localizedDescription),
         ),
-        leading:
-            Text('${skProduct.price} ${skProduct.priceLocale.currencyCode}'),
-        subtitle: Text(skProduct.localizedDescription),
       ),
     );
   }
@@ -50,11 +54,14 @@ class ProductWidget extends StatelessWidget {
       return _buildError('skuDetails is null');
     }
     final SkuDetailsWrapper skuDetails = product.skuDetailsWrapper!;
-    return Card(
-      child: ListTile(
-        title: Text('${skuDetails.title} (${skuDetails.sku})'),
-        leading: Text(skuDetails.price),
-        subtitle: Text(skuDetails.description),
+    return InkWellStack(
+      onTap: () {},
+      child: Card(
+        child: ListTile(
+          title: Text('${skuDetails.title} (${skuDetails.sku})'),
+          leading: Text(skuDetails.price),
+          subtitle: Text(skuDetails.description),
+        ),
       ),
     );
   }

@@ -23,6 +23,8 @@ class ApphudNonRenewingPurchase {
   factory ApphudNonRenewingPurchase.fromJson(Map<dynamic, dynamic> map) =>
       _$ApphudNonRenewingPurchaseFromJson(map);
 
+  Map<String, dynamic> toJson() => _$ApphudNonRenewingPurchaseToJson(this);
+
   @override
   String toString() {
     return 'ApphudNonRenewingPurchase{productId: $productId, purchasedAt: $purchasedAt, canceledAt: $canceledAt, isActive: $isActive, isSandbox: $isSandbox, isLocal: $isLocal}';

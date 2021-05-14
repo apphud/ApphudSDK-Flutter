@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product.dart';
 import 'package:apphud_example/src/feature/common/app_secrets_base.dart';
-import 'package:apphud_example/src/feature/common/json_print_mixin.dart';
+import 'package:apphud_example/src/feature/common/debug_print_mixin.dart';
 import 'package:apphud_example/src/feature/navigation/navigation_bloc.dart';
 import 'package:apphud_example/src/feature/navigation/navigation_event.dart';
 import 'package:bloc/bloc.dart';

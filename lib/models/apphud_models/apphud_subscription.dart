@@ -33,6 +33,8 @@ class ApphudSubscriptionWrapper {
   factory ApphudSubscriptionWrapper.fromJson(Map<dynamic, dynamic> map) =>
       _$ApphudSubscriptionWrapperFromJson(map);
 
+  Map<String, dynamic> toJson() => _$ApphudSubscriptionWrapperToJson(this);
+
   @override
   String toString() {
     return 'ApphudSubscriptionWrapper{productId: $productId, expiresAt: $expiresAt, isInRetryBilling: $isInRetryBilling, isAutorenewEnabled: $isAutorenewEnabled, isIntroductoryActivated: $isIntroductoryActivated, isActive: $isActive, status: $status, canceledAt: $canceledAt, startedAt: $startedAt, isSandbox: $isSandbox, isLocal: $isLocal}';
