@@ -11,7 +11,8 @@ import 'package:bloc/bloc.dart';
 import 'initialization_event.dart';
 import 'initialization_state.dart';
 
-class InitializationBloc extends Bloc<InitializationEvent, InitializationState> with DebugPrintMixin {
+class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
+    with DebugPrintMixin {
   final AppSecretsBase _appSecrets;
   final NavigationBloc _navigationBloc;
 
@@ -46,7 +47,8 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState> 
         productsFetchSuccess: _mapProductsFetchSuccess,
       );
 
-  Stream<InitializationState> _mapInitializeTrying(InitializeTrying value) async* {
+  Stream<InitializationState> _mapInitializeTrying(
+      InitializeTrying value) async* {
     try {
       await AppHud.enableDebugLogs();
       await AppHud.startManually(
@@ -62,8 +64,9 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState> 
           if (s.isProductFetched) {
             yield InitializationState.success(products: s.products);
             _navigationBloc.add(NavigationEvent.toHome());
+          } else {
+            yield s.copyWith(isStartSuccess: true);
           }
-          yield s.copyWith(isStartSuccess: true);
         },
       );
     } catch (e) {
@@ -84,11 +87,12 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState> 
         if (s.isStartSuccess) {
           yield InitializationState.success(products: event.products);
           _navigationBloc.add(NavigationEvent.toHome());
+        } else {
+          yield s.copyWith(
+            isProductFetched: true,
+            products: event.products,
+          );
         }
-        yield s.copyWith(
-          isProductFetched: true,
-          products: event.products,
-        );
       },
     );
   }
