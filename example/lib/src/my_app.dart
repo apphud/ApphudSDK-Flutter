@@ -1,3 +1,6 @@
+import 'package:apphud_example/app_secrets.dart';
+import 'package:apphud_example/src/feature/initialization/initialization_bloc.dart';
+import 'package:apphud_example/src/feature/initialization/initialization_event.dart';
 import 'package:apphud_example/src/feature/navigation/navigation_bloc.dart';
 import 'package:apphud_example/src/feature/navigation/navigation_route_information_parser.dart';
 import 'package:apphud_example/src/feature/navigation/navigation_router_deligate.dart';
@@ -15,8 +18,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _navigationBloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: _navigationBloc),
+        BlocProvider(
+            create: (_) => InitializationBloc(
+                  appSecrets: AppSecrets(),
+                  navigationBloc: BlocProvider.of(context),
+                )..add(InitializationEvent.initializeTrying()),
+            lazy: false),
+      ],
       child: MaterialApp.router(
         title: 'Apphud Flutter example',
         routeInformationParser: _navigationRouteInformationParser,

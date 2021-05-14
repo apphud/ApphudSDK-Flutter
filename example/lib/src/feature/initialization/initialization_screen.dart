@@ -1,9 +1,7 @@
-import 'package:apphud_example/app_secrets.dart';
 import 'package:apphud_example/src/feature/initialization/initialization_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'initialization_event.dart';
 import 'initialization_state.dart';
 
 class InitializationScreenPage extends Page {
@@ -12,14 +10,7 @@ class InitializationScreenPage extends Page {
     return MaterialPageRoute(
       settings: this,
       builder: (BuildContext context) {
-        return BlocProvider(
-          create: (_) => InitializationBloc(
-            appSecrets: AppSecrets(),
-            navigationBloc: BlocProvider.of(context),
-          )..add(InitializationEvent.initializeTrying()),
-          lazy: false,
-          child: InitializationStartScreen(),
-        );
+        return InitializationStartScreen();
       },
     );
   }
