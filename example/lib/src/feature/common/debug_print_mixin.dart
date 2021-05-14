@@ -42,7 +42,7 @@ mixin DebugPrintMixin {
       return buffer.toString();
     }).toList();
 
-    return borderedLines.join();
+    return borderedLines.join().replaceAll(RegExp(r'\n$'), '');
   }
 
   void _printUpDivider() {
