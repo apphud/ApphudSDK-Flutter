@@ -29,7 +29,7 @@ class StartBloc extends Bloc<StartEvent, StartState> with JsonPrintMixin {
       final List<ApphudProduct> products =
           await AppHud.productsDidFetchCallback();
       add(StartEvent.productsFetchSuccess(products));
-      printAsJson(products);
+      printAsJson('productsDidFetchCallback()',products);
     } catch (e) {
       add(StartEvent.productsFetchFailure(e.toString()));
     }
