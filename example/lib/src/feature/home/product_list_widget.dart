@@ -43,6 +43,10 @@ class ProductListWidget extends StatelessWidget {
       purchaseFailure: (f) =>
           'The purchase completed with error: ${f.error.message}'
           '${f.error.errorCode != null ? ', error code:${f.error.errorCode}' : ''}',
+      restorePurchasesSuccess: (_) =>
+          'The purchases restore completed successfully',
+      restorePurchaseFailure: (f) =>
+          'The purchases restore completed with error: ${f.error}',
     );
 
     if (message.isNotEmpty) {

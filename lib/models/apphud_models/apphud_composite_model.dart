@@ -36,4 +36,12 @@ class ApphudComposite {
       error: map['error'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'purchases': purchases,
+      'subscriptions': subscriptions,
+      'error': error,
+    };
+  }
 }

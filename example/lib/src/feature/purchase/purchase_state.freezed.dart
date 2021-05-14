@@ -33,6 +33,16 @@ class _$PurchaseStateTearOff {
       error,
     );
   }
+
+  RestorePurchasesSuccess restorePurchasesSuccess() {
+    return const RestorePurchasesSuccess();
+  }
+
+  RestorePurchasesFailure restorePurchaseFailure(String error) {
+    return RestorePurchasesFailure(
+      error,
+    );
+  }
 }
 
 /// @nodoc
@@ -46,6 +56,8 @@ mixin _$PurchaseState {
     required TResult Function() inProgress,
     required TResult Function() purchaseSuccess,
     required TResult Function(ApphudError error) purchaseFailure,
+    required TResult Function() restorePurchasesSuccess,
+    required TResult Function(String error) restorePurchaseFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,6 +66,8 @@ mixin _$PurchaseState {
     TResult Function()? inProgress,
     TResult Function()? purchaseSuccess,
     TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(String error)? restorePurchaseFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -63,6 +77,10 @@ mixin _$PurchaseState {
     required TResult Function(InProgress value) inProgress,
     required TResult Function(PurchaseSuccess value) purchaseSuccess,
     required TResult Function(PurchaseFailure value) purchaseFailure,
+    required TResult Function(RestorePurchasesSuccess value)
+        restorePurchasesSuccess,
+    required TResult Function(RestorePurchasesFailure value)
+        restorePurchaseFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -71,6 +89,8 @@ mixin _$PurchaseState {
     TResult Function(InProgress value)? inProgress,
     TResult Function(PurchaseSuccess value)? purchaseSuccess,
     TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -134,6 +154,8 @@ class _$Init extends Init {
     required TResult Function() inProgress,
     required TResult Function() purchaseSuccess,
     required TResult Function(ApphudError error) purchaseFailure,
+    required TResult Function() restorePurchasesSuccess,
+    required TResult Function(String error) restorePurchaseFailure,
   }) {
     return init();
   }
@@ -145,6 +167,8 @@ class _$Init extends Init {
     TResult Function()? inProgress,
     TResult Function()? purchaseSuccess,
     TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(String error)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -160,6 +184,10 @@ class _$Init extends Init {
     required TResult Function(InProgress value) inProgress,
     required TResult Function(PurchaseSuccess value) purchaseSuccess,
     required TResult Function(PurchaseFailure value) purchaseFailure,
+    required TResult Function(RestorePurchasesSuccess value)
+        restorePurchasesSuccess,
+    required TResult Function(RestorePurchasesFailure value)
+        restorePurchaseFailure,
   }) {
     return init(this);
   }
@@ -171,6 +199,8 @@ class _$Init extends Init {
     TResult Function(InProgress value)? inProgress,
     TResult Function(PurchaseSuccess value)? purchaseSuccess,
     TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -227,6 +257,8 @@ class _$InProgress extends InProgress {
     required TResult Function() inProgress,
     required TResult Function() purchaseSuccess,
     required TResult Function(ApphudError error) purchaseFailure,
+    required TResult Function() restorePurchasesSuccess,
+    required TResult Function(String error) restorePurchaseFailure,
   }) {
     return inProgress();
   }
@@ -238,6 +270,8 @@ class _$InProgress extends InProgress {
     TResult Function()? inProgress,
     TResult Function()? purchaseSuccess,
     TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(String error)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (inProgress != null) {
@@ -253,6 +287,10 @@ class _$InProgress extends InProgress {
     required TResult Function(InProgress value) inProgress,
     required TResult Function(PurchaseSuccess value) purchaseSuccess,
     required TResult Function(PurchaseFailure value) purchaseFailure,
+    required TResult Function(RestorePurchasesSuccess value)
+        restorePurchasesSuccess,
+    required TResult Function(RestorePurchasesFailure value)
+        restorePurchaseFailure,
   }) {
     return inProgress(this);
   }
@@ -264,6 +302,8 @@ class _$InProgress extends InProgress {
     TResult Function(InProgress value)? inProgress,
     TResult Function(PurchaseSuccess value)? purchaseSuccess,
     TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (inProgress != null) {
@@ -322,6 +362,8 @@ class _$PurchaseSuccess extends PurchaseSuccess {
     required TResult Function() inProgress,
     required TResult Function() purchaseSuccess,
     required TResult Function(ApphudError error) purchaseFailure,
+    required TResult Function() restorePurchasesSuccess,
+    required TResult Function(String error) restorePurchaseFailure,
   }) {
     return purchaseSuccess();
   }
@@ -333,6 +375,8 @@ class _$PurchaseSuccess extends PurchaseSuccess {
     TResult Function()? inProgress,
     TResult Function()? purchaseSuccess,
     TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(String error)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (purchaseSuccess != null) {
@@ -348,6 +392,10 @@ class _$PurchaseSuccess extends PurchaseSuccess {
     required TResult Function(InProgress value) inProgress,
     required TResult Function(PurchaseSuccess value) purchaseSuccess,
     required TResult Function(PurchaseFailure value) purchaseFailure,
+    required TResult Function(RestorePurchasesSuccess value)
+        restorePurchasesSuccess,
+    required TResult Function(RestorePurchasesFailure value)
+        restorePurchaseFailure,
   }) {
     return purchaseSuccess(this);
   }
@@ -359,6 +407,8 @@ class _$PurchaseSuccess extends PurchaseSuccess {
     TResult Function(InProgress value)? inProgress,
     TResult Function(PurchaseSuccess value)? purchaseSuccess,
     TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (purchaseSuccess != null) {
@@ -442,6 +492,8 @@ class _$PurchaseFailure extends PurchaseFailure {
     required TResult Function() inProgress,
     required TResult Function() purchaseSuccess,
     required TResult Function(ApphudError error) purchaseFailure,
+    required TResult Function() restorePurchasesSuccess,
+    required TResult Function(String error) restorePurchaseFailure,
   }) {
     return purchaseFailure(error);
   }
@@ -453,6 +505,8 @@ class _$PurchaseFailure extends PurchaseFailure {
     TResult Function()? inProgress,
     TResult Function()? purchaseSuccess,
     TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(String error)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (purchaseFailure != null) {
@@ -468,6 +522,10 @@ class _$PurchaseFailure extends PurchaseFailure {
     required TResult Function(InProgress value) inProgress,
     required TResult Function(PurchaseSuccess value) purchaseSuccess,
     required TResult Function(PurchaseFailure value) purchaseFailure,
+    required TResult Function(RestorePurchasesSuccess value)
+        restorePurchasesSuccess,
+    required TResult Function(RestorePurchasesFailure value)
+        restorePurchaseFailure,
   }) {
     return purchaseFailure(this);
   }
@@ -479,6 +537,8 @@ class _$PurchaseFailure extends PurchaseFailure {
     TResult Function(InProgress value)? inProgress,
     TResult Function(PurchaseSuccess value)? purchaseSuccess,
     TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (purchaseFailure != null) {
@@ -495,5 +555,247 @@ abstract class PurchaseFailure extends PurchaseState {
   ApphudError get error => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PurchaseFailureCopyWith<PurchaseFailure> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RestorePurchasesSuccessCopyWith<$Res> {
+  factory $RestorePurchasesSuccessCopyWith(RestorePurchasesSuccess value,
+          $Res Function(RestorePurchasesSuccess) then) =
+      _$RestorePurchasesSuccessCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$RestorePurchasesSuccessCopyWithImpl<$Res>
+    extends _$PurchaseStateCopyWithImpl<$Res>
+    implements $RestorePurchasesSuccessCopyWith<$Res> {
+  _$RestorePurchasesSuccessCopyWithImpl(RestorePurchasesSuccess _value,
+      $Res Function(RestorePurchasesSuccess) _then)
+      : super(_value, (v) => _then(v as RestorePurchasesSuccess));
+
+  @override
+  RestorePurchasesSuccess get _value => super._value as RestorePurchasesSuccess;
+}
+
+/// @nodoc
+
+class _$RestorePurchasesSuccess extends RestorePurchasesSuccess {
+  const _$RestorePurchasesSuccess() : super._();
+
+  @override
+  String toString() {
+    return 'PurchaseState.restorePurchasesSuccess()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is RestorePurchasesSuccess);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() inProgress,
+    required TResult Function() purchaseSuccess,
+    required TResult Function(ApphudError error) purchaseFailure,
+    required TResult Function() restorePurchasesSuccess,
+    required TResult Function(String error) restorePurchaseFailure,
+  }) {
+    return restorePurchasesSuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(String error)? restorePurchaseFailure,
+    required TResult orElse(),
+  }) {
+    if (restorePurchasesSuccess != null) {
+      return restorePurchasesSuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(InProgress value) inProgress,
+    required TResult Function(PurchaseSuccess value) purchaseSuccess,
+    required TResult Function(PurchaseFailure value) purchaseFailure,
+    required TResult Function(RestorePurchasesSuccess value)
+        restorePurchasesSuccess,
+    required TResult Function(RestorePurchasesFailure value)
+        restorePurchaseFailure,
+  }) {
+    return restorePurchasesSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
+    required TResult orElse(),
+  }) {
+    if (restorePurchasesSuccess != null) {
+      return restorePurchasesSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RestorePurchasesSuccess extends PurchaseState {
+  const factory RestorePurchasesSuccess() = _$RestorePurchasesSuccess;
+  const RestorePurchasesSuccess._() : super._();
+}
+
+/// @nodoc
+abstract class $RestorePurchasesFailureCopyWith<$Res> {
+  factory $RestorePurchasesFailureCopyWith(RestorePurchasesFailure value,
+          $Res Function(RestorePurchasesFailure) then) =
+      _$RestorePurchasesFailureCopyWithImpl<$Res>;
+  $Res call({String error});
+}
+
+/// @nodoc
+class _$RestorePurchasesFailureCopyWithImpl<$Res>
+    extends _$PurchaseStateCopyWithImpl<$Res>
+    implements $RestorePurchasesFailureCopyWith<$Res> {
+  _$RestorePurchasesFailureCopyWithImpl(RestorePurchasesFailure _value,
+      $Res Function(RestorePurchasesFailure) _then)
+      : super(_value, (v) => _then(v as RestorePurchasesFailure));
+
+  @override
+  RestorePurchasesFailure get _value => super._value as RestorePurchasesFailure;
+
+  @override
+  $Res call({
+    Object? error = freezed,
+  }) {
+    return _then(RestorePurchasesFailure(
+      error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RestorePurchasesFailure extends RestorePurchasesFailure {
+  const _$RestorePurchasesFailure(this.error) : super._();
+
+  @override
+  final String error;
+
+  @override
+  String toString() {
+    return 'PurchaseState.restorePurchaseFailure(error: $error)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is RestorePurchasesFailure &&
+            (identical(other.error, error) ||
+                const DeepCollectionEquality().equals(other.error, error)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(error);
+
+  @JsonKey(ignore: true)
+  @override
+  $RestorePurchasesFailureCopyWith<RestorePurchasesFailure> get copyWith =>
+      _$RestorePurchasesFailureCopyWithImpl<RestorePurchasesFailure>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() inProgress,
+    required TResult Function() purchaseSuccess,
+    required TResult Function(ApphudError error) purchaseFailure,
+    required TResult Function() restorePurchasesSuccess,
+    required TResult Function(String error) restorePurchaseFailure,
+  }) {
+    return restorePurchaseFailure(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(String error)? restorePurchaseFailure,
+    required TResult orElse(),
+  }) {
+    if (restorePurchaseFailure != null) {
+      return restorePurchaseFailure(error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(InProgress value) inProgress,
+    required TResult Function(PurchaseSuccess value) purchaseSuccess,
+    required TResult Function(PurchaseFailure value) purchaseFailure,
+    required TResult Function(RestorePurchasesSuccess value)
+        restorePurchasesSuccess,
+    required TResult Function(RestorePurchasesFailure value)
+        restorePurchaseFailure,
+  }) {
+    return restorePurchaseFailure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
+    required TResult orElse(),
+  }) {
+    if (restorePurchaseFailure != null) {
+      return restorePurchaseFailure(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RestorePurchasesFailure extends PurchaseState {
+  const factory RestorePurchasesFailure(String error) =
+      _$RestorePurchasesFailure;
+  const RestorePurchasesFailure._() : super._();
+
+  String get error => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RestorePurchasesFailureCopyWith<RestorePurchasesFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }

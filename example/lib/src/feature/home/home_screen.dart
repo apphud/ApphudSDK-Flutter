@@ -3,6 +3,7 @@ import 'package:apphud_example/src/feature/initialization/initialization_bloc.da
 import 'package:apphud_example/src/feature/initialization/initialization_state.dart';
 import 'package:apphud_example/src/feature/purchase/purchase_bloc.dart';
 import 'package:apphud_example/src/feature/purchase/purchase_state.dart';
+import 'package:apphud_example/src/feature/purchase/purchase_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,14 +45,36 @@ class HomeScreen extends StatelessWidget {
   Widget _buildBody(BuildContext context, InitializationState state) {
     return state.maybeMap(
       orElse: () => Center(child: CircularProgressIndicator()),
-      success: _buildProductList,
+      success: (s) => _buildProductList(context, s),
     );
   }
 
-  Widget _buildProductList(Success value) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ProductListWidget(productList: value.products),
+  Widget _buildProductList(BuildContext context, Success value) {
+    return Column(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ProductListWidget(productList: value.products),
+          ),
+        ),
+        _buildRestoreButton(context),
+      ],
+    );
+  }
+
+  Widget _buildRestoreButton(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FloatingActionButton.extended(
+          onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
+            PurchaseEvent.restorePurchases(),
+          ),
+          label: Text('Restore purchases'),
+        ),
+      ),
     );
   }
 }

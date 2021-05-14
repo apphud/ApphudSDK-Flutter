@@ -7,4 +7,6 @@ class PurchaseEvent with _$PurchaseEvent {
   const PurchaseEvent._();
 
   const factory PurchaseEvent.purchase(String id) = Purchase;
+
+  const factory PurchaseEvent.restorePurchases() = RestorePurchases;
 }

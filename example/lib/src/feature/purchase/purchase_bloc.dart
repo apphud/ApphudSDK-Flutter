@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/apphud_attribution_provider.dart';
+import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_purchase_result.dart';
 import 'package:apphud_example/src/feature/common/debug_print_mixin.dart';
@@ -34,7 +35,10 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   Stream<PurchaseState> mapEventToState(
     PurchaseEvent event,
   ) =>
-      event.map(purchase: _mapPurchase);
+      event.map(
+        purchase: _mapPurchase,
+        restorePurchases: _mapRestorePurchases,
+      );
 
   void _fetchSubscriptions() {
     AppHud.hasActiveSubscription().then(
@@ -159,6 +163,17 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       yield PurchaseState.purchaseSuccess();
     } else {
       yield PurchaseState.purchaseFailure(result.error!);
+    }
+  }
+
+  Stream<PurchaseState> _mapRestorePurchases(RestorePurchases value) async* {
+    yield PurchaseState.inProgress();
+    final ApphudComposite result = await AppHud.restorePurchases();
+    printAsJson('restorePurchases()', result);
+    if (result.error == null) {
+      yield PurchaseState.restorePurchasesSuccess();
+    } else {
+      yield PurchaseState.restorePurchaseFailure(result.error!);
     }
   }
 }

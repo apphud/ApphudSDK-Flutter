@@ -17,6 +17,12 @@ class PurchaseState with _$PurchaseState implements InProgressState {
   const factory PurchaseState.purchaseFailure(ApphudError error) =
       PurchaseFailure;
 
+  const factory PurchaseState.restorePurchasesSuccess() =
+      RestorePurchasesSuccess;
+
+  const factory PurchaseState.restorePurchaseFailure(String error) =
+      RestorePurchasesFailure;
+
   @override
   bool get inProgress => maybeMap(
         orElse: () => false,

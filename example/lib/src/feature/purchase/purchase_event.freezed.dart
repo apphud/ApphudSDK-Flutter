@@ -21,6 +21,10 @@ class _$PurchaseEventTearOff {
       id,
     );
   }
+
+  RestorePurchases restorePurchases() {
+    return const RestorePurchases();
+  }
 }
 
 /// @nodoc
@@ -28,33 +32,31 @@ const $PurchaseEvent = _$PurchaseEventTearOff();
 
 /// @nodoc
 mixin _$PurchaseEvent {
-  String get id => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id) purchase,
+    required TResult Function() restorePurchases,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? purchase,
+    TResult Function()? restorePurchases,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Purchase value) purchase,
+    required TResult Function(RestorePurchases value) restorePurchases,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Purchase value)? purchase,
+    TResult Function(RestorePurchases value)? restorePurchases,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $PurchaseEventCopyWith<PurchaseEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -63,7 +65,6 @@ abstract class $PurchaseEventCopyWith<$Res> {
   factory $PurchaseEventCopyWith(
           PurchaseEvent value, $Res Function(PurchaseEvent) then) =
       _$PurchaseEventCopyWithImpl<$Res>;
-  $Res call({String id});
 }
 
 /// @nodoc
@@ -74,25 +75,12 @@ class _$PurchaseEventCopyWithImpl<$Res>
   final PurchaseEvent _value;
   // ignore: unused_field
   final $Res Function(PurchaseEvent) _then;
-
-  @override
-  $Res call({
-    Object? id = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class $PurchaseCopyWith<$Res> implements $PurchaseEventCopyWith<$Res> {
+abstract class $PurchaseCopyWith<$Res> {
   factory $PurchaseCopyWith(Purchase value, $Res Function(Purchase) then) =
       _$PurchaseCopyWithImpl<$Res>;
-  @override
   $Res call({String id});
 }
 
@@ -152,6 +140,7 @@ class _$Purchase extends Purchase {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id) purchase,
+    required TResult Function() restorePurchases,
   }) {
     return purchase(id);
   }
@@ -160,6 +149,7 @@ class _$Purchase extends Purchase {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? purchase,
+    TResult Function()? restorePurchases,
     required TResult orElse(),
   }) {
     if (purchase != null) {
@@ -172,6 +162,7 @@ class _$Purchase extends Purchase {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Purchase value) purchase,
+    required TResult Function(RestorePurchases value) restorePurchases,
   }) {
     return purchase(this);
   }
@@ -180,6 +171,7 @@ class _$Purchase extends Purchase {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Purchase value)? purchase,
+    TResult Function(RestorePurchases value)? restorePurchases,
     required TResult orElse(),
   }) {
     if (purchase != null) {
@@ -193,10 +185,95 @@ abstract class Purchase extends PurchaseEvent {
   const factory Purchase(String id) = _$Purchase;
   const Purchase._() : super._();
 
-  @override
   String get id => throw _privateConstructorUsedError;
-  @override
   @JsonKey(ignore: true)
   $PurchaseCopyWith<Purchase> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RestorePurchasesCopyWith<$Res> {
+  factory $RestorePurchasesCopyWith(
+          RestorePurchases value, $Res Function(RestorePurchases) then) =
+      _$RestorePurchasesCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$RestorePurchasesCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res>
+    implements $RestorePurchasesCopyWith<$Res> {
+  _$RestorePurchasesCopyWithImpl(
+      RestorePurchases _value, $Res Function(RestorePurchases) _then)
+      : super(_value, (v) => _then(v as RestorePurchases));
+
+  @override
+  RestorePurchases get _value => super._value as RestorePurchases;
+}
+
+/// @nodoc
+
+class _$RestorePurchases extends RestorePurchases {
+  const _$RestorePurchases() : super._();
+
+  @override
+  String toString() {
+    return 'PurchaseEvent.restorePurchases()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is RestorePurchases);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String id) purchase,
+    required TResult Function() restorePurchases,
+  }) {
+    return restorePurchases();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id)? purchase,
+    TResult Function()? restorePurchases,
+    required TResult orElse(),
+  }) {
+    if (restorePurchases != null) {
+      return restorePurchases();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Purchase value) purchase,
+    required TResult Function(RestorePurchases value) restorePurchases,
+  }) {
+    return restorePurchases(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Purchase value)? purchase,
+    TResult Function(RestorePurchases value)? restorePurchases,
+    required TResult orElse(),
+  }) {
+    if (restorePurchases != null) {
+      return restorePurchases(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RestorePurchases extends PurchaseEvent {
+  const factory RestorePurchases() = _$RestorePurchases;
+  const RestorePurchases._() : super._();
 }
