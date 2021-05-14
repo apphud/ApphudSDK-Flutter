@@ -8,19 +8,19 @@ import 'package:apphud_example/src/feature/navigation/navigation_bloc.dart';
 import 'package:apphud_example/src/feature/navigation/navigation_event.dart';
 import 'package:bloc/bloc.dart';
 
-import 'start_event.dart';
-import 'start_state.dart';
+import 'initialization_event.dart';
+import 'initialization_state.dart';
 
-class StartBloc extends Bloc<StartEvent, StartState> with DebugPrintMixin {
+class InitializationBloc extends Bloc<InitializationEvent, InitializationState> with DebugPrintMixin {
   final AppSecretsBase _appSecrets;
   final NavigationBloc _navigationBloc;
 
-  StartBloc({
+  InitializationBloc({
     required AppSecretsBase appSecrets,
     required NavigationBloc navigationBloc,
   })   : _appSecrets = appSecrets,
         _navigationBloc = navigationBloc,
-        super(StartState.trying()) {
+        super(InitializationState.trying()) {
     _fetchProducts();
   }
 
@@ -28,25 +28,25 @@ class StartBloc extends Bloc<StartEvent, StartState> with DebugPrintMixin {
     try {
       final List<ApphudProduct> products =
           await AppHud.productsDidFetchCallback();
-      add(StartEvent.productsFetchSuccess(products));
+      add(InitializationEvent.productsFetchSuccess(products));
       printAsJson('productsDidFetchCallback()', products);
     } catch (e) {
-      add(StartEvent.productsFetchFailure(e.toString()));
+      add(InitializationEvent.productsFetchFailure(e.toString()));
       printError('productsDidFetchCallback()', e);
     }
   }
 
   @override
-  Stream<StartState> mapEventToState(
-    StartEvent event,
+  Stream<InitializationState> mapEventToState(
+    InitializationEvent event,
   ) =>
       event.map(
-        tryToStart: _mapTryToStart,
+        initializeTrying: _mapInitializeTrying,
         productsFetchFailure: _mapProductsFetchFailure,
         productsFetchSuccess: _mapProductsFetchSuccess,
       );
 
-  Stream<StartState> _mapTryToStart(TryToStart value) async* {
+  Stream<InitializationState> _mapInitializeTrying(InitializeTrying value) async* {
     try {
       await AppHud.enableDebugLogs();
       await AppHud.startManually(
@@ -60,29 +60,29 @@ class StartBloc extends Bloc<StartEvent, StartState> with DebugPrintMixin {
         orElse: () async* {},
         trying: (s) async* {
           if (s.isProductFetched) {
-            yield StartState.success(products: s.products);
+            yield InitializationState.success(products: s.products);
             _navigationBloc.add(NavigationEvent.toHome());
           }
           yield s.copyWith(isStartSuccess: true);
         },
       );
     } catch (e) {
-      yield StartState.startFail(e.toString());
+      yield InitializationState.startFail(e.toString());
     }
   }
 
-  Stream<StartState> _mapProductsFetchFailure(
+  Stream<InitializationState> _mapProductsFetchFailure(
       ProductsFetchFailure event) async* {
-    yield StartState.productsFetchFail(event.error);
+    yield InitializationState.productsFetchFail(event.error);
   }
 
-  Stream<StartState> _mapProductsFetchSuccess(
+  Stream<InitializationState> _mapProductsFetchSuccess(
       ProductsFetchSuccess event) async* {
     yield* state.maybeMap(
       orElse: () async* {},
       trying: (s) async* {
         if (s.isStartSuccess) {
-          yield StartState.success(products: event.products);
+          yield InitializationState.success(products: event.products);
           _navigationBloc.add(NavigationEvent.toHome());
         }
         yield s.copyWith(

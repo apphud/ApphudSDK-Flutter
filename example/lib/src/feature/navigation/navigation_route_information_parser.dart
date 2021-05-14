@@ -1,6 +1,6 @@
 import 'package:apphud_example/src/feature/home/home_screen.dart';
 import 'package:apphud_example/src/feature/navigation/navigation_state.dart';
-import 'package:apphud_example/src/feature/start/start_screen.dart';
+import 'package:apphud_example/src/feature/initialization/initialization_screen.dart';
 import 'package:flutter/material.dart';
 
 class NavigationRouteInformationParser
@@ -16,7 +16,7 @@ class NavigationRouteInformationParser
     if (uri.pathSegments.isEmpty) return NavigationState.start();
 
     switch (uri.pathSegments[0]) {
-      case StartScreen.pathName:
+      case InitializationStartScreen.pathName:
         return NavigationState.start();
     }
     return NavigationState.start();
@@ -25,7 +25,7 @@ class NavigationRouteInformationParser
   @override
   RouteInformation restoreRouteInformation(NavigationState state) {
     return state.map(
-      start: (_) => RouteInformation(location: '/${StartScreen.pathName}'),
+      start: (_) => RouteInformation(location: '/${InitializationStartScreen.pathName}'),
       home: (_) => RouteInformation(location: '/${HomeScreen.pathName}'),
     );
   }

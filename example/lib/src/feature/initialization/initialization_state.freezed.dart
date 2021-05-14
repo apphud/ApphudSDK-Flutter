@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'start_state.dart';
+part of 'initialization_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,8 +13,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$StartStateTearOff {
-  const _$StartStateTearOff();
+class _$InitializationStateTearOff {
+  const _$InitializationStateTearOff();
 
   Trying trying(
       {bool isStartSuccess = false,
@@ -47,10 +47,10 @@ class _$StartStateTearOff {
 }
 
 /// @nodoc
-const $StartState = _$StartStateTearOff();
+const $InitializationState = _$InitializationStateTearOff();
 
 /// @nodoc
-mixin _$StartState {
+mixin _$InitializationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(bool isStartSuccess, bool isProductFetched,
@@ -92,19 +92,20 @@ mixin _$StartState {
 }
 
 /// @nodoc
-abstract class $StartStateCopyWith<$Res> {
-  factory $StartStateCopyWith(
-          StartState value, $Res Function(StartState) then) =
-      _$StartStateCopyWithImpl<$Res>;
+abstract class $InitializationStateCopyWith<$Res> {
+  factory $InitializationStateCopyWith(
+          InitializationState value, $Res Function(InitializationState) then) =
+      _$InitializationStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$StartStateCopyWithImpl<$Res> implements $StartStateCopyWith<$Res> {
-  _$StartStateCopyWithImpl(this._value, this._then);
+class _$InitializationStateCopyWithImpl<$Res>
+    implements $InitializationStateCopyWith<$Res> {
+  _$InitializationStateCopyWithImpl(this._value, this._then);
 
-  final StartState _value;
+  final InitializationState _value;
   // ignore: unused_field
-  final $Res Function(StartState) _then;
+  final $Res Function(InitializationState) _then;
 }
 
 /// @nodoc
@@ -118,7 +119,7 @@ abstract class $TryingCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TryingCopyWithImpl<$Res> extends _$StartStateCopyWithImpl<$Res>
+class _$TryingCopyWithImpl<$Res> extends _$InitializationStateCopyWithImpl<$Res>
     implements $TryingCopyWith<$Res> {
   _$TryingCopyWithImpl(Trying _value, $Res Function(Trying) _then)
       : super(_value, (v) => _then(v as Trying));
@@ -170,7 +171,7 @@ class _$Trying extends Trying {
 
   @override
   String toString() {
-    return 'StartState.trying(isStartSuccess: $isStartSuccess, isProductFetched: $isProductFetched, products: $products)';
+    return 'InitializationState.trying(isStartSuccess: $isStartSuccess, isProductFetched: $isProductFetched, products: $products)';
   }
 
   @override
@@ -257,7 +258,7 @@ class _$Trying extends Trying {
   }
 }
 
-abstract class Trying extends StartState {
+abstract class Trying extends InitializationState {
   const factory Trying(
       {bool isStartSuccess,
       bool isProductFetched,
@@ -279,7 +280,8 @@ abstract class $SuccessCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SuccessCopyWithImpl<$Res> extends _$StartStateCopyWithImpl<$Res>
+class _$SuccessCopyWithImpl<$Res>
+    extends _$InitializationStateCopyWithImpl<$Res>
     implements $SuccessCopyWith<$Res> {
   _$SuccessCopyWithImpl(Success _value, $Res Function(Success) _then)
       : super(_value, (v) => _then(v as Success));
@@ -311,7 +313,7 @@ class _$Success extends Success {
 
   @override
   String toString() {
-    return 'StartState.success(products: $products)';
+    return 'InitializationState.success(products: $products)';
   }
 
   @override
@@ -389,7 +391,7 @@ class _$Success extends Success {
   }
 }
 
-abstract class Success extends StartState {
+abstract class Success extends InitializationState {
   const factory Success({List<ApphudProduct> products}) = _$Success;
   const Success._() : super._();
 
@@ -406,7 +408,8 @@ abstract class $StartFailCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StartFailCopyWithImpl<$Res> extends _$StartStateCopyWithImpl<$Res>
+class _$StartFailCopyWithImpl<$Res>
+    extends _$InitializationStateCopyWithImpl<$Res>
     implements $StartFailCopyWith<$Res> {
   _$StartFailCopyWithImpl(StartFail _value, $Res Function(StartFail) _then)
       : super(_value, (v) => _then(v as StartFail));
@@ -437,7 +440,7 @@ class _$StartFail extends StartFail {
 
   @override
   String toString() {
-    return 'StartState.startFail(error: $error)';
+    return 'InitializationState.startFail(error: $error)';
   }
 
   @override
@@ -514,7 +517,7 @@ class _$StartFail extends StartFail {
   }
 }
 
-abstract class StartFail extends StartState {
+abstract class StartFail extends InitializationState {
   const factory StartFail(String error) = _$StartFail;
   const StartFail._() : super._();
 
@@ -534,7 +537,7 @@ abstract class $ProductsFetchFailCopyWith<$Res> {
 
 /// @nodoc
 class _$ProductsFetchFailCopyWithImpl<$Res>
-    extends _$StartStateCopyWithImpl<$Res>
+    extends _$InitializationStateCopyWithImpl<$Res>
     implements $ProductsFetchFailCopyWith<$Res> {
   _$ProductsFetchFailCopyWithImpl(
       ProductsFetchFail _value, $Res Function(ProductsFetchFail) _then)
@@ -566,7 +569,7 @@ class _$ProductsFetchFail extends ProductsFetchFail {
 
   @override
   String toString() {
-    return 'StartState.productsFetchFail(error: $error)';
+    return 'InitializationState.productsFetchFail(error: $error)';
   }
 
   @override
@@ -643,7 +646,7 @@ class _$ProductsFetchFail extends ProductsFetchFail {
   }
 }
 
-abstract class ProductsFetchFail extends StartState {
+abstract class ProductsFetchFail extends InitializationState {
   const factory ProductsFetchFail(String error) = _$ProductsFetchFail;
   const ProductsFetchFail._() : super._();
 

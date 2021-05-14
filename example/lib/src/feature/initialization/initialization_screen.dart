@@ -1,31 +1,31 @@
 import 'package:apphud_example/app_secrets.dart';
-import 'package:apphud_example/src/feature/start/start_bloc.dart';
+import 'package:apphud_example/src/feature/initialization/initialization_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'start_event.dart';
-import 'start_state.dart';
+import 'initialization_event.dart';
+import 'initialization_state.dart';
 
-class StartScreenPage extends Page {
+class InitializationScreenPage extends Page {
   @override
   Route createRoute(BuildContext context) {
     return MaterialPageRoute(
       settings: this,
       builder: (BuildContext context) {
         return BlocProvider(
-          create: (_) => StartBloc(
+          create: (_) => InitializationBloc(
             appSecrets: AppSecrets(),
             navigationBloc: BlocProvider.of(context),
-          )..add(StartEvent.tryToStart()),
+          )..add(InitializationEvent.initializeTrying()),
           lazy: false,
-          child: StartScreen(),
+          child: InitializationStartScreen(),
         );
       },
     );
   }
 }
 
-class StartScreen extends StatelessWidget {
+class InitializationStartScreen extends StatelessWidget {
   static const String pathName = 'start';
 
   @override
@@ -37,8 +37,8 @@ class StartScreen extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return Center(
-      child: BlocBuilder<StartBloc, StartState>(
-        builder: (BuildContext context, StartState state) {
+      child: BlocBuilder<InitializationBloc, InitializationState>(
+        builder: (BuildContext context, InitializationState state) {
           return state.map(
             trying: _buildTrying,
             success: _buildSuccess,

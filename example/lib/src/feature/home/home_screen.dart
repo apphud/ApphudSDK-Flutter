@@ -1,5 +1,5 @@
-import 'package:apphud_example/src/feature/start/start_bloc.dart';
-import 'package:apphud_example/src/feature/start/start_state.dart';
+import 'package:apphud_example/src/feature/initialization/initialization_bloc.dart';
+import 'package:apphud_example/src/feature/initialization/initialization_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,13 +23,13 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<StartBloc, StartState>(
+      body: BlocBuilder<InitializationBloc, InitializationState>(
         builder: _buildBody,
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context, StartState state) {
+  Widget _buildBody(BuildContext context, InitializationState state) {
     return state.maybeMap(
       orElse: () => Center(child: CircularProgressIndicator()),
       success: _buildProductList,

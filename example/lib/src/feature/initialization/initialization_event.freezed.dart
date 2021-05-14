@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'start_event.dart';
+part of 'initialization_event.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,11 +13,11 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$StartEventTearOff {
-  const _$StartEventTearOff();
+class _$InitializationEventTearOff {
+  const _$InitializationEventTearOff();
 
-  TryToStart tryToStart() {
-    return const TryToStart();
+  InitializeTrying initializeTrying() {
+    return const InitializeTrying();
   }
 
   ProductsFetchSuccess productsFetchSuccess(List<ApphudProduct> products) {
@@ -34,13 +34,13 @@ class _$StartEventTearOff {
 }
 
 /// @nodoc
-const $StartEvent = _$StartEventTearOff();
+const $InitializationEvent = _$InitializationEventTearOff();
 
 /// @nodoc
-mixin _$StartEvent {
+mixin _$InitializationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() tryToStart,
+    required TResult Function() initializeTrying,
     required TResult Function(List<ApphudProduct> products)
         productsFetchSuccess,
     required TResult Function(String error) productsFetchFailure,
@@ -48,7 +48,7 @@ mixin _$StartEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? tryToStart,
+    TResult Function()? initializeTrying,
     TResult Function(List<ApphudProduct> products)? productsFetchSuccess,
     TResult Function(String error)? productsFetchFailure,
     required TResult orElse(),
@@ -56,14 +56,14 @@ mixin _$StartEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(TryToStart value) tryToStart,
+    required TResult Function(InitializeTrying value) initializeTrying,
     required TResult Function(ProductsFetchSuccess value) productsFetchSuccess,
     required TResult Function(ProductsFetchFailure value) productsFetchFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(TryToStart value)? tryToStart,
+    TResult Function(InitializeTrying value)? initializeTrying,
     TResult Function(ProductsFetchSuccess value)? productsFetchSuccess,
     TResult Function(ProductsFetchFailure value)? productsFetchFailure,
     required TResult orElse(),
@@ -72,51 +72,54 @@ mixin _$StartEvent {
 }
 
 /// @nodoc
-abstract class $StartEventCopyWith<$Res> {
-  factory $StartEventCopyWith(
-          StartEvent value, $Res Function(StartEvent) then) =
-      _$StartEventCopyWithImpl<$Res>;
+abstract class $InitializationEventCopyWith<$Res> {
+  factory $InitializationEventCopyWith(
+          InitializationEvent value, $Res Function(InitializationEvent) then) =
+      _$InitializationEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$StartEventCopyWithImpl<$Res> implements $StartEventCopyWith<$Res> {
-  _$StartEventCopyWithImpl(this._value, this._then);
+class _$InitializationEventCopyWithImpl<$Res>
+    implements $InitializationEventCopyWith<$Res> {
+  _$InitializationEventCopyWithImpl(this._value, this._then);
 
-  final StartEvent _value;
+  final InitializationEvent _value;
   // ignore: unused_field
-  final $Res Function(StartEvent) _then;
+  final $Res Function(InitializationEvent) _then;
 }
 
 /// @nodoc
-abstract class $TryToStartCopyWith<$Res> {
-  factory $TryToStartCopyWith(
-          TryToStart value, $Res Function(TryToStart) then) =
-      _$TryToStartCopyWithImpl<$Res>;
+abstract class $InitializeTryingCopyWith<$Res> {
+  factory $InitializeTryingCopyWith(
+          InitializeTrying value, $Res Function(InitializeTrying) then) =
+      _$InitializeTryingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$TryToStartCopyWithImpl<$Res> extends _$StartEventCopyWithImpl<$Res>
-    implements $TryToStartCopyWith<$Res> {
-  _$TryToStartCopyWithImpl(TryToStart _value, $Res Function(TryToStart) _then)
-      : super(_value, (v) => _then(v as TryToStart));
+class _$InitializeTryingCopyWithImpl<$Res>
+    extends _$InitializationEventCopyWithImpl<$Res>
+    implements $InitializeTryingCopyWith<$Res> {
+  _$InitializeTryingCopyWithImpl(
+      InitializeTrying _value, $Res Function(InitializeTrying) _then)
+      : super(_value, (v) => _then(v as InitializeTrying));
 
   @override
-  TryToStart get _value => super._value as TryToStart;
+  InitializeTrying get _value => super._value as InitializeTrying;
 }
 
 /// @nodoc
 
-class _$TryToStart extends TryToStart {
-  const _$TryToStart() : super._();
+class _$InitializeTrying extends InitializeTrying {
+  const _$InitializeTrying() : super._();
 
   @override
   String toString() {
-    return 'StartEvent.tryToStart()';
+    return 'InitializationEvent.initializeTrying()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is TryToStart);
+    return identical(this, other) || (other is InitializeTrying);
   }
 
   @override
@@ -125,24 +128,24 @@ class _$TryToStart extends TryToStart {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() tryToStart,
+    required TResult Function() initializeTrying,
     required TResult Function(List<ApphudProduct> products)
         productsFetchSuccess,
     required TResult Function(String error) productsFetchFailure,
   }) {
-    return tryToStart();
+    return initializeTrying();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? tryToStart,
+    TResult Function()? initializeTrying,
     TResult Function(List<ApphudProduct> products)? productsFetchSuccess,
     TResult Function(String error)? productsFetchFailure,
     required TResult orElse(),
   }) {
-    if (tryToStart != null) {
-      return tryToStart();
+    if (initializeTrying != null) {
+      return initializeTrying();
     }
     return orElse();
   }
@@ -150,31 +153,31 @@ class _$TryToStart extends TryToStart {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(TryToStart value) tryToStart,
+    required TResult Function(InitializeTrying value) initializeTrying,
     required TResult Function(ProductsFetchSuccess value) productsFetchSuccess,
     required TResult Function(ProductsFetchFailure value) productsFetchFailure,
   }) {
-    return tryToStart(this);
+    return initializeTrying(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(TryToStart value)? tryToStart,
+    TResult Function(InitializeTrying value)? initializeTrying,
     TResult Function(ProductsFetchSuccess value)? productsFetchSuccess,
     TResult Function(ProductsFetchFailure value)? productsFetchFailure,
     required TResult orElse(),
   }) {
-    if (tryToStart != null) {
-      return tryToStart(this);
+    if (initializeTrying != null) {
+      return initializeTrying(this);
     }
     return orElse();
   }
 }
 
-abstract class TryToStart extends StartEvent {
-  const factory TryToStart() = _$TryToStart;
-  const TryToStart._() : super._();
+abstract class InitializeTrying extends InitializationEvent {
+  const factory InitializeTrying() = _$InitializeTrying;
+  const InitializeTrying._() : super._();
 }
 
 /// @nodoc
@@ -187,7 +190,7 @@ abstract class $ProductsFetchSuccessCopyWith<$Res> {
 
 /// @nodoc
 class _$ProductsFetchSuccessCopyWithImpl<$Res>
-    extends _$StartEventCopyWithImpl<$Res>
+    extends _$InitializationEventCopyWithImpl<$Res>
     implements $ProductsFetchSuccessCopyWith<$Res> {
   _$ProductsFetchSuccessCopyWithImpl(
       ProductsFetchSuccess _value, $Res Function(ProductsFetchSuccess) _then)
@@ -219,7 +222,7 @@ class _$ProductsFetchSuccess extends ProductsFetchSuccess {
 
   @override
   String toString() {
-    return 'StartEvent.productsFetchSuccess(products: $products)';
+    return 'InitializationEvent.productsFetchSuccess(products: $products)';
   }
 
   @override
@@ -244,7 +247,7 @@ class _$ProductsFetchSuccess extends ProductsFetchSuccess {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() tryToStart,
+    required TResult Function() initializeTrying,
     required TResult Function(List<ApphudProduct> products)
         productsFetchSuccess,
     required TResult Function(String error) productsFetchFailure,
@@ -255,7 +258,7 @@ class _$ProductsFetchSuccess extends ProductsFetchSuccess {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? tryToStart,
+    TResult Function()? initializeTrying,
     TResult Function(List<ApphudProduct> products)? productsFetchSuccess,
     TResult Function(String error)? productsFetchFailure,
     required TResult orElse(),
@@ -269,7 +272,7 @@ class _$ProductsFetchSuccess extends ProductsFetchSuccess {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(TryToStart value) tryToStart,
+    required TResult Function(InitializeTrying value) initializeTrying,
     required TResult Function(ProductsFetchSuccess value) productsFetchSuccess,
     required TResult Function(ProductsFetchFailure value) productsFetchFailure,
   }) {
@@ -279,7 +282,7 @@ class _$ProductsFetchSuccess extends ProductsFetchSuccess {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(TryToStart value)? tryToStart,
+    TResult Function(InitializeTrying value)? initializeTrying,
     TResult Function(ProductsFetchSuccess value)? productsFetchSuccess,
     TResult Function(ProductsFetchFailure value)? productsFetchFailure,
     required TResult orElse(),
@@ -291,7 +294,7 @@ class _$ProductsFetchSuccess extends ProductsFetchSuccess {
   }
 }
 
-abstract class ProductsFetchSuccess extends StartEvent {
+abstract class ProductsFetchSuccess extends InitializationEvent {
   const factory ProductsFetchSuccess(List<ApphudProduct> products) =
       _$ProductsFetchSuccess;
   const ProductsFetchSuccess._() : super._();
@@ -312,7 +315,7 @@ abstract class $ProductsFetchFailureCopyWith<$Res> {
 
 /// @nodoc
 class _$ProductsFetchFailureCopyWithImpl<$Res>
-    extends _$StartEventCopyWithImpl<$Res>
+    extends _$InitializationEventCopyWithImpl<$Res>
     implements $ProductsFetchFailureCopyWith<$Res> {
   _$ProductsFetchFailureCopyWithImpl(
       ProductsFetchFailure _value, $Res Function(ProductsFetchFailure) _then)
@@ -344,7 +347,7 @@ class _$ProductsFetchFailure extends ProductsFetchFailure {
 
   @override
   String toString() {
-    return 'StartEvent.productsFetchFailure(error: $error)';
+    return 'InitializationEvent.productsFetchFailure(error: $error)';
   }
 
   @override
@@ -368,7 +371,7 @@ class _$ProductsFetchFailure extends ProductsFetchFailure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() tryToStart,
+    required TResult Function() initializeTrying,
     required TResult Function(List<ApphudProduct> products)
         productsFetchSuccess,
     required TResult Function(String error) productsFetchFailure,
@@ -379,7 +382,7 @@ class _$ProductsFetchFailure extends ProductsFetchFailure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? tryToStart,
+    TResult Function()? initializeTrying,
     TResult Function(List<ApphudProduct> products)? productsFetchSuccess,
     TResult Function(String error)? productsFetchFailure,
     required TResult orElse(),
@@ -393,7 +396,7 @@ class _$ProductsFetchFailure extends ProductsFetchFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(TryToStart value) tryToStart,
+    required TResult Function(InitializeTrying value) initializeTrying,
     required TResult Function(ProductsFetchSuccess value) productsFetchSuccess,
     required TResult Function(ProductsFetchFailure value) productsFetchFailure,
   }) {
@@ -403,7 +406,7 @@ class _$ProductsFetchFailure extends ProductsFetchFailure {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(TryToStart value)? tryToStart,
+    TResult Function(InitializeTrying value)? initializeTrying,
     TResult Function(ProductsFetchSuccess value)? productsFetchSuccess,
     TResult Function(ProductsFetchFailure value)? productsFetchFailure,
     required TResult orElse(),
@@ -415,7 +418,7 @@ class _$ProductsFetchFailure extends ProductsFetchFailure {
   }
 }
 
-abstract class ProductsFetchFailure extends StartEvent {
+abstract class ProductsFetchFailure extends InitializationEvent {
   const factory ProductsFetchFailure(String error) = _$ProductsFetchFailure;
   const ProductsFetchFailure._() : super._();
 
