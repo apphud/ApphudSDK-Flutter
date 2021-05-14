@@ -1,18 +1,39 @@
 import 'dart:convert';
 
-mixin JsonPrintMixin {
+mixin DebugPrintMixin {
   void printAsJson(String methodName, Object object) {
     try {
-      //final Map<String, dynamic> json = model.toJson();
       final JsonEncoder encoder = JsonEncoder.withIndent('  ');
       final String prettyPrint = encoder.convert(object);
-      print('***********************************************************************************');
+      _printDivider();
       print('The result of $methodName:\n $prettyPrint');
-      print('***********************************************************************************');
+      _printDivider();
     } catch (e) {
-      print('***********************************************************************************');
-      print('Error printing $object as result of $methodName, error: ${e.toString()}');
-      print('***********************************************************************************');
+      _printDivider();
+      print(
+        'Failed to printing $object as result of $methodName, '
+        'error: ${e.toString()}',
+      );
+      _printDivider();
+    }
+  }
+
+  void _printDivider() {
+    print('*****************************************************************');
+  }
+
+  void printError(String methodName, Object error) {
+    try {
+      _printDivider();
+      print('The result of $methodName is error:\n${error.toString()}');
+      _printDivider();
+    } catch (e) {
+      _printDivider();
+      print(
+        'Failed to print error as result of $methodName, '
+        'error: ${e.toString()}',
+      );
+      _printDivider();
     }
   }
 }

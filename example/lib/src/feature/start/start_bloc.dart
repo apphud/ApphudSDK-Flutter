@@ -11,7 +11,7 @@ import 'package:bloc/bloc.dart';
 import 'start_event.dart';
 import 'start_state.dart';
 
-class StartBloc extends Bloc<StartEvent, StartState> with JsonPrintMixin {
+class StartBloc extends Bloc<StartEvent, StartState> with DebugPrintMixin {
   final AppSecretsBase _appSecrets;
   final NavigationBloc _navigationBloc;
 
@@ -29,9 +29,10 @@ class StartBloc extends Bloc<StartEvent, StartState> with JsonPrintMixin {
       final List<ApphudProduct> products =
           await AppHud.productsDidFetchCallback();
       add(StartEvent.productsFetchSuccess(products));
-      printAsJson('productsDidFetchCallback()',products);
+      printAsJson('productsDidFetchCallback()', products);
     } catch (e) {
       add(StartEvent.productsFetchFailure(e.toString()));
+      printError('productsDidFetchCallback()', e);
     }
   }
 
