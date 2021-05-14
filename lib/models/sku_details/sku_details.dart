@@ -50,49 +50,7 @@ class SkuDetailsWrapper {
   factory SkuDetailsWrapper.fromJson(Map<dynamic, dynamic> map) =>
       _$SkuDetailsWrapperFromJson(map);
 
-  @override
-  bool operator ==(dynamic other) {
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-
-    final SkuDetailsWrapper typedOther = other;
-    return typedOther is SkuDetailsWrapper &&
-        typedOther.description == description &&
-        typedOther.freeTrialPeriod == freeTrialPeriod &&
-        typedOther.introductoryPrice == introductoryPrice &&
-        typedOther.introductoryPriceAmountMicros ==
-            introductoryPriceAmountMicros &&
-        typedOther.introductoryPriceCycles == introductoryPriceCycles &&
-        typedOther.introductoryPricePeriod == introductoryPricePeriod &&
-        typedOther.price == price &&
-        typedOther.priceAmountMicros == priceAmountMicros &&
-        typedOther.sku == sku &&
-        typedOther.subscriptionPeriod == subscriptionPeriod &&
-        typedOther.title == title &&
-        typedOther.type == type &&
-        typedOther.originalPrice == originalPrice &&
-        typedOther.originalPriceAmountMicros == originalPriceAmountMicros;
-  }
-
-  @override
-  int get hashCode {
-    return hashValues(
-        description.hashCode,
-        freeTrialPeriod.hashCode,
-        introductoryPrice.hashCode,
-        introductoryPriceAmountMicros.hashCode,
-        introductoryPriceCycles.hashCode,
-        introductoryPricePeriod.hashCode,
-        price.hashCode,
-        priceAmountMicros.hashCode,
-        sku.hashCode,
-        subscriptionPeriod.hashCode,
-        title.hashCode,
-        type.hashCode,
-        originalPrice,
-        originalPriceAmountMicros);
-  }
+  Map<String, dynamic> toJson() => _$SkuDetailsWrapperToJson(this);
 
   @override
   String toString() {

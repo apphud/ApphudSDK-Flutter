@@ -20,21 +20,8 @@ class SKProductSubscriptionPeriodWrapper {
   ) =>
       _$SKProductSubscriptionPeriodWrapperFromJson(map);
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    final SKProductSubscriptionPeriodWrapper typedOther =
-        other as SKProductSubscriptionPeriodWrapper;
-    return typedOther.numberOfUnits == numberOfUnits && typedOther.unit == unit;
-  }
-
-  @override
-  int get hashCode => hashValues(this.numberOfUnits, this.unit);
+  Map<String, dynamic> toJson() =>
+      _$SKProductSubscriptionPeriodWrapperToJson(this);
 
   @override
   String toString() {

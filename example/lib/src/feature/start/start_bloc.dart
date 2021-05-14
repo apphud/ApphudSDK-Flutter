@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product.dart';
 import 'package:apphud_example/src/feature/common/app_secrets_base.dart';
+import 'package:apphud_example/src/feature/common/json_print_mixin.dart';
 import 'package:apphud_example/src/feature/navigation/navigation_bloc.dart';
 import 'package:apphud_example/src/feature/navigation/navigation_event.dart';
 import 'package:bloc/bloc.dart';
@@ -10,7 +11,7 @@ import 'package:bloc/bloc.dart';
 import 'start_event.dart';
 import 'start_state.dart';
 
-class StartBloc extends Bloc<StartEvent, StartState> {
+class StartBloc extends Bloc<StartEvent, StartState> with JsonPrintMixin {
   final AppSecretsBase _appSecrets;
   final NavigationBloc _navigationBloc;
 
@@ -28,6 +29,7 @@ class StartBloc extends Bloc<StartEvent, StartState> {
       final List<ApphudProduct> products =
           await AppHud.productsDidFetchCallback();
       add(StartEvent.productsFetchSuccess(products));
+      printAsJson(products);
     } catch (e) {
       add(StartEvent.productsFetchFailure(e.toString()));
     }
