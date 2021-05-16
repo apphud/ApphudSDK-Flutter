@@ -41,6 +41,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       );
 
   void _fetchSubscriptions() {
+    printError('sampleMethod()', 'Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error 1');
     AppHud.hasActiveSubscription().then(
       (value) => printAsJson('hasActiveSubscription()', value),
       onError: (e) => printError('hasActiveSubscription()', e),

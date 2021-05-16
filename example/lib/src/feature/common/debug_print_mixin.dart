@@ -36,16 +36,35 @@ mixin DebugPrintMixin {
     final List<String> lines = src.split('\n');
     final List<String> borderedLines = lines.map((line) {
       final StringBuffer buffer = StringBuffer();
-      buffer.write('\u{2551}');
-      buffer.write(line.replaceAll('\n', ''));
-      for (int i = line.length; i < _width; i++) {
-        buffer.write(' ');
-      }
-      buffer.write('\u{2551}\n');
+      final String clearedLine = line.replaceAll('\n', '');
+      final List<String> rangedLines = splitByLength(clearedLine, _width);
+
+      rangedLines.forEach((rangedLine) {
+        buffer.write('\u{2551}');
+        buffer.write(rangedLine);
+        for (int i = rangedLine.length; i < _width; i++) {
+          buffer.write(' ');
+        }
+        buffer.write('\u{2551}\n');
+      });
+
       return buffer.toString();
     }).toList();
 
     return borderedLines.join().replaceAll(RegExp(r'\n$'), '');
+  }
+
+  List<String> splitByLength(String src, int length) {
+    if (length <= 0) return [src];
+    final List<String> result = [];
+    final int stepsCount = src.length ~/ length;
+    for (int step = 0; step < stepsCount; step++) {
+      result.add(src.substring(step * length, (step + 1) * length));
+    }
+    if (src.length % length != 0) {
+      result.add(src.substring(stepsCount * length));
+    }
+    return result;
   }
 
   void _printUpDivider() {
