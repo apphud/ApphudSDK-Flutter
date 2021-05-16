@@ -25,9 +25,9 @@ mixin DebugPrintMixin {
     } catch (e) {
       _printUpDivider();
       debugPrint(
-        'Failed to print $object as result of $methodName, '
-        'error: ${e.toString()}',
-      );
+          _addBorders('Failed to print $object as result of $methodName'));
+      _printMiddleDivider();
+      debugPrint(_addBorders(e.toString()));
       _printDownDivider();
     }
   }
@@ -88,10 +88,9 @@ mixin DebugPrintMixin {
       _printDownDivider();
     } catch (e) {
       _printUpDivider();
-      debugPrint(
-        'Failed to print error as result of $methodName, '
-        'error: ${e.toString()}',
-      );
+      debugPrint(_addBorders('Failed to print error as result of $methodName'));
+      _printMiddleDivider();
+      debugPrint(_addBorders(e.toString()));
       _printDownDivider();
     }
   }
