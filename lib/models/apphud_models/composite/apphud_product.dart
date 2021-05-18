@@ -22,4 +22,11 @@ class ApphudProduct {
       return ApphudProduct(skProductWrapper: skProductWrapper);
     }
   }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'skProductWrapper': skProductWrapper?.toJson(),
+      'skuDetailsWrapper': skuDetailsWrapper?.toJson(),
+    };
+  }
 }

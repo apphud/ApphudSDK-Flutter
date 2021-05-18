@@ -1,3 +1,6 @@
+## 2.0.3
+- Upgrade the example application
+
 ## 2.0.2
 - Add method documentation in apphud.dart
 - [Android] Upgrade to use ApphudSDK-Android:1.0.0:

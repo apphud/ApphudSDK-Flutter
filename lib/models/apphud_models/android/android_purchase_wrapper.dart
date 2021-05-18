@@ -28,6 +28,8 @@ class AndroidPurchaseWrapper {
     return _$AndroidPurchaseWrapperFromJson(map);
   }
 
+  Map<String, dynamic> toJson() => _$AndroidPurchaseWrapperToJson(this);
+
   @override
   String toString() {
     return 'ApphudPurchaseResultAndroid{orderId: $orderId, packageName: $packageName, purchaseToken: $purchaseToken, signature: $signature, sku: $sku, originalJson: $originalJson, purchaseState: $purchaseState, purchaseTime: $purchaseTime}';

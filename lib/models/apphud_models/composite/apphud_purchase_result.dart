@@ -27,6 +27,8 @@ class ApphudPurchaseResult {
   factory ApphudPurchaseResult.fromJson(Map<dynamic, dynamic> map) =>
       _$ApphudPurchaseResultFromJson(map);
 
+  Map<String, dynamic> toJson() => _$ApphudPurchaseResultToJson(this);
+
   @override
   String toString() {
     return 'ApphudPurchaseResult{subscription: $subscription, nonRenewingPurchase: $nonRenewingPurchase, transaction: $transaction, purchase: $purchase, error: $error}';

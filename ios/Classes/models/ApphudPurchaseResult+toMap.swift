@@ -65,7 +65,8 @@ extension ApphudNonRenewingPurchase {
                 "purchasedAt": purchasedAt.timeIntervalSince1970,
                 "canceledAt": canceledAt?.timeIntervalSince1970,
                 "isSandbox" : isSandbox,
-                "isLocal" : isLocal
+                "isLocal" : isLocal,
+                "isActive" : isActive()
         ]
     }
 }

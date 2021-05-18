@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import io.flutter.plugin.common.MethodChannel
 import com.apphud.sdk.domain.ApphudSubscription
 import android.util.Log
+import java.lang.IllegalStateException
 
 class HandlePurchasesHandler(override val routes: List<String>, val context: Context) : Handler {
 
@@ -89,8 +90,11 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             error?.let {
                 resultMap["error"] = DataTransformer.apphudError(it)
             }
-
-            result.success(resultMap)
+            try {
+                result.success(resultMap)
+            } catch (e: IllegalStateException ) {
+                Log.e("Apphud", e.toString(), e)
+            }
         }
     }
 

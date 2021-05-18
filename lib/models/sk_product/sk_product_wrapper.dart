@@ -1,5 +1,4 @@
 import 'package:apphud/models/sk_product/subscription_period_wrapper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'discount_wrapper.dart';
@@ -31,35 +30,7 @@ class SKProductWrapper {
   factory SKProductWrapper.fromJson(Map<dynamic, dynamic> map) =>
       _$SKProductWrapperFromJson(map);
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    final SKProductWrapper typedOther = other as SKProductWrapper;
-    return typedOther.productIdentifier == productIdentifier &&
-        typedOther.localizedTitle == localizedTitle &&
-        typedOther.localizedDescription == localizedDescription &&
-        typedOther.priceLocale == priceLocale &&
-        typedOther.subscriptionGroupIdentifier == subscriptionGroupIdentifier &&
-        typedOther.price == price &&
-        typedOther.subscriptionPeriod == subscriptionPeriod &&
-        typedOther.introductoryPrice == introductoryPrice;
-  }
-
-  @override
-  int get hashCode => hashValues(
-      this.productIdentifier,
-      this.localizedTitle,
-      this.localizedDescription,
-      this.priceLocale,
-      this.subscriptionGroupIdentifier,
-      this.price,
-      this.subscriptionPeriod,
-      this.introductoryPrice);
+  Map<String, dynamic> toJson() => _$SKProductWrapperToJson(this);
 
   @override
   String toString() {
@@ -80,21 +51,7 @@ class SKPriceLocaleWrapper {
   factory SKPriceLocaleWrapper.fromJson(Map<dynamic, dynamic> map) =>
       _$SKPriceLocaleWrapperFromJson(map);
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    final SKPriceLocaleWrapper typedOther = other as SKPriceLocaleWrapper;
-    return typedOther.currencySymbol == currencySymbol &&
-        typedOther.currencyCode == currencyCode;
-  }
-
-  @override
-  int get hashCode => hashValues(this.currencySymbol, this.currencyCode);
+  Map<String, dynamic> toJson() => _$SKPriceLocaleWrapperToJson(this);
 
   @override
   String toString() {
