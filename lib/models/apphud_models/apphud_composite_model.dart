@@ -35,7 +35,7 @@ class ApphudComposite {
     return ApphudComposite(
       purchases: purchases,
       subscriptions: subscriptions,
-      error: ApphudError.fromJson(map['error']),
+      error: map['error'] != null ? ApphudError.fromJson(map['error']) : null,
     );
   }
 
