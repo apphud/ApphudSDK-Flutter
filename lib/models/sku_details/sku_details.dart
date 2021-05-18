@@ -1,5 +1,3 @@
-import 'dart:ui' show hashValues;
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'sku_details.g.dart';

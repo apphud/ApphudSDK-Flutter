@@ -38,7 +38,7 @@ class _$PurchaseStateTearOff {
     return const RestorePurchasesSuccess();
   }
 
-  RestorePurchasesFailure restorePurchaseFailure(String error) {
+  RestorePurchasesFailure restorePurchaseFailure(ApphudError error) {
     return RestorePurchasesFailure(
       error,
     );
@@ -57,7 +57,7 @@ mixin _$PurchaseState {
     required TResult Function() purchaseSuccess,
     required TResult Function(ApphudError error) purchaseFailure,
     required TResult Function() restorePurchasesSuccess,
-    required TResult Function(String error) restorePurchaseFailure,
+    required TResult Function(ApphudError error) restorePurchaseFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,7 +67,7 @@ mixin _$PurchaseState {
     TResult Function()? purchaseSuccess,
     TResult Function(ApphudError error)? purchaseFailure,
     TResult Function()? restorePurchasesSuccess,
-    TResult Function(String error)? restorePurchaseFailure,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -155,7 +155,7 @@ class _$Init extends Init {
     required TResult Function() purchaseSuccess,
     required TResult Function(ApphudError error) purchaseFailure,
     required TResult Function() restorePurchasesSuccess,
-    required TResult Function(String error) restorePurchaseFailure,
+    required TResult Function(ApphudError error) restorePurchaseFailure,
   }) {
     return init();
   }
@@ -168,7 +168,7 @@ class _$Init extends Init {
     TResult Function()? purchaseSuccess,
     TResult Function(ApphudError error)? purchaseFailure,
     TResult Function()? restorePurchasesSuccess,
-    TResult Function(String error)? restorePurchaseFailure,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -258,7 +258,7 @@ class _$InProgress extends InProgress {
     required TResult Function() purchaseSuccess,
     required TResult Function(ApphudError error) purchaseFailure,
     required TResult Function() restorePurchasesSuccess,
-    required TResult Function(String error) restorePurchaseFailure,
+    required TResult Function(ApphudError error) restorePurchaseFailure,
   }) {
     return inProgress();
   }
@@ -271,7 +271,7 @@ class _$InProgress extends InProgress {
     TResult Function()? purchaseSuccess,
     TResult Function(ApphudError error)? purchaseFailure,
     TResult Function()? restorePurchasesSuccess,
-    TResult Function(String error)? restorePurchaseFailure,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (inProgress != null) {
@@ -363,7 +363,7 @@ class _$PurchaseSuccess extends PurchaseSuccess {
     required TResult Function() purchaseSuccess,
     required TResult Function(ApphudError error) purchaseFailure,
     required TResult Function() restorePurchasesSuccess,
-    required TResult Function(String error) restorePurchaseFailure,
+    required TResult Function(ApphudError error) restorePurchaseFailure,
   }) {
     return purchaseSuccess();
   }
@@ -376,7 +376,7 @@ class _$PurchaseSuccess extends PurchaseSuccess {
     TResult Function()? purchaseSuccess,
     TResult Function(ApphudError error)? purchaseFailure,
     TResult Function()? restorePurchasesSuccess,
-    TResult Function(String error)? restorePurchaseFailure,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (purchaseSuccess != null) {
@@ -493,7 +493,7 @@ class _$PurchaseFailure extends PurchaseFailure {
     required TResult Function() purchaseSuccess,
     required TResult Function(ApphudError error) purchaseFailure,
     required TResult Function() restorePurchasesSuccess,
-    required TResult Function(String error) restorePurchaseFailure,
+    required TResult Function(ApphudError error) restorePurchaseFailure,
   }) {
     return purchaseFailure(error);
   }
@@ -506,7 +506,7 @@ class _$PurchaseFailure extends PurchaseFailure {
     TResult Function()? purchaseSuccess,
     TResult Function(ApphudError error)? purchaseFailure,
     TResult Function()? restorePurchasesSuccess,
-    TResult Function(String error)? restorePurchaseFailure,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (purchaseFailure != null) {
@@ -603,7 +603,7 @@ class _$RestorePurchasesSuccess extends RestorePurchasesSuccess {
     required TResult Function() purchaseSuccess,
     required TResult Function(ApphudError error) purchaseFailure,
     required TResult Function() restorePurchasesSuccess,
-    required TResult Function(String error) restorePurchaseFailure,
+    required TResult Function(ApphudError error) restorePurchaseFailure,
   }) {
     return restorePurchasesSuccess();
   }
@@ -616,7 +616,7 @@ class _$RestorePurchasesSuccess extends RestorePurchasesSuccess {
     TResult Function()? purchaseSuccess,
     TResult Function(ApphudError error)? purchaseFailure,
     TResult Function()? restorePurchasesSuccess,
-    TResult Function(String error)? restorePurchaseFailure,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (restorePurchasesSuccess != null) {
@@ -668,7 +668,7 @@ abstract class $RestorePurchasesFailureCopyWith<$Res> {
   factory $RestorePurchasesFailureCopyWith(RestorePurchasesFailure value,
           $Res Function(RestorePurchasesFailure) then) =
       _$RestorePurchasesFailureCopyWithImpl<$Res>;
-  $Res call({String error});
+  $Res call({ApphudError error});
 }
 
 /// @nodoc
@@ -690,7 +690,7 @@ class _$RestorePurchasesFailureCopyWithImpl<$Res>
       error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String,
+              as ApphudError,
     ));
   }
 }
@@ -701,7 +701,7 @@ class _$RestorePurchasesFailure extends RestorePurchasesFailure {
   const _$RestorePurchasesFailure(this.error) : super._();
 
   @override
-  final String error;
+  final ApphudError error;
 
   @override
   String toString() {
@@ -734,7 +734,7 @@ class _$RestorePurchasesFailure extends RestorePurchasesFailure {
     required TResult Function() purchaseSuccess,
     required TResult Function(ApphudError error) purchaseFailure,
     required TResult Function() restorePurchasesSuccess,
-    required TResult Function(String error) restorePurchaseFailure,
+    required TResult Function(ApphudError error) restorePurchaseFailure,
   }) {
     return restorePurchaseFailure(error);
   }
@@ -747,7 +747,7 @@ class _$RestorePurchasesFailure extends RestorePurchasesFailure {
     TResult Function()? purchaseSuccess,
     TResult Function(ApphudError error)? purchaseFailure,
     TResult Function()? restorePurchasesSuccess,
-    TResult Function(String error)? restorePurchaseFailure,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
     required TResult orElse(),
   }) {
     if (restorePurchaseFailure != null) {
@@ -790,11 +790,11 @@ class _$RestorePurchasesFailure extends RestorePurchasesFailure {
 }
 
 abstract class RestorePurchasesFailure extends PurchaseState {
-  const factory RestorePurchasesFailure(String error) =
+  const factory RestorePurchasesFailure(ApphudError error) =
       _$RestorePurchasesFailure;
   const RestorePurchasesFailure._() : super._();
 
-  String get error => throw _privateConstructorUsedError;
+  ApphudError get error => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $RestorePurchasesFailureCopyWith<RestorePurchasesFailure> get copyWith =>
       throw _privateConstructorUsedError;

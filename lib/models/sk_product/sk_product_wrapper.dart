@@ -1,5 +1,4 @@
 import 'package:apphud/models/sk_product/subscription_period_wrapper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'discount_wrapper.dart';

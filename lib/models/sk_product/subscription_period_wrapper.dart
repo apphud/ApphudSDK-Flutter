@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:apphud/models/sk_product/subscription_period_time_wrapper.dart';
 import 'package:json_annotation/json_annotation.dart';
 

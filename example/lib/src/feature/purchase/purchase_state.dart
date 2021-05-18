@@ -20,7 +20,7 @@ class PurchaseState with _$PurchaseState implements InProgressState {
   const factory PurchaseState.restorePurchasesSuccess() =
       RestorePurchasesSuccess;
 
-  const factory PurchaseState.restorePurchaseFailure(String error) =
+  const factory PurchaseState.restorePurchaseFailure(ApphudError error) =
       RestorePurchasesFailure;
 
   @override

@@ -1,4 +1,3 @@
-import 'package:apphud/models/apphud_models/apphud_error.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product.dart';
 import 'package:apphud_example/src/feature/purchase/purchase_bloc.dart';
 import 'package:apphud_example/src/feature/purchase/purchase_state.dart';
@@ -46,7 +45,8 @@ class ProductListWidget extends StatelessWidget {
       restorePurchasesSuccess: (_) =>
           'The purchases restore completed successfully',
       restorePurchaseFailure: (f) =>
-          'The purchases restore completed with error: ${f.error}',
+          'The purchases restore completed with error: ${f.error.message}'
+          '${f.error.errorCode != null ? ', error code:${f.error.errorCode}' : ''}',
     );
 
     if (message.isNotEmpty) {
