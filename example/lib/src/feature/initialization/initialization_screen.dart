@@ -48,6 +48,16 @@ class InitializationStartScreen extends StatelessWidget {
   }
 
   Widget _buildTrying(Trying value) {
+    return _buildStatus(
+      isStartSuccess: value.isStartSuccess,
+      isProductFetched: value.isProductFetched,
+    );
+  }
+
+  Padding _buildStatus({
+    required bool isStartSuccess,
+    required bool isProductFetched,
+  }) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -55,7 +65,7 @@ class InitializationStartScreen extends StatelessWidget {
         children: [
           Card(
             child: ListTile(
-              leading: !value.isStartSuccess
+              leading: isStartSuccess
                   ? CircularProgressIndicator()
                   : Icon(Icons.check),
               title: Text('SDK initialization'),
@@ -64,7 +74,7 @@ class InitializationStartScreen extends StatelessWidget {
           const SizedBox(height: 20),
           Card(
             child: ListTile(
-              leading: !value.isProductFetched
+              leading: isProductFetched
                   ? CircularProgressIndicator()
                   : Icon(Icons.check),
               title: Text('Products fetching'),
@@ -76,8 +86,9 @@ class InitializationStartScreen extends StatelessWidget {
   }
 
   Widget _buildSuccess(Success value) {
-    return Center(
-      child: Text('Success'),
+    return _buildStatus(
+      isStartSuccess: true,
+      isProductFetched: true,
     );
   }
 
