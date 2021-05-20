@@ -6,12 +6,14 @@ part of 'apphud_non_renewing_purchase.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApphudNonRenewingPurchase _$ApphudNonRenewingPurchaseFromJson(
-    Map<String, dynamic> json) {
+ApphudNonRenewingPurchase _$ApphudNonRenewingPurchaseFromJson(Map json) {
   return ApphudNonRenewingPurchase(
     productId: json['productId'] as String,
-    purchasedAt: (json['purchasedAt'] as num)?.toDouble(),
-    canceledAt: (json['canceledAt'] as num)?.toDouble(),
+    purchasedAt: (json['purchasedAt'] as num).toDouble(),
+    isActive: json['isActive'] as bool,
+    canceledAt: (json['canceledAt'] as num?)?.toDouble(),
+    isLocal: json['isLocal'] as bool?,
+    isSandbox: json['isSandbox'] as bool?,
   );
 }
 
@@ -21,4 +23,7 @@ Map<String, dynamic> _$ApphudNonRenewingPurchaseToJson(
       'productId': instance.productId,
       'purchasedAt': instance.purchasedAt,
       'canceledAt': instance.canceledAt,
+      'isActive': instance.isActive,
+      'isSandbox': instance.isSandbox,
+      'isLocal': instance.isLocal,
     };

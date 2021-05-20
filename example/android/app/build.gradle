@@ -42,6 +42,7 @@ android {
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        applicationId "com.apphud.app"
     }
 
     buildTypes {

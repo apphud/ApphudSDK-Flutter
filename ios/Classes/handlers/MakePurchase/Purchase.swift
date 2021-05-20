@@ -13,11 +13,7 @@ final class PurchaseRequest: Request {
 
     func startRequest(arguments: (String), result: @escaping FlutterResult) {
         Apphud.purchase(arguments) { (response) in
-            if (response.error != nil) {
-                result(FlutterError(code: "500", message: response.error.debugDescription, details: nil))
-            } else {
                 result(response.toMap())
-            }
         }
     }
 }

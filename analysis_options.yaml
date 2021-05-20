@@ -1,0 +1,16 @@
+include: package:pedantic/analysis_options.yaml
+
+analyzer:
+  exclude:
+  - "build/**"
+  - "**/*.g.dart"
+  - "**/*.freezed.dart"
+
+  strong-mode:
+    implicit-casts: true
+
+linter:
+  rules:
+    camel_case_types: true
+    package_api_docs: true
+    omit_local_variable_types: false
