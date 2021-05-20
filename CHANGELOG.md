@@ -1,3 +1,7 @@
+## 2.0.4
+- Update collection dependency
+- Correct readme.md
+
 ## 2.0.3
 - Upgrade the example application
 
