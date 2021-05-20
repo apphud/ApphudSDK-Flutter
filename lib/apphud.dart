@@ -141,7 +141,7 @@ class AppHud {
   /// - parameter [productId] ir required. Identifier of the product that user wants to purchase.
   /// Returns [ApphudPurchase] object
   static Future<ApphudPurchaseResult> purchase(String productId) async {
-    final dynamic? json = await _channel.invokeMethod(
+    final dynamic json = await _channel.invokeMethod(
       'purchase',
       {'productId': productId},
     );
@@ -156,7 +156,7 @@ class AppHud {
   /// Returns [ApphudPurchaseResult] object
   static Future<ApphudPurchaseResult> purchaseWithoutValidation(
       String productId) async {
-    final dynamic? json = await _channel.invokeMethod(
+    final dynamic json = await _channel.invokeMethod(
       'purchaseWithoutValidation',
       {'productId': productId},
     );
@@ -173,7 +173,7 @@ class AppHud {
     required String productId,
     required String discountID,
   }) async {
-    final dynamic? json = await _channel.invokeMethod(
+    final dynamic json = await _channel.invokeMethod(
       'purchasePromo',
       {
         'productId': productId,
@@ -336,7 +336,7 @@ class AppHud {
   /// - parameter [setOnce] is optional. Pass `true` to make this property non-updatable.
   static Future<void> setUserProperty({
     required ApphudUserPropertyKey key,
-    dynamic? value,
+    dynamic value,
     bool setOnce = false,
   }) async {
     await _channel.invokeMethod(
