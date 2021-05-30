@@ -40,7 +40,7 @@ Use Apphud to easily give a discount for existing and lapsed customers. No backe
 
 💱 User local currency real-time conversion.
 
-🏆 Increase iOS app revenue using our [Rules](https://docs.apphud.com/rules-and-screens/rules).<br/>Apphud will automatically offer a promotional discount based subscription events.
+🏆 Increase iOS app revenue using our [Rules](https://docs.apphud.com/rules-and-screens/rules). Apphud will automatically offer a promotional discount based subscription events.
 
 🕵️ Subscription cancellation insights tool.
 Understand why you customers cancel a subscription to make right product decisions.

@@ -11,6 +11,7 @@ class AttributionHandler(override val routes: List<String>) : Handler {
                 addAttribution(provider, data, identifier, result)
             }
             AttributionRoutes.disableAdTracking.name -> disableAdTracking(result)
+            AttributionRoutes.collectSearchAdsAttribution.name ->  result.notImplemented()
         }
     }
 
@@ -18,7 +19,6 @@ class AttributionHandler(override val routes: List<String>) : Handler {
                                data: Map<String, Any>,
                                identifier: String?, result: MethodChannel.Result) {
         Apphud.addAttribution(provider, data, identifier)
-        //TODO: В Android SDK было бы неплохо добавить флаг выполненности запроса
         result.success(true)
     }
 
@@ -65,7 +65,8 @@ class AttributionHandler(override val routes: List<String>) : Handler {
 enum class AttributionRoutes {
 
     addAttribution,
-    disableAdTracking;
+    disableAdTracking,
+    collectSearchAdsAttribution;
 
     companion object Mapper {
         fun stringValues(): List<String> {

@@ -29,6 +29,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     _fetchSubscriptions();
     _setUserProperties();
     _setAttribution();
+    _collectSearchAdsAttribution();
   }
 
   @override
@@ -152,6 +153,17 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         printOnlyMethodName: true,
       ),
       onError: (e) => printError('_setAttribution()', e),
+    );
+  }
+
+  void _collectSearchAdsAttribution() {
+    AppHud.collectSearchAdsAttribution(
+    ).then(
+          (value) => printAsJson(
+        'collectSearchAdsAttribution()',
+        value ?? 'Ok',
+      ),
+      onError: (e) => printError('collectSearchAdsAttribution()', e),
     );
   }
 
