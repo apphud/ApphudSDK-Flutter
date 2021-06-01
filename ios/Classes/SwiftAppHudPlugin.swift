@@ -4,7 +4,7 @@ import ApphudSDK
 
 public class SwiftAppHudPlugin: NSObject, FlutterPlugin {
 
-    static let apphudDelegate = PluginApphudDelegate();
+    static let apphudDelegate = PluginApphudDelegate()
 
     let handlers: [BaseHandler] = [
         InitializationHandler(),
