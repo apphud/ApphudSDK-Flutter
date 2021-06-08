@@ -4,8 +4,8 @@ import android.content.Context
 import com.apphud.sdk.Apphud
 import com.google.gson.Gson
 import io.flutter.plugin.common.MethodChannel
-import com.apphud.sdk.domain.ApphudSubscription
 import android.util.Log
+import com.apphud.fluttersdk.toMap
 import java.lang.IllegalStateException
 
 class HandlePurchasesHandler(override val routes: List<String>, val context: Context) : Handler {
@@ -36,18 +36,13 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
 
     private fun subscription(result: MethodChannel.Result) {
         val subscription = Apphud.subscription()
-        if (subscription != null) {
-            val dict: HashMap<String, Any?> = DataTransformer.subscription(subscription)
-            result.success(dict)
-        } else {
-            result.success(null)
-        }
+        result.success(subscription?.toMap())
     }
 
     private fun subscriptions(result: MethodChannel.Result) {
         val subscriptions = Apphud.subscriptions()
         val jsonList: List<HashMap<String, Any?>> = subscriptions.map {
-            DataTransformer.subscription(it)
+            it.toMap()
         }
 
         result.success(jsonList)
@@ -58,7 +53,7 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
         val nonRenewingPurchases = Apphud.nonRenewingPurchases()
 
         val jsonList: List<HashMap<String, Any?>> = nonRenewingPurchases.map {
-            DataTransformer.nonRenewingPurchase(it)
+            it.toMap()
         }
 
         result.success(jsonList)
@@ -75,24 +70,24 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
 
             apphudSubscriptionList?.let {
                 val subscriptionJsonList: List<HashMap<String, Any?>> = it.map { s ->
-                    DataTransformer.subscription(s)
+                    s.toMap()
                 }
                 resultMap["subscriptions"] = subscriptionJsonList
             }
 
             apphudNonRenewingPurchaseList?.let {
                 val nrPurchasesJsonList: List<HashMap<String, Any?>> = it.map { p ->
-                    DataTransformer.nonRenewingPurchase(p)
+                    p.toMap()
                 }
                 resultMap["nrPurchases"] = nrPurchasesJsonList
             }
 
             error?.let {
-                resultMap["error"] = DataTransformer.apphudError(it)
+                resultMap["error"] = it.toMap()
             }
             try {
                 result.success(resultMap)
-            } catch (e: IllegalStateException ) {
+            } catch (e: IllegalStateException) {
                 Log.e("Apphud", e.toString(), e)
             }
         }

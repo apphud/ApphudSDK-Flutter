@@ -1,7 +1,10 @@
 package com.apphud.fluttersdk.handlers
 
 import android.app.Activity
+import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
+import com.apphud.sdk.ApphudError
+import com.apphud.sdk.domain.ApphudPaywall
 import io.flutter.plugin.common.MethodChannel
 
 
@@ -23,6 +26,20 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             MakePurchaseRoutes.purchasePromo.name -> result.notImplemented()
             MakePurchaseRoutes.syncPurchases.name -> syncPurchases(result)
             MakePurchaseRoutes.presentOfferCodeRedemptionSheet.name -> result.notImplemented()
+            MakePurchaseRoutes.getPaywalls.name -> getPaywalls(result)
+        }
+    }
+
+    private fun getPaywalls(result: MethodChannel.Result) {
+        Apphud.getPaywalls { paywalls: List<ApphudPaywall>?, error: ApphudError? ->
+            val resultMap = hashMapOf<String, Any?>()
+            paywalls?.let { it ->
+                resultMap["paywalls"] = it.map { paywall -> paywall.toMap() }
+            }
+            error?.let {
+                resultMap["error"] = it.toMap()
+            }
+            result.success(resultMap)
         }
     }
 
@@ -33,7 +50,7 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
     private fun productsDidFetchCallback(result: MethodChannel.Result) {
         Apphud.productsFetchCallback { skuProducts ->
             val jsonList: List<HashMap<String, Any?>> = skuProducts.map {
-                DataTransformer.skuDetails(it)
+                it.toMap()
             }
             result.success(jsonList)
         }
@@ -43,7 +60,7 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
         val skuProducts = Apphud.products()
         if (skuProducts != null) {
             val jsonList: List<HashMap<String, Any?>> = skuProducts.map {
-                DataTransformer.skuDetails(it)
+                it.toMap()
             }
             result.success(jsonList)
         } else {
@@ -54,7 +71,7 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
     private fun product(productIdentifier: String, result: MethodChannel.Result) {
         val skuDetails = Apphud.product(productIdentifier = productIdentifier)
         if (skuDetails != null) {
-            result.success(DataTransformer.skuDetails(skuDetails))
+            result.success(skuDetails.toMap())
         } else {
             result.success(null)
         }
@@ -65,19 +82,19 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             val resultMap = hashMapOf<String, Any?>()
 
             purchaseResult.subscription?.let {
-                resultMap["subscription"] = DataTransformer.subscription(it)
+                resultMap["subscription"] = it.toMap()
             }
 
             purchaseResult.nonRenewingPurchase?.let {
-                resultMap["nonRenewingPurchase"] = DataTransformer.nonRenewingPurchase(it)
+                resultMap["nonRenewingPurchase"] = it.toMap()
             }
 
             purchaseResult.purchase?.let {
-                resultMap["purchase"] = DataTransformer.purchase(it)
+                resultMap["purchase"] = it.toMap()
             }
 
             purchaseResult.error?.let {
-                resultMap["error"] = DataTransformer.apphudError(it)
+                resultMap["error"] = it.toMap()
             }
 
             result.success(resultMap)
@@ -136,7 +153,8 @@ enum class MakePurchaseRoutes {
     purchaseWithoutValidation,
     purchasePromo,
     syncPurchases,
-    presentOfferCodeRedemptionSheet;
+    presentOfferCodeRedemptionSheet,
+    getPaywalls;
 
     companion object Mapper {
         fun stringValues(): List<String> {

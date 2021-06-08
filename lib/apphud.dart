@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
+import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
 import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
@@ -187,6 +188,13 @@ class AppHud {
   ///  Displays an offer code redemption sheet.
   static Future<void> presentOfferCodeRedemptionSheet() async {
     await _channel.invokeMethod('presentOfferCodeRedemptionSheet');
+  }
+
+  static Future<ApphudPaywalls> getPaywalls() async {
+    final Map<dynamic, dynamic>? json =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('getPaywalls');
+
+    return ApphudPaywalls.fromJson(json!);
   }
 
 // Handle Purchases
@@ -418,8 +426,9 @@ class AppHud {
   ///
   /// Returns [ApphudError] if an error occurred or null otherwise.
   static Future<ApphudError?> collectSearchAdsAttribution() async {
-    final Map<dynamic, dynamic>? result = (await _channel.invokeMethod('collectSearchAdsAttribution'));
-    return result!=null ? ApphudError.fromJson(result) : null;
+    final Map<dynamic, dynamic>? result =
+        (await _channel.invokeMethod('collectSearchAdsAttribution'));
+    return result != null ? ApphudError.fromJson(result) : null;
   }
 
 // Other
