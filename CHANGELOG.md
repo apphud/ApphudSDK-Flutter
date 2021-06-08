@@ -1,3 +1,6 @@
+## 2.0.5
+- [iOS] Add method collectSearchAdsAttribution() to send search ads attribution data to Apphud.
+
 ## 2.0.4
 - Update collection dependency
 - Correct readme.md

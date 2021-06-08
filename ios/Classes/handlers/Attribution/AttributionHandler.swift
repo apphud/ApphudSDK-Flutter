@@ -18,6 +18,8 @@ class AttributionHandler: Handler {
             Action<DisableIDFACollectionRequest,DisableIDFACollectionArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.addAttribution.rawValue:
             Action<AddAttributionRequest,AddAttributionArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.collectSearchAdsAttribution.rawValue:
+            Action<CollectSearchAdsAttributionRequest,CollectSearchAdsAttributionParser>(args: args, result: result).startFlow()
         default:
             break
         }

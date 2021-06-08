@@ -8,6 +8,7 @@ import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
 import 'package:flutter/services.dart';
 
 import 'models/apphud_models/apphud_attribution_provider.dart';
+import 'models/apphud_models/apphud_error.dart';
 import 'models/apphud_models/composite/apphud_product.dart';
 import 'models/apphud_models/composite/apphud_purchase_result.dart';
 import 'models/extensions.dart';
@@ -412,6 +413,14 @@ class AppHud {
   /// Android only. Disables Ad tracking.
   static Future<void> disableAdTracking() =>
       _channel.invokeMethod('disableAdTracking');
+
+  /// iOS only. Send search ads attribution data to Apphud.
+  ///
+  /// Returns [ApphudError] if an error occurred or null otherwise.
+  static Future<ApphudError?> collectSearchAdsAttribution() async {
+    final Map<dynamic, dynamic>? result = (await _channel.invokeMethod('collectSearchAdsAttribution'));
+    return result!=null ? ApphudError.fromJson(result) : null;
+  }
 
 // Other
 

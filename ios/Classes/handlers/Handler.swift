@@ -122,6 +122,7 @@ enum AppHudMethod {
         case setAdvertisingIdentifier
         case disableIDFACollection
         case addAttribution
+        case collectSearchAdsAttribution
     }
 
     enum EligibilityChecks: String, CaseIterable {
