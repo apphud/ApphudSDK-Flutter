@@ -12,7 +12,6 @@ import kotlin.collections.HashMap
 
 fun ApphudPaywall.toMap(): HashMap<String, Any?> {
     return hashMapOf(
-            "id" to id,
             "name" to name,
             "identifier" to identifier,
             "default" to default,
@@ -23,7 +22,6 @@ fun ApphudPaywall.toMap(): HashMap<String, Any?> {
 
 fun ApphudProduct.toMap(): HashMap<String, Any?> {
     return hashMapOf(
-            "id" to id,
             "productId" to productId,
             "name" to name,
             "store" to store,
