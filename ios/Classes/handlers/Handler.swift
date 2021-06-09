@@ -87,6 +87,7 @@ enum AppHudMethod {
         case purchaseWithoutValidation
         case purchasePromo
         case presentOfferCodeRedemptionSheet
+        case getPaywalls
     }
 
     enum HandlePurchases: String, CaseIterable {
