@@ -8,7 +8,6 @@ part of 'apphud_paywall.dart';
 
 ApphudPaywall _$ApphudPaywallFromJson(Map json) {
   return ApphudPaywall(
-    id: json['id'] as String,
     name: json['name'] as String,
     identifier: json['identifier'] as String,
     isDefault: json['default'] as bool,
@@ -23,7 +22,6 @@ ApphudPaywall _$ApphudPaywallFromJson(Map json) {
 
 Map<String, dynamic> _$ApphudPaywallToJson(ApphudPaywall instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
       'identifier': instance.identifier,
       'default': instance.isDefault,

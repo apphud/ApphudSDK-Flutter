@@ -13,7 +13,7 @@ final class PurchasePromoRequest: Request {
 
     func startRequest(arguments: (productId: String, discountID: String), result: @escaping FlutterResult) {
         if #available(iOS 12.2, *) {
-            if Apphud.products() != nil {
+            if Apphud.products != nil {
                 guard let product = Apphud.product(productIdentifier: arguments.productId) else {
                     result(["error" : "product with id \(arguments.productId) does not exist"])
                     return

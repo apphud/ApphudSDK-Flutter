@@ -7,7 +7,6 @@ part 'apphud_product.g.dart';
 class ApphudProduct {
   final String productId;
   final String store;
-  final String? id;
   final String? name;
   final SkuDetailsWrapper? skuDetails;
   final String? paywallId;
@@ -15,7 +14,6 @@ class ApphudProduct {
   ApphudProduct({
     required this.productId,
     required this.store,
-    this.id,
     this.name,
     this.skuDetails,
     this.paywallId,
