@@ -1,0 +1,114 @@
+import 'dart:io';
+
+import 'package:apphud/models/apphud_models/apphud_paywall.dart';
+import 'package:apphud/models/apphud_models/apphud_paywall_product.dart';
+import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
+import 'package:apphud_example/src/feature/home/sk_product_widget.dart';
+import 'package:apphud_example/src/feature/home/sku_details_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
+class PaywallListWidget extends StatefulWidget {
+  final ApphudPaywalls paywalls;
+
+  const PaywallListWidget({
+    Key? key,
+    required this.paywalls,
+  }) : super(key: key);
+
+  @override
+  _PaywallListWidgetState createState() => _PaywallListWidgetState();
+}
+
+class _PaywallListWidgetState extends State<PaywallListWidget> {
+  List<bool> _isExpanded = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _isExpanded = widget.paywalls.paywalls.map((e) => false).toList();
+  }
+
+  @override
+  void didUpdateWidget(covariant PaywallListWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.paywalls.paywalls.length != oldWidget.paywalls.paywalls.length) {
+      _isExpanded = widget.paywalls.paywalls.map((e) => false).toList();
+      if (mounted) {
+        setState(() {});
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.paywalls.paywalls.isEmpty) {
+      return Center(child: Text('No paywalls'));
+    }
+    return _buildList();
+  }
+
+  Widget _buildList() {
+    return SingleChildScrollView(
+      child: ExpansionPanelList(
+        expansionCallback: (int index, bool isExpanded) {
+          setState(() {
+            _isExpanded[index] = !isExpanded;
+          });
+        },
+        children: _buildItems(),
+      ),
+    );
+  }
+
+  List<ExpansionPanel> _buildItems() {
+    final List<ExpansionPanel> panels = [];
+    int index = 0;
+    widget.paywalls.paywalls.forEach((paywall) {
+      final ExpansionPanel panel = ExpansionPanel(
+        headerBuilder: (_, __) => _buildHeader(paywall),
+        body: _buildItemBody(paywall),
+        isExpanded: _isExpanded[index],
+      );
+      panels.add(panel);
+      index++;
+    });
+    return panels;
+  }
+
+  Widget _buildItemBody(ApphudPaywall paywall) {
+    if ((paywall.products?.length ?? 0) == 0) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text('No products to purchase'),
+      );
+    }
+    return _buildProductList(paywall.products!);
+  }
+
+  Widget _buildHeader(ApphudPaywall paywall) {
+    return ListTile(
+      key: ValueKey(paywall.identifier),
+      title: Text(paywall.name),
+      subtitle: Text('Products: ${paywall.products?.length ?? 0}'),
+    );
+  }
+
+  Widget _buildProductList(List<ApphudPaywallProduct> products) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: products.map(_buildProduct).toList(),
+      ),
+    );
+  }
+
+  Widget _buildProduct(ApphudPaywallProduct product) {
+    if (Platform.isIOS) {
+      return SkProductWidget(skProduct: product.skProduct);
+    } else if (Platform.isAndroid) {
+      return SkuDetailsWidget(skuDetails: product.skuDetails);
+    }
+    return Text('No product for this platform');
+  }
+}

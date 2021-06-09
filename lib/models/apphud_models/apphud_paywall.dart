@@ -1,4 +1,4 @@
-import 'package:apphud/models/apphud_models/apphud_product.dart';
+import 'package:apphud/models/apphud_models/apphud_paywall_product.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'apphud_paywall.g.dart';
@@ -10,7 +10,7 @@ class ApphudPaywall {
   @JsonKey(name: 'default')
   final bool isDefault;
   final Map<String, dynamic>? json;
-  final List<ApphudProduct>? products;
+  final List<ApphudPaywallProduct>? products;
 
   ApphudPaywall({
     required this.name,

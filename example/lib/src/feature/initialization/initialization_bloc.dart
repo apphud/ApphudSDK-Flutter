@@ -72,12 +72,10 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
         observerMode: _appSecrets.observeMode,
       );
 
-      _fetchPaywalls();
-
       yield* state.maybeMap(
         orElse: () async* {},
         trying: (s) async* {
-          if (s.isProductFetched) {
+          if (s.isProductFetched && s.isPaywallsFetched) {
             yield InitializationState.success(products: s.products);
             _navigationBloc.add(NavigationEvent.toHome());
           } else {
@@ -85,6 +83,8 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
           }
         },
       );
+
+      _fetchPaywalls();
     } catch (e) {
       yield InitializationState.startFail(e.toString());
     }
