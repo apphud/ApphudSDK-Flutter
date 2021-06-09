@@ -39,7 +39,7 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             error?.let {
                 resultMap["error"] = it.toMap()
             }
-            result.success(resultMap)
+            activity.runOnUiThread { result.success(resultMap) }
         }
     }
 

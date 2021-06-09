@@ -1,3 +1,4 @@
+import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -10,14 +11,21 @@ class InitializationState with _$InitializationState {
   const factory InitializationState.trying({
     @Default(false) bool isStartSuccess,
     @Default(false) bool isProductFetched,
+    @Default(false) bool isPaywallsFetched,
     @Default([]) List<ApphudProduct> products,
+    @Default(ApphudPaywalls()) ApphudPaywalls paywalls,
   }) = Trying;
 
   const factory InitializationState.success({
     @Default([]) List<ApphudProduct> products,
+    @Default(ApphudPaywalls()) ApphudPaywalls paywalls,
   }) = Success;
 
   const factory InitializationState.startFail(String error) = StartFail;
 
-  const factory InitializationState.productsFetchFail(String error) = ProductsFetchFail;
+  const factory InitializationState.productsFetchFail(String error) =
+      ProductsFetchFail;
+
+  const factory InitializationState.paywallsFetchFail(String error) =
+      PaywallsFetchFail;
 }

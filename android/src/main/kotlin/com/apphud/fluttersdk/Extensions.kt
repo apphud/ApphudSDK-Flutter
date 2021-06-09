@@ -15,6 +15,7 @@ fun ApphudPaywall.toMap(): HashMap<String, Any?> {
             "id" to id,
             "name" to name,
             "identifier" to identifier,
+            "default" to default,
             "json" to json,
             "products" to products?.map { it.toMap() }
     )

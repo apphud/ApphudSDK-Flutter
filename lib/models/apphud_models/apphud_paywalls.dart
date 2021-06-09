@@ -6,13 +6,13 @@ part 'apphud_paywalls.g.dart';
 
 @JsonSerializable(anyMap: true)
 class ApphudPaywalls {
-  final List<ApphudPaywall>? paywalls;
+  final List<ApphudPaywall> paywalls;
   final ApphudError? error;
 
-  ApphudPaywalls({
-    this.paywalls,
+  const ApphudPaywalls({
+    List<ApphudPaywall>? paywalls,
     this.error,
-  });
+  }) : paywalls = paywalls ?? const <ApphudPaywall>[];
 
   factory ApphudPaywalls.fromJson(Map<dynamic, dynamic> map) =>
       _$ApphudPaywallsFromJson(map);
