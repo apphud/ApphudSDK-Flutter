@@ -25,6 +25,12 @@ class _$PurchaseEventTearOff {
   RestorePurchases restorePurchases() {
     return const RestorePurchases();
   }
+
+  PurchaseProduct purchaseProduct(ApphudPaywallProduct product) {
+    return PurchaseProduct(
+      product,
+    );
+  }
 }
 
 /// @nodoc
@@ -36,12 +42,14 @@ mixin _$PurchaseEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
+    required TResult Function(ApphudPaywallProduct product) purchaseProduct,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
+    TResult Function(ApphudPaywallProduct product)? purchaseProduct,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -49,12 +57,14 @@ mixin _$PurchaseEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(Purchase value) purchase,
     required TResult Function(RestorePurchases value) restorePurchases,
+    required TResult Function(PurchaseProduct value) purchaseProduct,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Purchase value)? purchase,
     TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -141,6 +151,7 @@ class _$Purchase extends Purchase {
   TResult when<TResult extends Object?>({
     required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
+    required TResult Function(ApphudPaywallProduct product) purchaseProduct,
   }) {
     return purchase(id);
   }
@@ -150,6 +161,7 @@ class _$Purchase extends Purchase {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
+    TResult Function(ApphudPaywallProduct product)? purchaseProduct,
     required TResult orElse(),
   }) {
     if (purchase != null) {
@@ -163,6 +175,7 @@ class _$Purchase extends Purchase {
   TResult map<TResult extends Object?>({
     required TResult Function(Purchase value) purchase,
     required TResult Function(RestorePurchases value) restorePurchases,
+    required TResult Function(PurchaseProduct value) purchaseProduct,
   }) {
     return purchase(this);
   }
@@ -172,6 +185,7 @@ class _$Purchase extends Purchase {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Purchase value)? purchase,
     TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
     required TResult orElse(),
   }) {
     if (purchase != null) {
@@ -233,6 +247,7 @@ class _$RestorePurchases extends RestorePurchases {
   TResult when<TResult extends Object?>({
     required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
+    required TResult Function(ApphudPaywallProduct product) purchaseProduct,
   }) {
     return restorePurchases();
   }
@@ -242,6 +257,7 @@ class _$RestorePurchases extends RestorePurchases {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
+    TResult Function(ApphudPaywallProduct product)? purchaseProduct,
     required TResult orElse(),
   }) {
     if (restorePurchases != null) {
@@ -255,6 +271,7 @@ class _$RestorePurchases extends RestorePurchases {
   TResult map<TResult extends Object?>({
     required TResult Function(Purchase value) purchase,
     required TResult Function(RestorePurchases value) restorePurchases,
+    required TResult Function(PurchaseProduct value) purchaseProduct,
   }) {
     return restorePurchases(this);
   }
@@ -264,6 +281,7 @@ class _$RestorePurchases extends RestorePurchases {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Purchase value)? purchase,
     TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
     required TResult orElse(),
   }) {
     if (restorePurchases != null) {
@@ -276,4 +294,126 @@ class _$RestorePurchases extends RestorePurchases {
 abstract class RestorePurchases extends PurchaseEvent {
   const factory RestorePurchases() = _$RestorePurchases;
   const RestorePurchases._() : super._();
+}
+
+/// @nodoc
+abstract class $PurchaseProductCopyWith<$Res> {
+  factory $PurchaseProductCopyWith(
+          PurchaseProduct value, $Res Function(PurchaseProduct) then) =
+      _$PurchaseProductCopyWithImpl<$Res>;
+  $Res call({ApphudPaywallProduct product});
+}
+
+/// @nodoc
+class _$PurchaseProductCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res>
+    implements $PurchaseProductCopyWith<$Res> {
+  _$PurchaseProductCopyWithImpl(
+      PurchaseProduct _value, $Res Function(PurchaseProduct) _then)
+      : super(_value, (v) => _then(v as PurchaseProduct));
+
+  @override
+  PurchaseProduct get _value => super._value as PurchaseProduct;
+
+  @override
+  $Res call({
+    Object? product = freezed,
+  }) {
+    return _then(PurchaseProduct(
+      product == freezed
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ApphudPaywallProduct,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$PurchaseProduct extends PurchaseProduct {
+  const _$PurchaseProduct(this.product) : super._();
+
+  @override
+  final ApphudPaywallProduct product;
+
+  @override
+  String toString() {
+    return 'PurchaseEvent.purchaseProduct(product: $product)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is PurchaseProduct &&
+            (identical(other.product, product) ||
+                const DeepCollectionEquality().equals(other.product, product)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(product);
+
+  @JsonKey(ignore: true)
+  @override
+  $PurchaseProductCopyWith<PurchaseProduct> get copyWith =>
+      _$PurchaseProductCopyWithImpl<PurchaseProduct>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String id) purchase,
+    required TResult Function() restorePurchases,
+    required TResult Function(ApphudPaywallProduct product) purchaseProduct,
+  }) {
+    return purchaseProduct(product);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id)? purchase,
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudPaywallProduct product)? purchaseProduct,
+    required TResult orElse(),
+  }) {
+    if (purchaseProduct != null) {
+      return purchaseProduct(product);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Purchase value) purchase,
+    required TResult Function(RestorePurchases value) restorePurchases,
+    required TResult Function(PurchaseProduct value) purchaseProduct,
+  }) {
+    return purchaseProduct(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Purchase value)? purchase,
+    TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
+    required TResult orElse(),
+  }) {
+    if (purchaseProduct != null) {
+      return purchaseProduct(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PurchaseProduct extends PurchaseEvent {
+  const factory PurchaseProduct(ApphudPaywallProduct product) =
+      _$PurchaseProduct;
+  const PurchaseProduct._() : super._();
+
+  ApphudPaywallProduct get product => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PurchaseProductCopyWith<PurchaseProduct> get copyWith =>
+      throw _privateConstructorUsedError;
 }

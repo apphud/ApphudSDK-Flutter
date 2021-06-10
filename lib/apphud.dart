@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
+import 'package:apphud/models/apphud_models/apphud_paywall_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
@@ -146,6 +148,15 @@ class AppHud {
     final dynamic json = await _channel.invokeMethod(
       'purchase',
       {'productId': productId},
+    );
+    return ApphudPurchaseResult.fromJson(json);
+  }
+
+  static Future<ApphudPurchaseResult> purchaseProduct(
+      ApphudPaywallProduct product) async {
+    final dynamic json = await _channel.invokeMethod(
+      'purchaseProduct',
+      product.toJson()..remove('skuDetails')..remove('skProduct'),
     );
     return ApphudPurchaseResult.fromJson(json);
   }

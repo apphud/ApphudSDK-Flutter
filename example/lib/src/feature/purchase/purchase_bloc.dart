@@ -39,6 +39,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       event.map(
         purchase: _mapPurchase,
         restorePurchases: _mapRestorePurchases,
+        purchaseProduct: _mapPurchaseProduct,
       );
 
   void _fetchSubscriptions() {
@@ -157,9 +158,8 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   }
 
   void _collectSearchAdsAttribution() {
-    AppHud.collectSearchAdsAttribution(
-    ).then(
-          (value) => printAsJson(
+    AppHud.collectSearchAdsAttribution().then(
+      (value) => printAsJson(
         'collectSearchAdsAttribution()',
         value ?? 'Ok',
       ),
@@ -171,6 +171,18 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     yield PurchaseState.inProgress();
     final ApphudPurchaseResult result = await AppHud.purchase(event.id);
     printAsJson('purchase(${event.id})', result);
+    if (result.error == null) {
+      yield PurchaseState.purchaseSuccess();
+    } else {
+      yield PurchaseState.purchaseFailure(result.error!);
+    }
+  }
+
+  Stream<PurchaseState> _mapPurchaseProduct(PurchaseProduct event) async* {
+    yield PurchaseState.inProgress();
+    final ApphudPurchaseResult result =
+        await AppHud.purchaseProduct(event.product);
+    printAsJson('purchaseProduct(${event.product.productId})', result);
     if (result.error == null) {
       yield PurchaseState.purchaseSuccess();
     } else {

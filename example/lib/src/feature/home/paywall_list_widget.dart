@@ -5,8 +5,11 @@ import 'package:apphud/models/apphud_models/apphud_paywall_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud_example/src/feature/home/sk_product_widget.dart';
 import 'package:apphud_example/src/feature/home/sku_details_widget.dart';
+import 'package:apphud_example/src/feature/purchase/purchase_bloc.dart';
+import 'package:apphud_example/src/feature/purchase/purchase_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaywallListWidget extends StatefulWidget {
   final ApphudPaywalls paywalls;
@@ -107,7 +110,12 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
     if (Platform.isIOS) {
       return SkProductWidget(skProduct: product.skProduct);
     } else if (Platform.isAndroid) {
-      return SkuDetailsWidget(skuDetails: product.skuDetails);
+      return SkuDetailsWidget(
+        skuDetails: product.skuDetails,
+        onTap: () => BlocProvider.of<PurchaseBloc>(context).add(
+          PurchaseEvent.purchaseProduct(product),
+        ),
+      );
     }
     return Text('No product for this platform');
   }
