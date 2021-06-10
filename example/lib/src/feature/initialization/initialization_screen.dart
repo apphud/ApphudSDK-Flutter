@@ -72,8 +72,8 @@ class InitializationStartScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: isStartSuccess
-                  ? CircularProgressIndicator()
-                  : Icon(Icons.check),
+                  ? Icon(Icons.check)
+                  : CircularProgressIndicator(),
               title: Text('SDK initialization'),
             ),
           ),
@@ -81,8 +81,8 @@ class InitializationStartScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: isProductFetched
-                  ? CircularProgressIndicator()
-                  : Icon(Icons.check),
+                  ? Icon(Icons.check)
+                  : CircularProgressIndicator(),
               title: Text('Products fetching'),
             ),
           ),
@@ -90,8 +90,8 @@ class InitializationStartScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: isPaywallsFetched
-                  ? CircularProgressIndicator()
-                  : Icon(Icons.check),
+                  ? Icon(Icons.check)
+                  : CircularProgressIndicator(),
               title: Text('Paywalls fetching'),
             ),
           ),

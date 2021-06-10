@@ -108,7 +108,11 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
 
   Widget _buildProduct(ApphudPaywallProduct product) {
     if (Platform.isIOS) {
-      return SkProductWidget(skProduct: product.skProduct);
+      return SkProductWidget(skProduct: product.skProduct,
+        onTap: () => BlocProvider.of<PurchaseBloc>(context).add(
+          PurchaseEvent.purchaseProduct(product),
+        ),
+      );
     } else if (Platform.isAndroid) {
       return SkuDetailsWidget(
         skuDetails: product.skuDetails,
