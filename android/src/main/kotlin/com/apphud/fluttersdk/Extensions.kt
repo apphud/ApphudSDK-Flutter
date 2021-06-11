@@ -3,10 +3,7 @@ package com.apphud.fluttersdk
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.SkuDetails
 import com.apphud.sdk.ApphudError
-import com.apphud.sdk.domain.ApphudNonRenewingPurchase
-import com.apphud.sdk.domain.ApphudPaywall
-import com.apphud.sdk.domain.ApphudProduct
-import com.apphud.sdk.domain.ApphudSubscription
+import com.apphud.sdk.domain.*
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -92,4 +89,13 @@ fun ApphudSubscription.toMap(): HashMap<String, Any?> {
             "isIntroductoryActivated" to isIntroductoryActivated,
             "isActive" to isActive(),
             "status" to status.name.toLowerCase(Locale.ROOT))
+}
+
+fun ApphudGroup.toMap(): HashMap<String, Any?> {
+    return hashMapOf(
+            "id" to id,
+            "name" to name,
+            "products" to products?.map { it.toMap() },
+            "hasAccess" to hasAccess()
+    )
 }

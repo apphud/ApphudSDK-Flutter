@@ -30,6 +30,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     _setUserProperties();
     _setAttribution();
     _collectSearchAdsAttribution();
+    _fetchPermissionGroups();
   }
 
   @override
@@ -164,6 +165,13 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         value ?? 'Ok',
       ),
       onError: (e) => printError('collectSearchAdsAttribution()', e),
+    );
+  }
+
+  void _fetchPermissionGroups() {
+    AppHud.permissionGroups().then(
+      (value) => printAsJson('permissionGroups()', value),
+      onError: (e) => printError('permissionGroups()', e),
     );
   }
 

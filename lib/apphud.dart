@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
+import 'package:apphud/models/apphud_models/apphud_group.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywall_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
@@ -206,6 +207,13 @@ class AppHud {
         await _channel.invokeMethod<Map<dynamic, dynamic>>('getPaywalls');
 
     return ApphudPaywalls.fromJson(json!);
+  }
+
+  static Future<List<ApphudGroup>> permissionGroups() async {
+    List<Map<dynamic, dynamic>> groups =
+        (await _channel.invokeMethod<List<dynamic>>('permissionGroups'))!
+            .toMapList;
+    return groups.map((json) => ApphudGroup.fromJson(json)).toList();
   }
 
 // Handle Purchases

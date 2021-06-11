@@ -42,7 +42,14 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
 
             MakePurchaseRoutes.purchaseProduct.name -> PurchaseProductParser(result).parse(args)
             { product -> purchaseProduct(product, result) }
+
+            MakePurchaseRoutes.permissionGroups.name -> getPermissionGroups(result)
         }
+    }
+
+    private fun getPermissionGroups(result: MethodChannel.Result) {
+        val groups = Apphud.permissionGroups()
+        result.success(groups.map { it.toMap() })
     }
 
     private fun getPaywalls(result: MethodChannel.Result) {
@@ -214,7 +221,8 @@ enum class MakePurchaseRoutes {
     syncPurchases,
     presentOfferCodeRedemptionSheet,
     getPaywalls,
-    purchaseProduct;
+    purchaseProduct,
+    permissionGroups;
 
     companion object Mapper {
         fun stringValues(): List<String> {
