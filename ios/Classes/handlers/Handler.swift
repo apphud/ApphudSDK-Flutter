@@ -139,5 +139,10 @@ enum AppHudMethod {
        case enableDebugLogs
        case isSandbox
     }
+    
+    enum PaywallLogs: String, CaseIterable {
+        case paywallShown
+        case paywallClosed
+    }
 }
 

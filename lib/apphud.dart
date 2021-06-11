@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_group.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
+import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_paywall_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
@@ -461,5 +462,21 @@ class AppHud {
     final bool? value = await _channel.invokeMethod<bool>('isSandbox');
     assert(value != null, 'Error getting isSandbox, value = null');
     return value!;
+  }
+
+// Paywall logs
+
+  static Future<void> paywallShown(ApphudPaywall paywall) async{
+    await _channel.invokeMethod(
+      'paywallShown',
+      {'identifier': paywall.identifier},
+    );
+  }
+
+  static Future<void> paywallClosed(ApphudPaywall paywall) async{
+    await _channel.invokeMethod(
+      'paywallClosed',
+      {'identifier': paywall.identifier},
+    );
   }
 }

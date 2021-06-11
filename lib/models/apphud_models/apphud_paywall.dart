@@ -7,7 +7,6 @@ part 'apphud_paywall.g.dart';
 class ApphudPaywall {
   final String name;
   final String identifier;
-  @JsonKey(name: 'default')
   final bool isDefault;
   final Map<String, dynamic>? json;
   final List<ApphudPaywallProduct>? products;

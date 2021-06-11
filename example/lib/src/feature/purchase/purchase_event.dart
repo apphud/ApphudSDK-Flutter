@@ -1,3 +1,4 @@
+import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_paywall_product.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -13,4 +14,10 @@ class PurchaseEvent with _$PurchaseEvent {
 
   const factory PurchaseEvent.purchaseProduct(ApphudPaywallProduct product) =
       PurchaseProduct;
+
+  const factory PurchaseEvent.paywallShown(ApphudPaywall paywall) =
+      PaywallShown;
+
+  const factory PurchaseEvent.paywallClosed(ApphudPaywall paywall) =
+      PaywallClosed;
 }

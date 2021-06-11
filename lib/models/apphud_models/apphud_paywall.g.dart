@@ -10,7 +10,7 @@ ApphudPaywall _$ApphudPaywallFromJson(Map json) {
   return ApphudPaywall(
     name: json['name'] as String,
     identifier: json['identifier'] as String,
-    isDefault: json['default'] as bool,
+    isDefault: json['isDefault'] as bool,
     json: (json['json'] as Map?)?.map(
       (k, e) => MapEntry(k as String, e),
     ),
@@ -24,7 +24,7 @@ Map<String, dynamic> _$ApphudPaywallToJson(ApphudPaywall instance) =>
     <String, dynamic>{
       'name': instance.name,
       'identifier': instance.identifier,
-      'default': instance.isDefault,
+      'isDefault': instance.isDefault,
       'json': instance.json,
       'products': instance.products,
     };
