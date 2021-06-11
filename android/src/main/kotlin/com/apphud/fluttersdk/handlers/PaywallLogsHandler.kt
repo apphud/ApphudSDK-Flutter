@@ -1,7 +1,6 @@
-package android.src.main.kotlin.com.apphud.fluttersdk.handlers
+package com.apphud.fluttersdk.handlers
 
 import android.content.Context
-import com.apphud.sdk.Apphud
 import io.flutter.plugin.common.MethodChannel
 
 

@@ -213,14 +213,14 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     }
   }
 
-  Stream<PurchaseState> _mapPaywallShown(PaywallShown event) async*{
-    if(Platform.isIOS) {
+  Stream<PurchaseState> _mapPaywallShown(PaywallShown event) async* {
+    if (Platform.isIOS) {
       unawaited(AppHud.paywallShown(event.paywall));
     }
   }
 
-  Stream<PurchaseState> _mapPaywallClosed(PaywallClosed event) async*{
-    if(Platform.isIOS) {
+  Stream<PurchaseState> _mapPaywallClosed(PaywallClosed event) async* {
+    if (Platform.isIOS) {
       unawaited(AppHud.paywallClosed(event.paywall));
     }
   }
