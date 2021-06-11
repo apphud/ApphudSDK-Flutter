@@ -32,6 +32,10 @@ class HandlePurchasesHandler: Handler {
             Action<ValidateReceiptRequest,ValidateReceiptArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.appStoreReceipt.rawValue:
             Action<AppStoreReceiptRequest,AppStoreReceiptArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.getPaywalls.rawValue:
+            Action<GetPaywallsRequest,GetPaywallsArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.permissionGroups.rawValue:
+            Action<PermissionGroupsRequest,PermissionGroupsArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }
