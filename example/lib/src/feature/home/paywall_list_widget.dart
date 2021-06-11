@@ -58,6 +58,13 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
           setState(() {
             _isExpanded[index] = !isExpanded;
           });
+
+          final ApphudPaywall paywall = widget.paywalls.paywalls[index];
+          PurchaseEvent event;
+          event = !isExpanded
+              ? PurchaseEvent.paywallShown(paywall)
+              : PurchaseEvent.paywallClosed(paywall);
+          BlocProvider.of<PurchaseBloc>(context).add(event);
         },
         children: _buildItems(),
       ),

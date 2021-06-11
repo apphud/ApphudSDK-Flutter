@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:apphud/apphud.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:apphud/models/apphud_models/apphud_attribution_provider.dart';
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
@@ -41,6 +43,8 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         purchase: _mapPurchase,
         restorePurchases: _mapRestorePurchases,
         purchaseProduct: _mapPurchaseProduct,
+        paywallShown: _mapPaywallShown,
+        paywallClosed: _mapPaywallClosed,
       );
 
   void _fetchSubscriptions() {
@@ -206,6 +210,18 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       yield PurchaseState.restorePurchasesSuccess();
     } else {
       yield PurchaseState.restorePurchaseFailure(result.error!);
+    }
+  }
+
+  Stream<PurchaseState> _mapPaywallShown(PaywallShown event) async*{
+    if(Platform.isIOS) {
+      unawaited(AppHud.paywallShown(event.paywall));
+    }
+  }
+
+  Stream<PurchaseState> _mapPaywallClosed(PaywallClosed event) async*{
+    if(Platform.isIOS) {
+      unawaited(AppHud.paywallClosed(event.paywall));
     }
   }
 }

@@ -11,7 +11,7 @@ extension ApphudPaywall {
     func toMap() -> [String: Any?] {
         return ["identifier": identifier,
                 "name": name,
-                "default": isDefault,
+                "isDefault": isDefault,
                 "json": json,
                 "products" : products.map({ (product:ApphudProduct) in product.toMap() })
         ]
