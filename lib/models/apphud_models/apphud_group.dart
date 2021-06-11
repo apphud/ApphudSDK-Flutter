@@ -5,13 +5,11 @@ part 'apphud_group.g.dart';
 
 @JsonSerializable(anyMap: true)
 class ApphudGroup {
-  final String id;
   final String name;
   final List<ApphudPaywallProduct>? products;
   final bool hasAccess;
 
   ApphudGroup({
-    required this.id,
     required this.name,
     required this.hasAccess,
     this.products,
@@ -24,6 +22,6 @@ class ApphudGroup {
 
   @override
   String toString() {
-    return 'ApphudGroup{id: $id, name: $name, products: $products, hasAccess: $hasAccess}';
+    return 'ApphudGroup{name: $name, products: $products, hasAccess: $hasAccess}';
   }
 }
