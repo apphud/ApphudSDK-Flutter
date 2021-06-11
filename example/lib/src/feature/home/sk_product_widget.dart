@@ -12,22 +12,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SkProductWidget extends StatelessWidget {
   final SKProductWrapper? skProduct;
   final VoidCallback? onTap;
+  final bool wrapInCard;
 
   const SkProductWidget({
     Key? key,
     this.skProduct,
     this.onTap,
-  }) : super(key: key);
+    bool? wrapInCard,
+  })  : wrapInCard = wrapInCard ?? true,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (skProduct == null) {
-      return Card(child: ListTile(title: Text('skProduct is null')));
+      return _wrapInCard(child: ListTile(title: Text('skProduct is null')));
     }
     final SKProductWrapper skProductLocal = skProduct!;
     return InkWellStack(
       onTap: onTap,
-      child: Card(
+      child: _wrapInCard(
         child: ListTile(
           title: Text(
             '${skProductLocal.localizedTitle} '
@@ -39,5 +42,12 @@ class SkProductWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _wrapInCard({required Widget child}) {
+    if (wrapInCard) {
+      return Card(elevation: 5, child: child);
+    }
+    return child;
   }
 }

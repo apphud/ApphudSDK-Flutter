@@ -92,8 +92,15 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
   Widget _buildHeader(ApphudPaywall paywall) {
     return ListTile(
       key: ValueKey(paywall.identifier),
-      title: Text(paywall.name),
-      subtitle: Text('Products: ${paywall.products?.length ?? 0}'),
+      title: Text(
+        paywall.name,
+        style: Theme.of(context).textTheme.headline5,
+      ),
+      subtitle: Text(
+        'isDefault: ${paywall.isDefault}\n'
+        'Products: ${paywall.products?.length ?? 0}',
+      ),
+      isThreeLine: true,
     );
   }
 
@@ -107,20 +114,41 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
   }
 
   Widget _buildProduct(ApphudPaywallProduct product) {
+    Widget content;
     if (Platform.isIOS) {
-      return SkProductWidget(skProduct: product.skProduct,
+      content = SkProductWidget(
+        skProduct: product.skProduct,
+        wrapInCard: false,
         onTap: () => BlocProvider.of<PurchaseBloc>(context).add(
           PurchaseEvent.purchaseProduct(product),
         ),
       );
     } else if (Platform.isAndroid) {
-      return SkuDetailsWidget(
+      content = SkuDetailsWidget(
+        wrapInCard: false,
         skuDetails: product.skuDetails,
         onTap: () => BlocProvider.of<PurchaseBloc>(context).add(
           PurchaseEvent.purchaseProduct(product),
         ),
       );
+    } else {
+      content = Text('No product for this platform');
     }
-    return Text('No product for this platform');
+    return Card(
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              product.name ?? 'No name',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            content,
+          ],
+        ),
+      ),
+    );
   }
 }

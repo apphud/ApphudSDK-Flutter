@@ -12,23 +12,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SkuDetailsWidget extends StatelessWidget {
   final SkuDetailsWrapper? skuDetails;
   final VoidCallback? onTap;
+  final bool wrapInCard;
 
   const SkuDetailsWidget({
     Key? key,
     this.skuDetails,
     this.onTap,
-  }) : super(key: key);
+    bool? wrapInCard,
+  })  : wrapInCard = wrapInCard ?? true,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (skuDetails == null) {
-      return Card(child: ListTile(title: Text('skuDetails is null')));
+      return _wrapInCard(child: ListTile(title: Text('skuDetails is null')));
     }
     final SkuDetailsWrapper skuDetailsLocal = skuDetails!;
     return InkWellStack(
       onTap: onTap,
-      child: Card(
-        elevation: 5,
+      child: _wrapInCard(
         child: ListTile(
           title: Text('${skuDetailsLocal.title} (${skuDetailsLocal.sku})'),
           leading: Text(skuDetailsLocal.price),
@@ -36,5 +38,12 @@ class SkuDetailsWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _wrapInCard({required Widget child}) {
+    if (wrapInCard) {
+      return Card(  elevation: 5,child: child);
+    }
+    return child;
   }
 }
