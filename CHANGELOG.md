@@ -8,6 +8,10 @@
     
 - Bugs were fixed:
     - Method getPaywalls() always returns result with error [Android]
+
+- Dependencies of Native SDK's were updated to:
+    - [Android] 1.1.0
+    - [iOS] 2.1.1
       
 - **BREAKING** refactor [iOS], [Android]:
     - AppHud class was renamed to Apphud
