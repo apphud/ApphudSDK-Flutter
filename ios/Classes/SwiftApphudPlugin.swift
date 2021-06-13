@@ -2,9 +2,7 @@ import Flutter
 import UIKit
 import ApphudSDK
 
-public class SwiftAppHudPlugin: NSObject, FlutterPlugin {
-
-    static let apphudDelegate = PluginApphudDelegate()
+public class SwiftApphudPlugin: NSObject, FlutterPlugin {
 
     let handlers: [BaseHandler] = [
         InitializationHandler(),
@@ -20,8 +18,8 @@ public class SwiftAppHudPlugin: NSObject, FlutterPlugin {
     ]
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "appHud", binaryMessenger: registrar.messenger())
-        let instance = SwiftAppHudPlugin()
+        let channel = FlutterMethodChannel(name: "apphud", binaryMessenger: registrar.messenger())
+        let instance = SwiftApphudPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
