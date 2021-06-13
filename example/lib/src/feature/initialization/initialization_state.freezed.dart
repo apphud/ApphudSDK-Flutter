@@ -20,7 +20,7 @@ class _$InitializationStateTearOff {
       {bool isStartSuccess = false,
       bool isProductFetched = false,
       bool isPaywallsFetched = false,
-      List<ApphudProduct> products = const [],
+      List<ApphudProductComposite> products = const [],
       ApphudPaywalls paywalls = const ApphudPaywalls()}) {
     return Trying(
       isStartSuccess: isStartSuccess,
@@ -32,7 +32,7 @@ class _$InitializationStateTearOff {
   }
 
   Success success(
-      {List<ApphudProduct> products = const [],
+      {List<ApphudProductComposite> products = const [],
       ApphudPaywalls paywalls = const ApphudPaywalls()}) {
     return Success(
       products: products,
@@ -70,11 +70,11 @@ mixin _$InitializationState {
             bool isStartSuccess,
             bool isProductFetched,
             bool isPaywallsFetched,
-            List<ApphudProduct> products,
+            List<ApphudProductComposite> products,
             ApphudPaywalls paywalls)
         trying,
     required TResult Function(
-            List<ApphudProduct> products, ApphudPaywalls paywalls)
+            List<ApphudProductComposite> products, ApphudPaywalls paywalls)
         success,
     required TResult Function(String error) startFail,
     required TResult Function(String error) productsFetchFail,
@@ -87,10 +87,11 @@ mixin _$InitializationState {
             bool isStartSuccess,
             bool isProductFetched,
             bool isPaywallsFetched,
-            List<ApphudProduct> products,
+            List<ApphudProductComposite> products,
             ApphudPaywalls paywalls)?
         trying,
-    TResult Function(List<ApphudProduct> products, ApphudPaywalls paywalls)?
+    TResult Function(
+            List<ApphudProductComposite> products, ApphudPaywalls paywalls)?
         success,
     TResult Function(String error)? startFail,
     TResult Function(String error)? productsFetchFail,
@@ -144,7 +145,7 @@ abstract class $TryingCopyWith<$Res> {
       {bool isStartSuccess,
       bool isProductFetched,
       bool isPaywallsFetched,
-      List<ApphudProduct> products,
+      List<ApphudProductComposite> products,
       ApphudPaywalls paywalls});
 }
 
@@ -181,7 +182,7 @@ class _$TryingCopyWithImpl<$Res> extends _$InitializationStateCopyWithImpl<$Res>
       products: products == freezed
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ApphudProduct>,
+              as List<ApphudProductComposite>,
       paywalls: paywalls == freezed
           ? _value.paywalls
           : paywalls // ignore: cast_nullable_to_non_nullable
@@ -212,7 +213,7 @@ class _$Trying extends Trying {
   final bool isPaywallsFetched;
   @JsonKey(defaultValue: const [])
   @override
-  final List<ApphudProduct> products;
+  final List<ApphudProductComposite> products;
   @JsonKey(defaultValue: const ApphudPaywalls())
   @override
   final ApphudPaywalls paywalls;
@@ -264,11 +265,11 @@ class _$Trying extends Trying {
             bool isStartSuccess,
             bool isProductFetched,
             bool isPaywallsFetched,
-            List<ApphudProduct> products,
+            List<ApphudProductComposite> products,
             ApphudPaywalls paywalls)
         trying,
     required TResult Function(
-            List<ApphudProduct> products, ApphudPaywalls paywalls)
+            List<ApphudProductComposite> products, ApphudPaywalls paywalls)
         success,
     required TResult Function(String error) startFail,
     required TResult Function(String error) productsFetchFail,
@@ -285,10 +286,11 @@ class _$Trying extends Trying {
             bool isStartSuccess,
             bool isProductFetched,
             bool isPaywallsFetched,
-            List<ApphudProduct> products,
+            List<ApphudProductComposite> products,
             ApphudPaywalls paywalls)?
         trying,
-    TResult Function(List<ApphudProduct> products, ApphudPaywalls paywalls)?
+    TResult Function(
+            List<ApphudProductComposite> products, ApphudPaywalls paywalls)?
         success,
     TResult Function(String error)? startFail,
     TResult Function(String error)? productsFetchFail,
@@ -336,14 +338,15 @@ abstract class Trying extends InitializationState {
       {bool isStartSuccess,
       bool isProductFetched,
       bool isPaywallsFetched,
-      List<ApphudProduct> products,
+      List<ApphudProductComposite> products,
       ApphudPaywalls paywalls}) = _$Trying;
   const Trying._() : super._();
 
   bool get isStartSuccess => throw _privateConstructorUsedError;
   bool get isProductFetched => throw _privateConstructorUsedError;
   bool get isPaywallsFetched => throw _privateConstructorUsedError;
-  List<ApphudProduct> get products => throw _privateConstructorUsedError;
+  List<ApphudProductComposite> get products =>
+      throw _privateConstructorUsedError;
   ApphudPaywalls get paywalls => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $TryingCopyWith<Trying> get copyWith => throw _privateConstructorUsedError;
@@ -353,7 +356,7 @@ abstract class Trying extends InitializationState {
 abstract class $SuccessCopyWith<$Res> {
   factory $SuccessCopyWith(Success value, $Res Function(Success) then) =
       _$SuccessCopyWithImpl<$Res>;
-  $Res call({List<ApphudProduct> products, ApphudPaywalls paywalls});
+  $Res call({List<ApphudProductComposite> products, ApphudPaywalls paywalls});
 }
 
 /// @nodoc
@@ -375,7 +378,7 @@ class _$SuccessCopyWithImpl<$Res>
       products: products == freezed
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ApphudProduct>,
+              as List<ApphudProductComposite>,
       paywalls: paywalls == freezed
           ? _value.paywalls
           : paywalls // ignore: cast_nullable_to_non_nullable
@@ -393,7 +396,7 @@ class _$Success extends Success {
 
   @JsonKey(defaultValue: const [])
   @override
-  final List<ApphudProduct> products;
+  final List<ApphudProductComposite> products;
   @JsonKey(defaultValue: const ApphudPaywalls())
   @override
   final ApphudPaywalls paywalls;
@@ -433,11 +436,11 @@ class _$Success extends Success {
             bool isStartSuccess,
             bool isProductFetched,
             bool isPaywallsFetched,
-            List<ApphudProduct> products,
+            List<ApphudProductComposite> products,
             ApphudPaywalls paywalls)
         trying,
     required TResult Function(
-            List<ApphudProduct> products, ApphudPaywalls paywalls)
+            List<ApphudProductComposite> products, ApphudPaywalls paywalls)
         success,
     required TResult Function(String error) startFail,
     required TResult Function(String error) productsFetchFail,
@@ -453,10 +456,11 @@ class _$Success extends Success {
             bool isStartSuccess,
             bool isProductFetched,
             bool isPaywallsFetched,
-            List<ApphudProduct> products,
+            List<ApphudProductComposite> products,
             ApphudPaywalls paywalls)?
         trying,
-    TResult Function(List<ApphudProduct> products, ApphudPaywalls paywalls)?
+    TResult Function(
+            List<ApphudProductComposite> products, ApphudPaywalls paywalls)?
         success,
     TResult Function(String error)? startFail,
     TResult Function(String error)? productsFetchFail,
@@ -500,10 +504,12 @@ class _$Success extends Success {
 
 abstract class Success extends InitializationState {
   const factory Success(
-      {List<ApphudProduct> products, ApphudPaywalls paywalls}) = _$Success;
+      {List<ApphudProductComposite> products,
+      ApphudPaywalls paywalls}) = _$Success;
   const Success._() : super._();
 
-  List<ApphudProduct> get products => throw _privateConstructorUsedError;
+  List<ApphudProductComposite> get products =>
+      throw _privateConstructorUsedError;
   ApphudPaywalls get paywalls => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $SuccessCopyWith<Success> get copyWith => throw _privateConstructorUsedError;
@@ -576,11 +582,11 @@ class _$StartFail extends StartFail {
             bool isStartSuccess,
             bool isProductFetched,
             bool isPaywallsFetched,
-            List<ApphudProduct> products,
+            List<ApphudProductComposite> products,
             ApphudPaywalls paywalls)
         trying,
     required TResult Function(
-            List<ApphudProduct> products, ApphudPaywalls paywalls)
+            List<ApphudProductComposite> products, ApphudPaywalls paywalls)
         success,
     required TResult Function(String error) startFail,
     required TResult Function(String error) productsFetchFail,
@@ -596,10 +602,11 @@ class _$StartFail extends StartFail {
             bool isStartSuccess,
             bool isProductFetched,
             bool isPaywallsFetched,
-            List<ApphudProduct> products,
+            List<ApphudProductComposite> products,
             ApphudPaywalls paywalls)?
         trying,
-    TResult Function(List<ApphudProduct> products, ApphudPaywalls paywalls)?
+    TResult Function(
+            List<ApphudProductComposite> products, ApphudPaywalls paywalls)?
         success,
     TResult Function(String error)? startFail,
     TResult Function(String error)? productsFetchFail,
@@ -720,11 +727,11 @@ class _$ProductsFetchFail extends ProductsFetchFail {
             bool isStartSuccess,
             bool isProductFetched,
             bool isPaywallsFetched,
-            List<ApphudProduct> products,
+            List<ApphudProductComposite> products,
             ApphudPaywalls paywalls)
         trying,
     required TResult Function(
-            List<ApphudProduct> products, ApphudPaywalls paywalls)
+            List<ApphudProductComposite> products, ApphudPaywalls paywalls)
         success,
     required TResult Function(String error) startFail,
     required TResult Function(String error) productsFetchFail,
@@ -740,10 +747,11 @@ class _$ProductsFetchFail extends ProductsFetchFail {
             bool isStartSuccess,
             bool isProductFetched,
             bool isPaywallsFetched,
-            List<ApphudProduct> products,
+            List<ApphudProductComposite> products,
             ApphudPaywalls paywalls)?
         trying,
-    TResult Function(List<ApphudProduct> products, ApphudPaywalls paywalls)?
+    TResult Function(
+            List<ApphudProductComposite> products, ApphudPaywalls paywalls)?
         success,
     TResult Function(String error)? startFail,
     TResult Function(String error)? productsFetchFail,
@@ -864,11 +872,11 @@ class _$PaywallsFetchFail extends PaywallsFetchFail {
             bool isStartSuccess,
             bool isProductFetched,
             bool isPaywallsFetched,
-            List<ApphudProduct> products,
+            List<ApphudProductComposite> products,
             ApphudPaywalls paywalls)
         trying,
     required TResult Function(
-            List<ApphudProduct> products, ApphudPaywalls paywalls)
+            List<ApphudProductComposite> products, ApphudPaywalls paywalls)
         success,
     required TResult Function(String error) startFail,
     required TResult Function(String error) productsFetchFail,
@@ -884,10 +892,11 @@ class _$PaywallsFetchFail extends PaywallsFetchFail {
             bool isStartSuccess,
             bool isProductFetched,
             bool isPaywallsFetched,
-            List<ApphudProduct> products,
+            List<ApphudProductComposite> products,
             ApphudPaywalls paywalls)?
         trying,
-    TResult Function(List<ApphudProduct> products, ApphudPaywalls paywalls)?
+    TResult Function(
+            List<ApphudProductComposite> products, ApphudPaywalls paywalls)?
         success,
     TResult Function(String error)? startFail,
     TResult Function(String error)? productsFetchFail,

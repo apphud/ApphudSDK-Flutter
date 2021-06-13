@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'apphud_paywall_product.dart';
+part of 'apphud_product.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApphudPaywallProduct _$ApphudPaywallProductFromJson(Map json) {
-  return ApphudPaywallProduct(
+ApphudProduct _$ApphudProductFromJson(Map json) {
+  return ApphudProduct(
     productId: json['productId'] as String,
     store: json['store'] as String,
     name: json['name'] as String?,
@@ -21,8 +21,7 @@ ApphudPaywallProduct _$ApphudPaywallProductFromJson(Map json) {
   );
 }
 
-Map<String, dynamic> _$ApphudPaywallProductToJson(
-        ApphudPaywallProduct instance) =>
+Map<String, dynamic> _$ApphudProductToJson(ApphudProduct instance) =>
     <String, dynamic>{
       'productId': instance.productId,
       'store': instance.store,

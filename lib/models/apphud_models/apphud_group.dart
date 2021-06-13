@@ -1,4 +1,4 @@
-import 'package:apphud/models/apphud_models/apphud_paywall_product.dart';
+import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'apphud_group.g.dart';
@@ -6,7 +6,7 @@ part 'apphud_group.g.dart';
 @JsonSerializable(anyMap: true)
 class ApphudGroup {
   final String name;
-  final List<ApphudPaywallProduct>? products;
+  final List<ApphudProduct>? products;
   final bool hasAccess;
 
   ApphudGroup({

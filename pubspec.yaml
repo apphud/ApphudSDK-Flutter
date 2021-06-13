@@ -26,6 +26,6 @@ flutter:
     platforms:
       android:
         package: com.apphud.fluttersdk
-        pluginClass: AppHudPlugin
+        pluginClass: ApphudPlugin
       ios:
-        pluginClass: AppHudPlugin
+        pluginClass: ApphudPlugin

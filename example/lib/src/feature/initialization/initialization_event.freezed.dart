@@ -20,7 +20,8 @@ class _$InitializationEventTearOff {
     return const InitializeTrying();
   }
 
-  ProductsFetchSuccess productsFetchSuccess(List<ApphudProduct> products) {
+  ProductsFetchSuccess productsFetchSuccess(
+      List<ApphudProductComposite> products) {
     return ProductsFetchSuccess(
       products,
     );
@@ -53,7 +54,7 @@ mixin _$InitializationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
-    required TResult Function(List<ApphudProduct> products)
+    required TResult Function(List<ApphudProductComposite> products)
         productsFetchSuccess,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
     required TResult Function(String error) productsFetchFailure,
@@ -63,7 +64,8 @@ mixin _$InitializationEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
-    TResult Function(List<ApphudProduct> products)? productsFetchSuccess,
+    TResult Function(List<ApphudProductComposite> products)?
+        productsFetchSuccess,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
     TResult Function(String error)? productsFetchFailure,
     TResult Function(String error)? paywallsFetchFailure,
@@ -149,7 +151,7 @@ class _$InitializeTrying extends InitializeTrying {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
-    required TResult Function(List<ApphudProduct> products)
+    required TResult Function(List<ApphudProductComposite> products)
         productsFetchSuccess,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
     required TResult Function(String error) productsFetchFailure,
@@ -162,7 +164,8 @@ class _$InitializeTrying extends InitializeTrying {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
-    TResult Function(List<ApphudProduct> products)? productsFetchSuccess,
+    TResult Function(List<ApphudProductComposite> products)?
+        productsFetchSuccess,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
     TResult Function(String error)? productsFetchFailure,
     TResult Function(String error)? paywallsFetchFailure,
@@ -213,7 +216,7 @@ abstract class $ProductsFetchSuccessCopyWith<$Res> {
   factory $ProductsFetchSuccessCopyWith(ProductsFetchSuccess value,
           $Res Function(ProductsFetchSuccess) then) =
       _$ProductsFetchSuccessCopyWithImpl<$Res>;
-  $Res call({List<ApphudProduct> products});
+  $Res call({List<ApphudProductComposite> products});
 }
 
 /// @nodoc
@@ -235,7 +238,7 @@ class _$ProductsFetchSuccessCopyWithImpl<$Res>
       products == freezed
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ApphudProduct>,
+              as List<ApphudProductComposite>,
     ));
   }
 }
@@ -246,7 +249,7 @@ class _$ProductsFetchSuccess extends ProductsFetchSuccess {
   const _$ProductsFetchSuccess(this.products) : super._();
 
   @override
-  final List<ApphudProduct> products;
+  final List<ApphudProductComposite> products;
 
   @override
   String toString() {
@@ -276,7 +279,7 @@ class _$ProductsFetchSuccess extends ProductsFetchSuccess {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
-    required TResult Function(List<ApphudProduct> products)
+    required TResult Function(List<ApphudProductComposite> products)
         productsFetchSuccess,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
     required TResult Function(String error) productsFetchFailure,
@@ -289,7 +292,8 @@ class _$ProductsFetchSuccess extends ProductsFetchSuccess {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
-    TResult Function(List<ApphudProduct> products)? productsFetchSuccess,
+    TResult Function(List<ApphudProductComposite> products)?
+        productsFetchSuccess,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
     TResult Function(String error)? productsFetchFailure,
     TResult Function(String error)? paywallsFetchFailure,
@@ -331,11 +335,12 @@ class _$ProductsFetchSuccess extends ProductsFetchSuccess {
 }
 
 abstract class ProductsFetchSuccess extends InitializationEvent {
-  const factory ProductsFetchSuccess(List<ApphudProduct> products) =
+  const factory ProductsFetchSuccess(List<ApphudProductComposite> products) =
       _$ProductsFetchSuccess;
   const ProductsFetchSuccess._() : super._();
 
-  List<ApphudProduct> get products => throw _privateConstructorUsedError;
+  List<ApphudProductComposite> get products =>
+      throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ProductsFetchSuccessCopyWith<ProductsFetchSuccess> get copyWith =>
       throw _privateConstructorUsedError;
@@ -409,7 +414,7 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
-    required TResult Function(List<ApphudProduct> products)
+    required TResult Function(List<ApphudProductComposite> products)
         productsFetchSuccess,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
     required TResult Function(String error) productsFetchFailure,
@@ -422,7 +427,8 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
-    TResult Function(List<ApphudProduct> products)? productsFetchSuccess,
+    TResult Function(List<ApphudProductComposite> products)?
+        productsFetchSuccess,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
     TResult Function(String error)? productsFetchFailure,
     TResult Function(String error)? paywallsFetchFailure,
@@ -541,7 +547,7 @@ class _$ProductsFetchFailure extends ProductsFetchFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
-    required TResult Function(List<ApphudProduct> products)
+    required TResult Function(List<ApphudProductComposite> products)
         productsFetchSuccess,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
     required TResult Function(String error) productsFetchFailure,
@@ -554,7 +560,8 @@ class _$ProductsFetchFailure extends ProductsFetchFailure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
-    TResult Function(List<ApphudProduct> products)? productsFetchSuccess,
+    TResult Function(List<ApphudProductComposite> products)?
+        productsFetchSuccess,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
     TResult Function(String error)? productsFetchFailure,
     TResult Function(String error)? paywallsFetchFailure,
@@ -672,7 +679,7 @@ class _$PaywallsFetchFailure extends PaywallsFetchFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
-    required TResult Function(List<ApphudProduct> products)
+    required TResult Function(List<ApphudProductComposite> products)
         productsFetchSuccess,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
     required TResult Function(String error) productsFetchFailure,
@@ -685,7 +692,8 @@ class _$PaywallsFetchFailure extends PaywallsFetchFailure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
-    TResult Function(List<ApphudProduct> products)? productsFetchSuccess,
+    TResult Function(List<ApphudProductComposite> products)?
+        productsFetchSuccess,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
     TResult Function(String error)? productsFetchFailure,
     TResult Function(String error)? paywallsFetchFailure,

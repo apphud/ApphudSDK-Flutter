@@ -1,10 +1,7 @@
-import 'package:apphud/models/apphud_models/composite/apphud_product.dart';
 import 'package:apphud_example/src/feature/purchase/purchase_bloc.dart';
 import 'package:apphud_example/src/feature/purchase/purchase_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'product_widget.dart';
 
 class PurchaseMessageWidget extends StatelessWidget {
   final Widget child;

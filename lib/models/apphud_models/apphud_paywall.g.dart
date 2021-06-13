@@ -15,7 +15,7 @@ ApphudPaywall _$ApphudPaywallFromJson(Map json) {
       (k, e) => MapEntry(k as String, e),
     ),
     products: (json['products'] as List<dynamic>?)
-        ?.map((e) => ApphudPaywallProduct.fromJson(e as Map))
+        ?.map((e) => ApphudProduct.fromJson(e as Map))
         .toList(),
   );
 }

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
-import 'package:apphud/models/apphud_models/composite/apphud_product.dart';
+import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:apphud_example/src/feature/common/app_secrets_base.dart';
 import 'package:apphud_example/src/feature/common/debug_print_mixin.dart';
 import 'package:apphud_example/src/feature/navigation/navigation_bloc.dart';
@@ -28,8 +28,8 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
 
   void _fetchProducts() async {
     try {
-      final List<ApphudProduct> products =
-          await AppHud.productsDidFetchCallback();
+      final List<ApphudProductComposite> products =
+          await Apphud.productsDidFetchCallback();
       add(InitializationEvent.productsFetchSuccess(products));
       printAsJson('productsDidFetchCallback()', products);
     } catch (e) {
@@ -40,7 +40,7 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
 
   void _fetchPaywalls() async {
     try {
-      final ApphudPaywalls paywalls = await AppHud.getPaywalls();
+      final ApphudPaywalls paywalls = await Apphud.getPaywalls();
       add(InitializationEvent.paywallsFetchSuccess(paywalls));
       printAsJson('getPaywalls()', paywalls);
     } catch (e) {
@@ -64,8 +64,8 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
   Stream<InitializationState> _mapInitializeTrying(
       InitializeTrying value) async* {
     try {
-      await AppHud.enableDebugLogs();
-      await AppHud.startManually(
+      await Apphud.enableDebugLogs();
+      await Apphud.startManually(
         apiKey: _appSecrets.apiKey,
         userID: _appSecrets.userID,
         deviceID: _appSecrets.deviceID,

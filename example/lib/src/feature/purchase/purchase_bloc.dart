@@ -48,29 +48,29 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       );
 
   void _fetchSubscriptions() {
-    AppHud.hasActiveSubscription().then(
+    Apphud.hasActiveSubscription().then(
       (value) => printAsJson('hasActiveSubscription()', value),
       onError: (e) => printError('hasActiveSubscription()', e),
     );
 
-    AppHud.subscription().then(
+    Apphud.subscription().then(
       (value) => printAsJson('subscription()', value),
       onError: (e) => printError('subscription()', e),
     );
 
-    AppHud.subscriptions().then(
+    Apphud.subscriptions().then(
       (value) => printAsJson('subscriptions()', value),
       onError: (e) => printError('subscriptions()', e),
     );
 
-    AppHud.nonRenewingPurchases().then(
+    Apphud.nonRenewingPurchases().then(
       (value) => printAsJson('nonRenewingPurchases()', value),
       onError: (e) => printError('nonRenewingPurchases()', e),
     );
   }
 
   void _setUserProperties() async {
-    await AppHud.setUserProperty(
+    await Apphud.setUserProperty(
       key: ApphudUserPropertyKey.name,
       value: _nameParameterValue,
     );
@@ -80,7 +80,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       printOnlyMethodName: true,
     );
 
-    await AppHud.setUserProperty(
+    await Apphud.setUserProperty(
       key: ApphudUserPropertyKey.email,
       value: _emailParameterValue,
     );
@@ -90,7 +90,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       printOnlyMethodName: true,
     );
 
-    await AppHud.setUserProperty(
+    await Apphud.setUserProperty(
       key: ApphudUserPropertyKey.phone,
       value: _phoneParameterValue,
     );
@@ -100,7 +100,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       printOnlyMethodName: true,
     );
 
-    await AppHud.setUserProperty(
+    await Apphud.setUserProperty(
       key: ApphudUserPropertyKey.age,
       value: _ageParameterValue,
     );
@@ -110,7 +110,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       printOnlyMethodName: true,
     );
 
-    await AppHud.setUserProperty(
+    await Apphud.setUserProperty(
       key: ApphudUserPropertyKey.gender,
       value: _genderParameterValue,
     );
@@ -120,7 +120,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       printOnlyMethodName: true,
     );
 
-    await AppHud.setUserProperty(
+    await Apphud.setUserProperty(
       key: ApphudUserPropertyKey.customProperty(_customParameterName),
       value: _customParameterValue,
     );
@@ -131,7 +131,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     );
 
     await Future.delayed(Duration(seconds: 2));
-    await AppHud.incrementUserProperty(
+    await Apphud.incrementUserProperty(
       key: ApphudUserPropertyKey.age,
       by: _ageIncreaseParameterValue,
     );
@@ -143,7 +143,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   }
 
   void _setAttribution() {
-    AppHud.addAttribution(
+    Apphud.addAttribution(
       data: _attributionData,
       provider: _attributionProvider,
     ).then(
@@ -163,7 +163,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   }
 
   void _collectSearchAdsAttribution() {
-    AppHud.collectSearchAdsAttribution().then(
+    Apphud.collectSearchAdsAttribution().then(
       (value) => printAsJson(
         'collectSearchAdsAttribution()',
         value ?? 'Ok',
@@ -173,7 +173,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   }
 
   void _fetchPermissionGroups() {
-    AppHud.permissionGroups().then(
+    Apphud.permissionGroups().then(
       (value) => printAsJson('permissionGroups()', value),
       onError: (e) => printError('permissionGroups()', e),
     );
@@ -181,7 +181,9 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
 
   Stream<PurchaseState> _mapPurchase(Purchase event) async* {
     yield PurchaseState.inProgress();
-    final ApphudPurchaseResult result = await AppHud.purchase(event.id);
+    final ApphudPurchaseResult result = await Apphud.purchase(
+      productId: event.id,
+    );
     printAsJson('purchase(${event.id})', result);
     if (result.error == null) {
       yield PurchaseState.purchaseSuccess();
@@ -192,8 +194,9 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
 
   Stream<PurchaseState> _mapPurchaseProduct(PurchaseProduct event) async* {
     yield PurchaseState.inProgress();
-    final ApphudPurchaseResult result =
-        await AppHud.purchaseProduct(event.product);
+    final ApphudPurchaseResult result = await Apphud.purchase(
+      product: event.product,
+    );
     printAsJson('purchaseProduct(${event.product.productId})', result);
     if (result.error == null) {
       yield PurchaseState.purchaseSuccess();
@@ -204,7 +207,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
 
   Stream<PurchaseState> _mapRestorePurchases(RestorePurchases value) async* {
     yield PurchaseState.inProgress();
-    final ApphudComposite result = await AppHud.restorePurchases();
+    final ApphudComposite result = await Apphud.restorePurchases();
     printAsJson('restorePurchases()', result);
     if (result.error == null) {
       yield PurchaseState.restorePurchasesSuccess();
@@ -215,13 +218,13 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
 
   Stream<PurchaseState> _mapPaywallShown(PaywallShown event) async* {
     if (Platform.isIOS) {
-      unawaited(AppHud.paywallShown(event.paywall));
+      unawaited(Apphud.paywallShown(event.paywall));
     }
   }
 
   Stream<PurchaseState> _mapPaywallClosed(PaywallClosed event) async* {
     if (Platform.isIOS) {
-      unawaited(AppHud.paywallClosed(event.paywall));
+      unawaited(Apphud.paywallClosed(event.paywall));
     }
   }
 }

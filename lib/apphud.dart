@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_group.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywall.dart';
-import 'package:apphud/models/apphud_models/apphud_paywall_product.dart';
+import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
@@ -14,12 +13,12 @@ import 'package:flutter/services.dart';
 
 import 'models/apphud_models/apphud_attribution_provider.dart';
 import 'models/apphud_models/apphud_error.dart';
-import 'models/apphud_models/composite/apphud_product.dart';
+import 'models/apphud_models/composite/apphud_product_composite.dart';
 import 'models/apphud_models/composite/apphud_purchase_result.dart';
 import 'models/extensions.dart';
 
-class AppHud {
-  static const MethodChannel _channel = MethodChannel('appHud');
+class Apphud {
+  static const MethodChannel _channel = MethodChannel('apphud');
 
 // Initialization
 
@@ -99,11 +98,13 @@ class AppHud {
   ///
   /// Note that you have to add all product identifiers in Apphud.
   /// You can use `productsDidFetchCallback` (iOS) callback or observe for `didFetchProductsNotification()`. Use whatever you like most.
-  static Future<List<ApphudProduct>> productsDidFetchCallback() async {
+  static Future<List<ApphudProductComposite>> productsDidFetchCallback() async {
     final List<Map<dynamic, dynamic>> products = (await _channel
             .invokeMethod<List<dynamic>>('productsDidFetchCallback'))!
         .toMapList;
-    return products.map((json) => ApphudProduct.fromJson(json)).toList();
+    return products
+        .map((json) => ApphudProductComposite.fromJson(json))
+        .toList();
   }
 
   /// iOS only. Refreshes SKProducts from the App Store.
@@ -118,49 +119,66 @@ class AppHud {
     return products.map((json) => SKProductWrapper.fromJson(json)).toList();
   }
 
-  /// Returns [ApphudProduct] object by [productIdentifier].
+  /// Returns [ApphudProductComposite] object by [productIdentifier].
   ///
   /// Note that you have to add this product identifier in Apphud.
   /// Will return `null` if product is not yet fetched from Google Play Billing (Android) or StoreKit (iOS).
-  static Future<ApphudProduct?> product(String productIdentifier) async {
+  static Future<ApphudProductComposite?> product(
+      String productIdentifier) async {
     final Map<dynamic, dynamic>? json =
         await _channel.invokeMethod<Map<dynamic, dynamic>>(
       'product',
       {'productIdentifier': productIdentifier},
     );
 
-    return json != null ? ApphudProduct.fromJson(json) : null;
+    return json != null ? ApphudProductComposite.fromJson(json) : null;
   }
 
-  /// Returns array of [ApphudProduct] objects that you added in Apphud.
+  /// Returns array of [ApphudProductComposite] objects that you added in Apphud.
   ///
   /// Note that this method will return `null` if products are not yet fetched. You should observe for `Apphud.didFetchProductsNotification()` notification (iOS) or use `productsDidFetchCallback` (iOS, Android).
-  static Future<List<ApphudProduct>?> products() async {
+  static Future<List<ApphudProductComposite>?> products() async {
     List<Map<dynamic, dynamic>>? products =
         (await _channel.invokeMethod<List<dynamic>>('products'))?.toMapList;
-    return products?.map((json) => ApphudProduct.fromJson(json)).toList();
+    return products
+        ?.map((json) => ApphudProductComposite.fromJson(json))
+        .toList();
   }
 
   ///  Purchase product and automatically submits App Store Receipt (iOS) or Google Play purchase token (Android) to Apphud.
   ///
   /// iOS:  You are not required to purchase product using Apphud SDK methods. You can purchase subscription or any in-app purchase using your own code. App Store receipt will be sent to Apphud anyway.
   /// - parameter [productId] ir required. Identifier of the product that user wants to purchase.
-  /// Returns [ApphudPurchase] object
-  static Future<ApphudPurchaseResult> purchase(String productId) async {
-    final dynamic json = await _channel.invokeMethod(
-      'purchase',
-      {'productId': productId},
-    );
-    return ApphudPurchaseResult.fromJson(json);
-  }
-
-  static Future<ApphudPurchaseResult> purchaseProduct(
-      ApphudPaywallProduct product) async {
-    final dynamic json = await _channel.invokeMethod(
-      'purchaseProduct',
-      product.toJson()..remove('skuDetails')..remove('skProduct'),
-    );
-    return ApphudPurchaseResult.fromJson(json);
+  /// Returns [ApphudPurchaseResult] object
+  static Future<ApphudPurchaseResult> purchase({
+    String? productId,
+    ApphudProduct? product,
+  }) async {
+    try {
+      assert(
+        !(productId == null && product == null),
+        'Both productId and product can not be null at the same time',
+      );
+      assert(
+        !(productId != null && product != null),
+        'Both productId and product can not be non null at the same time',
+      );
+      dynamic json;
+      if (productId != null) {
+        json = await _channel.invokeMethod(
+          'purchase',
+          {'productId': productId},
+        );
+      } else if (product != null) {
+        json = await _channel.invokeMethod(
+          'purchaseProduct',
+          product.toJson()..remove('skuDetails')..remove('skProduct'),
+        );
+      }
+      return ApphudPurchaseResult.fromJson(json);
+    } catch (e) {
+      return ApphudPurchaseResult(error: ApphudError(message: e.toString()));
+    }
   }
 
   /// Purchase product and automatically submits App Store Receipt (iOS) or Google Play purchase token (Android) to Apphud.
@@ -466,14 +484,14 @@ class AppHud {
 
 // Paywall logs
 
-  static Future<void> paywallShown(ApphudPaywall paywall) async{
+  static Future<void> paywallShown(ApphudPaywall paywall) async {
     await _channel.invokeMethod(
       'paywallShown',
       {'identifier': paywall.identifier},
     );
   }
 
-  static Future<void> paywallClosed(ApphudPaywall paywall) async{
+  static Future<void> paywallClosed(ApphudPaywall paywall) async {
     await _channel.invokeMethod(
       'paywallClosed',
       {'identifier': paywall.identifier},

@@ -1,5 +1,5 @@
 import 'package:apphud/models/apphud_models/apphud_paywall.dart';
-import 'package:apphud/models/apphud_models/apphud_paywall_product.dart';
+import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'purchase_event.freezed.dart';
@@ -12,7 +12,7 @@ class PurchaseEvent with _$PurchaseEvent {
 
   const factory PurchaseEvent.restorePurchases() = RestorePurchases;
 
-  const factory PurchaseEvent.purchaseProduct(ApphudPaywallProduct product) =
+  const factory PurchaseEvent.purchaseProduct(ApphudProduct product) =
       PurchaseProduct;
 
   const factory PurchaseEvent.paywallShown(ApphudPaywall paywall) =

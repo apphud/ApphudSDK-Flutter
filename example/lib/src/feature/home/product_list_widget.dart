@@ -1,10 +1,10 @@
-import 'package:apphud/models/apphud_models/composite/apphud_product.dart';
+import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:flutter/material.dart';
 
 import 'product_widget.dart';
 
 class ProductListWidget extends StatelessWidget {
-  final List<ApphudProduct> productList;
+  final List<ApphudProductComposite> productList;
 
   const ProductListWidget({
     Key? key,

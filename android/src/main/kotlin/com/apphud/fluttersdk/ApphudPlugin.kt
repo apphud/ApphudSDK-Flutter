@@ -14,8 +14,8 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 
 /** AppHudPlugin */
-class AppHudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
-    lateinit var handlers: List<Handler>
+class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+    private lateinit var handlers: List<Handler>
 
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
@@ -29,7 +29,7 @@ class AppHudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override
     fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "appHud")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud")
         channel.setMethodCallHandler(this)
         this.context = flutterPluginBinding.applicationContext
     }

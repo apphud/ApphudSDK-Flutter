@@ -11,7 +11,7 @@ ApphudGroup _$ApphudGroupFromJson(Map json) {
     name: json['name'] as String,
     hasAccess: json['hasAccess'] as bool,
     products: (json['products'] as List<dynamic>?)
-        ?.map((e) => ApphudPaywallProduct.fromJson(e as Map))
+        ?.map((e) => ApphudProduct.fromJson(e as Map))
         .toList(),
   );
 }

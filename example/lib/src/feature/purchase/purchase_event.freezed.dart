@@ -26,7 +26,7 @@ class _$PurchaseEventTearOff {
     return const RestorePurchases();
   }
 
-  PurchaseProduct purchaseProduct(ApphudPaywallProduct product) {
+  PurchaseProduct purchaseProduct(ApphudProduct product) {
     return PurchaseProduct(
       product,
     );
@@ -54,7 +54,7 @@ mixin _$PurchaseEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
-    required TResult Function(ApphudPaywallProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
   }) =>
@@ -63,7 +63,7 @@ mixin _$PurchaseEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
-    TResult Function(ApphudPaywallProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     required TResult orElse(),
@@ -171,7 +171,7 @@ class _$Purchase extends Purchase {
   TResult when<TResult extends Object?>({
     required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
-    required TResult Function(ApphudPaywallProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
   }) {
@@ -183,7 +183,7 @@ class _$Purchase extends Purchase {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
-    TResult Function(ApphudPaywallProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     required TResult orElse(),
@@ -275,7 +275,7 @@ class _$RestorePurchases extends RestorePurchases {
   TResult when<TResult extends Object?>({
     required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
-    required TResult Function(ApphudPaywallProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
   }) {
@@ -287,7 +287,7 @@ class _$RestorePurchases extends RestorePurchases {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
-    TResult Function(ApphudPaywallProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     required TResult orElse(),
@@ -337,7 +337,7 @@ abstract class $PurchaseProductCopyWith<$Res> {
   factory $PurchaseProductCopyWith(
           PurchaseProduct value, $Res Function(PurchaseProduct) then) =
       _$PurchaseProductCopyWithImpl<$Res>;
-  $Res call({ApphudPaywallProduct product});
+  $Res call({ApphudProduct product});
 }
 
 /// @nodoc
@@ -359,7 +359,7 @@ class _$PurchaseProductCopyWithImpl<$Res>
       product == freezed
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as ApphudPaywallProduct,
+              as ApphudProduct,
     ));
   }
 }
@@ -370,7 +370,7 @@ class _$PurchaseProduct extends PurchaseProduct {
   const _$PurchaseProduct(this.product) : super._();
 
   @override
-  final ApphudPaywallProduct product;
+  final ApphudProduct product;
 
   @override
   String toString() {
@@ -399,7 +399,7 @@ class _$PurchaseProduct extends PurchaseProduct {
   TResult when<TResult extends Object?>({
     required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
-    required TResult Function(ApphudPaywallProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
   }) {
@@ -411,7 +411,7 @@ class _$PurchaseProduct extends PurchaseProduct {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
-    TResult Function(ApphudPaywallProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     required TResult orElse(),
@@ -452,11 +452,10 @@ class _$PurchaseProduct extends PurchaseProduct {
 }
 
 abstract class PurchaseProduct extends PurchaseEvent {
-  const factory PurchaseProduct(ApphudPaywallProduct product) =
-      _$PurchaseProduct;
+  const factory PurchaseProduct(ApphudProduct product) = _$PurchaseProduct;
   const PurchaseProduct._() : super._();
 
-  ApphudPaywallProduct get product => throw _privateConstructorUsedError;
+  ApphudProduct get product => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PurchaseProductCopyWith<PurchaseProduct> get copyWith =>
       throw _privateConstructorUsedError;
@@ -528,7 +527,7 @@ class _$PaywallShown extends PaywallShown {
   TResult when<TResult extends Object?>({
     required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
-    required TResult Function(ApphudPaywallProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
   }) {
@@ -540,7 +539,7 @@ class _$PaywallShown extends PaywallShown {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
-    TResult Function(ApphudPaywallProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     required TResult orElse(),
@@ -657,7 +656,7 @@ class _$PaywallClosed extends PaywallClosed {
   TResult when<TResult extends Object?>({
     required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
-    required TResult Function(ApphudPaywallProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
   }) {
@@ -669,7 +668,7 @@ class _$PaywallClosed extends PaywallClosed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
-    TResult Function(ApphudPaywallProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     required TResult orElse(),

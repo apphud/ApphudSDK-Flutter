@@ -1,9 +1,6 @@
 import 'dart:io';
 
-import 'package:apphud/models/apphud_models/composite/apphud_product.dart';
-import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
-import 'package:apphud/models/sku_details/sku_details.dart';
-import 'package:apphud_example/src/feature/common/widgets/ink_well_stack.dart';
+import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:apphud_example/src/feature/home/sk_product_widget.dart';
 import 'package:apphud_example/src/feature/home/sku_details_widget.dart';
 import 'package:apphud_example/src/feature/purchase/purchase_bloc.dart';
@@ -12,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductWidget extends StatelessWidget {
-  final ApphudProduct product;
+  final ApphudProductComposite product;
 
   const ProductWidget({
     Key? key,

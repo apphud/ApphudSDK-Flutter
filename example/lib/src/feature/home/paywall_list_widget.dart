@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:apphud/models/apphud_models/apphud_paywall.dart';
-import 'package:apphud/models/apphud_models/apphud_paywall_product.dart';
+import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud_example/src/feature/home/sk_product_widget.dart';
 import 'package:apphud_example/src/feature/home/sku_details_widget.dart';
@@ -111,7 +111,7 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
     );
   }
 
-  Widget _buildProductList(List<ApphudPaywallProduct> products) {
+  Widget _buildProductList(List<ApphudProduct> products) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -120,7 +120,7 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
     );
   }
 
-  Widget _buildProduct(ApphudPaywallProduct product) {
+  Widget _buildProduct(ApphudProduct product) {
     Widget content;
     if (Platform.isIOS) {
       content = SkProductWidget(
