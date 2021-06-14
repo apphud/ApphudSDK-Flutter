@@ -87,6 +87,7 @@ enum AppHudMethod {
         case purchaseWithoutValidation
         case purchasePromo
         case presentOfferCodeRedemptionSheet
+        case purchaseProduct
     }
 
     enum HandlePurchases: String, CaseIterable {
@@ -100,6 +101,8 @@ enum AppHudMethod {
         case fetchRawReceiptInfo
         case validateReceipt
         case appStoreReceipt
+        case getPaywalls
+        case permissionGroups
     }
 
     enum UserProperties: String, CaseIterable {
@@ -135,6 +138,11 @@ enum AppHudMethod {
     enum Others: String, CaseIterable {
        case enableDebugLogs
        case isSandbox
+    }
+    
+    enum PaywallLogs: String, CaseIterable {
+        case paywallShown
+        case paywallClosed
     }
 }
 

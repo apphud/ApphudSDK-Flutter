@@ -41,6 +41,10 @@ class InitializationStartScreen extends StatelessWidget {
               title: 'Products fetching failed with error:',
               error: f.error,
             ),
+            paywallsFetchFail: (f) => _buildFail(
+              title: 'Paywalls fetching failed with error:',
+              error: f.error,
+            ),
           );
         },
       ),
@@ -51,12 +55,14 @@ class InitializationStartScreen extends StatelessWidget {
     return _buildStatus(
       isStartSuccess: value.isStartSuccess,
       isProductFetched: value.isProductFetched,
+      isPaywallsFetched: value.isPaywallsFetched,
     );
   }
 
   Padding _buildStatus({
     required bool isStartSuccess,
     required bool isProductFetched,
+    required bool isPaywallsFetched,
   }) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -66,8 +72,8 @@ class InitializationStartScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: isStartSuccess
-                  ? CircularProgressIndicator()
-                  : Icon(Icons.check),
+                  ? Icon(Icons.check)
+                  : CircularProgressIndicator(),
               title: Text('SDK initialization'),
             ),
           ),
@@ -75,9 +81,18 @@ class InitializationStartScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: isProductFetched
-                  ? CircularProgressIndicator()
-                  : Icon(Icons.check),
+                  ? Icon(Icons.check)
+                  : CircularProgressIndicator(),
               title: Text('Products fetching'),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Card(
+            child: ListTile(
+              leading: isPaywallsFetched
+                  ? Icon(Icons.check)
+                  : CircularProgressIndicator(),
+              title: Text('Paywalls fetching'),
             ),
           ),
         ],
@@ -89,18 +104,21 @@ class InitializationStartScreen extends StatelessWidget {
     return _buildStatus(
       isStartSuccess: true,
       isProductFetched: true,
+      isPaywallsFetched: true,
     );
   }
 
   Widget _buildFail({required String title, required String error}) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(title),
-            Text(error),
-          ],
+    return SafeArea(
+      child: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(title),
+              Text(error),
+            ],
+          ),
         ),
       ),
     );

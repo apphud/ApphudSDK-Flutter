@@ -9,7 +9,7 @@ import ApphudSDK
 
 class MakePurchaseHandler: Handler {
     typealias AssociatedEnum = AppHudMethod.MakePurchase
-
+    
     func tryToHandle(method: String, args: [String : Any]?, result: @escaping FlutterResult) {
         switch method {
         case AssociatedEnum.didFetchProductsNotification.rawValue:
@@ -30,6 +30,8 @@ class MakePurchaseHandler: Handler {
             Action<PurchasePromoRequest,PurchasePromoArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.presentOfferCodeRedemptionSheet.rawValue:
             Action<PresentOfferCodeRedemptionSheetRequest,PresentOfferCodeRedemptionSheetArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.purchaseProduct.rawValue:
+            Action<PurchaseProductRequest,PurchaseProductArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

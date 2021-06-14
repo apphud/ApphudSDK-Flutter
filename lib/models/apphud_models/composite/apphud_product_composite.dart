@@ -3,23 +3,23 @@ import 'dart:io';
 import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
 import 'package:apphud/models/sku_details/sku_details.dart';
 
-class ApphudProduct {
+class ApphudProductComposite {
   final SKProductWrapper? skProductWrapper;
   final SkuDetailsWrapper? skuDetailsWrapper;
 
-  ApphudProduct({
+  ApphudProductComposite({
     this.skProductWrapper,
     this.skuDetailsWrapper,
   });
 
-  factory ApphudProduct.fromJson(Map<dynamic, dynamic> json) {
+  factory ApphudProductComposite.fromJson(Map<dynamic, dynamic> json) {
     if (Platform.isAndroid) {
       final SkuDetailsWrapper skuDetailsWrapper =
           SkuDetailsWrapper.fromJson(json);
-      return ApphudProduct(skuDetailsWrapper: skuDetailsWrapper);
+      return ApphudProductComposite(skuDetailsWrapper: skuDetailsWrapper);
     } else {
       final SKProductWrapper skProductWrapper = SKProductWrapper.fromJson(json);
-      return ApphudProduct(skProductWrapper: skProductWrapper);
+      return ApphudProductComposite(skProductWrapper: skProductWrapper);
     }
   }
 
