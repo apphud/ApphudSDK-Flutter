@@ -19,10 +19,10 @@ fun ApphudPaywall.toMap(): HashMap<String, Any?> {
 
 fun ApphudProduct.toMap(): HashMap<String, Any?> {
     return hashMapOf(
-            "productId" to productId,
+            "productId" to product_id,
             "name" to name,
             "store" to store,
-            "paywallId" to paywallId,
+            "paywallId" to paywall_id,
             "skuDetails" to skuDetails?.toMap()
     )
 }

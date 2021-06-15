@@ -179,10 +179,10 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
 
                 val product = ApphudProduct(
                         id = id,
-                        productId = productId,
+                        product_id = productId,
                         name = name,
                         store = store,
-                        paywallId = paywallId,
+                        paywall_id = paywallId,
                         skuDetails = null
                 )
 
