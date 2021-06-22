@@ -13,7 +13,7 @@ final class ProductsRequest: Request {
     typealias ArgumentProvider = ProductsArgumentParser
 
     func startRequest(arguments: (), result: @escaping FlutterResult) {
-        if let products = Apphud.products() {
+        if let products = Apphud.products {
             result(products.map{ product in product.toMap()})
             return
         }
