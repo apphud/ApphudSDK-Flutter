@@ -7,17 +7,23 @@
     - method paywallClosed(ApphudPaywall paywall) [iOS]
     
 - Bugs were fixed:
-    - Method getPaywalls() always returns result with error [Android]
+    - Method restorePurchases() always returns result with error [Android] 
 
 - Dependencies of Native SDK's were updated to:
-    - [Android] 1.1.0
+    - [Android] 1.1.3
     - [iOS] 2.1.1
       
 - **BREAKING** refactor [iOS], [Android]:
     - AppHud class was renamed to Apphud
     - ApphudProduct was renamed to ApphudProductComposite and was marked as deprecated
     - Method purchase(String productId) -> purchase({String? productId}). Parameter productId was marked as deprecated
-   
+
+- Methods are deprecated:
+    - didFetchProductsNotification()
+    - refreshStoreKitProducts()
+    - product()
+    - products()
+     
 ## 2.0.5
 - [iOS] Add method collectSearchAdsAttribution() to send search ads attribution data to Apphud.
 
