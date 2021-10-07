@@ -65,6 +65,7 @@ class AttributionHandler(override val routes: List<String>) : Handler {
                 "facebook" -> ApphudAttributionProvider.facebook
                 "firebase" -> ApphudAttributionProvider.firebase
                 "appleSearchAds" -> throw IllegalArgumentException("appleSearchAds can not be provider for android platform")
+                "appleAdsAttribution" -> throw IllegalArgumentException("appleAdsAttribution can not be provider for android platform")
                 else -> {
                     return null
                 }

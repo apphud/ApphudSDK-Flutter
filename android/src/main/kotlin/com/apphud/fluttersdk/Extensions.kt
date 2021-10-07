@@ -9,12 +9,10 @@ import kotlin.collections.HashMap
 
 fun ApphudPaywall.toMap(): HashMap<String, Any?> {
     return hashMapOf(
-        "id" to id,
-        "name" to name,
         "identifier" to identifier,
         "isDefault" to default,
         "experimentId" to experimentId,
-        "variationIdentifier" to variationIdentifier,
+        "variationId" to variationIdentifier,
         "json" to json,
         "products" to products?.map { it.toMap() }
     )
@@ -22,7 +20,6 @@ fun ApphudPaywall.toMap(): HashMap<String, Any?> {
 
 fun ApphudProduct.toMap(): HashMap<String, Any?> {
     return hashMapOf(
-        "id" to id,
         "productId" to product_id,
         "name" to name,
         "store" to store,
@@ -121,31 +118,5 @@ fun Map<String, Any>.toApphudProduct(): ApphudProduct {
         store = store,
         paywall_id = paywallId,
         skuDetails = null
-    )
-}
-
-fun Map<String, Any>.toApphudPaywall(): ApphudPaywall {
-    val id = this["id"] as? String
-        ?: throw IllegalArgumentException("id is required argument")
-    val name =
-        this["name"] as? String ?: throw IllegalArgumentException("name is required argument")
-    val identifier = this["identifier"] as? String
-        ?: throw IllegalArgumentException("identifier is required argument")
-    val default = this["isDefault"] as? Boolean
-        ?: throw IllegalArgumentException("default is required argument")
-    val experimentId = this["experimentId"] as? String
-    val variationIdentifier = this["variationIdentifier"] as? String
-    val json = this["json"] as? Map<String, Any>
-    val products = (this["products"] as? List<Map<String, Any>>)?.map { it.toApphudProduct() }
-
-    return ApphudPaywall(
-        id = id,
-        name = name,
-        identifier = identifier,
-        default = default,
-        experimentId = experimentId,
-        variationIdentifier = variationIdentifier,
-        json = json,
-        products = products
     )
 }
