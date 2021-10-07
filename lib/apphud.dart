@@ -176,7 +176,9 @@ class Apphud {
       } else if (product != null) {
         json = await _channel.invokeMethod(
           'purchaseProduct',
-          product.toJson()..remove('skuDetails')..remove('skProduct'),
+          product.toJson()
+            ..remove('skuDetails')
+            ..remove('skProduct'),
         );
       }
       return ApphudPurchaseResult.fromJson(json);
@@ -233,6 +235,29 @@ class Apphud {
         await _channel.invokeMethod<Map<dynamic, dynamic>>('getPaywalls');
 
     return ApphudPaywalls.fromJson(json!);
+  }
+
+  /// iOS only. Returns paywalls with their `SKProducts`, if configured in Apphud Products Hub.
+  ///
+  /// Returns `null` if StoreKit products are not yet fetched from the App Store. To get notified when paywalls are ready to use, use `paywallsDidLoadCallback` – when it's called, paywalls are populated with their `SKProducts`.
+  static Future<ApphudPaywalls?> paywalls() async {
+    final Map<dynamic, dynamic>? json =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('paywalls');
+    return json != null ? ApphudPaywalls.fromJson(json) : null;
+  }
+
+  /// iOS only. This callback is called when paywalls are fully loaded with their StoreKit products.
+  ///
+  /// Callback is called immediately if paywalls are already loaded. It is safe to call this method multiple times – previous callback will not be overwritten, but will be added to array and once paywalls are loaded, all callbacks will be called.
+  static Future<ApphudPaywalls> paywallsDidLoadCallback() async {
+    final Map<dynamic, dynamic>? json = await _channel
+        .invokeMethod<Map<dynamic, dynamic>>('paywallsDidLoadCallback');
+    if (json == null) {
+      return ApphudPaywalls(
+        error: ApphudError(message: 'paywallsDidLoadCallback error'),
+      );
+    }
+    return ApphudPaywalls.fromJson(json);
   }
 
 // Handle Purchases
@@ -508,5 +533,29 @@ class Apphud {
       'paywallClosed',
       {'identifier': paywall.identifier},
     );
+  }
+
+// Promotionals
+
+  /// iOS only. You can grant free promotional subscription to user. Returns `true` in a callback if promotional was granted.
+  ///
+  /// You should pass either `productId` (recommended) or `permissionGroup` OR both parameters `null`. Sending both `productId` and `permissionGroup` parameters will result in `productId` being used.
+  /// - parameter [daysCount] is required. Number of days of free premium usage. For lifetime promotionals just pass extremely high value, like 10000.
+  /// - parameter [productId] is optional. Recommended. Product Id of promotional subscription.
+  /// - parameter [permissionGroup] is optional. Permission Group of promotional subscription. Use this parameter in case you have multiple permission groups.
+  static Future<bool> grantPromotional({
+    required int daysCount,
+    String? productId,
+    ApphudGroup? group,
+  }) async {
+    final bool? value = await _channel.invokeMethod<bool>(
+      'grantPromotional',
+      {
+        'daysCount': daysCount,
+        'productId': productId,
+        'permissionGroupName': group?.name,
+      },
+    );
+    return value!;
   }
 }

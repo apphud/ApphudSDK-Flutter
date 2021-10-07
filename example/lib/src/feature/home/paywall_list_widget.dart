@@ -100,12 +100,15 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
     return ListTile(
       key: ValueKey(paywall.identifier),
       title: Text(
-        paywall.name,
+        paywall.identifier,
         style: Theme.of(context).textTheme.headline5,
       ),
       subtitle: Text(
         'isDefault: ${paywall.isDefault}\n'
-        'Products: ${paywall.products?.length ?? 0}',
+        'products: ${paywall.products?.length ?? 0}\n'
+        'experimentId: ${paywall.experimentId}\n'
+        'variationId: ${paywall.variationId}\n'
+        'fromPaywall: ${paywall.fromPaywall}',
       ),
       isThreeLine: true,
     );
@@ -128,6 +131,9 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
         wrapInCard: false,
         onTap: () => BlocProvider.of<PurchaseBloc>(context).add(
           PurchaseEvent.purchaseProduct(product),
+        ),
+        onPromote: () => BlocProvider.of<PurchaseBloc>(context).add(
+          PurchaseEvent.grantPromotional(product),
         ),
       );
     } else if (Platform.isAndroid) {

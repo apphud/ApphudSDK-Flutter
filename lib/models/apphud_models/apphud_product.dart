@@ -8,19 +8,19 @@ part 'apphud_product.g.dart';
 class ApphudProduct {
   final String productId;
   final String store;
-  final String? id;
   final String? name;
   final SkuDetailsWrapper? skuDetails;
   final SKProductWrapper? skProduct;
   final String? paywallId;
+  final String? paywallIdentifier;
 
   ApphudProduct({
     required this.productId,
     required this.store,
-    this.id,
     this.name,
     this.skuDetails,
     this.paywallId,
+    this.paywallIdentifier,
     this.skProduct,
   });
 
@@ -31,6 +31,6 @@ class ApphudProduct {
 
   @override
   String toString() {
-    return 'ApphudProduct{productId: $productId, store: $store, id: $id, name: $name, skuDetails: $skuDetails, skProduct: $skProduct, paywallId: $paywallId}';
+    return 'ApphudProduct{productId: $productId, store: $store, name: $name, skuDetails: $skuDetails, skProduct: $skProduct, paywallId: $paywallId, paywallIdentifier: $paywallIdentifier}';
   }
 }

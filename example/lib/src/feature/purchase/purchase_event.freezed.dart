@@ -27,6 +27,12 @@ class _$PurchaseEventTearOff {
     );
   }
 
+  GrantPromotional grantPromotional(ApphudProduct product) {
+    return GrantPromotional(
+      product,
+    );
+  }
+
   PaywallShown paywallShown(ApphudPaywall paywall) {
     return PaywallShown(
       paywall,
@@ -49,6 +55,7 @@ mixin _$PurchaseEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
   }) =>
@@ -57,6 +64,7 @@ mixin _$PurchaseEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
   }) =>
@@ -65,6 +73,7 @@ mixin _$PurchaseEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     required TResult orElse(),
@@ -74,6 +83,7 @@ mixin _$PurchaseEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(RestorePurchases value) restorePurchases,
     required TResult Function(PurchaseProduct value) purchaseProduct,
+    required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
   }) =>
@@ -82,6 +92,7 @@ mixin _$PurchaseEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
   }) =>
@@ -90,6 +101,7 @@ mixin _$PurchaseEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
     required TResult orElse(),
@@ -156,6 +168,7 @@ class _$RestorePurchases extends RestorePurchases {
   TResult when<TResult extends Object?>({
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
   }) {
@@ -167,6 +180,7 @@ class _$RestorePurchases extends RestorePurchases {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
   }) {
@@ -178,6 +192,7 @@ class _$RestorePurchases extends RestorePurchases {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     required TResult orElse(),
@@ -193,6 +208,7 @@ class _$RestorePurchases extends RestorePurchases {
   TResult map<TResult extends Object?>({
     required TResult Function(RestorePurchases value) restorePurchases,
     required TResult Function(PurchaseProduct value) purchaseProduct,
+    required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
   }) {
@@ -204,6 +220,7 @@ class _$RestorePurchases extends RestorePurchases {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
   }) {
@@ -215,6 +232,7 @@ class _$RestorePurchases extends RestorePurchases {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
     required TResult orElse(),
@@ -298,6 +316,7 @@ class _$PurchaseProduct extends PurchaseProduct {
   TResult when<TResult extends Object?>({
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
   }) {
@@ -309,6 +328,7 @@ class _$PurchaseProduct extends PurchaseProduct {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
   }) {
@@ -320,6 +340,7 @@ class _$PurchaseProduct extends PurchaseProduct {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     required TResult orElse(),
@@ -335,6 +356,7 @@ class _$PurchaseProduct extends PurchaseProduct {
   TResult map<TResult extends Object?>({
     required TResult Function(RestorePurchases value) restorePurchases,
     required TResult Function(PurchaseProduct value) purchaseProduct,
+    required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
   }) {
@@ -346,6 +368,7 @@ class _$PurchaseProduct extends PurchaseProduct {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
   }) {
@@ -357,6 +380,7 @@ class _$PurchaseProduct extends PurchaseProduct {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
     required TResult orElse(),
@@ -375,6 +399,159 @@ abstract class PurchaseProduct extends PurchaseEvent {
   ApphudProduct get product => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PurchaseProductCopyWith<PurchaseProduct> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GrantPromotionalCopyWith<$Res> {
+  factory $GrantPromotionalCopyWith(
+          GrantPromotional value, $Res Function(GrantPromotional) then) =
+      _$GrantPromotionalCopyWithImpl<$Res>;
+  $Res call({ApphudProduct product});
+}
+
+/// @nodoc
+class _$GrantPromotionalCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res>
+    implements $GrantPromotionalCopyWith<$Res> {
+  _$GrantPromotionalCopyWithImpl(
+      GrantPromotional _value, $Res Function(GrantPromotional) _then)
+      : super(_value, (v) => _then(v as GrantPromotional));
+
+  @override
+  GrantPromotional get _value => super._value as GrantPromotional;
+
+  @override
+  $Res call({
+    Object? product = freezed,
+  }) {
+    return _then(GrantPromotional(
+      product == freezed
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ApphudProduct,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GrantPromotional extends GrantPromotional {
+  const _$GrantPromotional(this.product) : super._();
+
+  @override
+  final ApphudProduct product;
+
+  @override
+  String toString() {
+    return 'PurchaseEvent.grantPromotional(product: $product)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is GrantPromotional &&
+            (identical(other.product, product) ||
+                const DeepCollectionEquality().equals(other.product, product)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(product);
+
+  @JsonKey(ignore: true)
+  @override
+  $GrantPromotionalCopyWith<GrantPromotional> get copyWith =>
+      _$GrantPromotionalCopyWithImpl<GrantPromotional>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() restorePurchases,
+    required TResult Function(ApphudProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudPaywall paywall) paywallShown,
+    required TResult Function(ApphudPaywall paywall) paywallClosed,
+  }) {
+    return grantPromotional(product);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudPaywall paywall)? paywallShown,
+    TResult Function(ApphudPaywall paywall)? paywallClosed,
+  }) {
+    return grantPromotional?.call(product);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudPaywall paywall)? paywallShown,
+    TResult Function(ApphudPaywall paywall)? paywallClosed,
+    required TResult orElse(),
+  }) {
+    if (grantPromotional != null) {
+      return grantPromotional(product);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RestorePurchases value) restorePurchases,
+    required TResult Function(PurchaseProduct value) purchaseProduct,
+    required TResult Function(GrantPromotional value) grantPromotional,
+    required TResult Function(PaywallShown value) paywallShown,
+    required TResult Function(PaywallClosed value) paywallClosed,
+  }) {
+    return grantPromotional(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
+    TResult Function(PaywallShown value)? paywallShown,
+    TResult Function(PaywallClosed value)? paywallClosed,
+  }) {
+    return grantPromotional?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
+    TResult Function(PaywallShown value)? paywallShown,
+    TResult Function(PaywallClosed value)? paywallClosed,
+    required TResult orElse(),
+  }) {
+    if (grantPromotional != null) {
+      return grantPromotional(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GrantPromotional extends PurchaseEvent {
+  const factory GrantPromotional(ApphudProduct product) = _$GrantPromotional;
+  const GrantPromotional._() : super._();
+
+  ApphudProduct get product => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GrantPromotionalCopyWith<GrantPromotional> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -444,6 +621,7 @@ class _$PaywallShown extends PaywallShown {
   TResult when<TResult extends Object?>({
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
   }) {
@@ -455,6 +633,7 @@ class _$PaywallShown extends PaywallShown {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
   }) {
@@ -466,6 +645,7 @@ class _$PaywallShown extends PaywallShown {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     required TResult orElse(),
@@ -481,6 +661,7 @@ class _$PaywallShown extends PaywallShown {
   TResult map<TResult extends Object?>({
     required TResult Function(RestorePurchases value) restorePurchases,
     required TResult Function(PurchaseProduct value) purchaseProduct,
+    required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
   }) {
@@ -492,6 +673,7 @@ class _$PaywallShown extends PaywallShown {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
   }) {
@@ -503,6 +685,7 @@ class _$PaywallShown extends PaywallShown {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
     required TResult orElse(),
@@ -591,6 +774,7 @@ class _$PaywallClosed extends PaywallClosed {
   TResult when<TResult extends Object?>({
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
   }) {
@@ -602,6 +786,7 @@ class _$PaywallClosed extends PaywallClosed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
   }) {
@@ -613,6 +798,7 @@ class _$PaywallClosed extends PaywallClosed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     required TResult orElse(),
@@ -628,6 +814,7 @@ class _$PaywallClosed extends PaywallClosed {
   TResult map<TResult extends Object?>({
     required TResult Function(RestorePurchases value) restorePurchases,
     required TResult Function(PurchaseProduct value) purchaseProduct,
+    required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
   }) {
@@ -639,6 +826,7 @@ class _$PaywallClosed extends PaywallClosed {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
   }) {
@@ -650,6 +838,7 @@ class _$PaywallClosed extends PaywallClosed {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
     required TResult orElse(),

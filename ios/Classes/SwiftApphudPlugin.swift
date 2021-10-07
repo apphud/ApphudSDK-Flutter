@@ -14,7 +14,8 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         AttributionHandler(),
         EligibilityChecksHandler(),
         OthersHandler(),
-        PaywallLogsHandler()
+        PaywallLogsHandler(),
+        PromotionalsHandler(),
     ]
 
     public static func register(with registrar: FlutterPluginRegistrar) {

@@ -9,7 +9,7 @@ import Foundation
 
 class HandlePurchasesHandler: Handler {
     typealias AssociatedEnum = AppHudMethod.HandlePurchases
-
+    
     func tryToHandle(method: String, args: [String : Any]?, result: @escaping FlutterResult) {
         switch method {
         case AssociatedEnum.hasActiveSubscription.rawValue:
@@ -36,6 +36,10 @@ class HandlePurchasesHandler: Handler {
             Action<GetPaywallsRequest,GetPaywallsArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.permissionGroups.rawValue:
             Action<PermissionGroupsRequest,PermissionGroupsArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.paywalls.rawValue:
+            Action<PaywallsRequest,PaywallsArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.paywallsDidLoadCallback.rawValue:
+            Action<PaywallsDidLoadCallbackRequest,PaywallsDidLoadCallbackArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

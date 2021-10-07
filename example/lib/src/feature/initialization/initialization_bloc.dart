@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
@@ -62,6 +63,8 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
         },
       );
 
+      _paywallsIos();
+      _paywallsDidLoadCallbackIos();
       _fetchPaywalls();
     } catch (e) {
       yield InitializationState.startFail(e.toString());
@@ -91,5 +94,29 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
         }
       },
     );
+  }
+
+  void _paywallsIos() {
+    if (Platform.isIOS) {
+      Apphud.paywalls().then(
+        (value) => printAsJson(
+          'paywalls',
+          value,
+        ),
+        onError: (e) => printError('paywalls', e),
+      );
+    }
+  }
+
+  void _paywallsDidLoadCallbackIos() {
+    if (Platform.isIOS) {
+      Apphud.paywallsDidLoadCallback().then(
+        (value) => printAsJson(
+          'paywallsDidLoadCallback()',
+          value,
+        ),
+        onError: (e) => printError('paywallsDidLoadCallback()', e),
+      );
+    }
   }
 }

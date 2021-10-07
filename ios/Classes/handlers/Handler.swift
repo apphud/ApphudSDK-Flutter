@@ -103,6 +103,8 @@ enum AppHudMethod {
         case appStoreReceipt
         case getPaywalls
         case permissionGroups
+        case paywalls
+        case paywallsDidLoadCallback
     }
 
     enum UserProperties: String, CaseIterable {
@@ -143,6 +145,10 @@ enum AppHudMethod {
     enum PaywallLogs: String, CaseIterable {
         case paywallShown
         case paywallClosed
+    }
+    
+    enum Promotionals: String, CaseIterable {
+        case grantPromotional
     }
 }
 

@@ -5,22 +5,20 @@ part 'apphud_paywall.g.dart';
 
 @JsonSerializable(anyMap: true)
 class ApphudPaywall {
-  final String id;
-  final String name;
   final String identifier;
   final bool isDefault;
   final String? experimentId;
-  final String? variationIdentifier;
+  final String? variationId;
+  final String? fromPaywall;
   final Map<String, dynamic>? json;
   final List<ApphudProduct>? products;
 
   ApphudPaywall({
-    required this.id,
-    required this.name,
     required this.identifier,
     required this.isDefault,
     this.experimentId,
-    this.variationIdentifier,
+    this.variationId,
+    this.fromPaywall,
     this.json,
     this.products,
   });
@@ -32,6 +30,6 @@ class ApphudPaywall {
 
   @override
   String toString() {
-    return 'ApphudPaywall{id: $id, name: $name, identifier: $identifier, isDefault: $isDefault, experimentId: $experimentId, variationIdentifier: $variationIdentifier, json: $json, products: $products}';
+    return 'ApphudPaywall{identifier: $identifier, isDefault: $isDefault, experimentId: $experimentId, variationId: $variationId, fromPaywall: $fromPaywall, json: $json, products: $products}';
   }
 }
