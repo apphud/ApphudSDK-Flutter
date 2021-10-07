@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:apphud/apphud.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:apphud/models/apphud_models/apphud_attribution_provider.dart';
@@ -40,7 +39,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     PurchaseEvent event,
   ) =>
       event.map(
-        purchase: _mapPurchase,
         restorePurchases: _mapRestorePurchases,
         purchaseProduct: _mapPurchaseProduct,
         paywallShown: _mapPaywallShown,
@@ -179,19 +177,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     );
   }
 
-  Stream<PurchaseState> _mapPurchase(Purchase event) async* {
-    yield PurchaseState.inProgress();
-    final ApphudPurchaseResult result = await Apphud.purchase(
-      productId: event.id,
-    );
-    printAsJson('purchase(${event.id})', result);
-    if (result.error == null) {
-      yield PurchaseState.purchaseSuccess();
-    } else {
-      yield PurchaseState.purchaseFailure(result.error!);
-    }
-  }
-
   Stream<PurchaseState> _mapPurchaseProduct(PurchaseProduct event) async* {
     yield PurchaseState.inProgress();
     final ApphudPurchaseResult result = await Apphud.purchase(
@@ -217,14 +202,28 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   }
 
   Stream<PurchaseState> _mapPaywallShown(PaywallShown event) async* {
-    if (Platform.isIOS) {
-      unawaited(Apphud.paywallShown(event.paywall));
-    }
+    unawaited(Apphud.paywallShown(event.paywall).then(
+      (value) => printAsJson(
+        'paywallShown(${event.paywall.identifier})',
+        'success',
+      ),
+      onError: (e) => printError(
+        'paywallShown(${event.paywall.identifier})',
+        e,
+      ),
+    ));
   }
 
   Stream<PurchaseState> _mapPaywallClosed(PaywallClosed event) async* {
-    if (Platform.isIOS) {
-      unawaited(Apphud.paywallClosed(event.paywall));
-    }
+    unawaited(Apphud.paywallClosed(event.paywall).then(
+      (value) => printAsJson(
+        'paywallClosed(${event.paywall.identifier})',
+        'success',
+      ),
+      onError: (e) => printError(
+        'paywallClosed(${event.paywall.identifier})',
+        e,
+      ),
+    ));
   }
 }

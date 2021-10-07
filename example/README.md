@@ -1,6 +1,6 @@
-# appHud_example
+# Apphud_example
 
-Demonstrates how to use the appHud plugin.
+Demonstrates how to use the Apphud Flutter SDK.
 
 ## Getting Started
 

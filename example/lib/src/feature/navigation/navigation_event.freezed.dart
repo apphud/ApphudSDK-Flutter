@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'navigation_event.dart';
 
@@ -37,6 +38,12 @@ mixin _$NavigationEvent {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? toStart,
+    TResult Function()? toHome,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? toStart,
     TResult Function()? toHome,
@@ -47,6 +54,12 @@ mixin _$NavigationEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(ToStart value) toStart,
     required TResult Function(ToHome value) toHome,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(ToStart value)? toStart,
+    TResult Function(ToHome value)? toHome,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -120,6 +133,15 @@ class _$ToStart extends ToStart {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? toStart,
+    TResult Function()? toHome,
+  }) {
+    return toStart?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? toStart,
     TResult Function()? toHome,
@@ -138,6 +160,15 @@ class _$ToStart extends ToStart {
     required TResult Function(ToHome value) toHome,
   }) {
     return toStart(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(ToStart value)? toStart,
+    TResult Function(ToHome value)? toHome,
+  }) {
+    return toStart?.call(this);
   }
 
   @override
@@ -204,6 +235,15 @@ class _$ToHome extends ToHome {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? toStart,
+    TResult Function()? toHome,
+  }) {
+    return toHome?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? toStart,
     TResult Function()? toHome,
@@ -222,6 +262,15 @@ class _$ToHome extends ToHome {
     required TResult Function(ToHome value) toHome,
   }) {
     return toHome(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(ToStart value)? toStart,
+    TResult Function(ToHome value)? toHome,
+  }) {
+    return toHome?.call(this);
   }
 
   @override

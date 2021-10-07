@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'purchase_event.dart';
 
@@ -15,12 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 class _$PurchaseEventTearOff {
   const _$PurchaseEventTearOff();
-
-  Purchase purchase(String id) {
-    return Purchase(
-      id,
-    );
-  }
 
   RestorePurchases restorePurchases() {
     return const RestorePurchases();
@@ -52,7 +47,6 @@ const $PurchaseEvent = _$PurchaseEventTearOff();
 mixin _$PurchaseEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudPaywall paywall) paywallShown,
@@ -60,8 +54,15 @@ mixin _$PurchaseEvent {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudPaywall paywall)? paywallShown,
+    TResult Function(ApphudPaywall paywall)? paywallClosed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudPaywall paywall)? paywallShown,
@@ -71,7 +72,6 @@ mixin _$PurchaseEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Purchase value) purchase,
     required TResult Function(RestorePurchases value) restorePurchases,
     required TResult Function(PurchaseProduct value) purchaseProduct,
     required TResult Function(PaywallShown value) paywallShown,
@@ -79,8 +79,15 @@ mixin _$PurchaseEvent {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(PaywallShown value)? paywallShown,
+    TResult Function(PaywallClosed value)? paywallClosed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Purchase value)? purchase,
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
     TResult Function(PaywallShown value)? paywallShown,
@@ -105,132 +112,6 @@ class _$PurchaseEventCopyWithImpl<$Res>
   final PurchaseEvent _value;
   // ignore: unused_field
   final $Res Function(PurchaseEvent) _then;
-}
-
-/// @nodoc
-abstract class $PurchaseCopyWith<$Res> {
-  factory $PurchaseCopyWith(Purchase value, $Res Function(Purchase) then) =
-      _$PurchaseCopyWithImpl<$Res>;
-  $Res call({String id});
-}
-
-/// @nodoc
-class _$PurchaseCopyWithImpl<$Res> extends _$PurchaseEventCopyWithImpl<$Res>
-    implements $PurchaseCopyWith<$Res> {
-  _$PurchaseCopyWithImpl(Purchase _value, $Res Function(Purchase) _then)
-      : super(_value, (v) => _then(v as Purchase));
-
-  @override
-  Purchase get _value => super._value as Purchase;
-
-  @override
-  $Res call({
-    Object? id = freezed,
-  }) {
-    return _then(Purchase(
-      id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$Purchase extends Purchase {
-  const _$Purchase(this.id) : super._();
-
-  @override
-  final String id;
-
-  @override
-  String toString() {
-    return 'PurchaseEvent.purchase(id: $id)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is Purchase &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(id);
-
-  @JsonKey(ignore: true)
-  @override
-  $PurchaseCopyWith<Purchase> get copyWith =>
-      _$PurchaseCopyWithImpl<Purchase>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String id) purchase,
-    required TResult Function() restorePurchases,
-    required TResult Function(ApphudProduct product) purchaseProduct,
-    required TResult Function(ApphudPaywall paywall) paywallShown,
-    required TResult Function(ApphudPaywall paywall) paywallClosed,
-  }) {
-    return purchase(id);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? purchase,
-    TResult Function()? restorePurchases,
-    TResult Function(ApphudProduct product)? purchaseProduct,
-    TResult Function(ApphudPaywall paywall)? paywallShown,
-    TResult Function(ApphudPaywall paywall)? paywallClosed,
-    required TResult orElse(),
-  }) {
-    if (purchase != null) {
-      return purchase(id);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Purchase value) purchase,
-    required TResult Function(RestorePurchases value) restorePurchases,
-    required TResult Function(PurchaseProduct value) purchaseProduct,
-    required TResult Function(PaywallShown value) paywallShown,
-    required TResult Function(PaywallClosed value) paywallClosed,
-  }) {
-    return purchase(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Purchase value)? purchase,
-    TResult Function(RestorePurchases value)? restorePurchases,
-    TResult Function(PurchaseProduct value)? purchaseProduct,
-    TResult Function(PaywallShown value)? paywallShown,
-    TResult Function(PaywallClosed value)? paywallClosed,
-    required TResult orElse(),
-  }) {
-    if (purchase != null) {
-      return purchase(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Purchase extends PurchaseEvent {
-  const factory Purchase(String id) = _$Purchase;
-  const Purchase._() : super._();
-
-  String get id => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $PurchaseCopyWith<Purchase> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -273,7 +154,6 @@ class _$RestorePurchases extends RestorePurchases {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudPaywall paywall) paywallShown,
@@ -284,8 +164,18 @@ class _$RestorePurchases extends RestorePurchases {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudPaywall paywall)? paywallShown,
+    TResult Function(ApphudPaywall paywall)? paywallClosed,
+  }) {
+    return restorePurchases?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudPaywall paywall)? paywallShown,
@@ -301,7 +191,6 @@ class _$RestorePurchases extends RestorePurchases {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Purchase value) purchase,
     required TResult Function(RestorePurchases value) restorePurchases,
     required TResult Function(PurchaseProduct value) purchaseProduct,
     required TResult Function(PaywallShown value) paywallShown,
@@ -312,8 +201,18 @@ class _$RestorePurchases extends RestorePurchases {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(PaywallShown value)? paywallShown,
+    TResult Function(PaywallClosed value)? paywallClosed,
+  }) {
+    return restorePurchases?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Purchase value)? purchase,
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
     TResult Function(PaywallShown value)? paywallShown,
@@ -397,7 +296,6 @@ class _$PurchaseProduct extends PurchaseProduct {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudPaywall paywall) paywallShown,
@@ -408,8 +306,18 @@ class _$PurchaseProduct extends PurchaseProduct {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudPaywall paywall)? paywallShown,
+    TResult Function(ApphudPaywall paywall)? paywallClosed,
+  }) {
+    return purchaseProduct?.call(product);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudPaywall paywall)? paywallShown,
@@ -425,7 +333,6 @@ class _$PurchaseProduct extends PurchaseProduct {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Purchase value) purchase,
     required TResult Function(RestorePurchases value) restorePurchases,
     required TResult Function(PurchaseProduct value) purchaseProduct,
     required TResult Function(PaywallShown value) paywallShown,
@@ -436,8 +343,18 @@ class _$PurchaseProduct extends PurchaseProduct {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(PaywallShown value)? paywallShown,
+    TResult Function(PaywallClosed value)? paywallClosed,
+  }) {
+    return purchaseProduct?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Purchase value)? purchase,
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
     TResult Function(PaywallShown value)? paywallShown,
@@ -525,7 +442,6 @@ class _$PaywallShown extends PaywallShown {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudPaywall paywall) paywallShown,
@@ -536,8 +452,18 @@ class _$PaywallShown extends PaywallShown {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudPaywall paywall)? paywallShown,
+    TResult Function(ApphudPaywall paywall)? paywallClosed,
+  }) {
+    return paywallShown?.call(paywall);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudPaywall paywall)? paywallShown,
@@ -553,7 +479,6 @@ class _$PaywallShown extends PaywallShown {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Purchase value) purchase,
     required TResult Function(RestorePurchases value) restorePurchases,
     required TResult Function(PurchaseProduct value) purchaseProduct,
     required TResult Function(PaywallShown value) paywallShown,
@@ -564,8 +489,18 @@ class _$PaywallShown extends PaywallShown {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(PaywallShown value)? paywallShown,
+    TResult Function(PaywallClosed value)? paywallClosed,
+  }) {
+    return paywallShown?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Purchase value)? purchase,
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
     TResult Function(PaywallShown value)? paywallShown,
@@ -654,7 +589,6 @@ class _$PaywallClosed extends PaywallClosed {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) purchase,
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudPaywall paywall) paywallShown,
@@ -665,8 +599,18 @@ class _$PaywallClosed extends PaywallClosed {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudPaywall paywall)? paywallShown,
+    TResult Function(ApphudPaywall paywall)? paywallClosed,
+  }) {
+    return paywallClosed?.call(paywall);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? purchase,
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudPaywall paywall)? paywallShown,
@@ -682,7 +626,6 @@ class _$PaywallClosed extends PaywallClosed {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Purchase value) purchase,
     required TResult Function(RestorePurchases value) restorePurchases,
     required TResult Function(PurchaseProduct value) purchaseProduct,
     required TResult Function(PaywallShown value) paywallShown,
@@ -693,8 +636,18 @@ class _$PaywallClosed extends PaywallClosed {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(PaywallShown value)? paywallShown,
+    TResult Function(PaywallClosed value)? paywallClosed,
+  }) {
+    return paywallClosed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Purchase value)? purchase,
     TResult Function(RestorePurchases value)? restorePurchases,
     TResult Function(PurchaseProduct value)? purchaseProduct,
     TResult Function(PaywallShown value)? paywallShown,

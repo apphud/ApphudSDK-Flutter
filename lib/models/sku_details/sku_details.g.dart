@@ -6,25 +6,24 @@ part of 'sku_details.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SkuDetailsWrapper _$SkuDetailsWrapperFromJson(Map json) {
-  return SkuDetailsWrapper(
-    description: json['description'] as String,
-    freeTrialPeriod: json['freeTrialPeriod'] as String,
-    introductoryPrice: json['introductoryPrice'] as String,
-    introductoryPriceAmountMicros: json['introductoryPriceAmountMicros'] as int,
-    introductoryPriceCycles: json['introductoryPriceCycles'] as int,
-    introductoryPricePeriod: json['introductoryPricePeriod'] as String,
-    price: json['price'] as String,
-    priceAmountMicros: json['priceAmountMicros'] as int,
-    priceCurrencyCode: json['priceCurrencyCode'] as String,
-    sku: json['sku'] as String,
-    subscriptionPeriod: json['subscriptionPeriod'] as String,
-    title: json['title'] as String,
-    type: _$enumDecode(_$SkuTypeEnumMap, json['type']),
-    originalPrice: json['originalPrice'] as String,
-    originalPriceAmountMicros: json['originalPriceAmountMicros'] as int,
-  );
-}
+SkuDetailsWrapper _$SkuDetailsWrapperFromJson(Map json) => SkuDetailsWrapper(
+      description: json['description'] as String,
+      freeTrialPeriod: json['freeTrialPeriod'] as String,
+      introductoryPrice: json['introductoryPrice'] as String,
+      introductoryPriceAmountMicros:
+          json['introductoryPriceAmountMicros'] as int,
+      introductoryPriceCycles: json['introductoryPriceCycles'] as int,
+      introductoryPricePeriod: json['introductoryPricePeriod'] as String,
+      price: json['price'] as String,
+      priceAmountMicros: json['priceAmountMicros'] as int,
+      priceCurrencyCode: json['priceCurrencyCode'] as String,
+      sku: json['sku'] as String,
+      subscriptionPeriod: json['subscriptionPeriod'] as String,
+      title: json['title'] as String,
+      type: _$enumDecode(_$SkuTypeEnumMap, json['type']),
+      originalPrice: json['originalPrice'] as String,
+      originalPriceAmountMicros: json['originalPriceAmountMicros'] as int,
+    );
 
 Map<String, dynamic> _$SkuDetailsWrapperToJson(SkuDetailsWrapper instance) =>
     <String, dynamic>{

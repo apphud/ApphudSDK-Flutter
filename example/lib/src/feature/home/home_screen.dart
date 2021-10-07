@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'paywall_list_widget.dart';
-import 'product_list_widget.dart';
 
 class HomeScreenPage extends Page {
   @override
@@ -46,45 +45,18 @@ class HomeScreen extends StatelessWidget {
       Scaffold(body: Center(child: CircularProgressIndicator()));
 
   Widget _buildProductsTabs(BuildContext context, Success value) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        bottomNavigationBar: _buildRestoreButton(context),
-        appBar: _buildAppBar(),
-        body: _buildBody(context, value),
-      ),
+    return Scaffold(
+      bottomNavigationBar: _buildRestoreButton(context),
+      appBar: AppBar(title: Text('Paywalls')),
+      body: _buildBody(context, value),
     );
   }
 
   Widget _buildBody(BuildContext context, Success value) {
     return OverlayProgressIndicator<PurchaseBloc, PurchaseState>(
       child: PurchaseMessageWidget(
-        child: TabBarView(
-          children: [
-            _buildPaywallList(context, value),
-            _buildProductList(context, value),
-          ],
-        ),
+        child: _buildPaywallList(context, value),
       ),
-    );
-  }
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      bottom: TabBar(
-        tabs: [
-          Tab(text: 'Paywalls'),
-          Tab(text: 'Products'),
-        ],
-      ),
-      title: Text('Apphud'),
-    );
-  }
-
-  Widget _buildProductList(BuildContext context, Success value) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ProductListWidget(productList: value.products),
     );
   }
 

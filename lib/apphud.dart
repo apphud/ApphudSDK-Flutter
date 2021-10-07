@@ -494,7 +494,7 @@ class Apphud {
 
 // Paywall logs
 
-  /// iOS only. Paywall shown event will be displayed in AppHud dashboard.
+  /// Paywall shown event will be displayed in AppHud dashboard.
   static Future<void> paywallShown(ApphudPaywall paywall) async {
     await _channel.invokeMethod(
       'paywallShown',
@@ -502,7 +502,7 @@ class Apphud {
     );
   }
 
-  /// iOS only. Paywall closed event will be displayed in AppHud dashboard.
+  /// Paywall closed event will be displayed in AppHud dashboard.
   static Future<void> paywallClosed(ApphudPaywall paywall) async {
     await _channel.invokeMethod(
       'paywallClosed',

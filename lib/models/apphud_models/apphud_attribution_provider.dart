@@ -1,4 +1,10 @@
-enum ApphudAttributionProvider { appsFlyer, adjust, appleSearchAds, facebook }
+enum ApphudAttributionProvider {
+  appsFlyer,
+  adjust,
+  appleSearchAds,
+  facebook,
+  firebase,
+}
 
 extension ApphudAttributionProviderConverter on ApphudAttributionProvider {
   String get convertToString {
@@ -11,6 +17,8 @@ extension ApphudAttributionProviderConverter on ApphudAttributionProvider {
         return 'appleSearchAds';
       case ApphudAttributionProvider.facebook:
         return 'facebook';
+      case ApphudAttributionProvider.firebase:
+        return 'firebase';
     }
   }
 }

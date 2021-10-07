@@ -6,17 +6,16 @@ part of 'discount_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SKProductDiscountWrapper _$SKProductDiscountWrapperFromJson(Map json) {
-  return SKProductDiscountWrapper(
-    price: json['price'] as String,
-    numberOfPeriods: json['numberOfPeriods'] as int,
-    paymentMode: _$enumDecode(
-        _$SKProductDiscountPaymentModeEnumMap, json['paymentMode']),
-    priceLocale: SKPriceLocaleWrapper.fromJson(json['priceLocale'] as Map),
-    subscriptionPeriod: SKProductSubscriptionPeriodWrapper.fromJson(
-        json['subscriptionPeriod'] as Map),
-  );
-}
+SKProductDiscountWrapper _$SKProductDiscountWrapperFromJson(Map json) =>
+    SKProductDiscountWrapper(
+      price: json['price'] as String,
+      numberOfPeriods: json['numberOfPeriods'] as int,
+      paymentMode: _$enumDecode(
+          _$SKProductDiscountPaymentModeEnumMap, json['paymentMode']),
+      priceLocale: SKPriceLocaleWrapper.fromJson(json['priceLocale'] as Map),
+      subscriptionPeriod: SKProductSubscriptionPeriodWrapper.fromJson(
+          json['subscriptionPeriod'] as Map),
+    );
 
 Map<String, dynamic> _$SKProductDiscountWrapperToJson(
         SKProductDiscountWrapper instance) =>

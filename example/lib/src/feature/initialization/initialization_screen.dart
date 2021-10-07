@@ -37,10 +37,6 @@ class InitializationStartScreen extends StatelessWidget {
               title: 'SDK initialization failed with error:',
               error: f.error,
             ),
-            productsFetchFail: (f) => _buildFail(
-              title: 'Products fetching failed with error:',
-              error: f.error,
-            ),
             paywallsFetchFail: (f) => _buildFail(
               title: 'Paywalls fetching failed with error:',
               error: f.error,
@@ -54,14 +50,12 @@ class InitializationStartScreen extends StatelessWidget {
   Widget _buildTrying(Trying value) {
     return _buildStatus(
       isStartSuccess: value.isStartSuccess,
-      isProductFetched: value.isProductFetched,
       isPaywallsFetched: value.isPaywallsFetched,
     );
   }
 
   Padding _buildStatus({
     required bool isStartSuccess,
-    required bool isProductFetched,
     required bool isPaywallsFetched,
   }) {
     return Padding(
@@ -75,15 +69,6 @@ class InitializationStartScreen extends StatelessWidget {
                   ? Icon(Icons.check)
                   : CircularProgressIndicator(),
               title: Text('SDK initialization'),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Card(
-            child: ListTile(
-              leading: isProductFetched
-                  ? Icon(Icons.check)
-                  : CircularProgressIndicator(),
-              title: Text('Products fetching'),
             ),
           ),
           const SizedBox(height: 20),
@@ -103,7 +88,6 @@ class InitializationStartScreen extends StatelessWidget {
   Widget _buildSuccess(Success value) {
     return _buildStatus(
       isStartSuccess: true,
-      isProductFetched: true,
       isPaywallsFetched: true,
     );
   }

@@ -6,12 +6,10 @@ part of 'apphud_error.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApphudError _$ApphudErrorFromJson(Map json) {
-  return ApphudError(
-    message: json['message'] as String?,
-    errorCode: json['errorCode'] as int?,
-  );
-}
+ApphudError _$ApphudErrorFromJson(Map json) => ApphudError(
+      message: json['message'] as String?,
+      errorCode: json['errorCode'] as int?,
+    );
 
 Map<String, dynamic> _$ApphudErrorToJson(ApphudError instance) =>
     <String, dynamic>{
