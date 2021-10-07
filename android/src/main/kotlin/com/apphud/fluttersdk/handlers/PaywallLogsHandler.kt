@@ -1,11 +1,9 @@
 package com.apphud.fluttersdk.handlers
 
 import android.content.Context
-import com.apphud.fluttersdk.toApphudPaywall
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudError
 import com.apphud.sdk.domain.ApphudPaywall
-import com.apphud.sdk.domain.ApphudProduct
 import io.flutter.plugin.common.MethodChannel
 
 
