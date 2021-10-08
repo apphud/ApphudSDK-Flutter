@@ -1,3 +1,21 @@
+## 2.1.0
+- [iOS], [Android] Experiments were added. Run Experiments(A/B tests) to test different in-app purchases prices in order to find the best.
+- [iOS] Apple search Ads logic was improved. Submit Apple Attribution Token to Apphud with Apphud.addAttribution().
+- [iOS] Paywalls methods was improved. Paywalls are already exist after SDK initialization. Use paywalls() method.
+- [iOS] paywallsDidLoadCallback() method was added. This callback is called when paywalls are fully loaded with their StoreKit products.
+- [iOS] Promotionals were added. You can grant free promotional subscription to user with new method grantPromotional()
+- [Android] Paywalls events methods were implemented: paywallShown(), paywallClosed()
+- [Android] Supporting of Google Billing library 4.0 was implemented
+- [iOS], [Android] Bug fixing and some internal improvements.
+- [iOS], [Android] Products list was removed from Example app because of deprecation due to Paywalls. 
+
+- **BREAKING** refactor [iOS], [Android]:
+    - 'name' property was removed from ApphudPaywall
+     
+- Dependencies of Native SDK's were updated to:
+    - [Android] 1.2.2
+    - [iOS] 2.4.0
+
 ## 2.0.6 
 - Paywalls features were implemented:
     - method getPaywalls() [iOS], [Android]
