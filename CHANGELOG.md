@@ -14,7 +14,7 @@
      
 - Dependencies of Native SDK's were updated to:
     - [Android] 1.2.2
-    - [iOS] 2.4.0
+    - [iOS] 2.4.1
 
 ## 2.0.6 
 - Paywalls features were implemented:

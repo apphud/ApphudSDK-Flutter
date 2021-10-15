@@ -106,8 +106,8 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
       subtitle: Text(
         'isDefault: ${paywall.isDefault}\n'
         'products: ${paywall.products?.length ?? 0}\n'
-        'experimentId: ${paywall.experimentId}\n'
-        'variationId: ${paywall.variationId}\n'
+        'experimentName: ${paywall.experimentName}\n'
+        'variationName: ${paywall.variationName}\n'
         'fromPaywall: ${paywall.fromPaywall}',
       ),
       isThreeLine: true,
