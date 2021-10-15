@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'apphud'
-  s.version          = '2.1.0'
+  s.version          = '2.1.1'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
@@ -15,7 +15,7 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'ApphudSDK','2.4.0'
+  s.dependency 'ApphudSDK','2.4.1'
   s.platform = :ios, '11.2'
 
   # Flutter.framework does not contain a i386 slice.

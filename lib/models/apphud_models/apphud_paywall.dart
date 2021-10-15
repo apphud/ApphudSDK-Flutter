@@ -7,8 +7,8 @@ part 'apphud_paywall.g.dart';
 class ApphudPaywall {
   final String identifier;
   final bool isDefault;
-  final String? experimentId;
-  final String? variationId;
+  final String? experimentName;
+  final String? variationName;
   final String? fromPaywall;
   final Map<String, dynamic>? json;
   final List<ApphudProduct>? products;
@@ -16,8 +16,8 @@ class ApphudPaywall {
   ApphudPaywall({
     required this.identifier,
     required this.isDefault,
-    this.experimentId,
-    this.variationId,
+    this.experimentName,
+    this.variationName,
     this.fromPaywall,
     this.json,
     this.products,
@@ -30,6 +30,6 @@ class ApphudPaywall {
 
   @override
   String toString() {
-    return 'ApphudPaywall{identifier: $identifier, isDefault: $isDefault, experimentId: $experimentId, variationId: $variationId, fromPaywall: $fromPaywall, json: $json, products: $products}';
+    return 'ApphudPaywall{identifier: $identifier, isDefault: $isDefault, experimentName: $experimentName, variationName: $variationName, fromPaywall: $fromPaywall, json: $json, products: $products}';
   }
 }

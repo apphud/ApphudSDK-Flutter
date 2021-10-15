@@ -13,8 +13,8 @@ extension ApphudPaywall {
                 "isDefault": isDefault,
                 "json": json,
                 "products" : products.map({ (product:ApphudProduct) in product.toMap() }),
-                "experimentId" : experimentId,
-                "variationId" : variationId,
+                "experimentName" : experimentName,
+                "variationName" : variationName,
                 "fromPaywall" : fromPaywall,
         ]
     }
@@ -26,6 +26,7 @@ extension ApphudProduct {
                 "name" : name,
                 "store" :store,
                 "paywallIdentifier" : paywallIdentifier,
+                "paywallId": paywallId,
                 "skProduct" : skProduct?.toMap()
         ]
     }
