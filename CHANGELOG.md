@@ -6,6 +6,7 @@
 - [iOS] Promotionals were added. You can grant free promotional subscription to user with new method grantPromotional()
 - [Android] Paywalls events methods were implemented: paywallShown(), paywallClosed()
 - [Android] Supporting of Google Billing library 4.0 was implemented
+- [iOS], [Android] Properties 'experimentName' and 'variationName' were added to ApphudPaywall.
 - [iOS], [Android] Bug fixing and some internal improvements.
 - [iOS], [Android] Products list was removed from Example app because of deprecation due to Paywalls. 
 
