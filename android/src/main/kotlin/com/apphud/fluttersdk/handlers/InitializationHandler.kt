@@ -2,6 +2,7 @@ package com.apphud.fluttersdk.handlers
 
 import android.content.Context
 import com.apphud.sdk.Apphud
+import com.apphud.sdk.client.HttpUrlConnectionExecutor
 import io.flutter.plugin.common.MethodChannel
 
 
@@ -10,9 +11,11 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
     override fun tryToHandle(method: String, args: Map<String, Any>?, result: MethodChannel.Result) {
         when (method) {
             InitializationRoutes.start.name -> StartParser(result).parse(args) { apiKey, userId ->
+                HttpUrlConnectionExecutor.X_SDK = "flutter"
                 start(apiKey, userId, result)
             }
             InitializationRoutes.startManually.name -> StartManuallyParser(result).parse(args) { apiKey, userId, deviceId ->
+                HttpUrlConnectionExecutor.X_SDK = "flutter"
                 startManually(apiKey, userId, deviceId, result)
             }
             InitializationRoutes.updateUserID.name -> UpdateUserIDParser(result).parse(args) { userId ->

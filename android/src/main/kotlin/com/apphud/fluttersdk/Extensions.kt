@@ -11,8 +11,8 @@ fun ApphudPaywall.toMap(): HashMap<String, Any?> {
     return hashMapOf(
         "identifier" to identifier,
         "isDefault" to default,
-        "experimentId" to experimentId,
-        "variationId" to variationIdentifier,
+        "experimentName" to experimentName,
+        "variationName" to variationName,
         "json" to json,
         "products" to products?.map { it.toMap() }
     )
@@ -24,7 +24,8 @@ fun ApphudProduct.toMap(): HashMap<String, Any?> {
         "name" to name,
         "store" to store,
         "paywallId" to paywall_id,
-        "skuDetails" to skuDetails?.toMap()
+        "skuDetails" to skuDetails?.toMap(),
+        "paywallIdentifier" to paywall_identifier
     )
 }
 
@@ -110,6 +111,7 @@ fun Map<String, Any>.toApphudProduct(): ApphudProduct {
     val store = this["store"] as? String
         ?: throw IllegalArgumentException("store is required argument")
     val paywallId = this["paywallId"] as? String
+    val paywallIdentifier = this["paywallIdentifier"] as? String
 
     return ApphudProduct(
         id = id,
@@ -117,6 +119,7 @@ fun Map<String, Any>.toApphudProduct(): ApphudProduct {
         name = name,
         store = store,
         paywall_id = paywallId,
-        skuDetails = null
+        skuDetails = null,
+        paywall_identifier = paywallIdentifier
     )
 }

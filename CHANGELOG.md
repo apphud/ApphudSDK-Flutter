@@ -4,6 +4,8 @@
 - [iOS] Paywalls methods was improved. Paywalls are already exist after SDK initialization. Use paywalls() method.
 - [iOS] paywallsDidLoadCallback() method was added. This callback is called when paywalls are fully loaded with their StoreKit products.
 - [iOS] Promotionals were added. You can grant free promotional subscription to user with new method grantPromotional()
+- [iOS] Fixed important bug when User Properties sometimes may not be saved when submitted simultaneously with initialisation.
+- [iOS] Fixed a bug when incoming rules did not automatically mark as read.
 - [Android] Paywalls events methods were implemented: paywallShown(), paywallClosed()
 - [Android] Supporting of Google Billing library 4.0 was implemented
 - [iOS], [Android] Properties 'experimentName' and 'variationName' were added to ApphudPaywall.
@@ -14,8 +16,8 @@
     - 'name' property was removed from ApphudPaywall
      
 - Dependencies of Native SDK's were updated to:
-    - [Android] 1.2.2
-    - [iOS] 2.4.1
+    - [Android] 1.3.2
+    - [iOS] 2.4.3
 
 ## 2.0.6 
 - Paywalls features were implemented:
