@@ -29,7 +29,6 @@ final class  PurchaseProductArgumentParser: Parser {
             throw(InternalError(code: "400", message: "paywallId is required argument"))
         }
         
-        
         var product:ApphudProduct?
         
         let paywalls = Apphud.paywalls ?? []
