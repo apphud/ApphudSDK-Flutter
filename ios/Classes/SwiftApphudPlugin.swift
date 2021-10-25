@@ -21,6 +21,7 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "apphud", binaryMessenger: registrar.messenger())
         let instance = SwiftApphudPlugin()
+        setHeaders()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
@@ -32,5 +33,9 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
                 $0.tryToHandle(method: method, args: arguments, result: result)
                 : ()
         }
+    }
+    private static func setHeaders() {
+        ApphudHttpClient.shared.sdkType = "flutter"
+        ApphudHttpClient.shared.sdkVersion = "2.1.0"
     }
 }
