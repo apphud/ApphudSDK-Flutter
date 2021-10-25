@@ -16,7 +16,7 @@
     - 'name' property was removed from ApphudPaywall
      
 - Dependencies of Native SDK's were updated to:
-    - [Android] 1.3.2
+    - [Android] 1.3.3
     - [iOS] 2.4.3
 
 ## 2.0.6 

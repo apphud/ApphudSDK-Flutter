@@ -8,14 +8,18 @@ import io.flutter.plugin.common.MethodChannel
 
 class InitializationHandler(override val routes: List<String>, val context: Context) : Handler {
 
-    override fun tryToHandle(method: String, args: Map<String, Any>?, result: MethodChannel.Result) {
+    override fun tryToHandle(
+        method: String,
+        args: Map<String, Any>?,
+        result: MethodChannel.Result
+    ) {
         when (method) {
             InitializationRoutes.start.name -> StartParser(result).parse(args) { apiKey, userId ->
-                HttpUrlConnectionExecutor.X_SDK = "flutter"
+                setHeaders()
                 start(apiKey, userId, result)
             }
             InitializationRoutes.startManually.name -> StartManuallyParser(result).parse(args) { apiKey, userId, deviceId ->
-                HttpUrlConnectionExecutor.X_SDK = "flutter"
+                setHeaders()
                 startManually(apiKey, userId, deviceId, result)
             }
             InitializationRoutes.updateUserID.name -> UpdateUserIDParser(result).parse(args) { userId ->
@@ -27,12 +31,22 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
         }
     }
 
+    private fun setHeaders() {
+        HttpUrlConnectionExecutor.X_SDK = "flutter"
+        HttpUrlConnectionExecutor.X_SDK_VERSION = "2.1.0"
+    }
+
     private fun start(apiKey: String, userId: String?, result: MethodChannel.Result) {
         Apphud.start(context = context, apiKey = apiKey, userId = userId)
         result.success(null)
     }
 
-    private fun startManually(apiKey: String, userId: String?, deviceId: String?, result: MethodChannel.Result) {
+    private fun startManually(
+        apiKey: String,
+        userId: String?,
+        deviceId: String?,
+        result: MethodChannel.Result
+    ) {
         Apphud.start(context = context, apiKey = apiKey, userId = userId, deviceId = deviceId)
         result.success(null)
     }
@@ -56,18 +70,13 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
         result.success(null)
     }
 
-    private fun enableDebugLogs(result: MethodChannel.Result) {
-        Apphud.enableDebugLogs()
-        result.success(null)
-    }
-
     class StartParser(val result: MethodChannel.Result) {
 
         fun parse(args: Map<String, Any>?, callback: (apiKey: String, userId: String?) -> Unit) {
             try {
                 args ?: throw IllegalArgumentException("apiKey is required argument")
                 val apiKey = args["apiKey"] as? String
-                        ?: throw IllegalArgumentException("apiKey is required argument")
+                    ?: throw IllegalArgumentException("apiKey is required argument")
                 val userId = args["userID"] as? String
 
                 callback(apiKey, userId)
@@ -78,11 +87,14 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
     }
 
     class StartManuallyParser(val result: MethodChannel.Result) {
-        fun parse(args: Map<String, Any>?, callback: (apiKey: String, userId: String?, deviceId: String?) -> Unit) {
+        fun parse(
+            args: Map<String, Any>?,
+            callback: (apiKey: String, userId: String?, deviceId: String?) -> Unit
+        ) {
             try {
                 args ?: throw IllegalArgumentException("apiKey is required argument")
                 val apiKey = args["apiKey"] as? String
-                        ?: throw IllegalArgumentException("apiKey is required argument")
+                    ?: throw IllegalArgumentException("apiKey is required argument")
                 val userId = args["userID"] as? String
                 val deviceId = args["deviceID"] as? String
 
@@ -98,7 +110,7 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
             try {
                 args ?: throw IllegalArgumentException("userID is required argument")
                 val userId = args["userID"] as? String
-                        ?: throw IllegalArgumentException("userID is required argument")
+                    ?: throw IllegalArgumentException("userID is required argument")
 
                 callback(userId)
             } catch (e: IllegalArgumentException) {
