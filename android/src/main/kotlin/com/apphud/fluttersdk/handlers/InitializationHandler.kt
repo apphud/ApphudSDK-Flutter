@@ -15,11 +15,9 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
     ) {
         when (method) {
             InitializationRoutes.start.name -> StartParser(result).parse(args) { apiKey, userId ->
-                setHeaders()
                 start(apiKey, userId, result)
             }
             InitializationRoutes.startManually.name -> StartManuallyParser(result).parse(args) { apiKey, userId, deviceId ->
-                setHeaders()
                 startManually(apiKey, userId, deviceId, result)
             }
             InitializationRoutes.updateUserID.name -> UpdateUserIDParser(result).parse(args) { userId ->
@@ -29,11 +27,6 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
             InitializationRoutes.deviceID.name -> result.notImplemented()
             InitializationRoutes.logout.name -> logout(result)
         }
-    }
-
-    private fun setHeaders() {
-        HttpUrlConnectionExecutor.X_SDK = "flutter"
-        HttpUrlConnectionExecutor.X_SDK_VERSION = "2.1.0"
     }
 
     private fun start(apiKey: String, userId: String?, result: MethodChannel.Result) {
