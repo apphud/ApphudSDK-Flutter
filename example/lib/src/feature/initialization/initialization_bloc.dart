@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
-import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:apphud_example/src/feature/common/app_secrets_base.dart';
 import 'package:apphud_example/src/feature/common/debug_print_mixin.dart';
 import 'package:apphud_example/src/feature/navigation/navigation_bloc.dart';
@@ -22,21 +22,7 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
     required NavigationBloc navigationBloc,
   })  : _appSecrets = appSecrets,
         _navigationBloc = navigationBloc,
-        super(InitializationState.trying()) {
-    _fetchProducts();
-  }
-
-  void _fetchProducts() async {
-    try {
-      final List<ApphudProductComposite> products =
-          await Apphud.productsDidFetchCallback();
-      add(InitializationEvent.productsFetchSuccess(products));
-      printAsJson('productsDidFetchCallback()', products);
-    } catch (e) {
-      add(InitializationEvent.productsFetchFailure(e.toString()));
-      printError('productsDidFetchCallback()', e);
-    }
-  }
+        super(InitializationState.trying());
 
   void _fetchPaywalls() async {
     try {
@@ -55,8 +41,6 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
   ) =>
       event.map(
         initializeTrying: _mapInitializeTrying,
-        productsFetchFailure: _mapProductsFetchFailure,
-        productsFetchSuccess: _mapProductsFetchSuccess,
         paywallsFetchFailure: _mapPaywallsFetchFailure,
         paywallsFetchSuccess: _mapPaywallsFetchSuccess,
       );
@@ -75,45 +59,16 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
       yield* state.maybeMap(
         orElse: () async* {},
         trying: (s) async* {
-          if (s.isProductFetched && s.isPaywallsFetched) {
-            yield InitializationState.success(products: s.products);
-            _navigationBloc.add(NavigationEvent.toHome());
-          } else {
-            yield s.copyWith(isStartSuccess: true);
-          }
+          yield s.copyWith(isStartSuccess: true);
         },
       );
 
+      _paywallsIos();
+      _paywallsDidLoadCallbackIos();
       _fetchPaywalls();
     } catch (e) {
       yield InitializationState.startFail(e.toString());
     }
-  }
-
-  Stream<InitializationState> _mapProductsFetchFailure(
-      ProductsFetchFailure event) async* {
-    yield InitializationState.productsFetchFail(event.error);
-  }
-
-  Stream<InitializationState> _mapProductsFetchSuccess(
-      ProductsFetchSuccess event) async* {
-    yield* state.maybeMap(
-      orElse: () async* {},
-      trying: (s) async* {
-        if (s.isStartSuccess && s.isPaywallsFetched) {
-          yield InitializationState.success(
-            products: event.products,
-            paywalls: s.paywalls,
-          );
-          _navigationBloc.add(NavigationEvent.toHome());
-        } else {
-          yield s.copyWith(
-            isProductFetched: true,
-            products: event.products,
-          );
-        }
-      },
-    );
   }
 
   Stream<InitializationState> _mapPaywallsFetchFailure(
@@ -126,10 +81,9 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
     yield* state.maybeMap(
       orElse: () async* {},
       trying: (s) async* {
-        if (s.isStartSuccess && s.isProductFetched) {
+        if (s.isStartSuccess) {
           yield InitializationState.success(
             paywalls: event.paywalls,
-            products: s.products,
           );
           _navigationBloc.add(NavigationEvent.toHome());
         } else {
@@ -140,5 +94,29 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
         }
       },
     );
+  }
+
+  void _paywallsIos() {
+    if (Platform.isIOS) {
+      Apphud.paywalls().then(
+        (value) => printAsJson(
+          'paywalls',
+          value,
+        ),
+        onError: (e) => printError('paywalls', e),
+      );
+    }
+  }
+
+  void _paywallsDidLoadCallbackIos() {
+    if (Platform.isIOS) {
+      Apphud.paywallsDidLoadCallback().then(
+        (value) => printAsJson(
+          'paywallsDidLoadCallback()',
+          value,
+        ),
+        onError: (e) => printError('paywallsDidLoadCallback()', e),
+      );
+    }
   }
 }

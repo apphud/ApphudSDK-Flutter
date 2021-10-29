@@ -8,12 +8,13 @@ part 'purchase_event.freezed.dart';
 class PurchaseEvent with _$PurchaseEvent {
   const PurchaseEvent._();
 
-  const factory PurchaseEvent.purchase(String id) = Purchase;
-
   const factory PurchaseEvent.restorePurchases() = RestorePurchases;
 
   const factory PurchaseEvent.purchaseProduct(ApphudProduct product) =
       PurchaseProduct;
+
+  const factory PurchaseEvent.grantPromotional(ApphudProduct product) =
+      GrantPromotional;
 
   const factory PurchaseEvent.paywallShown(ApphudPaywall paywall) =
       PaywallShown;

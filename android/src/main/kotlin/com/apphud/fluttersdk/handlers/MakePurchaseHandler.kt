@@ -2,6 +2,7 @@ package com.apphud.fluttersdk.handlers
 
 import android.app.Activity
 import android.util.Log
+import com.apphud.fluttersdk.toApphudProduct
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudError
@@ -14,7 +15,11 @@ import java.lang.IllegalStateException
 
 class MakePurchaseHandler(override val routes: List<String>, val activity: Activity) : Handler {
 
-    override fun tryToHandle(method: String, args: Map<String, Any>?, result: MethodChannel.Result) {
+    override fun tryToHandle(
+        method: String,
+        args: Map<String, Any>?,
+        result: MethodChannel.Result
+    ) {
         when (method) {
             MakePurchaseRoutes.didFetchProductsNotification.name -> result.notImplemented()
 
@@ -111,8 +116,10 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
         }
     }
 
-    private fun processPurchaseResult(purchaseResult: ApphudPurchaseResult,
-                                      result: MethodChannel.Result) {
+    private fun processPurchaseResult(
+        purchaseResult: ApphudPurchaseResult,
+        result: MethodChannel.Result
+    ) {
         val resultMap = hashMapOf<String, Any?>()
 
         purchaseResult.subscription?.let {
@@ -156,7 +163,7 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             try {
                 args ?: throw IllegalArgumentException("productIdentifier is required argument")
                 val productIdentifier = args["productIdentifier"] as? String
-                        ?: throw IllegalArgumentException("productIdentifier is required argument")
+                    ?: throw IllegalArgumentException("productIdentifier is required argument")
 
                 callback(productIdentifier)
             } catch (e: IllegalArgumentException) {
@@ -168,26 +175,8 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
     class PurchaseProductParser(private val result: MethodChannel.Result) {
         fun parse(args: Map<String, Any>?, callback: (product: ApphudProduct) -> Unit) {
             try {
-                args ?: throw IllegalArgumentException("productId is required argument")
-                val productId = args["productId"] as? String
-                        ?: throw IllegalArgumentException("productId is required argument")
-                val id = args["id"] as? String
-                val name = args["name"] as? String
-                val store = args["store"] as? String
-                        ?: throw IllegalArgumentException("store is required argument")
-                val paywallId = args["paywallId"] as? String
-
-                val product = ApphudProduct(
-                        id = id,
-                        product_id = productId,
-                        name = name,
-                        store = store,
-                        paywall_id = paywallId,
-                        skuDetails = null
-                )
-
-
-                callback(product)
+                args ?: throw IllegalArgumentException("arguments are required")
+                callback(args.toApphudProduct())
             } catch (e: IllegalArgumentException) {
                 result.error("400", e.message, "")
             }
@@ -199,7 +188,7 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             try {
                 args ?: throw IllegalArgumentException("productId is required argument")
                 val productId = args["productId"] as? String
-                        ?: throw IllegalArgumentException("productId is required argument")
+                    ?: throw IllegalArgumentException("productId is required argument")
 
                 callback(productId)
             } catch (e: IllegalArgumentException) {

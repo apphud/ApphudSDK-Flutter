@@ -12,6 +12,7 @@ class ApphudProduct {
   final SkuDetailsWrapper? skuDetails;
   final SKProductWrapper? skProduct;
   final String? paywallId;
+  final String? paywallIdentifier;
 
   ApphudProduct({
     required this.productId,
@@ -19,6 +20,7 @@ class ApphudProduct {
     this.name,
     this.skuDetails,
     this.paywallId,
+    this.paywallIdentifier,
     this.skProduct,
   });
 
@@ -29,6 +31,6 @@ class ApphudProduct {
 
   @override
   String toString() {
-    return 'ApphudProduct{productId: $productId, store: $store, name: $name, skuDetails: $skuDetails, skProduct: $skProduct, paywallId: $paywallId}';
+    return 'ApphudProduct{productId: $productId, store: $store, name: $name, skuDetails: $skuDetails, skProduct: $skProduct, paywallId: $paywallId, paywallIdentifier: $paywallIdentifier}';
   }
 }

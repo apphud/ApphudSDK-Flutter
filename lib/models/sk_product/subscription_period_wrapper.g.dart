@@ -7,12 +7,11 @@ part of 'subscription_period_wrapper.dart';
 // **************************************************************************
 
 SKProductSubscriptionPeriodWrapper _$SKProductSubscriptionPeriodWrapperFromJson(
-    Map json) {
-  return SKProductSubscriptionPeriodWrapper(
-    numberOfUnits: json['numberOfUnits'] as int,
-    unit: _$enumDecode(_$SKSubscriptionPeriodTimeEnumMap, json['unit']),
-  );
-}
+        Map json) =>
+    SKProductSubscriptionPeriodWrapper(
+      numberOfUnits: json['numberOfUnits'] as int,
+      unit: _$enumDecode(_$SKSubscriptionPeriodTimeEnumMap, json['unit']),
+    );
 
 Map<String, dynamic> _$SKProductSubscriptionPeriodWrapperToJson(
         SKProductSubscriptionPeriodWrapper instance) =>

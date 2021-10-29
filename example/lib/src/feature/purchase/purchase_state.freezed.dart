@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'purchase_state.dart';
 
@@ -61,6 +62,16 @@ mixin _$PurchaseState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function()? inProgress,
@@ -81,6 +92,16 @@ mixin _$PurchaseState {
         restorePurchasesSuccess,
     required TResult Function(RestorePurchasesFailure value)
         restorePurchaseFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -162,6 +183,19 @@ class _$Init extends Init {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
+  }) {
+    return init?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function()? inProgress,
@@ -190,6 +224,19 @@ class _$Init extends Init {
         restorePurchaseFailure,
   }) {
     return init(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
+  }) {
+    return init?.call(this);
   }
 
   @override
@@ -265,6 +312,19 @@ class _$InProgress extends InProgress {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
+  }) {
+    return inProgress?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function()? inProgress,
@@ -293,6 +353,19 @@ class _$InProgress extends InProgress {
         restorePurchaseFailure,
   }) {
     return inProgress(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
+  }) {
+    return inProgress?.call(this);
   }
 
   @override
@@ -370,6 +443,19 @@ class _$PurchaseSuccess extends PurchaseSuccess {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
+  }) {
+    return purchaseSuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function()? inProgress,
@@ -398,6 +484,19 @@ class _$PurchaseSuccess extends PurchaseSuccess {
         restorePurchaseFailure,
   }) {
     return purchaseSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
+  }) {
+    return purchaseSuccess?.call(this);
   }
 
   @override
@@ -500,6 +599,19 @@ class _$PurchaseFailure extends PurchaseFailure {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
+  }) {
+    return purchaseFailure?.call(error);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function()? inProgress,
@@ -528,6 +640,19 @@ class _$PurchaseFailure extends PurchaseFailure {
         restorePurchaseFailure,
   }) {
     return purchaseFailure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
+  }) {
+    return purchaseFailure?.call(this);
   }
 
   @override
@@ -610,6 +735,19 @@ class _$RestorePurchasesSuccess extends RestorePurchasesSuccess {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
+  }) {
+    return restorePurchasesSuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function()? inProgress,
@@ -638,6 +776,19 @@ class _$RestorePurchasesSuccess extends RestorePurchasesSuccess {
         restorePurchaseFailure,
   }) {
     return restorePurchasesSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
+  }) {
+    return restorePurchasesSuccess?.call(this);
   }
 
   @override
@@ -741,6 +892,19 @@ class _$RestorePurchasesFailure extends RestorePurchasesFailure {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inProgress,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(ApphudError error)? restorePurchaseFailure,
+  }) {
+    return restorePurchaseFailure?.call(error);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function()? inProgress,
@@ -769,6 +933,19 @@ class _$RestorePurchasesFailure extends RestorePurchasesFailure {
         restorePurchaseFailure,
   }) {
     return restorePurchaseFailure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InProgress value)? inProgress,
+    TResult Function(PurchaseSuccess value)? purchaseSuccess,
+    TResult Function(PurchaseFailure value)? purchaseFailure,
+    TResult Function(RestorePurchasesSuccess value)? restorePurchasesSuccess,
+    TResult Function(RestorePurchasesFailure value)? restorePurchaseFailure,
+  }) {
+    return restorePurchaseFailure?.call(this);
   }
 
   @override

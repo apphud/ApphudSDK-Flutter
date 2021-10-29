@@ -2,12 +2,17 @@ package com.apphud.fluttersdk.handlers
 
 import android.content.Context
 import com.apphud.sdk.Apphud
+import com.apphud.sdk.client.HttpUrlConnectionExecutor
 import io.flutter.plugin.common.MethodChannel
 
 
 class InitializationHandler(override val routes: List<String>, val context: Context) : Handler {
 
-    override fun tryToHandle(method: String, args: Map<String, Any>?, result: MethodChannel.Result) {
+    override fun tryToHandle(
+        method: String,
+        args: Map<String, Any>?,
+        result: MethodChannel.Result
+    ) {
         when (method) {
             InitializationRoutes.start.name -> StartParser(result).parse(args) { apiKey, userId ->
                 start(apiKey, userId, result)
@@ -29,7 +34,12 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
         result.success(null)
     }
 
-    private fun startManually(apiKey: String, userId: String?, deviceId: String?, result: MethodChannel.Result) {
+    private fun startManually(
+        apiKey: String,
+        userId: String?,
+        deviceId: String?,
+        result: MethodChannel.Result
+    ) {
         Apphud.start(context = context, apiKey = apiKey, userId = userId, deviceId = deviceId)
         result.success(null)
     }
@@ -53,18 +63,13 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
         result.success(null)
     }
 
-    private fun enableDebugLogs(result: MethodChannel.Result) {
-        Apphud.enableDebugLogs()
-        result.success(null)
-    }
-
     class StartParser(val result: MethodChannel.Result) {
 
         fun parse(args: Map<String, Any>?, callback: (apiKey: String, userId: String?) -> Unit) {
             try {
                 args ?: throw IllegalArgumentException("apiKey is required argument")
                 val apiKey = args["apiKey"] as? String
-                        ?: throw IllegalArgumentException("apiKey is required argument")
+                    ?: throw IllegalArgumentException("apiKey is required argument")
                 val userId = args["userID"] as? String
 
                 callback(apiKey, userId)
@@ -75,11 +80,14 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
     }
 
     class StartManuallyParser(val result: MethodChannel.Result) {
-        fun parse(args: Map<String, Any>?, callback: (apiKey: String, userId: String?, deviceId: String?) -> Unit) {
+        fun parse(
+            args: Map<String, Any>?,
+            callback: (apiKey: String, userId: String?, deviceId: String?) -> Unit
+        ) {
             try {
                 args ?: throw IllegalArgumentException("apiKey is required argument")
                 val apiKey = args["apiKey"] as? String
-                        ?: throw IllegalArgumentException("apiKey is required argument")
+                    ?: throw IllegalArgumentException("apiKey is required argument")
                 val userId = args["userID"] as? String
                 val deviceId = args["deviceID"] as? String
 
@@ -95,7 +103,7 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
             try {
                 args ?: throw IllegalArgumentException("userID is required argument")
                 val userId = args["userID"] as? String
-                        ?: throw IllegalArgumentException("userID is required argument")
+                    ?: throw IllegalArgumentException("userID is required argument")
 
                 callback(userId)
             } catch (e: IllegalArgumentException) {

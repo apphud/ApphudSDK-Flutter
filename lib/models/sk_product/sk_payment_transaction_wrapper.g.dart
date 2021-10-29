@@ -6,15 +6,14 @@ part of 'sk_payment_transaction_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SKPaymentTransactionWrapper _$SKPaymentTransactionWrapperFromJson(Map json) {
-  return SKPaymentTransactionWrapper(
-    transactionIdentifier: json['transactionIdentifier'] as String?,
-    transactionDate: (json['transactionDate'] as num?)?.toDouble(),
-    payment: json['payment'] == null
-        ? null
-        : SKPaymentWrapper.fromJson(json['payment'] as Map),
-  );
-}
+SKPaymentTransactionWrapper _$SKPaymentTransactionWrapperFromJson(Map json) =>
+    SKPaymentTransactionWrapper(
+      transactionIdentifier: json['transactionIdentifier'] as String?,
+      transactionDate: (json['transactionDate'] as num?)?.toDouble(),
+      payment: json['payment'] == null
+          ? null
+          : SKPaymentWrapper.fromJson(json['payment'] as Map),
+    );
 
 Map<String, dynamic> _$SKPaymentTransactionWrapperToJson(
         SKPaymentTransactionWrapper instance) =>
@@ -24,14 +23,12 @@ Map<String, dynamic> _$SKPaymentTransactionWrapperToJson(
       'payment': instance.payment,
     };
 
-SKPaymentWrapper _$SKPaymentWrapperFromJson(Map json) {
-  return SKPaymentWrapper(
-    productIdentifier: json['productIdentifier'] as String,
-    description: json['description'] as String,
-    quantity: json['quantity'] as int,
-    applicationUsername: json['applicationUsername'] as String?,
-  );
-}
+SKPaymentWrapper _$SKPaymentWrapperFromJson(Map json) => SKPaymentWrapper(
+      productIdentifier: json['productIdentifier'] as String,
+      description: json['description'] as String,
+      quantity: json['quantity'] as int,
+      applicationUsername: json['applicationUsername'] as String?,
+    );
 
 Map<String, dynamic> _$SKPaymentWrapperToJson(SKPaymentWrapper instance) =>
     <String, dynamic>{

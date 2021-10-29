@@ -6,16 +6,14 @@ part of 'apphud_paywalls.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApphudPaywalls _$ApphudPaywallsFromJson(Map json) {
-  return ApphudPaywalls(
-    paywalls: (json['paywalls'] as List<dynamic>?)
-        ?.map((e) => ApphudPaywall.fromJson(e as Map))
-        .toList(),
-    error: json['error'] == null
-        ? null
-        : ApphudError.fromJson(json['error'] as Map),
-  );
-}
+ApphudPaywalls _$ApphudPaywallsFromJson(Map json) => ApphudPaywalls(
+      paywalls: (json['paywalls'] as List<dynamic>?)
+          ?.map((e) => ApphudPaywall.fromJson(e as Map))
+          .toList(),
+      error: json['error'] == null
+          ? null
+          : ApphudError.fromJson(json['error'] as Map),
+    );
 
 Map<String, dynamic> _$ApphudPaywallsToJson(ApphudPaywalls instance) =>
     <String, dynamic>{

@@ -8,7 +8,7 @@ class AndroidPurchaseWrapper {
   final String packageName;
   final String purchaseToken;
   final String signature;
-  final String sku;
+  final List<String> skus;
   final String originalJson;
   final int purchaseState;
   final int purchaseTime;
@@ -19,7 +19,7 @@ class AndroidPurchaseWrapper {
     required this.purchaseState,
     required this.purchaseToken,
     required this.signature,
-    required this.sku,
+    required this.skus,
     required this.originalJson,
     required this.purchaseTime,
   });
@@ -32,6 +32,6 @@ class AndroidPurchaseWrapper {
 
   @override
   String toString() {
-    return 'ApphudPurchaseResultAndroid{orderId: $orderId, packageName: $packageName, purchaseToken: $purchaseToken, signature: $signature, sku: $sku, originalJson: $originalJson, purchaseState: $purchaseState, purchaseTime: $purchaseTime}';
+    return 'ApphudPurchaseResultAndroid{orderId: $orderId, packageName: $packageName, purchaseToken: $purchaseToken, signature: $signature, skus: $skus, originalJson: $originalJson, purchaseState: $purchaseState, purchaseTime: $purchaseTime}';
   }
 }

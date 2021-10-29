@@ -6,21 +6,20 @@ part of 'apphud_subscription.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApphudSubscriptionWrapper _$ApphudSubscriptionWrapperFromJson(Map json) {
-  return ApphudSubscriptionWrapper(
-    productId: json['productId'] as String,
-    expiresAt: (json['expiresAt'] as num).toDouble(),
-    isInRetryBilling: json['isInRetryBilling'] as bool,
-    isAutorenewEnabled: json['isAutorenewEnabled'] as bool,
-    isIntroductoryActivated: json['isIntroductoryActivated'] as bool,
-    isActive: json['isActive'] as bool,
-    status: _$enumDecode(_$ApphudSubscriptionStatusEnumMap, json['status']),
-    startedAt: (json['startedAt'] as num?)?.toDouble(),
-    canceledAt: (json['canceledAt'] as num?)?.toDouble(),
-    isSandbox: json['isSandbox'] as bool?,
-    isLocal: json['isLocal'] as bool?,
-  );
-}
+ApphudSubscriptionWrapper _$ApphudSubscriptionWrapperFromJson(Map json) =>
+    ApphudSubscriptionWrapper(
+      productId: json['productId'] as String,
+      expiresAt: (json['expiresAt'] as num).toDouble(),
+      isInRetryBilling: json['isInRetryBilling'] as bool,
+      isAutorenewEnabled: json['isAutorenewEnabled'] as bool,
+      isIntroductoryActivated: json['isIntroductoryActivated'] as bool,
+      isActive: json['isActive'] as bool,
+      status: _$enumDecode(_$ApphudSubscriptionStatusEnumMap, json['status']),
+      startedAt: (json['startedAt'] as num?)?.toDouble(),
+      canceledAt: (json['canceledAt'] as num?)?.toDouble(),
+      isSandbox: json['isSandbox'] as bool?,
+      isLocal: json['isLocal'] as bool?,
+    );
 
 Map<String, dynamic> _$ApphudSubscriptionWrapperToJson(
         ApphudSubscriptionWrapper instance) =>

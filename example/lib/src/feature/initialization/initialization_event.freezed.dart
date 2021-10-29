@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'initialization_event.dart';
 
@@ -20,22 +21,9 @@ class _$InitializationEventTearOff {
     return const InitializeTrying();
   }
 
-  ProductsFetchSuccess productsFetchSuccess(
-      List<ApphudProductComposite> products) {
-    return ProductsFetchSuccess(
-      products,
-    );
-  }
-
   PaywallsFetchSuccess paywallsFetchSuccess(ApphudPaywalls paywalls) {
     return PaywallsFetchSuccess(
       paywalls,
-    );
-  }
-
-  ProductsFetchFailure productsFetchFailure(String error) {
-    return ProductsFetchFailure(
-      error,
     );
   }
 
@@ -54,20 +42,21 @@ mixin _$InitializationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
-    required TResult Function(List<ApphudProductComposite> products)
-        productsFetchSuccess,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
-    required TResult Function(String error) productsFetchFailure,
     required TResult Function(String error) paywallsFetchFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initializeTrying,
+    TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult Function(String error)? paywallsFetchFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
-    TResult Function(List<ApphudProductComposite> products)?
-        productsFetchSuccess,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
-    TResult Function(String error)? productsFetchFailure,
     TResult Function(String error)? paywallsFetchFailure,
     required TResult orElse(),
   }) =>
@@ -75,18 +64,21 @@ mixin _$InitializationEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(InitializeTrying value) initializeTrying,
-    required TResult Function(ProductsFetchSuccess value) productsFetchSuccess,
     required TResult Function(PaywallsFetchSuccess value) paywallsFetchSuccess,
-    required TResult Function(ProductsFetchFailure value) productsFetchFailure,
     required TResult Function(PaywallsFetchFailure value) paywallsFetchFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(InitializeTrying value)? initializeTrying,
+    TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult Function(PaywallsFetchFailure value)? paywallsFetchFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InitializeTrying value)? initializeTrying,
-    TResult Function(ProductsFetchSuccess value)? productsFetchSuccess,
     TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
-    TResult Function(ProductsFetchFailure value)? productsFetchFailure,
     TResult Function(PaywallsFetchFailure value)? paywallsFetchFailure,
     required TResult orElse(),
   }) =>
@@ -151,10 +143,7 @@ class _$InitializeTrying extends InitializeTrying {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
-    required TResult Function(List<ApphudProductComposite> products)
-        productsFetchSuccess,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
-    required TResult Function(String error) productsFetchFailure,
     required TResult Function(String error) paywallsFetchFailure,
   }) {
     return initializeTrying();
@@ -162,12 +151,19 @@ class _$InitializeTrying extends InitializeTrying {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initializeTrying,
+    TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult Function(String error)? paywallsFetchFailure,
+  }) {
+    return initializeTrying?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
-    TResult Function(List<ApphudProductComposite> products)?
-        productsFetchSuccess,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
-    TResult Function(String error)? productsFetchFailure,
     TResult Function(String error)? paywallsFetchFailure,
     required TResult orElse(),
   }) {
@@ -181,9 +177,7 @@ class _$InitializeTrying extends InitializeTrying {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(InitializeTrying value) initializeTrying,
-    required TResult Function(ProductsFetchSuccess value) productsFetchSuccess,
     required TResult Function(PaywallsFetchSuccess value) paywallsFetchSuccess,
-    required TResult Function(ProductsFetchFailure value) productsFetchFailure,
     required TResult Function(PaywallsFetchFailure value) paywallsFetchFailure,
   }) {
     return initializeTrying(this);
@@ -191,11 +185,19 @@ class _$InitializeTrying extends InitializeTrying {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(InitializeTrying value)? initializeTrying,
+    TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult Function(PaywallsFetchFailure value)? paywallsFetchFailure,
+  }) {
+    return initializeTrying?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InitializeTrying value)? initializeTrying,
-    TResult Function(ProductsFetchSuccess value)? productsFetchSuccess,
     TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
-    TResult Function(ProductsFetchFailure value)? productsFetchFailure,
     TResult Function(PaywallsFetchFailure value)? paywallsFetchFailure,
     required TResult orElse(),
   }) {
@@ -209,141 +211,6 @@ class _$InitializeTrying extends InitializeTrying {
 abstract class InitializeTrying extends InitializationEvent {
   const factory InitializeTrying() = _$InitializeTrying;
   const InitializeTrying._() : super._();
-}
-
-/// @nodoc
-abstract class $ProductsFetchSuccessCopyWith<$Res> {
-  factory $ProductsFetchSuccessCopyWith(ProductsFetchSuccess value,
-          $Res Function(ProductsFetchSuccess) then) =
-      _$ProductsFetchSuccessCopyWithImpl<$Res>;
-  $Res call({List<ApphudProductComposite> products});
-}
-
-/// @nodoc
-class _$ProductsFetchSuccessCopyWithImpl<$Res>
-    extends _$InitializationEventCopyWithImpl<$Res>
-    implements $ProductsFetchSuccessCopyWith<$Res> {
-  _$ProductsFetchSuccessCopyWithImpl(
-      ProductsFetchSuccess _value, $Res Function(ProductsFetchSuccess) _then)
-      : super(_value, (v) => _then(v as ProductsFetchSuccess));
-
-  @override
-  ProductsFetchSuccess get _value => super._value as ProductsFetchSuccess;
-
-  @override
-  $Res call({
-    Object? products = freezed,
-  }) {
-    return _then(ProductsFetchSuccess(
-      products == freezed
-          ? _value.products
-          : products // ignore: cast_nullable_to_non_nullable
-              as List<ApphudProductComposite>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ProductsFetchSuccess extends ProductsFetchSuccess {
-  const _$ProductsFetchSuccess(this.products) : super._();
-
-  @override
-  final List<ApphudProductComposite> products;
-
-  @override
-  String toString() {
-    return 'InitializationEvent.productsFetchSuccess(products: $products)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is ProductsFetchSuccess &&
-            (identical(other.products, products) ||
-                const DeepCollectionEquality()
-                    .equals(other.products, products)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(products);
-
-  @JsonKey(ignore: true)
-  @override
-  $ProductsFetchSuccessCopyWith<ProductsFetchSuccess> get copyWith =>
-      _$ProductsFetchSuccessCopyWithImpl<ProductsFetchSuccess>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initializeTrying,
-    required TResult Function(List<ApphudProductComposite> products)
-        productsFetchSuccess,
-    required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
-    required TResult Function(String error) productsFetchFailure,
-    required TResult Function(String error) paywallsFetchFailure,
-  }) {
-    return productsFetchSuccess(products);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initializeTrying,
-    TResult Function(List<ApphudProductComposite> products)?
-        productsFetchSuccess,
-    TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
-    TResult Function(String error)? productsFetchFailure,
-    TResult Function(String error)? paywallsFetchFailure,
-    required TResult orElse(),
-  }) {
-    if (productsFetchSuccess != null) {
-      return productsFetchSuccess(products);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(InitializeTrying value) initializeTrying,
-    required TResult Function(ProductsFetchSuccess value) productsFetchSuccess,
-    required TResult Function(PaywallsFetchSuccess value) paywallsFetchSuccess,
-    required TResult Function(ProductsFetchFailure value) productsFetchFailure,
-    required TResult Function(PaywallsFetchFailure value) paywallsFetchFailure,
-  }) {
-    return productsFetchSuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(InitializeTrying value)? initializeTrying,
-    TResult Function(ProductsFetchSuccess value)? productsFetchSuccess,
-    TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
-    TResult Function(ProductsFetchFailure value)? productsFetchFailure,
-    TResult Function(PaywallsFetchFailure value)? paywallsFetchFailure,
-    required TResult orElse(),
-  }) {
-    if (productsFetchSuccess != null) {
-      return productsFetchSuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ProductsFetchSuccess extends InitializationEvent {
-  const factory ProductsFetchSuccess(List<ApphudProductComposite> products) =
-      _$ProductsFetchSuccess;
-  const ProductsFetchSuccess._() : super._();
-
-  List<ApphudProductComposite> get products =>
-      throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $ProductsFetchSuccessCopyWith<ProductsFetchSuccess> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -414,10 +281,7 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
-    required TResult Function(List<ApphudProductComposite> products)
-        productsFetchSuccess,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
-    required TResult Function(String error) productsFetchFailure,
     required TResult Function(String error) paywallsFetchFailure,
   }) {
     return paywallsFetchSuccess(paywalls);
@@ -425,12 +289,19 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initializeTrying,
+    TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult Function(String error)? paywallsFetchFailure,
+  }) {
+    return paywallsFetchSuccess?.call(paywalls);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
-    TResult Function(List<ApphudProductComposite> products)?
-        productsFetchSuccess,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
-    TResult Function(String error)? productsFetchFailure,
     TResult Function(String error)? paywallsFetchFailure,
     required TResult orElse(),
   }) {
@@ -444,9 +315,7 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(InitializeTrying value) initializeTrying,
-    required TResult Function(ProductsFetchSuccess value) productsFetchSuccess,
     required TResult Function(PaywallsFetchSuccess value) paywallsFetchSuccess,
-    required TResult Function(ProductsFetchFailure value) productsFetchFailure,
     required TResult Function(PaywallsFetchFailure value) paywallsFetchFailure,
   }) {
     return paywallsFetchSuccess(this);
@@ -454,11 +323,19 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(InitializeTrying value)? initializeTrying,
+    TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult Function(PaywallsFetchFailure value)? paywallsFetchFailure,
+  }) {
+    return paywallsFetchSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InitializeTrying value)? initializeTrying,
-    TResult Function(ProductsFetchSuccess value)? productsFetchSuccess,
     TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
-    TResult Function(ProductsFetchFailure value)? productsFetchFailure,
     TResult Function(PaywallsFetchFailure value)? paywallsFetchFailure,
     required TResult orElse(),
   }) {
@@ -477,138 +354,6 @@ abstract class PaywallsFetchSuccess extends InitializationEvent {
   ApphudPaywalls get paywalls => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PaywallsFetchSuccessCopyWith<PaywallsFetchSuccess> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ProductsFetchFailureCopyWith<$Res> {
-  factory $ProductsFetchFailureCopyWith(ProductsFetchFailure value,
-          $Res Function(ProductsFetchFailure) then) =
-      _$ProductsFetchFailureCopyWithImpl<$Res>;
-  $Res call({String error});
-}
-
-/// @nodoc
-class _$ProductsFetchFailureCopyWithImpl<$Res>
-    extends _$InitializationEventCopyWithImpl<$Res>
-    implements $ProductsFetchFailureCopyWith<$Res> {
-  _$ProductsFetchFailureCopyWithImpl(
-      ProductsFetchFailure _value, $Res Function(ProductsFetchFailure) _then)
-      : super(_value, (v) => _then(v as ProductsFetchFailure));
-
-  @override
-  ProductsFetchFailure get _value => super._value as ProductsFetchFailure;
-
-  @override
-  $Res call({
-    Object? error = freezed,
-  }) {
-    return _then(ProductsFetchFailure(
-      error == freezed
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ProductsFetchFailure extends ProductsFetchFailure {
-  const _$ProductsFetchFailure(this.error) : super._();
-
-  @override
-  final String error;
-
-  @override
-  String toString() {
-    return 'InitializationEvent.productsFetchFailure(error: $error)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is ProductsFetchFailure &&
-            (identical(other.error, error) ||
-                const DeepCollectionEquality().equals(other.error, error)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(error);
-
-  @JsonKey(ignore: true)
-  @override
-  $ProductsFetchFailureCopyWith<ProductsFetchFailure> get copyWith =>
-      _$ProductsFetchFailureCopyWithImpl<ProductsFetchFailure>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initializeTrying,
-    required TResult Function(List<ApphudProductComposite> products)
-        productsFetchSuccess,
-    required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
-    required TResult Function(String error) productsFetchFailure,
-    required TResult Function(String error) paywallsFetchFailure,
-  }) {
-    return productsFetchFailure(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initializeTrying,
-    TResult Function(List<ApphudProductComposite> products)?
-        productsFetchSuccess,
-    TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
-    TResult Function(String error)? productsFetchFailure,
-    TResult Function(String error)? paywallsFetchFailure,
-    required TResult orElse(),
-  }) {
-    if (productsFetchFailure != null) {
-      return productsFetchFailure(error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(InitializeTrying value) initializeTrying,
-    required TResult Function(ProductsFetchSuccess value) productsFetchSuccess,
-    required TResult Function(PaywallsFetchSuccess value) paywallsFetchSuccess,
-    required TResult Function(ProductsFetchFailure value) productsFetchFailure,
-    required TResult Function(PaywallsFetchFailure value) paywallsFetchFailure,
-  }) {
-    return productsFetchFailure(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(InitializeTrying value)? initializeTrying,
-    TResult Function(ProductsFetchSuccess value)? productsFetchSuccess,
-    TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
-    TResult Function(ProductsFetchFailure value)? productsFetchFailure,
-    TResult Function(PaywallsFetchFailure value)? paywallsFetchFailure,
-    required TResult orElse(),
-  }) {
-    if (productsFetchFailure != null) {
-      return productsFetchFailure(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ProductsFetchFailure extends InitializationEvent {
-  const factory ProductsFetchFailure(String error) = _$ProductsFetchFailure;
-  const ProductsFetchFailure._() : super._();
-
-  String get error => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $ProductsFetchFailureCopyWith<ProductsFetchFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -679,10 +424,7 @@ class _$PaywallsFetchFailure extends PaywallsFetchFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
-    required TResult Function(List<ApphudProductComposite> products)
-        productsFetchSuccess,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
-    required TResult Function(String error) productsFetchFailure,
     required TResult Function(String error) paywallsFetchFailure,
   }) {
     return paywallsFetchFailure(error);
@@ -690,12 +432,19 @@ class _$PaywallsFetchFailure extends PaywallsFetchFailure {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initializeTrying,
+    TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult Function(String error)? paywallsFetchFailure,
+  }) {
+    return paywallsFetchFailure?.call(error);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
-    TResult Function(List<ApphudProductComposite> products)?
-        productsFetchSuccess,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
-    TResult Function(String error)? productsFetchFailure,
     TResult Function(String error)? paywallsFetchFailure,
     required TResult orElse(),
   }) {
@@ -709,9 +458,7 @@ class _$PaywallsFetchFailure extends PaywallsFetchFailure {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(InitializeTrying value) initializeTrying,
-    required TResult Function(ProductsFetchSuccess value) productsFetchSuccess,
     required TResult Function(PaywallsFetchSuccess value) paywallsFetchSuccess,
-    required TResult Function(ProductsFetchFailure value) productsFetchFailure,
     required TResult Function(PaywallsFetchFailure value) paywallsFetchFailure,
   }) {
     return paywallsFetchFailure(this);
@@ -719,11 +466,19 @@ class _$PaywallsFetchFailure extends PaywallsFetchFailure {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(InitializeTrying value)? initializeTrying,
+    TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult Function(PaywallsFetchFailure value)? paywallsFetchFailure,
+  }) {
+    return paywallsFetchFailure?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InitializeTrying value)? initializeTrying,
-    TResult Function(ProductsFetchSuccess value)? productsFetchSuccess,
     TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
-    TResult Function(ProductsFetchFailure value)? productsFetchFailure,
     TResult Function(PaywallsFetchFailure value)? paywallsFetchFailure,
     required TResult orElse(),
   }) {

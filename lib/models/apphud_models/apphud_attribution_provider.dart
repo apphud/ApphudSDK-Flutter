@@ -1,4 +1,12 @@
-enum ApphudAttributionProvider { appsFlyer, adjust, appleSearchAds, facebook }
+enum ApphudAttributionProvider {
+  appsFlyer,
+  adjust,
+  @Deprecated('Attribution for versions 14.2 or lower, iAd framework')
+  appleSearchAds,
+  facebook,
+  firebase,
+  appleAdsAttribution,
+}
 
 extension ApphudAttributionProviderConverter on ApphudAttributionProvider {
   String get convertToString {
@@ -11,6 +19,10 @@ extension ApphudAttributionProviderConverter on ApphudAttributionProvider {
         return 'appleSearchAds';
       case ApphudAttributionProvider.facebook:
         return 'facebook';
+      case ApphudAttributionProvider.firebase:
+        return 'firebase';
+      case ApphudAttributionProvider.appleAdsAttribution:
+        return 'appleAdsAttribution';
     }
   }
 }

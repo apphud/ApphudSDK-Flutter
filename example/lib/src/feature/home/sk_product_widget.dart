@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 class SkProductWidget extends StatelessWidget {
   final SKProductWrapper? skProduct;
   final VoidCallback? onTap;
+  final VoidCallback? onPromote;
   final bool wrapInCard;
 
   const SkProductWidget({
     Key? key,
     this.skProduct,
     this.onTap,
+    this.onPromote,
     bool? wrapInCard,
   })  : wrapInCard = wrapInCard ?? true,
         super(key: key);
@@ -21,7 +23,7 @@ class SkProductWidget extends StatelessWidget {
       return _wrapInCard(child: ListTile(title: Text('skProduct is null')));
     }
     final SKProductWrapper skProductLocal = skProduct!;
-    return InkWellStack(
+    return InkWell(
       onTap: onTap,
       child: _wrapInCard(
         child: ListTile(
@@ -32,6 +34,11 @@ class SkProductWidget extends StatelessWidget {
           leading: Text(
               '${skProductLocal.price} ${skProductLocal.priceLocale.currencyCode}'),
           subtitle: Text(skProductLocal.localizedDescription),
+          trailing: FloatingActionButton(
+            heroTag: '${skProductLocal.productIdentifier}',
+            onPressed: onPromote,
+            child: Text('P'),
+          ),
         ),
       ),
     );
