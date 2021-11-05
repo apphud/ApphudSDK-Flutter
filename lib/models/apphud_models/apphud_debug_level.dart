@@ -1,0 +1,4 @@
+enum ApphudDebugLevel {
+  low,
+  high,
+}

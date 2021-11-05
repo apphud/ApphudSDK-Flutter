@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:apphud/apphud.dart';
+import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud_example/src/feature/common/app_secrets_base.dart';
 import 'package:apphud_example/src/feature/common/debug_print_mixin.dart';
@@ -48,7 +49,7 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
   Stream<InitializationState> _mapInitializeTrying(
       InitializeTrying value) async* {
     try {
-      await Apphud.enableDebugLogs();
+      await Apphud.enableDebugLogs(level: ApphudDebugLevel.high);
       await Apphud.startManually(
         apiKey: _appSecrets.apiKey,
         userID: _appSecrets.userID,

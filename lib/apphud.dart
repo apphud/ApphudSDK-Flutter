@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
+import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
 import 'package:apphud/models/apphud_models/apphud_group.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywall.dart';
@@ -507,8 +508,15 @@ class Apphud {
 // Other
 
   /// Enables debug logs. You should call this method before SDK initialization.
-  static Future<void> enableDebugLogs() =>
-      _channel.invokeMethod('enableDebugLogs');
+  ///
+  /// - [iOS] only parameter [level] is optional. Default value is [ApphudDebugLevel.low].
+  /// The value [ApphudDebugLevel.high] enables printing of additional debug messages, for example HTTP requests and responses
+  static Future<void> enableDebugLogs({
+    ApphudDebugLevel level = ApphudDebugLevel.low,
+  }) =>
+      _channel.invokeMethod('enableDebugLogs', {
+        'level': level == ApphudDebugLevel.low ? 0 : 1,
+      });
 
   ///  iOS only. Returns `true` if current build is running on simulator or Debug/TestFlight modes. Returns `false` if current build is App Store build.
   static Future<bool> isSandbox() async {
