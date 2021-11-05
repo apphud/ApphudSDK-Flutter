@@ -1,6 +1,6 @@
 name: apphud
 description: Official Apphud Flutter SDK is a lightweight open-source library to manage auto-renewable subscriptions and other in-app purchases in your iOS/Android app. No backend required.
-version: 2.1.0
+version: 2.1.1
 homepage: 'https://apphud.com'
 repository: 'https://github.com/apphud/ApphudSDK-Flutter'
 
