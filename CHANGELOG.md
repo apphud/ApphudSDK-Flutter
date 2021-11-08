@@ -1,8 +1,11 @@
 ## 2.1.1
 - [iOS] The optional parameter 'level' was added to the method enableDebugLogs(). Possible values are:
     - 'ApphudDebugLevel.low' - the same as previous amount of debug information.
-    - 'ApphudDebugLevel.hight' - enables printing of additional debug messages, for example HTTP requests and responses.
+    - 'ApphudDebugLevel.high' - enables printing of additional debug messages, for example HTTP requests and responses.
   
+- Dependencies of Native SDK's were updated to:
+    - [Android] 1.3.9
+    
 ## 2.1.0
 - [iOS], [Android] Experiments were added. Run Experiments(A/B tests) to test different in-app purchases prices in order to find the best.
 - [iOS] Apple search Ads logic was improved. Submit Apple Attribution Token to Apphud with Apphud.addAttribution().

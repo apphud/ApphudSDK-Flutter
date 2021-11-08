@@ -39,9 +39,10 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         handlers.forEach { handler ->
             if (handler.isAbleToHandle(call.method)) handler.tryToHandle(
-                    method = call.method,
-                    args = call.arguments as? Map<String, Any>,
-                    result = result)
+                method = call.method,
+                args = call.arguments as? Map<String, Any>,
+                result = result
+            )
         }
     }
 
@@ -57,19 +58,19 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         setHeaders()
 
         handlers = listOf(
-                InitializationHandler(InitializationRoutes.stringValues(), context = this.context),
-                MakePurchaseHandler(MakePurchaseRoutes.stringValues(), activity = sActivity),
-                HandlePurchasesHandler(HandlePurchasesRoutes.stringValues(), context = this.context),
-                AttributionHandler(AttributionRoutes.stringValues()),
-                OtherHandler(OtherRoutes.stringValues(), context = this.context),
-                UserPropertiesHandler(UserPropertiesRoutes.stringValues(), context = this.context),
-                PaywallLogsHandler(PaywallLogsRoutes.stringValues(), context = this.context)
+            InitializationHandler(InitializationRoutes.stringValues(), context = this.context),
+            MakePurchaseHandler(MakePurchaseRoutes.stringValues(), activity = sActivity),
+            HandlePurchasesHandler(HandlePurchasesRoutes.stringValues(), context = this.context),
+            AttributionHandler(AttributionRoutes.stringValues()),
+            OtherHandler(OtherRoutes.stringValues(), context = this.context),
+            UserPropertiesHandler(UserPropertiesRoutes.stringValues(), context = this.context),
+            PaywallLogsHandler(PaywallLogsRoutes.stringValues(), context = this.context)
         )
     }
 
     private fun setHeaders() {
         HttpUrlConnectionExecutor.X_SDK = "flutter"
-        HttpUrlConnectionExecutor.X_SDK_VERSION = "2.1.0"
+        HttpUrlConnectionExecutor.X_SDK_VERSION = BuildConfig.APPHUD_FLUTTER_SDK_VERSION
     }
 
     override fun onDetachedFromActivityForConfigChanges() {

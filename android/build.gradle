@@ -1,5 +1,35 @@
+import com.android.builder.internal.ClassFieldImpl
+import groovy.json.JsonSlurper
+
 group 'com.apphud.app'
 version '1.0-SNAPSHOT'
+
+String apphudFlutterSdkVersion = 'unknown'
+
+try {
+    String packagesContent = new File('../.dart_tool/package_config.json').text
+    def jsonSlurper = new JsonSlurper()
+    def packagesMap = jsonSlurper.parseText(packagesContent)
+    def packagesList = packagesMap.packages
+    assert packagesList instanceof List
+
+    def rootUri = packagesList.findResult { it.name == 'apphud' ? it.rootUri : null }
+    assert rootUri != null
+
+    def path = rootUri.replace('file://', '') + '/pubspec.yaml'
+    String pubspecContent = new File(path).text
+
+    def pubspecList = pubspecContent.split('\n')
+    for (String pubspecItem in pubspecList) {
+        String[] lineItems = pubspecItem.split(':')
+        if (lineItems.length > 1 && lineItems[0].trim() == 'version') {
+            apphudFlutterSdkVersion = lineItems[1].trim();
+            break
+        }
+    }
+} catch (Error e) {
+    apphudFlutterSdkVersion = 'unknown'
+}
 
 buildscript {
     ext.kotlin_version = '1.3.72'
@@ -33,6 +63,7 @@ android {
     }
     defaultConfig {
         minSdkVersion 16
+        it.addBuildConfigField(new ClassFieldImpl('String', 'APPHUD_FLUTTER_SDK_VERSION', '\"' + apphudFlutterSdkVersion + '\"'))
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -41,7 +72,7 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.github.apphud:ApphudSDK-Android:1.3.3"
+    implementation "com.github.apphud:ApphudSDK-Android:1.3.9"
     implementation 'com.android.billingclient:billing:4.0.0'
     implementation 'com.google.code.gson:gson:2.8.6'
 }
