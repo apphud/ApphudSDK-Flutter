@@ -35,6 +35,9 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         }
     }
     private static func setHeaders() {
+        if let version = Bundle(identifier: "org.cocoapods.apphud")?.infoDictionary?["CFBundleShortVersionString"] as? String{
+            
+        }
         ApphudHttpClient.shared.sdkType = "flutter"
         ApphudHttpClient.shared.sdkVersion = "2.1.0"
     }
