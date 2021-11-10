@@ -1,8 +1,10 @@
 ## 2.1.1
-- [iOS] The optional parameter 'level' was added to the method enableDebugLogs(). Possible values are:
+- [iOS] The optional parameter 'level' was added to the method enableDebugLogs(). 
+    Possible values are:
     - 'ApphudDebugLevel.low' - the same as previous amount of debug information.
     - 'ApphudDebugLevel.high' - enables printing of additional debug messages, for example HTTP requests and responses.
-  
+- [iOS], [Android] Automatic fetching of Apphud Flutter SDK version was implemented
+ 
 - Dependencies of Native SDK's were updated to:
     - [Android] 1.3.9
     
