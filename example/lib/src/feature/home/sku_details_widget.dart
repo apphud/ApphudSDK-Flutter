@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 class SkuDetailsWidget extends StatelessWidget {
   final SkuDetailsWrapper? skuDetails;
   final VoidCallback? onTap;
+  final VoidCallback? onPromote;
   final bool wrapInCard;
 
   const SkuDetailsWidget({
     Key? key,
     this.skuDetails,
     this.onTap,
+    this.onPromote,
     bool? wrapInCard,
   })  : wrapInCard = wrapInCard ?? true,
         super(key: key);
@@ -28,6 +30,11 @@ class SkuDetailsWidget extends StatelessWidget {
           title: Text('${skuDetailsLocal.title} (${skuDetailsLocal.sku})'),
           leading: Text(skuDetailsLocal.price),
           subtitle: Text(skuDetailsLocal.description),
+          trailing: FloatingActionButton(
+            heroTag: '${skuDetailsLocal.sku}',
+            onPressed: onPromote,
+            child: Text('P'),
+          ),
         ),
       ),
     );

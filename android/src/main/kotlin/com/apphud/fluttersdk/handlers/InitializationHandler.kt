@@ -2,7 +2,7 @@ package com.apphud.fluttersdk.handlers
 
 import android.content.Context
 import com.apphud.sdk.Apphud
-import com.apphud.sdk.client.HttpUrlConnectionExecutor
+//import com.apphud.sdk.client.HttpUrlConnectionExecutor
 import io.flutter.plugin.common.MethodChannel
 
 

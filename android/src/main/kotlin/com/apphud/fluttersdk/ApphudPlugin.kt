@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import androidx.annotation.NonNull
 import com.apphud.fluttersdk.handlers.*
-import com.apphud.sdk.client.HttpUrlConnectionExecutor
+import com.apphud.sdk.managers.HeadersInterceptor
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
@@ -64,13 +64,14 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             AttributionHandler(AttributionRoutes.stringValues()),
             OtherHandler(OtherRoutes.stringValues(), context = this.context),
             UserPropertiesHandler(UserPropertiesRoutes.stringValues(), context = this.context),
-            PaywallLogsHandler(PaywallLogsRoutes.stringValues(), context = this.context)
+            PaywallLogsHandler(PaywallLogsRoutes.stringValues(), context = this.context),
+            PromotionalsHandler(PromotionalsRoutes.stringValues())
         )
     }
 
     private fun setHeaders() {
-        HttpUrlConnectionExecutor.X_SDK = "flutter"
-        HttpUrlConnectionExecutor.X_SDK_VERSION = BuildConfig.APPHUD_FLUTTER_SDK_VERSION
+        //HeadersInterceptor.X_SDK = "flutter"
+        //HeadersInterceptor.X_SDK_VERSION = BuildConfig.APPHUD_FLUTTER_SDK_VERSION
     }
 
     override fun onDetachedFromActivityForConfigChanges() {

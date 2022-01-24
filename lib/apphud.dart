@@ -545,7 +545,7 @@ class Apphud {
 
 // Promotionals
 
-  /// iOS only. You can grant free promotional subscription to user. Returns `true` in a callback if promotional was granted.
+  /// You can grant free promotional subscription to user. Returns `true` in a callback if promotional was granted.
   ///
   /// You should pass either `productId` (recommended) or `permissionGroup` OR both parameters `null`. Sending both `productId` and `permissionGroup` parameters will result in `productId` being used.
   /// - parameter [daysCount] is required. Number of days of free premium usage. For lifetime promotionals just pass extremely high value, like 10000.
