@@ -71,7 +71,7 @@ class Apphud {
     return (await _channel.invokeMethod<String>('userID'))!;
   }
 
-  /// iOS only. Returns current device ID.
+  /// Returns current device ID.
   ///
   /// You should use it only if you want to implement custom logout/login flow by saving User ID & Device ID pair for each app user.
   static Future<String> deviceID() async {
