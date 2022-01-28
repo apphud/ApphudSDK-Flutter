@@ -27,11 +27,15 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private var activity: Activity? = null
 
     private lateinit var channel: MethodChannel
+    private lateinit var listenerChannel: MethodChannel
+    private lateinit var listenerHandler: ApphudListenerHandler
 
     override
     fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud")
         channel.setMethodCallHandler(this)
+        listenerChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud/listener")
+        listenerHandler = ApphudListenerHandler(listenerChannel)
         this.context = flutterPluginBinding.applicationContext
     }
 
@@ -48,6 +52,8 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+        listenerHandler.dispose()
+        listenerHandler
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
@@ -70,7 +76,7 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun setHeaders() {
-        //HeadersInterceptor.X_SDK = "flutter"
+        HeadersInterceptor.X_SDK = "Flutter"
         //HeadersInterceptor.X_SDK_VERSION = BuildConfig.APPHUD_FLUTTER_SDK_VERSION
     }
 

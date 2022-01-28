@@ -23,17 +23,19 @@ class SkuDetailsWidget extends StatelessWidget {
       return _wrapInCard(child: ListTile(title: Text('skuDetails is null')));
     }
     final SkuDetailsWrapper skuDetailsLocal = skuDetails!;
-    return InkWellStack(
+    return InkWell(
       onTap: onTap,
       child: _wrapInCard(
         child: ListTile(
           title: Text('${skuDetailsLocal.title} (${skuDetailsLocal.sku})'),
           leading: Text(skuDetailsLocal.price),
           subtitle: Text(skuDetailsLocal.description),
-          trailing: FloatingActionButton(
-            heroTag: '${skuDetailsLocal.sku}',
-            onPressed: onPromote,
-            child: Text('P'),
+          trailing: HeroMode(
+            enabled: false,
+            child: FloatingActionButton(
+              onPressed: onPromote,
+              child: Text('P'),
+            ),
           ),
         ),
       ),

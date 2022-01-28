@@ -11,8 +11,4 @@ class InitializationEvent with _$InitializationEvent {
 
   const factory InitializationEvent.paywallsFetchSuccess(
       ApphudPaywalls paywalls) = PaywallsFetchSuccess;
-
-
-  const factory InitializationEvent.paywallsFetchFailure(String error) =
-      PaywallsFetchFailure;
 }

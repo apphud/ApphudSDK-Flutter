@@ -3,7 +3,10 @@ import 'dart:io';
 
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
+import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
+import 'package:apphud/models/apphud_models/apphud_subscription.dart';
+import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:apphud_example/src/feature/common/app_secrets_base.dart';
 import 'package:apphud_example/src/feature/common/debug_print_mixin.dart';
 import 'package:apphud_example/src/feature/navigation/navigation_bloc.dart';
@@ -14,7 +17,8 @@ import 'initialization_event.dart';
 import 'initialization_state.dart';
 
 class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
-    with DebugPrintMixin {
+    with DebugPrintMixin
+    implements ApphudListener {
   final AppSecretsBase _appSecrets;
   final NavigationBloc _navigationBloc;
 
@@ -26,14 +30,7 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
         super(InitializationState.trying());
 
   void _fetchPaywalls() async {
-    try {
-      final ApphudPaywalls paywalls = await Apphud.getPaywalls();
-      add(InitializationEvent.paywallsFetchSuccess(paywalls));
-      printAsJson('getPaywalls()', paywalls);
-    } catch (e) {
-      add(InitializationEvent.paywallsFetchFailure(e.toString()));
-      printError('getPaywalls()', e);
-    }
+    unawaited(Apphud.setListener(listener: this));
   }
 
   @override
@@ -42,7 +39,6 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
   ) =>
       event.map(
         initializeTrying: _mapInitializeTrying,
-        paywallsFetchFailure: _mapPaywallsFetchFailure,
         paywallsFetchSuccess: _mapPaywallsFetchSuccess,
       );
 
@@ -70,11 +66,6 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
     } catch (e) {
       yield InitializationState.startFail(e.toString());
     }
-  }
-
-  Stream<InitializationState> _mapPaywallsFetchFailure(
-      PaywallsFetchFailure event) async* {
-    yield InitializationState.paywallsFetchFail(event.error);
   }
 
   Stream<InitializationState> _mapPaywallsFetchSuccess(
@@ -119,5 +110,41 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
         onError: (e) => printError('paywallsDidLoadCallback()', e),
       );
     }
+  }
+
+  @override
+  Future<void> apphudDidChangeUserID(String userId) async {
+    printAsJson('ApphudListener.apphudDidChangeUserID', userId);
+  }
+
+  @override
+  Future<void> apphudFecthProducts(
+    List<ApphudProductComposite> products,
+  ) async {
+    printAsJson('ApphudListener.apphudFecthProducts', products);
+  }
+
+  @override
+  Future<void> paywallsDidFullyLoad(ApphudPaywalls paywalls) async {
+    add(InitializationEvent.paywallsFetchSuccess(paywalls));
+  }
+
+  @override
+  Future<void> paywallsDidLoad(ApphudPaywalls paywalls) async {
+    printAsJson('ApphudListener.paywallsDidLoad', paywalls);
+  }
+
+  @override
+  Future<void> apphudNonRenewingPurchasesUpdated(
+    List<ApphudNonRenewingPurchase> purchases,
+  ) async {
+    printAsJson('ApphudListener.apphudNonRenewingPurchasesUpdated', purchases);
+  }
+
+  @override
+  Future<void> apphudSubscriptionsUpdated(
+    List<ApphudSubscriptionWrapper> subscriptions,
+  ) async {
+    printAsJson('ApphudListener.apphudSubscriptionsUpdated', subscriptions);
   }
 }

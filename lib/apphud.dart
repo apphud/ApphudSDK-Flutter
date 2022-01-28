@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:apphud/listener/apphud_listener.dart';
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
 import 'package:apphud/models/apphud_models/apphud_group.dart';
@@ -12,14 +13,19 @@ import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
 import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
 import 'package:flutter/services.dart';
 
+import 'listener/apphud_listener_handler.dart';
 import 'models/apphud_models/apphud_attribution_provider.dart';
 import 'models/apphud_models/apphud_error.dart';
 import 'models/apphud_models/composite/apphud_product_composite.dart';
 import 'models/apphud_models/composite/apphud_purchase_result.dart';
 import 'models/extensions.dart';
+export 'listener/apphud_listener.dart';
 
 class Apphud {
   static const MethodChannel _channel = MethodChannel('apphud');
+  static const MethodChannel _listenerChannel =
+      MethodChannel('apphud/listener');
+  static ApphudListenerHandler? _apphudListenerHandler;
 
 // Initialization
 
@@ -91,7 +97,7 @@ class Apphud {
   ///
   /// Note that you have to add all product identifiers in Apphud.
   /// You can use `productsDidFetchCallback` callback or observe for `didFetchProductsNotification()`. Use whatever you like most.
-  @Deprecated('Use `getPaywalls()` method instead.')
+  @Deprecated('Use `setListener({ApphudListener? listener})` method instead.')
   static Future<String> didFetchProductsNotification() async {
     return (await _channel.invokeMethod('didFetchProductsNotification'))!;
   }
@@ -113,7 +119,7 @@ class Apphud {
   ///
   /// You have to add all product identifiers in Apphud.
   /// You shouldn't call this method at app launch, because Apphud SDK automatically fetches products during initialization. Only use this method as a fallback.
-  @Deprecated('Use `getPaywalls()` method instead.')
+  @Deprecated('Use `setListener({ApphudListener? listener})` method instead.')
   static Future<List<SKProductWrapper>> refreshStoreKitProducts() async {
     List<Map<dynamic, dynamic>> products =
         (await _channel.invokeMethod<List<dynamic>>('refreshStoreKitProducts'))!
@@ -126,7 +132,7 @@ class Apphud {
   ///
   /// Note that you have to add this product identifier in Apphud.
   /// Will return `null` if product is not yet fetched from Google Play Billing (Android) or StoreKit (iOS).
-  @Deprecated('Use `getPaywalls()` method instead.')
+  @Deprecated('Use `setListener({ApphudListener? listener})` method instead.')
   static Future<ApphudProductComposite?> product(
       String productIdentifier) async {
     final Map<dynamic, dynamic>? json =
@@ -141,7 +147,7 @@ class Apphud {
   /// Returns array of [ApphudProductComposite] objects that you added in Apphud.
   ///
   /// Note that this method will return `null` if products are not yet fetched. You should observe for `Apphud.didFetchProductsNotification()` notification (iOS) or use `productsDidFetchCallback` (iOS, Android).
-  @Deprecated('Use `getPaywalls()` method instead.')
+  @Deprecated('Use `setListener({ApphudListener? listener})` method instead.')
   static Future<List<ApphudProductComposite>?> products() async {
     List<Map<dynamic, dynamic>>? products =
         (await _channel.invokeMethod<List<dynamic>>('products'))?.toMapList;
@@ -226,16 +232,6 @@ class Apphud {
   ///  Displays an offer code redemption sheet.
   static Future<void> presentOfferCodeRedemptionSheet() async {
     await _channel.invokeMethod('presentOfferCodeRedemptionSheet');
-  }
-
-  //// Fetches  paywalls configured in Apphud dashboard.
-  ///
-  /// Paywalls are automatically cached on device.
-  static Future<ApphudPaywalls> getPaywalls() async {
-    final Map<dynamic, dynamic>? json =
-        await _channel.invokeMethod<Map<dynamic, dynamic>>('getPaywalls');
-
-    return ApphudPaywalls.fromJson(json!);
   }
 
   /// iOS only. Returns paywalls with their `SKProducts`, if configured in Apphud Products Hub.
@@ -565,5 +561,23 @@ class Apphud {
       },
     );
     return value!;
+  }
+
+// Listener
+
+  /// Set listener
+  ///
+  /// - parameter [listener] is optional. When the parameter is null or omitted,
+  // the previous set listener will be removed. The only one listener
+  // may be used at the same time, so the new listener replaces the previous.
+  static Future<void> setListener({ApphudListener? listener}) async {
+    _apphudListenerHandler?.dispose();
+    _apphudListenerHandler = null;
+    if (listener != null) {
+      _apphudListenerHandler = ApphudListenerHandler(
+        channel: _listenerChannel,
+        listener: listener,
+      );
+    }
   }
 }
