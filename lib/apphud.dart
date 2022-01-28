@@ -236,25 +236,13 @@ class Apphud {
 
   /// iOS only. Returns paywalls with their `SKProducts`, if configured in Apphud Products Hub.
   ///
-  /// Returns `null` if StoreKit products are not yet fetched from the App Store. To get notified when paywalls are ready to use, use `paywallsDidLoadCallback` – when it's called, paywalls are populated with their `SKProducts`.
+  /// Returns `null` if StoreKit products are not yet fetched from the App Store.
+  /// To get notified when paywalls are ready to use, use `paywallsDidFullyLoad`
+  /// of `ApphudListener` – when it's called, paywalls are populated with their `SKProducts`.
   static Future<ApphudPaywalls?> paywalls() async {
     final Map<dynamic, dynamic>? json =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('paywalls');
     return json != null ? ApphudPaywalls.fromJson(json) : null;
-  }
-
-  /// iOS only. This callback is called when paywalls are fully loaded with their StoreKit products.
-  ///
-  /// Callback is called immediately if paywalls are already loaded. It is safe to call this method multiple times – previous callback will not be overwritten, but will be added to array and once paywalls are loaded, all callbacks will be called.
-  static Future<ApphudPaywalls> paywallsDidLoadCallback() async {
-    final Map<dynamic, dynamic>? json = await _channel
-        .invokeMethod<Map<dynamic, dynamic>>('paywallsDidLoadCallback');
-    if (json == null) {
-      return ApphudPaywalls(
-        error: ApphudError(message: 'paywallsDidLoadCallback error'),
-      );
-    }
-    return ApphudPaywalls.fromJson(json);
   }
 
 // Handle Purchases
