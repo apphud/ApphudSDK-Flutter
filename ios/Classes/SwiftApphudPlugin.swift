@@ -23,6 +23,8 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         let instance = SwiftApphudPlugin()
         setHeaders()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        let delegateChanell = FlutterMethodChannel(name: "apphud/listener", binaryMessenger: registrar.messenger())
+        registrar.addMethodCallDelegate(ApphudDelegateHandler(channel: delegateChanell), channel: delegateChanell)
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
