@@ -17,9 +17,12 @@ final class ProductsRequest: Request {
             result(products.map{ product in product.toMap()})
             return
         }
-        Apphud.productsDidFetchCallback { products in
-            result(products.map{ product in product.toMap()})
-            return
+        Apphud.productsDidFetchCallback { (products,error) in
+            if(error == nil){
+                result(products.map{ product in product.toMap()})
+            } else {
+                result(FlutterError(code: "500", message: error?.localizedDescription, details: nil))
+            }
         }
     }
 }

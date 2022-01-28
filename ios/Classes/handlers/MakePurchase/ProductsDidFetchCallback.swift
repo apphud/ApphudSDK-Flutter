@@ -13,8 +13,12 @@ final class ProductsDidFetchCallbackRequest: Request {
     typealias ArgumentProvider = ProductsDidFetchCallbackArgumentParser
 
     func startRequest(arguments: (), result: @escaping FlutterResult) {
-        Apphud.productsDidFetchCallback { products in
-            result(products.map{ product in product.toMap()})
+        Apphud.productsDidFetchCallback { (products,error) in
+            if(error == nil){
+                result(products.map{ product in product.toMap()})
+            } else {
+                result(FlutterError(code: "500", message: error?.localizedDescription, details: nil))
+            }
         }
     }
 }
