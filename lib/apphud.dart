@@ -93,10 +93,13 @@ class Apphud {
 
 // Make Purchase
 
-  /// iOS only. This notification is sent when SKProducts are fetched from StoreKit.
+  /// iOS only. This notification is sent when `SKProduct`s are fetched from the App Store.
   ///
-  /// Note that you have to add all product identifiers in Apphud.
-  /// You can use `productsDidFetchCallback` callback or observe for `didFetchProductsNotification()`. Use whatever you like most.
+  /// Note that you have to add all product identifiers in Apphud Dashboard > Product Hub > Products.
+  /// You can use `productsDidFetchCallback` callback or observe for `didFetchProductsNotification()`
+  /// or implement `apphudDidFetchProducts` 'ApphudListener' method. Use whatever you like most.
+  /// Best practise is not to use this method, but implement paywalls logic by adding your
+  /// paywall configuration in Apphud Dashboard > Product Hub > Paywalls.
   @Deprecated('Use `setListener({ApphudListener? listener})` method instead.')
   static Future<String> didFetchProductsNotification() async {
     return (await _channel.invokeMethod('didFetchProductsNotification'))!;
@@ -105,7 +108,6 @@ class Apphud {
   /// This callback is called when SKProducts are fetched from StoreKit (iOS) or Google Play Billing (Android).
   ///
   /// Note that you have to add all product identifiers in Apphud.
-  /// You can use `productsDidFetchCallback` (iOS) callback or observe for `didFetchProductsNotification()`. Use whatever you like most.
   static Future<List<ApphudProductComposite>> productsDidFetchCallback() async {
     final List<Map<dynamic, dynamic>> products = (await _channel
             .invokeMethod<List<dynamic>>('productsDidFetchCallback'))!
@@ -115,11 +117,13 @@ class Apphud {
         .toList();
   }
 
-  /// iOS only. Refreshes SKProducts from the App Store.
+  /// iOS only.  Refreshes `SKProduct`s from the App Store.
   ///
-  /// You have to add all product identifiers in Apphud.
-  /// You shouldn't call this method at app launch, because Apphud SDK automatically fetches products during initialization. Only use this method as a fallback.
-  @Deprecated('Use `setListener({ApphudListener? listener})` method instead.')
+  /// You have to add all product identifiers in Apphud Dashboard > Product Hub > Products.
+  /// You shouldn't call this method at app launch, because Apphud SDK automatically
+  /// fetches products during initialization. Only use this method as a fallback.
+  /// Best practise is not to use this method, but implement paywalls logic by adding your
+  /// paywall configuration in Apphud Dashboard > Product Hub > Paywalls.
   static Future<List<SKProductWrapper>> refreshStoreKitProducts() async {
     List<Map<dynamic, dynamic>> products =
         (await _channel.invokeMethod<List<dynamic>>('refreshStoreKitProducts'))!
@@ -130,9 +134,10 @@ class Apphud {
 
   /// Returns [ApphudProductComposite] object by [productIdentifier].
   ///
-  /// Note that you have to add this product identifier in Apphud.
-  /// Will return `null` if product is not yet fetched from Google Play Billing (Android) or StoreKit (iOS).
-  @Deprecated('Use `setListener({ApphudListener? listener})` method instead.')
+  /// Note that you have to add this product identifier in Apphud Dashboard > Product Hub > Products.
+  /// Will return `null` if product is not yet fetched from the App Store.
+  /// Best practise is not to use this method, but implement paywalls logic by adding your
+  /// paywall configuration in Apphud Dashboard > Product Hub > Paywalls.
   static Future<ApphudProductComposite?> product(
       String productIdentifier) async {
     final Map<dynamic, dynamic>? json =
@@ -144,10 +149,13 @@ class Apphud {
     return json != null ? ApphudProductComposite.fromJson(json) : null;
   }
 
-  /// Returns array of [ApphudProductComposite] objects that you added in Apphud.
+  /// Returns array of [ApphudProductComposite] objects that you added in Apphud > Product Hub > Products.
   ///
-  /// Note that this method will return `null` if products are not yet fetched. You should observe for `Apphud.didFetchProductsNotification()` notification (iOS) or use `productsDidFetchCallback` (iOS, Android).
-  @Deprecated('Use `setListener({ApphudListener? listener})` method instead.')
+  /// Note that this method will return `null` if products are not yet fetched from the App Store.
+  /// You should observe for `didFetchProductsNotification()` notification on iOS or implement
+  /// `apphudFetchProducts` method of 'ApphudListener' or use `productsDidFetchCallback`.
+  /// Best practise is not to use this method, but implement paywalls logic by adding your
+  /// paywall configuration in Apphud Dashboard > Product Hub > Paywalls.
   static Future<List<ApphudProductComposite>?> products() async {
     List<Map<dynamic, dynamic>>? products =
         (await _channel.invokeMethod<List<dynamic>>('products'))?.toMapList;
@@ -158,11 +166,14 @@ class Apphud {
 
   ///  Purchase product and automatically submits App Store Receipt (iOS) or Google Play purchase token (Android) to Apphud.
   ///
-  /// iOS:  You are not required to purchase product using Apphud SDK methods. You can purchase subscription or any in-app purchase using your own code. App Store receipt will be sent to Apphud anyway.
-  /// - parameter [productId] ir required. Identifier of the product that user wants to purchase.
+  /// - parameter [productId] is identifier of the product that user wants to purchase. If you don't use Apphud paywalls, you can use this parameter.
+  /// Best practise is not to use this method, but implement paywalls logic by adding your paywall configuration in Apphud Dashboard > Product Hub > Paywalls.
+  /// - parameter [product] - is an `ApphudProduct` object from your `ApphudPaywall`. You must first configure paywalls in Apphud Dashboard > Product Hub > Paywalls.
   /// Returns [ApphudPurchaseResult] object
+  /// Note for iOS only:  You are not required to purchase product using Apphud SDK methods.
+  /// You can purchase subscription or any in-app purchase using your own code. App Store receipt will be sent to Apphud anyway.
   static Future<ApphudPurchaseResult> purchase({
-    @Deprecated('Use product parameter instead.') String? productId,
+    String? productId,
     ApphudProduct? product,
   }) async {
     try {
@@ -447,14 +458,6 @@ class Apphud {
       'setAdvertisingIdentifier',
       {'idfa': idfa},
     );
-  }
-
-  /// iOS only. Opt out of IDFA collection.
-  ///
-  /// Currently we collect IDFA to match users between Apphud and attribution platforms (AppsFlyer, Branch). If you don't use and not planning to use such services, you can call this method.
-  /// This method must be called before Apphud SDK initialization.
-  static Future<void> disableIDFACollection() async {
-    await _channel.invokeMethod('disableIDFACollection');
   }
 
   ///  Submit attribution data to Apphud from your attribution network provider.
