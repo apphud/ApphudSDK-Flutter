@@ -60,7 +60,7 @@ class ApphudListenerHandler {
     List<ApphudProductComposite> products = productsMap
         .map((json) => ApphudProductComposite.fromJson(json))
         .toList();
-    unawaited(_listener.apphudFecthProducts(products));
+    unawaited(_listener.apphudDidFecthProducts(products));
   }
 
   Future<void> _handlePaywallsDidFullyLoad(dynamic arguments) async {

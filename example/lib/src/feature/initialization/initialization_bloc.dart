@@ -91,10 +91,10 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
   }
 
   @override
-  Future<void> apphudFecthProducts(
+  Future<void> apphudDidFecthProducts(
     List<ApphudProductComposite> products,
   ) async {
-    printAsJson('ApphudListener.apphudFecthProducts', products);
+    printAsJson('ApphudListener.apphudDidFecthProducts', products);
   }
 
   @override

@@ -9,7 +9,7 @@ abstract class ApphudListener {
 
   /// Returns array of products after they are fetched from Google Billing or StoreKit.
   /// Note that you have to add all product identifiers in Apphud.
-  Future<void> apphudFecthProducts(List<ApphudProductComposite> products);
+  Future<void> apphudDidFecthProducts(List<ApphudProductComposite> products);
 
   /// Called when paywalls are fully loaded with their SkuDetails or SkProducts
   Future<void> paywallsDidFullyLoad(ApphudPaywalls paywalls);

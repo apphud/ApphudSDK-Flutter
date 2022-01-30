@@ -91,6 +91,22 @@ class Apphud {
   /// If previous user had active subscription, the new logged-in user can still restore purchases on this device and both users will be merged under the previous paid one, because Apple ID is tied to a device.
   static Future<void> logout() => _channel.invokeMethod('logout');
 
+  /// Set listener
+  ///
+  /// - parameter [listener] is optional. When the parameter is null or omitted,
+  // the previous set listener will be removed. The only one listener
+  // may be used at the same time, so the new listener replaces the previous.
+  static Future<void> setListener({ApphudListener? listener}) async {
+    _apphudListenerHandler?.dispose();
+    _apphudListenerHandler = null;
+    if (listener != null) {
+      _apphudListenerHandler = ApphudListenerHandler(
+        channel: _listenerChannel,
+        listener: listener,
+      );
+    }
+  }
+
 // Make Purchase
 
   /// iOS only. This notification is sent when `SKProduct`s are fetched from the App Store.
@@ -552,23 +568,5 @@ class Apphud {
       },
     );
     return value!;
-  }
-
-// Listener
-
-  /// Set listener
-  ///
-  /// - parameter [listener] is optional. When the parameter is null or omitted,
-  // the previous set listener will be removed. The only one listener
-  // may be used at the same time, so the new listener replaces the previous.
-  static Future<void> setListener({ApphudListener? listener}) async {
-    _apphudListenerHandler?.dispose();
-    _apphudListenerHandler = null;
-    if (listener != null) {
-      _apphudListenerHandler = ApphudListenerHandler(
-        channel: _listenerChannel,
-        listener: listener,
-      );
-    }
   }
 }
