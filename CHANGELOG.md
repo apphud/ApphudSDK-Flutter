@@ -15,7 +15,7 @@
  
 - Dependencies of Native SDK's were updated to:
     - [Android] 1.5.3
-    - [iOS] 2.5.5
+    - [iOS] 2.5.6
     
 ## 2.1.0
 - [iOS], [Android] Experiments were added. Run Experiments(A/B tests) to test different in-app purchases prices in order to find the best.
