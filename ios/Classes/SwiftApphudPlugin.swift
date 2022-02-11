@@ -23,6 +23,8 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         let instance = SwiftApphudPlugin()
         setHeaders()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        let delegateChanell = FlutterMethodChannel(name: "apphud/listener", binaryMessenger: registrar.messenger())
+        registrar.addMethodCallDelegate(ApphudDelegateHandler(channel: delegateChanell), channel: delegateChanell)
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -35,7 +37,8 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         }
     }
     private static func setHeaders() {
-        ApphudHttpClient.shared.sdkType = "flutter"
-        ApphudHttpClient.shared.sdkVersion = "2.1.0"
+        let sdkVersion = Bundle(identifier: "org.cocoapods.apphud")?.infoDictionary?["CFBundleShortVersionString"] as? String
+        ApphudHttpClient.shared.sdkType = "Flutter"
+        ApphudHttpClient.shared.sdkVersion = sdkVersion ?? "unknown"
     }
 }

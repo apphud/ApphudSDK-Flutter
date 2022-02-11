@@ -12,11 +12,14 @@ final class RefreshStoreKitProductsRequest: Request {
     typealias ArgumentProvider = RefreshStoreKitProductsArgumentParser
     
     func startRequest(arguments: (), result: @escaping FlutterResult) {
-        Apphud.refreshStoreKitProducts { products in
-            result(products.map{ product in product.toMap()})
+        Apphud.refreshStoreKitProducts { (products,error) in
+                if(error == nil){
+                    result(products.map{ product in product.toMap()})
+                } else {
+                    result(FlutterError(code: "500", message: error?.localizedDescription, details: nil))
+                }
         }
     }
-
 }
 
 final class  RefreshStoreKitProductsArgumentParser: Parser {

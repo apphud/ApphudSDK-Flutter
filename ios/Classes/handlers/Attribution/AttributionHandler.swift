@@ -14,8 +14,6 @@ class AttributionHandler: Handler {
         switch method {
         case AssociatedEnum.setAdvertisingIdentifier.rawValue:
             Action<SetAdvertisingIdentifierRequest,SetAdvertisingIdentifierArgumentParser>(args: args, result: result).startFlow()
-        case AssociatedEnum.disableIDFACollection.rawValue:
-            Action<DisableIDFACollectionRequest,DisableIDFACollectionArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.addAttribution.rawValue:
             Action<AddAttributionRequest,AddAttributionArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.collectSearchAdsAttribution.rawValue:

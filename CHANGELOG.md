@@ -1,3 +1,22 @@
+## 2.2.0
+- [iOS] The optional parameter 'level' was added to the method enableDebugLogs(). 
+    Possible values are:
+    - 'ApphudDebugLevel.low' - the same as previous amount of debug information.
+    - 'ApphudDebugLevel.high' - enables printing of additional debug messages, for example HTTP requests and responses.
+- [iOS], [Android] Automatic fetching of Apphud Flutter SDK version was implemented
+- [iOS] **BREAKING** Method 'disableIDFACollection()' was removed
+- [Android] Method 'grantPromotional()' was implemented
+- [Android], [iOS] Class 'ApphudListener' and method 'setListener({ApphudListener? listener})' were implemented
+- [Android], [iOS] **BREAKING** Method 'getPaywalls()' was removed. Please use ApphudListener instead.
+- [iOS] **BREAKING** Method 'paywallsDidLoadCallback()' was removed. Please use ApphudListener instead.
+- [Android] Method 'deviceId()' was implemented
+- [Andoid], [iOS] Significantly improved SDK performance and caching. Now SDK will send much less requests to Apphud server.
+
+ 
+- Dependencies of Native SDK's were updated to:
+    - [Android] 1.5.3
+    - [iOS] 2.5.6
+    
 ## 2.1.0
 - [iOS], [Android] Experiments were added. Run Experiments(A/B tests) to test different in-app purchases prices in order to find the best.
 - [iOS] Apple search Ads logic was improved. Submit Apple Attribution Token to Apphud with Apphud.addAttribution().

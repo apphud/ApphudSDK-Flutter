@@ -33,7 +33,8 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     _setAttribution();
     _collectSearchAdsAttribution();
     _fetchPermissionGroups();
-    _paywallsIos();
+    _paywalls();
+    _deviceId();
   }
 
   @override
@@ -180,16 +181,24 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     );
   }
 
-  void _paywallsIos() {
-    if (Platform.isIOS) {
-      Apphud.paywalls().then(
-        (value) => printAsJson(
-          'paywalls',
-          value,
-        ),
-        onError: (e) => printError('paywalls', e),
-      );
-    }
+  void _paywalls() {
+    Apphud.paywalls().then(
+      (value) => printAsJson(
+        'paywalls',
+        value,
+      ),
+      onError: (e) => printError('paywalls', e),
+    );
+  }
+
+  void _deviceId() {
+    Apphud.deviceID().then(
+      (value) => printAsJson(
+        'deviceID',
+        value,
+      ),
+      onError: (e) => printError('deviceID', e),
+    );
   }
 
   Stream<PurchaseState> _mapPurchaseProduct(PurchaseProduct event) async* {

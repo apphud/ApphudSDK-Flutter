@@ -41,23 +41,11 @@ class PaywallParser(private val result: MethodChannel.Result) {
             args ?: throw IllegalArgumentException("arguments are required")
             val identifier = args["identifier"] as? String
                 ?: throw IllegalArgumentException("identifier is required argument")
-
-            Apphud.getPaywalls { paywalls: List<ApphudPaywall>?, error: ApphudError? ->
-                if (error != null) {
-                    result.error(
-                        error.errorCode?.toString() ?: "400",
-                        error.message,
-                        ""
-                    )
-                } else {
-                    val paywall = paywalls?.firstOrNull { it.identifier == identifier }
-                        ?: throw IllegalArgumentException(
-                            "There isn't the paywall with identifier $identifier"
-                        )
-                    callback(paywall)
-                }
-            }
-
+            val paywall = Apphud.paywalls().firstOrNull { it.identifier == identifier }
+                ?: throw IllegalArgumentException(
+                    "There isn't the paywall with identifier $identifier"
+                )
+            callback(paywall)
         } catch (e: IllegalArgumentException) {
             result.error("400", e.message, "")
         }

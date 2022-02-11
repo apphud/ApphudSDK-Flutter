@@ -34,10 +34,12 @@ class SkProductWidget extends StatelessWidget {
           leading: Text(
               '${skProductLocal.price} ${skProductLocal.priceLocale.currencyCode}'),
           subtitle: Text(skProductLocal.localizedDescription),
-          trailing: FloatingActionButton(
-            heroTag: '${skProductLocal.productIdentifier}',
-            onPressed: onPromote,
-            child: Text('P'),
+          trailing: HeroMode(
+            enabled: false,
+            child: FloatingActionButton(
+              onPressed: onPromote,
+              child: Text('P'),
+            ),
           ),
         ),
       ),

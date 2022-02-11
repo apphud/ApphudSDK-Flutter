@@ -43,7 +43,9 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
 
             MakePurchaseRoutes.presentOfferCodeRedemptionSheet.name -> result.notImplemented()
 
-            MakePurchaseRoutes.getPaywalls.name -> getPaywalls(result)
+            MakePurchaseRoutes.getPaywalls.name -> result.notImplemented();
+
+            MakePurchaseRoutes.paywalls.name -> paywalls(result)
 
             MakePurchaseRoutes.purchaseProduct.name -> PurchaseProductParser(result).parse(args)
             { product -> purchaseProduct(product, result) }
@@ -57,17 +59,11 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
         result.success(groups.map { it.toMap() })
     }
 
-    private fun getPaywalls(result: MethodChannel.Result) {
-        Apphud.getPaywalls { paywalls: List<ApphudPaywall>?, error: ApphudError? ->
-            val resultMap = hashMapOf<String, Any?>()
-            paywalls?.let { it ->
-                resultMap["paywalls"] = it.map { paywall -> paywall.toMap() }
-            }
-            error?.let {
-                resultMap["error"] = it.toMap()
-            }
-            activity.runOnUiThread { result.success(resultMap) }
-        }
+    private fun paywalls(result: MethodChannel.Result) {
+        val paywalls: List<ApphudPaywall> = Apphud.paywalls();
+        val resultMap = hashMapOf<String, Any?>()
+        resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
+        activity.runOnUiThread { result.success(resultMap) }
     }
 
     private fun didFetchProductsNotification(result: MethodChannel.Result) {
@@ -210,6 +206,7 @@ enum class MakePurchaseRoutes {
     syncPurchases,
     presentOfferCodeRedemptionSheet,
     getPaywalls,
+    paywalls,
     purchaseProduct,
     permissionGroups;
 

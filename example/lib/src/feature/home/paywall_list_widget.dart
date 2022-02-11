@@ -143,6 +143,9 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
         onTap: () => BlocProvider.of<PurchaseBloc>(context).add(
           PurchaseEvent.purchaseProduct(product),
         ),
+        onPromote: () => BlocProvider.of<PurchaseBloc>(context).add(
+          PurchaseEvent.grantPromotional(product),
+        ),
       );
     } else {
       content = Text('No product for this platform');

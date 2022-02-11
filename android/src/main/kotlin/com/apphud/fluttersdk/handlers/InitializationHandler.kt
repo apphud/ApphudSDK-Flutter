@@ -2,7 +2,7 @@ package com.apphud.fluttersdk.handlers
 
 import android.content.Context
 import com.apphud.sdk.Apphud
-import com.apphud.sdk.client.HttpUrlConnectionExecutor
+//import com.apphud.sdk.client.HttpUrlConnectionExecutor
 import io.flutter.plugin.common.MethodChannel
 
 
@@ -24,7 +24,7 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
                 updateUserID(userId, result)
             }
             InitializationRoutes.userID.name -> userID(result)
-            InitializationRoutes.deviceID.name -> result.notImplemented()
+            InitializationRoutes.deviceID.name -> deviceID(result)
             InitializationRoutes.logout.name -> logout(result)
         }
     }
@@ -55,7 +55,8 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
     }
 
     private fun deviceID(result: MethodChannel.Result) {
-        // not implemented
+        val deviceId = Apphud.deviceId();
+        result.success(deviceId)
     }
 
     private fun logout(result: MethodChannel.Result) {
