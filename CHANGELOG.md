@@ -1,3 +1,12 @@
+## 2.2.1
+- [Android] Fixed bug that method hasActiveSubscription was false for paying users at launch before data refreshes. Now value is cached.
+- [Android] Fixed internal potential crash
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 1.5.5
+  - [iOS] 
+
+
 ## 2.2.0
 - [iOS] The optional parameter 'level' was added to the method enableDebugLogs(). 
     Possible values are:
