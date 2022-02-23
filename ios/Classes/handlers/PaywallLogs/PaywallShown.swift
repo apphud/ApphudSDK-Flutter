@@ -13,8 +13,9 @@ final class PaywallShownRequest: Request {
 
     func startRequest(arguments: PaywallArgumentParser.ArgumentType, result: @escaping FlutterResult) {
         Apphud.getPaywalls { (paywalls:[ApphudPaywall]?, _ ) in
-            let paywall = paywalls?.first { pw in return pw.identifier==arguments }
-            Apphud.paywallShown(paywall)
+            if let paywall = paywalls?.first(where: { pw in return pw.identifier==arguments }) {
+                Apphud.paywallShown(paywall)
+            }
         }
         result(nil)
     }

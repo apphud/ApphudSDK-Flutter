@@ -261,11 +261,12 @@ class Apphud {
     await _channel.invokeMethod('presentOfferCodeRedemptionSheet');
   }
 
-  /// iOS only. Returns paywalls with their `SKProducts`, if configured in Apphud Products Hub.
-  ///
-  /// Returns `null` if StoreKit products are not yet fetched from the App Store.
-  /// To get notified when paywalls are ready to use, use `paywallsDidFullyLoad`
-  /// of `ApphudListener` – when it's called, paywalls are populated with their `SKProducts`.
+  /// Returns paywalls configured in Apphud Dashboard > Product Hub > Paywalls.
+  /// Each paywall contains an array of `ApphudProduct` objects that you use for purchase.
+  /// `ApphudProduct` is Apphud's wrapper around `SkuDetails` or 'SkProduct'.
+  /// Returns empty array if paywalls are not yet fetched.
+  /// To get notified when paywalls are ready to use, use ApphudListener's  `paywallsDidLoad` or `paywallsDidFullyLoad` methods.
+  /// Best practice is to use this method together with `paywallsDidFullyLoad` listener.
   static Future<ApphudPaywalls?> paywalls() async {
     final Map<dynamic, dynamic>? json =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('paywalls');
@@ -274,9 +275,11 @@ class Apphud {
 
 // Handle Purchases
 
-  /// Fetches permission groups configured in Apphud dashboard.
+  /// Returns permission groups configured in Apphud dashboard > Product Hub > Products. Groups are cached on device.
   ///
-  /// Groups are cached on device.
+  /// Note that this method returns empty array if `SkuDetails` or 'SkProduct' are not yet fetched from Google Play / App Store.
+  /// To get notified when `permissionGroups` are ready to use, use ApphudListener's `paywallsDidFullyLoad` method
+  /// Best practice is not to use this method at all, but use `paywalls()` instead.
   static Future<List<ApphudGroup>> permissionGroups() async {
     List<Map<dynamic, dynamic>> groups =
         (await _channel.invokeMethod<List<dynamic>>('permissionGroups'))!
@@ -284,9 +287,9 @@ class Apphud {
     return groups.map((json) => ApphudGroup.fromJson(json)).toList();
   }
 
-  /// Returns true if user has active subscription.
-  ///
-  /// Use this method to determine whether or not to unlock premium functionality to the user.
+  /// Returns `true` if user has active subscription. Value is cached on device.
+  /// Use this method to determine whether or not user has active premium subscription.
+  /// Note that if you have lifetime purchases, you must use another `isNonRenewingPurchaseActive` method.
   static Future<bool> hasActiveSubscription() async {
     return (await _channel.invokeMethod('hasActiveSubscription')) ?? false;
   }
