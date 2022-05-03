@@ -262,6 +262,7 @@ class Apphud {
   }
 
   /// Returns paywalls configured in Apphud Dashboard > Product Hub > Paywalls.
+  ///
   /// Each paywall contains an array of `ApphudProduct` objects that you use for purchase.
   /// `ApphudProduct` is Apphud's wrapper around `SkuDetails` or 'SkProduct'.
   /// Returns empty array if paywalls are not yet fetched.
@@ -271,6 +272,17 @@ class Apphud {
     final Map<dynamic, dynamic>? json =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('paywalls');
     return json != null ? ApphudPaywalls.fromJson(json) : null;
+  }
+
+  /// iOS only. If you want to use A/B experiments while running SDK in `Observer Mode` you should manually send paywall identifier to Apphud using this method.
+  ///
+  /// Note that you have to add paywalls in Apphud Dashboard > Product Hub > Paywalls.
+  /// You must call this method right after your own purchase method.
+  static Future<void> didPurchaseFromPaywall(String paywallIdentifier) async {
+    await _channel.invokeMethod(
+      'didPurchaseFromPaywall',
+      {'paywallIdentifier': paywallIdentifier},
+    );
   }
 
 // Handle Purchases

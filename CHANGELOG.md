@@ -1,6 +1,7 @@
 ### 2.2.2
-- [iOS], [Android] Method `hasPremiumAccess()` was implemented
-- [Android] The parameter `paywallIdentifier` was introduced for the method `syncPurchases()`
+- [iOS], [Android] Method `hasPremiumAccess()` was implemented.
+- [Android] The parameter `paywallIdentifier` was introduced for the method `syncPurchases()`.
+- [iOS] The method `didPurchaseFromPaywall` was implemented.
 
 - Dependencies of Native SDK's were updated to:
   - [Android] 1.5.9
