@@ -36,7 +36,7 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
     }
 
     private fun hasPremiumAccess(result: MethodChannel.Result) {
-        val isHasActiveSubscription = false; //Apphud.hasPremiumAccess()
+        val isHasActiveSubscription = Apphud.hasPremiumAccess()
         result.success(isHasActiveSubscription)
     }
 

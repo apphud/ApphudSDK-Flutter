@@ -153,8 +153,7 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
     }
 
     private fun syncPurchases(paywallIdentifier: String?, result: MethodChannel.Result) {
-        Apphud.syncPurchases()
-        //Apphud.syncPurchases(paywallIdentifier)
+        Apphud.syncPurchases(paywallIdentifier)
         result.success(null)
     }
 

@@ -4,7 +4,7 @@
 - [iOS] The method `didPurchaseFromPaywall` was implemented.
 
 - Dependencies of Native SDK's were updated to:
-  - [Android] 1.5.9
+  - [Android] 1.6.0
   - [iOS] 2.8.1
 
 ## 2.2.1
