@@ -69,6 +69,11 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       (value) => printAsJson('nonRenewingPurchases()', value),
       onError: (e) => printError('nonRenewingPurchases()', e),
     );
+
+    Apphud.hasPremiumAccess().then(
+      (value) => printAsJson('hasPremiumAccess()', value),
+      onError: (e) => printError('hasPremiumAccess()', e),
+    );
   }
 
   void _setUserProperties() async {

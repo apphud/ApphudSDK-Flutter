@@ -1,3 +1,12 @@
+## 2.2.2
+- [iOS], [Android] Method `hasPremiumAccess()` was implemented.
+- [Android] The parameter `paywallIdentifier` was introduced for the method `syncPurchases()`.
+- [iOS] The method `didPurchaseFromPaywall` was implemented.
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 1.6.0
+  - [iOS] 2.8.1
+
 ## 2.2.1
 - [Android] Fixed bug that method hasActiveSubscription was false for paying users at launch before data refreshes. Now value is cached.
 - [Android] Fixed internal potential crash

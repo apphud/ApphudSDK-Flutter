@@ -26,11 +26,17 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             HandlePurchasesRoutes.fetchRawReceiptInfo.name -> result.notImplemented()
             HandlePurchasesRoutes.validateReceipt.name -> result.notImplemented()
             HandlePurchasesRoutes.appStoreReceipt.name -> result.notImplemented()
+            HandlePurchasesRoutes.hasPremiumAccess.name -> hasPremiumAccess(result)
         }
     }
 
     private fun hasActiveSubscription(result: MethodChannel.Result) {
         val isHasActiveSubscription = Apphud.hasActiveSubscription()
+        result.success(isHasActiveSubscription)
+    }
+
+    private fun hasPremiumAccess(result: MethodChannel.Result) {
+        val isHasActiveSubscription = Apphud.hasPremiumAccess()
         result.success(isHasActiveSubscription)
     }
 
@@ -127,7 +133,8 @@ enum class HandlePurchasesRoutes {
     migratePurchasesIfNeeded,
     fetchRawReceiptInfo,
     validateReceipt,
-    appStoreReceipt;
+    appStoreReceipt,
+    hasPremiumAccess;
 
     companion object Mapper {
         fun stringValues(): List<String> {

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
@@ -101,17 +102,28 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
       key: ValueKey(paywall.identifier),
       title: Text(
         paywall.identifier,
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme
+            .of(context)
+            .textTheme
+            .headline5,
       ),
       subtitle: Text(
         'isDefault: ${paywall.isDefault}\n'
-        'products: ${paywall.products?.length ?? 0}\n'
-        'experimentName: ${paywall.experimentName}\n'
-        'variationName: ${paywall.variationName}\n'
-        'fromPaywall: ${paywall.fromPaywall}',
+            'products: ${paywall.products?.length ?? 0}\n'
+            'experimentName: ${paywall.experimentName}\n'
+            'variationName: ${paywall.variationName}\n'
+            'fromPaywall: ${paywall.fromPaywall}',
       ),
       isThreeLine: true,
+      trailing: Platform.isIOS ? _buildABWidget(paywall) : null,
     );
+  }
+
+  Widget _buildABWidget(ApphudPaywall paywall) {
+    return TextButton(onPressed: () {
+      Apphud.didPurchaseFromPaywall(paywall.identifier);
+    },
+      child: Text('Send\nA/B paywallId'),);
   }
 
   Widget _buildProductList(List<ApphudProduct> products) {
@@ -129,23 +141,27 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
       content = SkProductWidget(
         skProduct: product.skProduct,
         wrapInCard: false,
-        onTap: () => BlocProvider.of<PurchaseBloc>(context).add(
-          PurchaseEvent.purchaseProduct(product),
-        ),
-        onPromote: () => BlocProvider.of<PurchaseBloc>(context).add(
-          PurchaseEvent.grantPromotional(product),
-        ),
+        onTap: () =>
+            BlocProvider.of<PurchaseBloc>(context).add(
+              PurchaseEvent.purchaseProduct(product),
+            ),
+        onPromote: () =>
+            BlocProvider.of<PurchaseBloc>(context).add(
+              PurchaseEvent.grantPromotional(product),
+            ),
       );
     } else if (Platform.isAndroid) {
       content = SkuDetailsWidget(
         wrapInCard: false,
         skuDetails: product.skuDetails,
-        onTap: () => BlocProvider.of<PurchaseBloc>(context).add(
-          PurchaseEvent.purchaseProduct(product),
-        ),
-        onPromote: () => BlocProvider.of<PurchaseBloc>(context).add(
-          PurchaseEvent.grantPromotional(product),
-        ),
+        onTap: () =>
+            BlocProvider.of<PurchaseBloc>(context).add(
+              PurchaseEvent.purchaseProduct(product),
+            ),
+        onPromote: () =>
+            BlocProvider.of<PurchaseBloc>(context).add(
+              PurchaseEvent.grantPromotional(product),
+            ),
       );
     } else {
       content = Text('No product for this platform');
@@ -159,7 +175,10 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
           children: [
             Text(
               product.name ?? 'No name',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline6,
             ),
             content,
           ],

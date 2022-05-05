@@ -39,11 +39,12 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
 
             MakePurchaseRoutes.purchasePromo.name -> result.notImplemented()
 
-            MakePurchaseRoutes.syncPurchases.name -> syncPurchases(result)
+            MakePurchaseRoutes.syncPurchases.name -> SyncPurchasesParser(result).parse(args) {
+                paywallIdentifier -> syncPurchases(paywallIdentifier, result)}
 
             MakePurchaseRoutes.presentOfferCodeRedemptionSheet.name -> result.notImplemented()
 
-            MakePurchaseRoutes.getPaywalls.name -> result.notImplemented();
+            MakePurchaseRoutes.getPaywalls.name -> result.notImplemented()
 
             MakePurchaseRoutes.paywalls.name -> paywalls(result)
 
@@ -51,6 +52,8 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             { product -> purchaseProduct(product, result) }
 
             MakePurchaseRoutes.permissionGroups.name -> getPermissionGroups(result)
+
+            MakePurchaseRoutes.didPurchaseFromPaywall.name -> result.notImplemented()
         }
     }
 
@@ -149,8 +152,8 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
         // not implemented
     }
 
-    private fun syncPurchases(result: MethodChannel.Result) {
-        Apphud.syncPurchases()
+    private fun syncPurchases(paywallIdentifier: String?, result: MethodChannel.Result) {
+        Apphud.syncPurchases(paywallIdentifier)
         result.success(null)
     }
 
@@ -192,6 +195,13 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             }
         }
     }
+
+    class SyncPurchasesParser(private val result: MethodChannel.Result) {
+        fun parse(args: Map<String, Any>?, callback: (paywallIdentifier: String?) -> Unit) {
+            val paywallIdentifier = args?.get("paywallIdentifier") as String?
+            callback(paywallIdentifier)
+        }
+    }
 }
 
 enum class MakePurchaseRoutes {
@@ -208,7 +218,8 @@ enum class MakePurchaseRoutes {
     getPaywalls,
     paywalls,
     purchaseProduct,
-    permissionGroups;
+    permissionGroups,
+    didPurchaseFromPaywall;
 
     companion object Mapper {
         fun stringValues(): List<String> {

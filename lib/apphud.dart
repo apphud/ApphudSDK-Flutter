@@ -262,6 +262,7 @@ class Apphud {
   }
 
   /// Returns paywalls configured in Apphud Dashboard > Product Hub > Paywalls.
+  ///
   /// Each paywall contains an array of `ApphudProduct` objects that you use for purchase.
   /// `ApphudProduct` is Apphud's wrapper around `SkuDetails` or 'SkProduct'.
   /// Returns empty array if paywalls are not yet fetched.
@@ -271,6 +272,17 @@ class Apphud {
     final Map<dynamic, dynamic>? json =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('paywalls');
     return json != null ? ApphudPaywalls.fromJson(json) : null;
+  }
+
+  /// iOS only. If you want to use A/B experiments while running SDK in `Observer Mode` you should manually send paywall identifier to Apphud using this method.
+  ///
+  /// Note that you have to add paywalls in Apphud Dashboard > Product Hub > Paywalls.
+  /// You must call this method right after your own purchase method.
+  static Future<void> didPurchaseFromPaywall(String paywallIdentifier) async {
+    await _channel.invokeMethod(
+      'didPurchaseFromPaywall',
+      {'paywallIdentifier': paywallIdentifier},
+    );
   }
 
 // Handle Purchases
@@ -288,10 +300,22 @@ class Apphud {
   }
 
   /// Returns `true` if user has active subscription. Value is cached on device.
+  ///
   /// Use this method to determine whether or not user has active premium subscription.
   /// Note that if you have lifetime purchases, you must use another `isNonRenewingPurchaseActive` method.
   static Future<bool> hasActiveSubscription() async {
     return (await _channel.invokeMethod('hasActiveSubscription')) ?? false;
+  }
+
+  /// Returns `true` if user has active subscription or non renewing purchase (lifetime).
+  ///
+  /// You should not use this method if you have consumable in-app purchases, like coin packs.
+  /// Use this method to determine whether or not user has active premium access.
+  /// If you have consumable purchases, this method won't operate correctly,
+  /// because Apphud SDK doesn't differ consumables from non-consumables.
+
+  static Future<bool> hasPremiumAccess() async {
+    return (await _channel.invokeMethod('hasPremiumAccess')) ?? false;
   }
 
   ///  Returns [ApphudSubscriptionWrapper] subscription object that current user has ever purchased. Subscriptions are cached on device.
@@ -372,8 +396,13 @@ class Apphud {
   /// Android only. This method will send all the purchases to the Apphud server.
   ///
   /// Call this when using your own implementation for subscriptions anytime a sync is needed, like after a successful purchase.
-  static Future<void> syncPurchases() async {
-    await _channel.invokeMethod('syncPurchases');
+  static Future<void> syncPurchases({String? paywallIdentifier}) async {
+    await _channel.invokeMethod(
+      'syncPurchases',
+      {
+        'paywallIdentifier': paywallIdentifier,
+      },
+    );
   }
 
   /// iOS only. If you already have a live app with paying users and you want Apphud to track their purchases, you should import their App Store receipts into Apphud. Call this method at launch of your app for your paying users. This method should be used only to migrate existing paying users that are not yet tracked by Apphud.
