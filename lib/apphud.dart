@@ -285,6 +285,16 @@ class Apphud {
     );
   }
 
+  /// Android only. Refreshes current purchases: subscriptions and non-renewing purchases.
+  ///
+  /// To get notified about updates, you should listen for ApphudListener's
+  /// apphudSubscriptionsUpdated() and apphudNonRenewingPurchasesUpdated() methods.
+  /// Best practice is to use this method when your app reactivates from a background.
+  /// i.e. second app open during lifecycle.
+  static Future<void> refreshEntitlements() async {
+    await _channel.invokeMethod('refreshEntitlements');
+  }
+
 // Handle Purchases
 
   /// Returns permission groups configured in Apphud dashboard > Product Hub > Products. Groups are cached on device.
