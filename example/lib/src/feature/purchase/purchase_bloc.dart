@@ -48,6 +48,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         paywallShown: _mapPaywallShown,
         paywallClosed: _mapPaywallClosed,
         grantPromotional: _mapGrantPromotional,
+        refreshEntitlements: _mapRefreshEntitlements,
       );
 
   void _fetchSubscriptions() {
@@ -278,6 +279,21 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       ),
       onError: (e) => printError(
         'grantPromotional(${event.product.productId})',
+        e,
+      ),
+    ));
+  }
+
+  Stream<PurchaseState> _mapRefreshEntitlements(
+    RefreshEntitlements event,
+  ) async* {
+    unawaited(Apphud.refreshEntitlements().then(
+      (value) => printAsJson(
+        'refreshEntitlements()',
+        'success',
+      ),
+      onError: (e) => printError(
+        'refreshEntitlements()',
         e,
       ),
     ));

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:apphud_example/src/feature/common/widgets/overlay_progress_indicator.dart';
 import 'package:apphud_example/src/feature/home/purchase_message_widget.dart';
 import 'package:apphud_example/src/feature/initialization/initialization_bloc.dart';
@@ -69,11 +71,24 @@ class HomeScreen extends StatelessWidget {
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: FloatingActionButton.extended(
-          onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
-            PurchaseEvent.restorePurchases(),
-          ),
-          label: Text('Restore purchases'),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FloatingActionButton.extended(
+              onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
+                PurchaseEvent.restorePurchases(),
+              ),
+              label: Text('Restore purchases'),
+            ),
+            if (Platform.isAndroid) const SizedBox(height: 10),
+            if (Platform.isAndroid)
+              FloatingActionButton.extended(
+                onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
+                  PurchaseEvent.refreshEntitlements(),
+                ),
+                label: Text('Refresh entitlements'),
+              ),
+          ],
         ),
       ),
     );

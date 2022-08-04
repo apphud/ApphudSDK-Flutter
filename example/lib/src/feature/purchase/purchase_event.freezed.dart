@@ -44,6 +44,10 @@ class _$PurchaseEventTearOff {
       paywall,
     );
   }
+
+  RefreshEntitlements refreshEntitlements() {
+    return const RefreshEntitlements();
+  }
 }
 
 /// @nodoc
@@ -58,6 +62,7 @@ mixin _$PurchaseEvent {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
+    required TResult Function() refreshEntitlements,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,6 +72,7 @@ mixin _$PurchaseEvent {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -76,6 +82,7 @@ mixin _$PurchaseEvent {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -86,6 +93,7 @@ mixin _$PurchaseEvent {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
+    required TResult Function(RefreshEntitlements value) refreshEntitlements,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -95,6 +103,7 @@ mixin _$PurchaseEvent {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -104,6 +113,7 @@ mixin _$PurchaseEvent {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -171,6 +181,7 @@ class _$RestorePurchases extends RestorePurchases {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
+    required TResult Function() refreshEntitlements,
   }) {
     return restorePurchases();
   }
@@ -183,6 +194,7 @@ class _$RestorePurchases extends RestorePurchases {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
   }) {
     return restorePurchases?.call();
   }
@@ -195,6 +207,7 @@ class _$RestorePurchases extends RestorePurchases {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
     required TResult orElse(),
   }) {
     if (restorePurchases != null) {
@@ -211,6 +224,7 @@ class _$RestorePurchases extends RestorePurchases {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
+    required TResult Function(RefreshEntitlements value) refreshEntitlements,
   }) {
     return restorePurchases(this);
   }
@@ -223,6 +237,7 @@ class _$RestorePurchases extends RestorePurchases {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
   }) {
     return restorePurchases?.call(this);
   }
@@ -235,6 +250,7 @@ class _$RestorePurchases extends RestorePurchases {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     required TResult orElse(),
   }) {
     if (restorePurchases != null) {
@@ -319,6 +335,7 @@ class _$PurchaseProduct extends PurchaseProduct {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
+    required TResult Function() refreshEntitlements,
   }) {
     return purchaseProduct(product);
   }
@@ -331,6 +348,7 @@ class _$PurchaseProduct extends PurchaseProduct {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
   }) {
     return purchaseProduct?.call(product);
   }
@@ -343,6 +361,7 @@ class _$PurchaseProduct extends PurchaseProduct {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
     required TResult orElse(),
   }) {
     if (purchaseProduct != null) {
@@ -359,6 +378,7 @@ class _$PurchaseProduct extends PurchaseProduct {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
+    required TResult Function(RefreshEntitlements value) refreshEntitlements,
   }) {
     return purchaseProduct(this);
   }
@@ -371,6 +391,7 @@ class _$PurchaseProduct extends PurchaseProduct {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
   }) {
     return purchaseProduct?.call(this);
   }
@@ -383,6 +404,7 @@ class _$PurchaseProduct extends PurchaseProduct {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     required TResult orElse(),
   }) {
     if (purchaseProduct != null) {
@@ -472,6 +494,7 @@ class _$GrantPromotional extends GrantPromotional {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
+    required TResult Function() refreshEntitlements,
   }) {
     return grantPromotional(product);
   }
@@ -484,6 +507,7 @@ class _$GrantPromotional extends GrantPromotional {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
   }) {
     return grantPromotional?.call(product);
   }
@@ -496,6 +520,7 @@ class _$GrantPromotional extends GrantPromotional {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
     required TResult orElse(),
   }) {
     if (grantPromotional != null) {
@@ -512,6 +537,7 @@ class _$GrantPromotional extends GrantPromotional {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
+    required TResult Function(RefreshEntitlements value) refreshEntitlements,
   }) {
     return grantPromotional(this);
   }
@@ -524,6 +550,7 @@ class _$GrantPromotional extends GrantPromotional {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
   }) {
     return grantPromotional?.call(this);
   }
@@ -536,6 +563,7 @@ class _$GrantPromotional extends GrantPromotional {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     required TResult orElse(),
   }) {
     if (grantPromotional != null) {
@@ -624,6 +652,7 @@ class _$PaywallShown extends PaywallShown {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
+    required TResult Function() refreshEntitlements,
   }) {
     return paywallShown(paywall);
   }
@@ -636,6 +665,7 @@ class _$PaywallShown extends PaywallShown {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
   }) {
     return paywallShown?.call(paywall);
   }
@@ -648,6 +678,7 @@ class _$PaywallShown extends PaywallShown {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
     required TResult orElse(),
   }) {
     if (paywallShown != null) {
@@ -664,6 +695,7 @@ class _$PaywallShown extends PaywallShown {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
+    required TResult Function(RefreshEntitlements value) refreshEntitlements,
   }) {
     return paywallShown(this);
   }
@@ -676,6 +708,7 @@ class _$PaywallShown extends PaywallShown {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
   }) {
     return paywallShown?.call(this);
   }
@@ -688,6 +721,7 @@ class _$PaywallShown extends PaywallShown {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     required TResult orElse(),
   }) {
     if (paywallShown != null) {
@@ -777,6 +811,7 @@ class _$PaywallClosed extends PaywallClosed {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
+    required TResult Function() refreshEntitlements,
   }) {
     return paywallClosed(paywall);
   }
@@ -789,6 +824,7 @@ class _$PaywallClosed extends PaywallClosed {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
   }) {
     return paywallClosed?.call(paywall);
   }
@@ -801,6 +837,7 @@ class _$PaywallClosed extends PaywallClosed {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
     required TResult orElse(),
   }) {
     if (paywallClosed != null) {
@@ -817,6 +854,7 @@ class _$PaywallClosed extends PaywallClosed {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
+    required TResult Function(RefreshEntitlements value) refreshEntitlements,
   }) {
     return paywallClosed(this);
   }
@@ -829,6 +867,7 @@ class _$PaywallClosed extends PaywallClosed {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
   }) {
     return paywallClosed?.call(this);
   }
@@ -841,6 +880,7 @@ class _$PaywallClosed extends PaywallClosed {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     required TResult orElse(),
   }) {
     if (paywallClosed != null) {
@@ -858,4 +898,133 @@ abstract class PaywallClosed extends PurchaseEvent {
   @JsonKey(ignore: true)
   $PaywallClosedCopyWith<PaywallClosed> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RefreshEntitlementsCopyWith<$Res> {
+  factory $RefreshEntitlementsCopyWith(
+          RefreshEntitlements value, $Res Function(RefreshEntitlements) then) =
+      _$RefreshEntitlementsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$RefreshEntitlementsCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res>
+    implements $RefreshEntitlementsCopyWith<$Res> {
+  _$RefreshEntitlementsCopyWithImpl(
+      RefreshEntitlements _value, $Res Function(RefreshEntitlements) _then)
+      : super(_value, (v) => _then(v as RefreshEntitlements));
+
+  @override
+  RefreshEntitlements get _value => super._value as RefreshEntitlements;
+}
+
+/// @nodoc
+
+class _$RefreshEntitlements extends RefreshEntitlements {
+  const _$RefreshEntitlements() : super._();
+
+  @override
+  String toString() {
+    return 'PurchaseEvent.refreshEntitlements()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is RefreshEntitlements);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() restorePurchases,
+    required TResult Function(ApphudProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudPaywall paywall) paywallShown,
+    required TResult Function(ApphudPaywall paywall) paywallClosed,
+    required TResult Function() refreshEntitlements,
+  }) {
+    return refreshEntitlements();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudPaywall paywall)? paywallShown,
+    TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
+  }) {
+    return refreshEntitlements?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudPaywall paywall)? paywallShown,
+    TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? refreshEntitlements,
+    required TResult orElse(),
+  }) {
+    if (refreshEntitlements != null) {
+      return refreshEntitlements();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RestorePurchases value) restorePurchases,
+    required TResult Function(PurchaseProduct value) purchaseProduct,
+    required TResult Function(GrantPromotional value) grantPromotional,
+    required TResult Function(PaywallShown value) paywallShown,
+    required TResult Function(PaywallClosed value) paywallClosed,
+    required TResult Function(RefreshEntitlements value) refreshEntitlements,
+  }) {
+    return refreshEntitlements(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
+    TResult Function(PaywallShown value)? paywallShown,
+    TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
+  }) {
+    return refreshEntitlements?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
+    TResult Function(PaywallShown value)? paywallShown,
+    TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(RefreshEntitlements value)? refreshEntitlements,
+    required TResult orElse(),
+  }) {
+    if (refreshEntitlements != null) {
+      return refreshEntitlements(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RefreshEntitlements extends PurchaseEvent {
+  const factory RefreshEntitlements() = _$RefreshEntitlements;
+  const RefreshEntitlements._() : super._();
 }
