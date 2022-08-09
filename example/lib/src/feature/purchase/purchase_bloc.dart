@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:apphud/apphud.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:apphud/models/apphud_models/apphud_attribution_provider.dart';
@@ -21,6 +20,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   static const String _genderParameterValue = 'male';
   static const String _customParameterName = 'new_some_custom_property';
   static const String _customParameterValue = 'new custom value';
+  static const String _idfa = 'custom_idfa_new';
   static const Map<String, dynamic> _attributionData = {
     'testAttribution': 'testValue',
   };
@@ -35,6 +35,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     _fetchPermissionGroups();
     _paywalls();
     _deviceId();
+    _setAdvertisingIdentifier();
   }
 
   @override
@@ -47,6 +48,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         paywallShown: _mapPaywallShown,
         paywallClosed: _mapPaywallClosed,
         grantPromotional: _mapGrantPromotional,
+        refreshEntitlements: _mapRefreshEntitlements,
       );
 
   void _fetchSubscriptions() {
@@ -206,6 +208,16 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     );
   }
 
+  void _setAdvertisingIdentifier() {
+    Apphud.setAdvertisingIdentifier(_idfa).then(
+          (value) => printAsJson(
+        'setAdvertisingIdentifier',
+        'Ok',
+      ),
+      onError: (e) => printError('setAdvertisingIdentifier', e),
+    );
+  }
+
   Stream<PurchaseState> _mapPurchaseProduct(PurchaseProduct event) async* {
     yield PurchaseState.inProgress();
     final ApphudPurchaseResult result = await Apphud.purchase(
@@ -267,6 +279,21 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       ),
       onError: (e) => printError(
         'grantPromotional(${event.product.productId})',
+        e,
+      ),
+    ));
+  }
+
+  Stream<PurchaseState> _mapRefreshEntitlements(
+    RefreshEntitlements event,
+  ) async* {
+    unawaited(Apphud.refreshEntitlements().then(
+      (value) => printAsJson(
+        'refreshEntitlements()',
+        'success',
+      ),
+      onError: (e) => printError(
+        'refreshEntitlements()',
         e,
       ),
     ));

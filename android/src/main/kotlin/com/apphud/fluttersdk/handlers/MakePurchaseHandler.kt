@@ -54,6 +54,8 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             MakePurchaseRoutes.permissionGroups.name -> getPermissionGroups(result)
 
             MakePurchaseRoutes.didPurchaseFromPaywall.name -> result.notImplemented()
+
+            MakePurchaseRoutes.refreshEntitlements.name -> refreshEntitlements(result)
         }
     }
 
@@ -157,6 +159,11 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
         result.success(null)
     }
 
+    private fun refreshEntitlements(result: MethodChannel.Result) {
+        Apphud.refreshEntitlements()
+        result.success(null)
+    }
+
     class ProductParser(private val result: MethodChannel.Result) {
         fun parse(args: Map<String, Any>?, callback: (productIdentifier: String) -> Unit) {
             try {
@@ -219,7 +226,8 @@ enum class MakePurchaseRoutes {
     paywalls,
     purchaseProduct,
     permissionGroups,
-    didPurchaseFromPaywall;
+    didPurchaseFromPaywall,
+    refreshEntitlements;
 
     companion object Mapper {
         fun stringValues(): List<String> {

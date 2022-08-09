@@ -1,0 +1,29 @@
+PODS:
+  - apphud (2.2.4):
+    - ApphudSDK (= 2.8.5)
+    - Flutter
+  - ApphudSDK (2.8.5)
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - apphud (from `.symlinks/plugins/apphud/ios`)
+  - Flutter (from `Flutter`)
+
+SPEC REPOS:
+  trunk:
+    - ApphudSDK
+
+EXTERNAL SOURCES:
+  apphud:
+    :path: ".symlinks/plugins/apphud/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  apphud: 093ca538dc6493af44836fbe0deb7bf025269ded
+  ApphudSDK: af0f66b67136074e094f3ceec45c0a3dabe223df
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.11.3
