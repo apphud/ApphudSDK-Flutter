@@ -7,7 +7,7 @@
 
 - Dependencies of Native SDK's were updated to:
   - [Android] 1.6.2
-  - [iOS] 2.8.3
+  - [iOS] 2.8.5
 
 ## 2.2.3
 - [iOS] Payment swizzle was disabled for observer mode.
