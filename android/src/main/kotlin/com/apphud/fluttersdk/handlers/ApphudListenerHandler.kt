@@ -62,11 +62,11 @@ class ApphudListenerHandler(private val channel: MethodChannel) : MethodChannel.
         }
     }
 
-    override fun paywallsDidLoad(paywalls: List<ApphudPaywall>) {
+    override fun userDidLoad() {
         if (isListeningStarted) {
             val resultMap = hashMapOf<String, Any?>()
-            resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
-            channel.invokeMethod("paywallsDidLoad", resultMap)
+            resultMap["paywalls"] = Apphud.paywalls().map { paywall -> paywall.toMap() }
+            channel.invokeMethod("userDidLoad", resultMap)
         }
     }
 

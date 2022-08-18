@@ -104,8 +104,8 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
   }
 
   @override
-  Future<void> paywallsDidLoad(ApphudPaywalls paywalls) async {
-    printAsJson('ApphudListener.paywallsDidLoad', paywalls);
+  Future<void> userDidLoad(ApphudPaywalls paywalls) async {
+    printAsJson('ApphudListener.userDidLoad', paywalls);
   }
 
   @override

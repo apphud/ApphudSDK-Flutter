@@ -4,7 +4,7 @@
 
 ## Greetings!
 
-Apphud SDK is an open-source Swift library to manage auto-renewable subscriptions and other in-app purchases in your app.
+Apphud SDK is an open-source library to manage auto-renewable subscriptions and other in-app purchases in your app.
 <p align="center">
 <img src="https://apphud.com/images/greetings.png" width="30%" height="30%" />
 </p>

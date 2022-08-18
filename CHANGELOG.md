@@ -1,3 +1,14 @@
+## 2.2.5
+- [iOS], [Android] `ApphudListener`'s method `userDidLoad` is introduced.
+- [iOS], [Android] **BREAKING** Method `paywallsDidLoad` of `ApphudListener` is removed. 
+  Please use `ApphudListener`'s methods `userDidLoad` or `paywallsDidFullyLoad` methods,
+  depending on whether or not you need `SkuDetails`/`SKProducts` to be already filled in paywalls.
+- [Android] Internal improvements and bug fixing.
+  
+- Dependencies of Native SDK's were updated to:
+  - [Android] 1.6.4
+  - [iOS] 2.8.5
+
 ## 2.2.4
 - [Android] Fixed a bug when ApphudListener’s paywallsDidFullyLoad method wasn’t called in some cases.
 - [Android] Added new method refreshEntitlements().
