@@ -37,13 +37,12 @@ public class ApphudDelegateHandler: NSObject, FlutterPlugin, ApphudDelegate {
     private func start() {
         isListeningStarted = true
         Apphud.setDelegate(self)
-        Apphud.paywallsDidLoadCallback(self.paywallsDidLoadCallback)
     }
     private func stop() {
         isListeningStarted = false
     }
     
-    private func paywallsDidLoadCallback(paywalls:[ApphudPaywall]) {
+    public func paywallsDidFullyLoad(paywalls:[ApphudPaywall]) {
         if(isListeningStarted){
             channel.invokeMethod("paywallsDidFullyLoad",
                                  arguments: [
@@ -76,6 +75,15 @@ public class ApphudDelegateHandler: NSObject, FlutterPlugin, ApphudDelegate {
     public func apphudDidChangeUserID(_ userID: String) {
         if(isListeningStarted) {
             channel.invokeMethod("didChangeUserID", arguments:userID)
+        }
+    }
+    
+    public func userDidLoad(rawPaywalls:[ApphudPaywall]) {
+        if(isListeningStarted){
+            channel.invokeMethod("userDidLoad",
+                                 arguments: [
+                                            "paywalls" : rawPaywalls.map({ (paywall: ApphudPaywall) in paywall.toMap() }),
+                                            ])
         }
     }
 }
