@@ -7,27 +7,23 @@ PODS:
 
 DEPENDENCIES:
   - apphud (from `.symlinks/plugins/apphud/ios`)
-  - ApphudSDK (from `https://github.com/apphud/ApphudSDK.git`)
   - Flutter (from `Flutter`)
+
+SPEC REPOS:
+  trunk:
+    - ApphudSDK
 
 EXTERNAL SOURCES:
   apphud:
     :path: ".symlinks/plugins/apphud/ios"
-  ApphudSDK:
-    :git: https://github.com/apphud/ApphudSDK.git
   Flutter:
     :path: Flutter
-
-CHECKOUT OPTIONS:
-  ApphudSDK:
-    :commit: 3d299069829053f3fb0d93a693107bd688aec1fa
-    :git: https://github.com/apphud/ApphudSDK.git
 
 SPEC CHECKSUMS:
   apphud: c52541b13b70aa7f4657edca19dd28e6cffba6d7
   ApphudSDK: 244d8554b544459d897ce47f6738d69ffb71792e
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
 
-PODFILE CHECKSUM: 4e191ead8a5259cd4c3958f5a3440518f7a3a872
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
 COCOAPODS: 1.11.3
