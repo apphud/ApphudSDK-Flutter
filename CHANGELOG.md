@@ -1,3 +1,8 @@
+## 2.2.6
+- [iOS] Bug fix for Flutter SDK
+- Dependencies of Native SDK's were updated to:
+  - [iOS] 2.8.8
+
 ## 2.2.5
 - [iOS], [Android] `ApphudListener`'s method `userDidLoad` is introduced.
 - [iOS], [Android] **BREAKING** Method `paywallsDidLoad` of `ApphudListener` is removed. 
