@@ -66,6 +66,8 @@ class Apphud {
 
   /// Updates user ID value.
   ///
+  /// Note that it should be called only after user is registered, i.e.
+  /// inside ApphudListener's userDidRegister method.
   /// - parameter [userID] is required. New user ID value.
   static Future<void> updateUserID(String userID) =>
       _channel.invokeMethod('updateUserID', {'userID': userID});
@@ -266,7 +268,7 @@ class Apphud {
   /// Each paywall contains an array of `ApphudProduct` objects that you use for purchase.
   /// `ApphudProduct` is Apphud's wrapper around `SkuDetails` or 'SkProduct'.
   /// Returns empty array if paywalls are not yet fetched.
-  /// To get notified when paywalls are ready to use, use ApphudListener's  `paywallsDidLoad` or `paywallsDidFullyLoad` methods.
+  /// To get notified when paywalls are ready to use, use ApphudListener's  `userDidLoad` or `paywallsDidFullyLoad` methods.
   /// Best practice is to use this method together with `paywallsDidFullyLoad` listener.
   static Future<ApphudPaywalls?> paywalls() async {
     final Map<dynamic, dynamic>? json =

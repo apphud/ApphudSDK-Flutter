@@ -42,7 +42,7 @@ android {
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        applicationId "com.apphud.app"
+        applicationId "com.apphud.demo"
     }
 
     buildTypes {

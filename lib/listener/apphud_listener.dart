@@ -14,8 +14,13 @@ abstract class ApphudListener {
   /// Called when paywalls are fully loaded with their SkuDetails or SkProducts
   Future<void> paywallsDidFullyLoad(ApphudPaywalls paywalls);
 
-  /// Android only. Called when paywalls are loaded, however SkuDetails may still be nil at the moment
-  Future<void> paywallsDidLoad(ApphudPaywalls paywalls);
+  /// Called when user is registered in Apphud [or used from cache].
+  ///
+  /// This method is called once per app lifecycle.
+  /// The `paywalls` array may not yet have `SKProducts`/'SkuDetails', so this method should not be used for paywalls management.
+  /// However, if using A/B Testing, `paywalls` can be used to fetch `experimentName`, `variationName` or other parameters
+  /// like `json` from your experimental paywall.
+  Future<void> userDidLoad(ApphudPaywalls paywalls);
 
   /// Returns array of subscriptions that user ever purchased. Empty array means user never purchased a subscription.
   ///

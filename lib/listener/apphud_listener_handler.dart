@@ -35,8 +35,8 @@ class ApphudListenerHandler {
         unawaited(_handlePaywallsDidFullyLoad(call.arguments));
         break;
 
-      case 'paywallsDidLoad':
-        unawaited(_handlePaywallsDidLoad(call.arguments));
+      case 'userDidLoad':
+        unawaited(_handleUserDidLoad(call.arguments));
         break;
 
       case 'apphudSubscriptionsUpdated':
@@ -68,9 +68,9 @@ class ApphudListenerHandler {
     unawaited(_listener.paywallsDidFullyLoad(ApphudPaywalls.fromJson(map)));
   }
 
-  Future<void> _handlePaywallsDidLoad(dynamic arguments) async {
+  Future<void> _handleUserDidLoad(dynamic arguments) async {
     final Map<dynamic, dynamic> map = arguments;
-    unawaited(_listener.paywallsDidLoad(ApphudPaywalls.fromJson(map)));
+    unawaited(_listener.userDidLoad(ApphudPaywalls.fromJson(map)));
   }
 
   Future<void> _handleApphudSubscriptionsUpdated(dynamic arguments) async {
