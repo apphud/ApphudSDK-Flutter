@@ -33,9 +33,7 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override
     fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud")
-        channel.setMethodCallHandler(this)
         listenerChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud/listener")
-        listenerHandler = ApphudListenerHandler(listenerChannel)
         this.context = flutterPluginBinding.applicationContext
     }
 
@@ -51,12 +49,13 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        channel.setMethodCallHandler(null)
-        listenerHandler.dispose()
-        listenerHandler
+
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        channel.setMethodCallHandler(this)
+        listenerHandler = ApphudListenerHandler(listenerChannel)
+
         activity = binding.activity
 
         val sActivity = activity ?: return
@@ -82,13 +81,22 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onDetachedFromActivityForConfigChanges() {
         activity = null
+
+        channel.setMethodCallHandler(null)
+        listenerHandler.dispose()
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
         activity = binding.activity
+
+        channel.setMethodCallHandler(this)
+        listenerHandler = ApphudListenerHandler(listenerChannel)
     }
 
     override fun onDetachedFromActivity() {
         activity = null
+
+        channel.setMethodCallHandler(null)
+        listenerHandler.dispose()
     }
 }

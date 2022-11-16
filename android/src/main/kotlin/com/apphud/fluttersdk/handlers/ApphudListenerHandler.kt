@@ -21,8 +21,14 @@ class ApphudListenerHandler(private val channel: MethodChannel) : MethodChannel.
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
-            "startListening" -> start()
-            "stopListening" -> stop()
+            "startListening" -> {
+                start()
+                result.success(null)
+            }
+            "stopListening" -> {
+                stop()
+                result.success(null)
+            }
         }
     }
 
