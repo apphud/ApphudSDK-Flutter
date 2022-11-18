@@ -2,6 +2,7 @@ package com.apphud.fluttersdk
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import androidx.annotation.NonNull
 import com.apphud.fluttersdk.handlers.*
 import com.apphud.sdk.managers.HeadersInterceptor
@@ -24,18 +25,35 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /// when the Flutter Engine is detached from the Activity
 
     private lateinit var context: Context
+
     private var activity: Activity? = null
 
-    private lateinit var channel: MethodChannel
-    private lateinit var listenerChannel: MethodChannel
-    private lateinit var listenerHandler: ApphudListenerHandler
+
+    companion object {
+        @JvmStatic
+        private var listenerHandler: ApphudListenerHandler? = null
+
+        @JvmStatic
+        private var channel: MethodChannel? = null
+
+        @JvmStatic
+        private var listenerChannel: MethodChannel? = null
+    }
+
 
     override
     fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud")
-        channel.setMethodCallHandler(this)
-        listenerChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud/listener")
-        listenerHandler = ApphudListenerHandler(listenerChannel)
+        channel ?: run {
+            channel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud")
+            channel!!.setMethodCallHandler(this)
+        }
+        listenerChannel ?: run {
+            listenerChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud/listener")
+        }
+        listenerHandler ?: run {
+            listenerHandler = ApphudListenerHandler()
+            listenerHandler!!.setMethodCallHandler(listenerChannel)
+        }
         this.context = flutterPluginBinding.applicationContext
     }
 
@@ -51,9 +69,11 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        channel.setMethodCallHandler(null)
-        listenerHandler.dispose()
-        listenerHandler
+        channel?.setMethodCallHandler(null)
+        channel = null
+        listenerHandler?.setMethodCallHandler(null)
+        listenerHandler = null
+        listenerChannel = null
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {

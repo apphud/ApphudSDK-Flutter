@@ -1,3 +1,10 @@
+## 2.2.7
+- [Android] fixed incorrect ApphudListener behaviour when the ApphudPlugin instance is created twice because of Firebase.
+- [Android] Internal improvements.
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 1.6.5
+  
 ## 2.2.6
 - [iOS] Bug fix for Flutter SDK
 - Dependencies of Native SDK's were updated to:
