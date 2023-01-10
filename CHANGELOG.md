@@ -1,3 +1,9 @@
+## 2.2.8
+- [Android] Internal improvements and bug fixes with syncing purchases
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 1.7.0
+
 ## 2.2.7
 - [Android] fixed incorrect ApphudListener behaviour when the ApphudPlugin instance is created twice because of Firebase.
 - [Android] Internal improvements.
