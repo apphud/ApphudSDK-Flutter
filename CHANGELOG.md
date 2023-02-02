@@ -1,3 +1,9 @@
+## 2.2.9
+- [Android] Bug fixes
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 1.7.0
+
 ## 2.2.8
 - [Android] Internal improvements and bug fixes with syncing purchases
 
