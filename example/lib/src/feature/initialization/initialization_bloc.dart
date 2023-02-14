@@ -52,6 +52,9 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
         observerMode: _appSecrets.observeMode,
       );
 
+      printAsJson('UserId after start', await Apphud.userID());
+      printAsJson('Subscriptions after start', await Apphud.subscriptions());
+
       yield* state.maybeMap(
         orElse: () async* {},
         trying: (s) async* {
