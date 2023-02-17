@@ -1,3 +1,9 @@
+## 2.2.13
+- [Android] Bug fixes
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 1.7.7
+
 ## 2.2.12
 - [Android] Bug fixes
 
