@@ -534,7 +534,7 @@ class Apphud {
     final bool isAdded = await _channel.invokeMethod('addAttribution', {
       'data': data,
       'from': provider.convertToString,
-      'identifer': identifier
+      'identifier': identifier
     });
     return isAdded;
   }

@@ -27,10 +27,10 @@ final class AddAttributionArgumentParser: Parser {
               let from = ApphudAttributionProvider.fromString(fromString) else {
             throw(InternalError(code: "400", message: "data and attibution provider are required arguments"))
         }
-        let identifer = args["identifer"] as? String
+        let identifier = args["identifier"] as? String
         return (data,
                 from,
-                identifer)
+                identifier)
     }
 }
 
