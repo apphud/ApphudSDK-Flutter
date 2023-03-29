@@ -1,3 +1,6 @@
+## 2.2.14
+- [Android] Fixes bug with AddAttribution for AppsFlyer provider.
+
 ## 2.2.13
 - [Android] Bug fixes
 
