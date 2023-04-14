@@ -36,6 +36,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     _paywalls();
     _deviceId();
     _setAdvertisingIdentifier();
+    _testPushNotifications();
   }
 
   @override
@@ -210,12 +211,24 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
 
   void _setAdvertisingIdentifier() {
     Apphud.setAdvertisingIdentifier(_idfa).then(
-          (value) => printAsJson(
+      (value) => printAsJson(
         'setAdvertisingIdentifier',
         'Ok',
       ),
       onError: (e) => printError('setAdvertisingIdentifier', e),
     );
+  }
+
+  void _testPushNotifications() async {
+    final tokenResult = await Apphud.submitPushNotificationsToken(
+      '1234567890-some-token',
+    );
+    printAsJson('submitPushNotificationsToken', tokenResult);
+
+    final pushResult = await Apphud.handlePushNotification({
+      'some_property': 'some_value',
+    });
+    printAsJson('handlePushNotification', pushResult);
   }
 
   Stream<PurchaseState> _mapPurchaseProduct(PurchaseProduct event) async* {
