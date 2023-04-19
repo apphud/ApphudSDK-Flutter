@@ -613,36 +613,4 @@ class Apphud {
     );
     return value!;
   }
-
-// Push notifications
-
-  /// iOS only. Submit device push token to Apphud.
-  ///
-  /// - parameter [token]  is required - push token.
-  /// Returns true if successfully sent.
-  static Future<bool> submitPushNotificationsToken(String token) async {
-    final bool? value = await _channel.invokeMethod<bool>(
-      'submitPushNotificationsToken',
-      {
-        'token': token,
-      },
-    );
-    return value ?? false;
-  }
-
-  /// iOS only.  Handles push notification payload.
-  ///
-  /// Use this method to handle incoming Rules.
-  /// Apphud handles only push notifications that were created by Apphud.
-  /// - parameter [apsInfo] is required. Payload of push notification.
-  /// Returns `true` if push notification was successfully handled by Apphud.
-  static Future<bool> handlePushNotification(
-    Map<String, dynamic> apsInfo,
-  ) async {
-    final bool? value = await _channel.invokeMethod<bool>(
-      'handlePushNotification',
-      apsInfo,
-    );
-    return value ?? false;
-  }
 }

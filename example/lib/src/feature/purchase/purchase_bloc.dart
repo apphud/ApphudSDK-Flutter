@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:apphud/apphud.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:apphud/models/apphud_models/apphud_attribution_provider.dart';
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
@@ -37,7 +36,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     _paywalls();
     _deviceId();
     _setAdvertisingIdentifier();
-    _initFCM();
   }
 
   @override
@@ -212,40 +210,12 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
 
   void _setAdvertisingIdentifier() {
     Apphud.setAdvertisingIdentifier(_idfa).then(
-      (value) => printAsJson(
+          (value) => printAsJson(
         'setAdvertisingIdentifier',
         'Ok',
       ),
       onError: (e) => printError('setAdvertisingIdentifier', e),
     );
-  }
-
- void _initFCM() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    printAsJson(
-      'FCM requestPermission authorizationStatus',
-      settings.authorizationStatus,
-    );
-     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-       final token = await messaging.getToken();
-       printAsJson('FCM token', token);
-      // if (token != null) {
-       //  final isTokenSubmitted = await Apphud.submitPushNotificationsToken(token);
-        // printAsJson('submitPushNotificationsToken', isTokenSubmitted);
-      // }
-       FirebaseMessaging.onMessage.listen((message) {
-         printAsJson('FCM message received', message);
-       });
-     }
   }
 
   Stream<PurchaseState> _mapPurchaseProduct(PurchaseProduct event) async* {

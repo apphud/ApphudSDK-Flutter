@@ -1,5 +1,5 @@
 ## 2.2.15
-- [iOS] `submitPushNotificationsToken` and `handlePushNotification` methods were introduced.
+- [iOS] PUSH notifications handling was added to the example app.
 
 ## 2.2.14
 - [Android] Fixes bug with AddAttribution for AppsFlyer provider.

@@ -10,7 +10,6 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         HandlePurchasesHandler(),
         UserPropertiesHandler(),
         RulesAndScreensMethodsHandler(),
-        PushNotificationsHandler(),
         AttributionHandler(),
         EligibilityChecksHandler(),
         OthersHandler(),
