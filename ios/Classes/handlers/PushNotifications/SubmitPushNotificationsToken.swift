@@ -6,11 +6,12 @@
 //
 import ApphudSDK
 
-final class SubmitPushNotificationsTokenRequest: Request {
+final class SubmitPushNotificationsTokenRequest: NSObject, Request, UNUserNotificationCenterDelegate {
     typealias ArgumentProvider = SubmitPushNotificationsTokenArgumentParser
     
     func startRequest(arguments: (Data), result: @escaping FlutterResult) {
         
+        let delegate = UNUserNotificationCenter.current().delegate
         Apphud.submitPushNotificationsToken(token: arguments) {(sendResult) in
             result(sendResult)
         }

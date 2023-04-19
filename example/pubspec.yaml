@@ -28,6 +28,9 @@ dependencies:
 
   freezed_annotation: ^0.14.3
 
+  firebase_messaging: ^14.4.0
+
+  firebase_core: ^2.9.0
 
 dev_dependencies:
   flutter_test:
