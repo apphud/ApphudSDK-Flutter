@@ -1,3 +1,10 @@
+## 2.2.15
+- [Android] 'optOutOfTracking' and 'collectDeviceIdentifiers' are introduced
+- [Android] **BREAKING** Method `disableAdTracking` is removed.
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 1.8.0
+   
 ## 2.2.14
 - [Android] Fixes bug with AddAttribution for AppsFlyer provider.
 

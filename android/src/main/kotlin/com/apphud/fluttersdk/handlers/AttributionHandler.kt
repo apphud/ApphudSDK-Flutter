@@ -14,7 +14,6 @@ class AttributionHandler(override val routes: List<String>) : Handler {
             AttributionRoutes.addAttribution.name -> AttributionParser(result).parse(args) { provider, data, identifier ->
                 addAttribution(provider, data, identifier, result)
             }
-            AttributionRoutes.disableAdTracking.name -> disableAdTracking(result)
             AttributionRoutes.collectSearchAdsAttribution.name -> result.notImplemented()
         }
     }
@@ -27,12 +26,6 @@ class AttributionHandler(override val routes: List<String>) : Handler {
         Apphud.addAttribution(provider, data, identifier)
         result.success(true)
     }
-
-    private fun disableAdTracking(result: MethodChannel.Result) {
-        Apphud.disableAdTracking()
-        result.success(null)
-    }
-
 
     class AttributionParser(val result: MethodChannel.Result) {
         fun parse(
@@ -77,7 +70,6 @@ class AttributionHandler(override val routes: List<String>) : Handler {
 enum class AttributionRoutes {
 
     addAttribution,
-    disableAdTracking,
     collectSearchAdsAttribution;
 
     companion object Mapper {
