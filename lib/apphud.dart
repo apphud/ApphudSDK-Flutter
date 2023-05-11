@@ -539,10 +539,6 @@ class Apphud {
     return isAdded;
   }
 
-  /// Android only. Disables Ad tracking.
-  static Future<void> disableAdTracking() =>
-      _channel.invokeMethod('disableAdTracking');
-
   /// iOS only. Send search ads attribution data to Apphud.
   ///
   /// Returns [ApphudError] if an error occurred or null otherwise.
@@ -589,6 +585,23 @@ class Apphud {
       {'identifier': paywall.identifier},
     );
   }
+
+  /// Android only. Must be called before SDK initialization.
+  ///
+  /// If called, some user parameters like Advertising ID, Android ID,
+  /// App Set ID, Device Type, IP address will not be tracked by Apphud.
+  static Future<void> optOutOfTracking() =>
+      _channel.invokeMethod('optOutOfTracking');
+
+  /// Android only. Collects device identifiers that are required for some third-party integrations,
+  /// like AppsFlyer, Adjust, Singular, etc.
+  ///
+  /// Identifiers include Advertising ID, Android ID, App Set ID.
+  /// When targeting Android 13 and above, you must declare AD_ID permission
+  /// in the manifest file: https://support.google.com/googleplay/android-developer/answer/6048248?hl=en
+  /// Be sure optOutOfTracking() not called before. Otherwise device identifiers will not be collected.
+  static Future<void> collectDeviceIdentifiers() =>
+      _channel.invokeMethod('collectDeviceIdentifiers');
 
 // Promotionals
 

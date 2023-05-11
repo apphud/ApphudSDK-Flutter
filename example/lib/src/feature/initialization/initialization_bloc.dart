@@ -45,6 +45,7 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
       InitializeTrying value) async* {
     try {
       await Apphud.enableDebugLogs(level: ApphudDebugLevel.high);
+
       await Apphud.startManually(
         apiKey: _appSecrets.apiKey,
         userID: _appSecrets.userID,
