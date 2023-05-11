@@ -7,10 +7,16 @@ import io.flutter.plugin.common.MethodChannel
 
 class OtherHandler(override val routes: List<String>, val context: Context) : Handler {
 
-    override fun tryToHandle(method: String, args: Map<String, Any>?, result: MethodChannel.Result) {
+    override fun tryToHandle(
+        method: String,
+        args: Map<String, Any>?,
+        result: MethodChannel.Result
+    ) {
         when (method) {
             OtherRoutes.enableDebugLogs.name -> enableDebugLogs(result)
             OtherRoutes.isSandbox.name -> result.notImplemented()
+            OtherRoutes.optOutOfTracking.name -> optOutOfTracking(result)
+            OtherRoutes.collectDeviceIdentifiers.name -> collectDeviceIdentifiers(result)
         }
     }
 
@@ -19,11 +25,22 @@ class OtherHandler(override val routes: List<String>, val context: Context) : Ha
         result.success(null)
     }
 
+    private fun optOutOfTracking(result: MethodChannel.Result) {
+        Apphud.optOutOfTracking()
+        result.success(null)
+    }
+
+    private fun collectDeviceIdentifiers(result: MethodChannel.Result) {
+        Apphud.collectDeviceIdentifiers()
+        result.success(null)
+    }
 }
 
 enum class OtherRoutes {
     enableDebugLogs,
-    isSandbox;
+    isSandbox,
+    optOutOfTracking,
+    collectDeviceIdentifiers;
 
     companion object Mapper {
         fun stringValues(): List<String> {

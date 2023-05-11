@@ -120,11 +120,6 @@ enum AppHudMethod {
         case pendingRule
     }
 
-    enum PushNotifications: String, CaseIterable {
-        case submitPushNotificationsToken
-        case handlePushNotification
-    }
-
     enum Attribution: String, CaseIterable {
         case setAdvertisingIdentifier
         case disableIDFACollection
