@@ -1,5 +1,7 @@
 package com.apphud.fluttersdk
 
+import com.android.billingclient.api.AccountIdentifiers
+import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.SkuDetails
 import com.apphud.sdk.ApphudError
@@ -24,32 +26,52 @@ fun ApphudProduct.toMap(): HashMap<String, Any?> {
         "name" to name,
         "store" to store,
         "paywallId" to paywall_id,
-        "skuDetails" to skuDetails?.toMap(),
+        "productDetails" to productDetails?.toMap(),
         "paywallIdentifier" to paywall_identifier
     )
 }
 
 
-fun SkuDetails.toMap(): HashMap<String, Any?> {
+fun ProductDetails.toMap(): HashMap<String, Any?> {
     return hashMapOf(
         "description" to description,
-        "freeTrialPeriod" to freeTrialPeriod,
-        "introductoryPrice" to introductoryPrice,
-        "introductoryPriceAmountMicros" to introductoryPriceAmountMicros,
-        "introductoryPriceCycles" to introductoryPriceCycles,
-        "introductoryPricePeriod" to introductoryPricePeriod,
-        "price" to price,
-        "priceAmountMicros" to priceAmountMicros,
-        "priceCurrencyCode" to priceCurrencyCode,
-        "sku" to sku,
-        "subscriptionPeriod" to subscriptionPeriod,
+        "name" to name,
+        "productId" to productId,
+        "productType" to productType,
         "title" to title,
-        "type" to type,
-        "originalPrice" to originalPrice,
-        "originalPriceAmountMicros" to originalPriceAmountMicros
+        "oneTimePurchaseOfferDetails" to oneTimePurchaseOfferDetails?.toMap(),
+        "subscriptionOfferDetails" to subscriptionOfferDetails?.map { it.toMap() },
     )
 }
 
+fun ProductDetails.OneTimePurchaseOfferDetails.toMap(): HashMap<String, Any?> {
+    return hashMapOf(
+        "priceAmountMicros" to priceAmountMicros,
+        "formattedPrice" to formattedPrice,
+        "priceCurrencyCode" to priceCurrencyCode,
+    )
+}
+
+fun ProductDetails.SubscriptionOfferDetails.toMap(): HashMap<String, Any?> {
+    return hashMapOf(
+        "basePlanId" to basePlanId,
+        "offerId" to offerId,
+        "offerTags" to offerTags,
+        "offerToken" to offerToken,
+        "pricingPhases" to pricingPhases.pricingPhaseList.map { it.toMap() },
+    )
+}
+
+fun ProductDetails.PricingPhase.toMap(): HashMap<String, Any?> {
+    return hashMapOf(
+        "billingCycleCount" to billingCycleCount,
+        "recurrenceMode" to recurrenceMode,
+        "priceAmountMicros" to priceAmountMicros,
+        "billingPeriod" to billingPeriod,
+        "formattedPrice" to formattedPrice,
+        "priceCurrencyCode" to priceCurrencyCode,
+    )
+}
 
 fun ApphudError.toMap(): HashMap<String, Any?> {
     return hashMapOf(
@@ -60,14 +82,26 @@ fun ApphudError.toMap(): HashMap<String, Any?> {
 
 fun Purchase.toMap(): HashMap<String, Any?> {
     return hashMapOf(
+        "purchaseState" to purchaseState,
+        "quantity" to quantity,
+        "purchaseTime" to purchaseTime,
+        "accountIdentifiers" to accountIdentifiers?.toMap(),
+        "developerPayload" to developerPayload,
         "orderId" to orderId,
         "originalJson" to originalJson,
         "packageName" to packageName,
-        "purchaseState" to purchaseState,
-        "purchaseTime" to purchaseTime,
         "purchaseToken" to purchaseToken,
         "signature" to signature,
-        "skus" to skus.map { it }
+        "products" to products,
+        "isAcknowledged" to isAcknowledged,
+        "isAutoRenewing" to isAutoRenewing
+    )
+}
+
+fun AccountIdentifiers.toMap(): HashMap<String, Any?> {
+    return hashMapOf(
+        "obfuscatedAccountId" to obfuscatedAccountId,
+        "obfuscatedProfileId" to obfuscatedProfileId,
     )
 }
 
@@ -91,7 +125,7 @@ fun ApphudSubscription.toMap(): HashMap<String, Any?> {
         "isAutorenewEnabled" to isAutoRenewEnabled,
         "isIntroductoryActivated" to isIntroductoryActivated,
         "isActive" to isActive(),
-        "status" to status.name.toLowerCase(Locale.ROOT)
+        "status" to status.name.lowercase(Locale.ROOT)
     )
 }
 
@@ -119,7 +153,7 @@ fun Map<String, Any>.toApphudProduct(): ApphudProduct {
         name = name,
         store = store,
         paywall_id = paywallId,
-        skuDetails = null,
+        productDetails = null,
         paywall_identifier = paywallIdentifier
     )
 }

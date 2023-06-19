@@ -99,14 +99,6 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
         }
     }
 
-    private fun migratePurchasesIfNeeded(result: MethodChannel.Result) {
-        // not implemented
-    }
-
-    private fun fetchRawReceiptInfo(result: MethodChannel.Result) {
-        // not implemented
-    }
-
     class IsNonRenewingPurchaseActiveParser(val result: MethodChannel.Result) {
         fun parse(args: Map<String, Any>?, callback: (productId: String) -> Unit) {
             try {

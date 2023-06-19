@@ -1,5 +1,5 @@
+import 'package:apphud/models/product_details/product_details_wrapper.dart';
 import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
-import 'package:apphud/models/sku_details/sku_details.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'apphud_product.g.dart';
@@ -9,7 +9,7 @@ class ApphudProduct {
   final String productId;
   final String store;
   final String? name;
-  final SkuDetailsWrapper? skuDetails;
+  final ProductDetailsWrapper? productDetails;
   final SKProductWrapper? skProduct;
   final String? paywallId;
   final String? paywallIdentifier;
@@ -18,7 +18,7 @@ class ApphudProduct {
     required this.productId,
     required this.store,
     this.name,
-    this.skuDetails,
+    this.productDetails,
     this.paywallId,
     this.paywallIdentifier,
     this.skProduct,
@@ -31,6 +31,6 @@ class ApphudProduct {
 
   @override
   String toString() {
-    return 'ApphudProduct{productId: $productId, store: $store, name: $name, skuDetails: $skuDetails, skProduct: $skProduct, paywallId: $paywallId, paywallIdentifier: $paywallIdentifier}';
+    return 'ApphudProduct{productId: $productId, store: $store, name: $name, productDetails: $productDetails, skProduct: $skProduct, paywallId: $paywallId, paywallIdentifier: $paywallIdentifier}';
   }
 }

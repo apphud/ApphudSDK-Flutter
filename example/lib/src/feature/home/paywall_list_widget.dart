@@ -151,9 +151,9 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
             ),
       );
     } else if (Platform.isAndroid) {
-      content = SkuDetailsWidget(
+      content = ProductDetailsWidget(
         wrapInCard: false,
-        skuDetails: product.skuDetails,
+        productDetails: product.productDetails,
         onTap: () =>
             BlocProvider.of<PurchaseBloc>(context).add(
               PurchaseEvent.purchaseProduct(product),

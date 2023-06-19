@@ -1,16 +1,17 @@
-import 'package:apphud/models/sku_details/sku_details.dart';
-import 'package:apphud_example/src/feature/common/widgets/ink_well_stack.dart';
+import 'dart:convert';
+
+import 'package:apphud/models/product_details/product_details_wrapper.dart';
 import 'package:flutter/material.dart';
 
-class SkuDetailsWidget extends StatelessWidget {
-  final SkuDetailsWrapper? skuDetails;
+class ProductDetailsWidget extends StatelessWidget {
+  final ProductDetailsWrapper? productDetails;
   final VoidCallback? onTap;
   final VoidCallback? onPromote;
   final bool wrapInCard;
 
-  const SkuDetailsWidget({
+  const ProductDetailsWidget({
     Key? key,
-    this.skuDetails,
+    this.productDetails,
     this.onTap,
     this.onPromote,
     bool? wrapInCard,
@@ -19,17 +20,19 @@ class SkuDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (skuDetails == null) {
-      return _wrapInCard(child: ListTile(title: Text('skuDetails is null')));
+    if (productDetails == null) {
+      return _wrapInCard(
+          child: ListTile(title: Text('productDetails is null')));
     }
-    final SkuDetailsWrapper skuDetailsLocal = skuDetails!;
+    final ProductDetailsWrapper productDetailsLocal = productDetails!;
     return InkWell(
       onTap: onTap,
       child: _wrapInCard(
         child: ListTile(
-          title: Text('${skuDetailsLocal.title} (${skuDetailsLocal.sku})'),
-          leading: Text(skuDetailsLocal.price),
-          subtitle: Text(skuDetailsLocal.description),
+          title: Text(
+              '${productDetailsLocal.title} (${productDetailsLocal.productId})'),
+          leading: Text(productDetailsLocal.description),
+          subtitle: _buildProductDetailsJson(productDetailsLocal),
           trailing: HeroMode(
             enabled: false,
             child: FloatingActionButton(
@@ -39,6 +42,25 @@ class SkuDetailsWidget extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildProductDetailsJson(ProductDetailsWrapper productDetails) {
+    final JsonEncoder encoder = JsonEncoder.withIndent(' ');
+    final oneTimePurchaseOfferDetails = encoder.convert(
+      productDetails.oneTimePurchaseOfferDetails,
+    );
+
+    final subscriptionOfferDetails = productDetails.subscriptionOfferDetails
+            ?.map((d) => Text(encoder.convert(d)))
+            .toList(growable: false) ??
+        <Widget>[];
+
+    return Column(
+      children: [
+        Text(oneTimePurchaseOfferDetails),
+        ...subscriptionOfferDetails,
+      ],
     );
   }
 

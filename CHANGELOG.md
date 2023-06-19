@@ -1,3 +1,10 @@
+## 2.3.0
+- [Android] **BREAKING** SkuDetailsWrapper was replaced by ProductDetailsWrapper because of the migration to Billing v5.
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 2.0.0
+
+
 ## 2.2.15
 - [iOS] PUSH notifications handling was added to the example app.
 - [Android] 'optOutOfTracking' and 'collectDeviceIdentifiers' are introduced

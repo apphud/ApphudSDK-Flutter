@@ -13,20 +13,33 @@ AndroidPurchaseWrapper _$AndroidPurchaseWrapperFromJson(Map json) =>
       purchaseState: json['purchaseState'] as int,
       purchaseToken: json['purchaseToken'] as String,
       signature: json['signature'] as String,
-      skus: (json['skus'] as List<dynamic>).map((e) => e as String).toList(),
+      products:
+          (json['products'] as List<dynamic>).map((e) => e as String).toList(),
       originalJson: json['originalJson'] as String,
       purchaseTime: json['purchaseTime'] as int,
+      accountIdentifiers: (json['accountIdentifiers'] as List<dynamic>?)
+          ?.map((e) => AndroidAccountIdentifiersWrapper.fromJson(e as Map))
+          .toList(),
+      developerPayload: json['developerPayload'] as String,
+      quantity: json['quantity'] as int,
+      isAcknowledged: json['isAcknowledged'] as bool,
+      isAutoRenewing: json['isAutoRenewing'] as bool,
     );
 
 Map<String, dynamic> _$AndroidPurchaseWrapperToJson(
         AndroidPurchaseWrapper instance) =>
     <String, dynamic>{
+      'purchaseState': instance.purchaseState,
+      'quantity': instance.quantity,
+      'purchaseTime': instance.purchaseTime,
+      'accountIdentifiers': instance.accountIdentifiers,
+      'developerPayload': instance.developerPayload,
       'orderId': instance.orderId,
+      'originalJson': instance.originalJson,
       'packageName': instance.packageName,
       'purchaseToken': instance.purchaseToken,
       'signature': instance.signature,
-      'skus': instance.skus,
-      'originalJson': instance.originalJson,
-      'purchaseState': instance.purchaseState,
-      'purchaseTime': instance.purchaseTime,
+      'products': instance.products,
+      'isAcknowledged': instance.isAcknowledged,
+      'isAutoRenewing': instance.isAutoRenewing,
     };

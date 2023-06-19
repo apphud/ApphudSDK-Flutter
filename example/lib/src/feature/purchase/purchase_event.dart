@@ -23,4 +23,6 @@ class PurchaseEvent with _$PurchaseEvent {
       PaywallClosed;
 
   const factory PurchaseEvent.refreshEntitlements() = RefreshEntitlements;
+
+  const factory PurchaseEvent.syncPurchase() = SyncPurchase;
 }
