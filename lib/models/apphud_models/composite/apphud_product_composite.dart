@@ -1,22 +1,23 @@
 import 'dart:io';
 
+import 'package:apphud/models/product_details/product_details_wrapper.dart';
 import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
-import 'package:apphud/models/sku_details/sku_details.dart';
 
 class ApphudProductComposite {
   final SKProductWrapper? skProductWrapper;
-  final SkuDetailsWrapper? skuDetailsWrapper;
+  final ProductDetailsWrapper? productDetailsWrapper;
 
   ApphudProductComposite({
     this.skProductWrapper,
-    this.skuDetailsWrapper,
+    this.productDetailsWrapper,
   });
 
   factory ApphudProductComposite.fromJson(Map<dynamic, dynamic> json) {
     if (Platform.isAndroid) {
-      final SkuDetailsWrapper skuDetailsWrapper =
-          SkuDetailsWrapper.fromJson(json);
-      return ApphudProductComposite(skuDetailsWrapper: skuDetailsWrapper);
+      final ProductDetailsWrapper productDetailsWrapper =
+          ProductDetailsWrapper.fromJson(json);
+      return ApphudProductComposite(
+          productDetailsWrapper: productDetailsWrapper);
     } else {
       final SKProductWrapper skProductWrapper = SKProductWrapper.fromJson(json);
       return ApphudProductComposite(skProductWrapper: skProductWrapper);
@@ -26,7 +27,7 @@ class ApphudProductComposite {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'skProductWrapper': skProductWrapper?.toJson(),
-      'skuDetailsWrapper': skuDetailsWrapper?.toJson(),
+      'productDetailsWrapper': productDetailsWrapper?.toJson(),
     };
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:apphud/apphud.dart';
-import 'package:pedantic/pedantic.dart';
 import 'package:apphud/models/apphud_models/apphud_attribution_provider.dart';
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
@@ -49,6 +48,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         paywallClosed: _mapPaywallClosed,
         grantPromotional: _mapGrantPromotional,
         refreshEntitlements: _mapRefreshEntitlements,
+        syncPurchase: _mapSyncPurchase,
       );
 
   void _fetchSubscriptions() {
@@ -210,7 +210,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
 
   void _setAdvertisingIdentifier() {
     Apphud.setAdvertisingIdentifier(_idfa).then(
-          (value) => printAsJson(
+      (value) => printAsJson(
         'setAdvertisingIdentifier',
         'Ok',
       ),
@@ -220,8 +220,16 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
 
   Stream<PurchaseState> _mapPurchaseProduct(PurchaseProduct event) async* {
     yield PurchaseState.inProgress();
+    final subscriptionOfferDetails =
+        event.product.productDetails?.subscriptionOfferDetails ?? [];
+    final offerIdToken = subscriptionOfferDetails.isEmpty
+        ? null
+        : subscriptionOfferDetails.first.offerToken;
     final ApphudPurchaseResult result = await Apphud.purchase(
-      product: event.product,
+      productId: event.product.productId,
+      // or we can use
+      // product: event.product,
+      offerIdToken: offerIdToken,
     );
     printAsJson('purchaseProduct(${event.product.productId})', result);
     if (result.error == null) {
@@ -294,6 +302,19 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       ),
       onError: (e) => printError(
         'refreshEntitlements()',
+        e,
+      ),
+    ));
+  }
+
+  Stream<PurchaseState> _mapSyncPurchase(SyncPurchase event) async* {
+    unawaited(Apphud.syncPurchases().then(
+      (value) => printAsJson(
+        'syncPurchases()',
+        'success',
+      ),
+      onError: (e) => printError(
+        'syncPurchases()',
         e,
       ),
     ));

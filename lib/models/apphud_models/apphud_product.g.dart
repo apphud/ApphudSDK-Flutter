@@ -10,9 +10,9 @@ ApphudProduct _$ApphudProductFromJson(Map json) => ApphudProduct(
       productId: json['productId'] as String,
       store: json['store'] as String,
       name: json['name'] as String?,
-      skuDetails: json['skuDetails'] == null
+      productDetails: json['productDetails'] == null
           ? null
-          : SkuDetailsWrapper.fromJson(json['skuDetails'] as Map),
+          : ProductDetailsWrapper.fromJson(json['productDetails'] as Map),
       paywallId: json['paywallId'] as String?,
       paywallIdentifier: json['paywallIdentifier'] as String?,
       skProduct: json['skProduct'] == null
@@ -25,7 +25,7 @@ Map<String, dynamic> _$ApphudProductToJson(ApphudProduct instance) =>
       'productId': instance.productId,
       'store': instance.store,
       'name': instance.name,
-      'skuDetails': instance.skuDetails,
+      'productDetails': instance.productDetails,
       'skProduct': instance.skProduct,
       'paywallId': instance.paywallId,
       'paywallIdentifier': instance.paywallIdentifier,

@@ -14,7 +14,7 @@ ApphudSubscriptionWrapper _$ApphudSubscriptionWrapperFromJson(Map json) =>
       isAutorenewEnabled: json['isAutorenewEnabled'] as bool,
       isIntroductoryActivated: json['isIntroductoryActivated'] as bool,
       isActive: json['isActive'] as bool,
-      status: _$enumDecode(_$ApphudSubscriptionStatusEnumMap, json['status']),
+      status: $enumDecode(_$ApphudSubscriptionStatusEnumMap, json['status']),
       startedAt: (json['startedAt'] as num?)?.toDouble(),
       canceledAt: (json['canceledAt'] as num?)?.toDouble(),
       isSandbox: json['isSandbox'] as bool?,
@@ -36,32 +36,6 @@ Map<String, dynamic> _$ApphudSubscriptionWrapperToJson(
       'isSandbox': instance.isSandbox,
       'isLocal': instance.isLocal,
     };
-
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
 
 const _$ApphudSubscriptionStatusEnumMap = {
   ApphudSubscriptionStatus.trial: 'trial',

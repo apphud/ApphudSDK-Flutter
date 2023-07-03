@@ -88,6 +88,14 @@ class HomeScreen extends StatelessWidget {
                 ),
                 label: Text('Refresh entitlements'),
               ),
+            if (Platform.isAndroid) const SizedBox(height: 10),
+            if (Platform.isAndroid)
+              FloatingActionButton.extended(
+                onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
+                  PurchaseEvent.syncPurchase(),
+                ),
+                label: Text('Sync purchases'),
+              ),
           ],
         ),
       ),

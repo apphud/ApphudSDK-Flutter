@@ -5,10 +5,10 @@ import android.util.Log
 import com.apphud.fluttersdk.toApphudProduct
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
-import com.apphud.sdk.ApphudError
 import com.apphud.sdk.ApphudPurchaseResult
 import com.apphud.sdk.domain.ApphudPaywall
 import com.apphud.sdk.domain.ApphudProduct
+import com.apphud.sdk.flutter.ApphudFlutter
 import io.flutter.plugin.common.MethodChannel
 import java.lang.IllegalStateException
 
@@ -33,14 +33,20 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             { productIdentifier -> product(productIdentifier, result) }
 
             MakePurchaseRoutes.purchase.name -> PurchaseParser(result).parse(args)
-            { productId -> purchase(productId, result) }
+            { productId, offerIdToken, oldToken, replacementMode ->
+                purchase(productId, offerIdToken, oldToken, replacementMode, result)
+            }
 
             MakePurchaseRoutes.purchaseWithoutValidation.name -> result.notImplemented()
 
             MakePurchaseRoutes.purchasePromo.name -> result.notImplemented()
 
-            MakePurchaseRoutes.syncPurchases.name -> SyncPurchasesParser(result).parse(args) {
-                paywallIdentifier -> syncPurchases(paywallIdentifier, result)}
+            MakePurchaseRoutes.syncPurchases.name -> SyncPurchasesParser(result).parse(args) { paywallIdentifier ->
+                syncPurchases(
+                    paywallIdentifier,
+                    result
+                )
+            }
 
             MakePurchaseRoutes.presentOfferCodeRedemptionSheet.name -> result.notImplemented()
 
@@ -49,7 +55,15 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             MakePurchaseRoutes.paywalls.name -> paywalls(result)
 
             MakePurchaseRoutes.purchaseProduct.name -> PurchaseProductParser(result).parse(args)
-            { product -> purchaseProduct(product, result) }
+            { product, offerIdToken, oldToken, replacementMode ->
+                purchaseProduct(
+                    product,
+                    offerIdToken,
+                    oldToken,
+                    replacementMode,
+                    result
+                )
+            }
 
             MakePurchaseRoutes.permissionGroups.name -> getPermissionGroups(result)
 
@@ -65,19 +79,16 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
     }
 
     private fun paywalls(result: MethodChannel.Result) {
-        val paywalls: List<ApphudPaywall> = Apphud.paywalls();
+        val paywalls: List<ApphudPaywall> = Apphud.paywalls()
         val resultMap = hashMapOf<String, Any?>()
         resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
         activity.runOnUiThread { result.success(resultMap) }
     }
 
-    private fun didFetchProductsNotification(result: MethodChannel.Result) {
-        // not implemented
-    }
 
     private fun productsDidFetchCallback(result: MethodChannel.Result) {
-        Apphud.productsFetchCallback { skuProducts ->
-            val jsonList: List<HashMap<String, Any?>> = skuProducts.map {
+        Apphud.productsFetchCallback { productDetails ->
+            val jsonList: List<HashMap<String, Any?>> = productDetails.map {
                 it.toMap()
             }
             result.success(jsonList)
@@ -85,9 +96,9 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
     }
 
     private fun products(result: MethodChannel.Result) {
-        val skuProducts = Apphud.products()
-        if (skuProducts != null) {
-            val jsonList: List<HashMap<String, Any?>> = skuProducts.map {
+        val productDetails = Apphud.products()
+        if (productDetails != null) {
+            val jsonList: List<HashMap<String, Any?>> = productDetails.map {
                 it.toMap()
             }
             result.success(jsonList)
@@ -97,25 +108,51 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
     }
 
     private fun product(productIdentifier: String, result: MethodChannel.Result) {
-        val skuDetails = Apphud.product(productIdentifier = productIdentifier)
-        if (skuDetails != null) {
-            result.success(skuDetails.toMap())
+        val productDetails = Apphud.product(productIdentifier = productIdentifier)
+        if (productDetails != null) {
+            result.success(productDetails.toMap())
         } else {
             result.success(null)
         }
     }
 
-    private fun purchase(productId: String, result: MethodChannel.Result) {
-        Apphud.purchase(activity, productId) { purchaseResult ->
+    private fun purchase(
+        productId: String,
+        offerIdToken: String? = null,
+        oldToken: String? = null,
+        replacementMode: Int? = null,
+        result: MethodChannel.Result
+    ) {
+        ApphudFlutter.purchase(
+            activity,
+            productId,
+            offerIdToken,
+            oldToken,
+            replacementMode
+        ) { purchaseResult ->
+            processPurchaseResult(purchaseResult, result)
+        }
+
+    }
+
+    private fun purchaseProduct(
+        product: ApphudProduct,
+        offerIdToken: String? = null,
+        oldToken: String? = null,
+        replacementMode: Int? = null,
+        result: MethodChannel.Result
+    ) {
+        Apphud.purchase(
+            activity,
+            product,
+            offerIdToken,
+            oldToken,
+            replacementMode
+        ) { purchaseResult ->
             processPurchaseResult(purchaseResult, result)
         }
     }
 
-    private fun purchaseProduct(product: ApphudProduct, result: MethodChannel.Result) {
-        Apphud.purchase(activity, product) { purchaseResult ->
-            processPurchaseResult(purchaseResult, result)
-        }
-    }
 
     private fun processPurchaseResult(
         purchaseResult: ApphudPurchaseResult,
@@ -146,16 +183,8 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
         }
     }
 
-    private fun purchaseWithoutValidation() {
-        // not implemented
-    }
-
-    private fun purchasePromo() {
-        // not implemented
-    }
-
     private fun syncPurchases(paywallIdentifier: String?, result: MethodChannel.Result) {
-        Apphud.syncPurchases(paywallIdentifier)
+        ApphudFlutter.syncPurchases(paywallIdentifier)
         result.success(null)
     }
 
@@ -179,10 +208,32 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
     }
 
     class PurchaseProductParser(private val result: MethodChannel.Result) {
-        fun parse(args: Map<String, Any>?, callback: (product: ApphudProduct) -> Unit) {
+        fun parse(
+            args: Map<String, Any>?, callback: (
+                product: ApphudProduct,
+                offerIdToken: String?,
+                oldToken: String?,
+                replacementMode: Int?
+            ) -> Unit
+        ) {
             try {
                 args ?: throw IllegalArgumentException("arguments are required")
-                callback(args.toApphudProduct())
+
+                val product = args.toApphudProduct()
+                val paywalls = Apphud.paywalls()
+                for (pw in paywalls) {
+                    val apphudProduct =
+                        pw.products?.firstOrNull { pr -> pr.product_id == product.product_id }
+                    if (apphudProduct != null) {
+                        product.productDetails = apphudProduct.productDetails
+                        break
+                    }
+                }
+                val offerIdToken = args["offerIdToken"] as? String
+                val oldToken = args["oldToken"] as? String
+                val replacementMode = args["replacementMode"] as? Int
+
+                callback(product, offerIdToken, oldToken, replacementMode)
             } catch (e: IllegalArgumentException) {
                 result.error("400", e.message, "")
             }
@@ -190,13 +241,24 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
     }
 
     class PurchaseParser(private val result: MethodChannel.Result) {
-        fun parse(args: Map<String, Any>?, callback: (productId: String) -> Unit) {
+        fun parse(
+            args: Map<String, Any>?, callback: (
+                productId: String,
+                offerIdToken: String?,
+                oldToken: String?,
+                replacementMode: Int?
+            ) -> Unit
+        ) {
             try {
                 args ?: throw IllegalArgumentException("productId is required argument")
                 val productId = args["productId"] as? String
                     ?: throw IllegalArgumentException("productId is required argument")
 
-                callback(productId)
+                val offerIdToken = args["offerIdToken"] as? String
+                val oldToken = args["oldToken"] as? String
+                val replacementMode = args["replacementMode"] as? Int
+
+                callback(productId, offerIdToken, oldToken, replacementMode)
             } catch (e: IllegalArgumentException) {
                 result.error("400", e.message, "")
             }

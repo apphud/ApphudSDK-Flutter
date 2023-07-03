@@ -1,6 +1,6 @@
 package com.apphud.fluttersdk.handlers
 
-import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.ProductDetails
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudListener
@@ -15,7 +15,7 @@ class ApphudListenerHandler() : MethodChannel.MethodCallHandler,
     private var isListeningStarted: Boolean = false
     private var channel: MethodChannel? = null
     private var userIdCached: String? = null
-    private var detailsCached: List<SkuDetails>? = null
+    private var detailsCached: List<ProductDetails>? = null
     private var paywallsCached: List<ApphudPaywall>? = null
     private var didUserLoad: Boolean = false
     private var subscriptionsCached: List<ApphudSubscription>? = null
@@ -43,6 +43,7 @@ class ApphudListenerHandler() : MethodChannel.MethodCallHandler,
                 start()
                 result.success(null)
             }
+
             "stopListening" -> {
                 stop()
                 result.success(null)
@@ -53,7 +54,7 @@ class ApphudListenerHandler() : MethodChannel.MethodCallHandler,
     private fun start() {
         isListeningStarted = true
         userIdCached?.let { v -> apphudDidChangeUserID(v) }
-        detailsCached?.let { v -> apphudFetchSkuDetailsProducts(v) }
+        detailsCached?.let { v -> apphudFetchProductDetails(v) }
         paywallsCached?.let { v -> paywallsDidFullyLoad(v) }
         if (didUserLoad) userDidLoad()
         subscriptionsCached?.let { v -> apphudSubscriptionsUpdated(v) }
@@ -71,7 +72,7 @@ class ApphudListenerHandler() : MethodChannel.MethodCallHandler,
         }
     }
 
-    override fun apphudFetchSkuDetailsProducts(details: List<SkuDetails>) {
+    override fun apphudFetchProductDetails(details: List<ProductDetails>) {
         detailsCached = details
         if (isListeningStarted) {
             val resultMap: List<HashMap<String, Any?>> = details.map {

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'navigation_event.dart';
@@ -11,23 +12,7 @@ part of 'navigation_event.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$NavigationEventTearOff {
-  const _$NavigationEventTearOff();
-
-  ToStart toStart() {
-    return const ToStart();
-  }
-
-  ToHome toHome() {
-    return const ToHome();
-  }
-}
-
-/// @nodoc
-const $NavigationEvent = _$NavigationEventTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$NavigationEvent {
@@ -89,19 +74,19 @@ class _$NavigationEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $ToStartCopyWith<$Res> {
-  factory $ToStartCopyWith(ToStart value, $Res Function(ToStart) then) =
-      _$ToStartCopyWithImpl<$Res>;
+abstract class _$$ToStartCopyWith<$Res> {
+  factory _$$ToStartCopyWith(_$ToStart value, $Res Function(_$ToStart) then) =
+      __$$ToStartCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ToStartCopyWithImpl<$Res> extends _$NavigationEventCopyWithImpl<$Res>
-    implements $ToStartCopyWith<$Res> {
-  _$ToStartCopyWithImpl(ToStart _value, $Res Function(ToStart) _then)
-      : super(_value, (v) => _then(v as ToStart));
+class __$$ToStartCopyWithImpl<$Res> extends _$NavigationEventCopyWithImpl<$Res>
+    implements _$$ToStartCopyWith<$Res> {
+  __$$ToStartCopyWithImpl(_$ToStart _value, $Res Function(_$ToStart) _then)
+      : super(_value, (v) => _then(v as _$ToStart));
 
   @override
-  ToStart get _value => super._value as ToStart;
+  _$ToStart get _value => super._value as _$ToStart;
 }
 
 /// @nodoc
@@ -116,7 +101,8 @@ class _$ToStart extends ToStart {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is ToStart);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ToStart);
   }
 
   @override
@@ -191,19 +177,19 @@ abstract class ToStart extends NavigationEvent {
 }
 
 /// @nodoc
-abstract class $ToHomeCopyWith<$Res> {
-  factory $ToHomeCopyWith(ToHome value, $Res Function(ToHome) then) =
-      _$ToHomeCopyWithImpl<$Res>;
+abstract class _$$ToHomeCopyWith<$Res> {
+  factory _$$ToHomeCopyWith(_$ToHome value, $Res Function(_$ToHome) then) =
+      __$$ToHomeCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ToHomeCopyWithImpl<$Res> extends _$NavigationEventCopyWithImpl<$Res>
-    implements $ToHomeCopyWith<$Res> {
-  _$ToHomeCopyWithImpl(ToHome _value, $Res Function(ToHome) _then)
-      : super(_value, (v) => _then(v as ToHome));
+class __$$ToHomeCopyWithImpl<$Res> extends _$NavigationEventCopyWithImpl<$Res>
+    implements _$$ToHomeCopyWith<$Res> {
+  __$$ToHomeCopyWithImpl(_$ToHome _value, $Res Function(_$ToHome) _then)
+      : super(_value, (v) => _then(v as _$ToHome));
 
   @override
-  ToHome get _value => super._value as ToHome;
+  _$ToHome get _value => super._value as _$ToHome;
 }
 
 /// @nodoc
@@ -218,7 +204,8 @@ class _$ToHome extends ToHome {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is ToHome);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ToHome);
   }
 
   @override

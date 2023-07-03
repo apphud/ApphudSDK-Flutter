@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'navigation_state.dart';
@@ -11,23 +12,7 @@ part of 'navigation_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$NavigationStateTearOff {
-  const _$NavigationStateTearOff();
-
-  Start start() {
-    return const Start();
-  }
-
-  Home home() {
-    return const Home();
-  }
-}
-
-/// @nodoc
-const $NavigationState = _$NavigationStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$NavigationState {
@@ -89,19 +74,19 @@ class _$NavigationStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $StartCopyWith<$Res> {
-  factory $StartCopyWith(Start value, $Res Function(Start) then) =
-      _$StartCopyWithImpl<$Res>;
+abstract class _$$StartCopyWith<$Res> {
+  factory _$$StartCopyWith(_$Start value, $Res Function(_$Start) then) =
+      __$$StartCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$StartCopyWithImpl<$Res> extends _$NavigationStateCopyWithImpl<$Res>
-    implements $StartCopyWith<$Res> {
-  _$StartCopyWithImpl(Start _value, $Res Function(Start) _then)
-      : super(_value, (v) => _then(v as Start));
+class __$$StartCopyWithImpl<$Res> extends _$NavigationStateCopyWithImpl<$Res>
+    implements _$$StartCopyWith<$Res> {
+  __$$StartCopyWithImpl(_$Start _value, $Res Function(_$Start) _then)
+      : super(_value, (v) => _then(v as _$Start));
 
   @override
-  Start get _value => super._value as Start;
+  _$Start get _value => super._value as _$Start;
 }
 
 /// @nodoc
@@ -116,7 +101,8 @@ class _$Start extends Start {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is Start);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$Start);
   }
 
   @override
@@ -191,19 +177,19 @@ abstract class Start extends NavigationState {
 }
 
 /// @nodoc
-abstract class $HomeCopyWith<$Res> {
-  factory $HomeCopyWith(Home value, $Res Function(Home) then) =
-      _$HomeCopyWithImpl<$Res>;
+abstract class _$$HomeCopyWith<$Res> {
+  factory _$$HomeCopyWith(_$Home value, $Res Function(_$Home) then) =
+      __$$HomeCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$HomeCopyWithImpl<$Res> extends _$NavigationStateCopyWithImpl<$Res>
-    implements $HomeCopyWith<$Res> {
-  _$HomeCopyWithImpl(Home _value, $Res Function(Home) _then)
-      : super(_value, (v) => _then(v as Home));
+class __$$HomeCopyWithImpl<$Res> extends _$NavigationStateCopyWithImpl<$Res>
+    implements _$$HomeCopyWith<$Res> {
+  __$$HomeCopyWithImpl(_$Home _value, $Res Function(_$Home) _then)
+      : super(_value, (v) => _then(v as _$Home));
 
   @override
-  Home get _value => super._value as Home;
+  _$Home get _value => super._value as _$Home;
 }
 
 /// @nodoc
@@ -218,7 +204,8 @@ class _$Home extends Home {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is Home);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$Home);
   }
 
   @override

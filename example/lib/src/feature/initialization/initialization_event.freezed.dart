@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'initialization_event.dart';
@@ -11,25 +12,7 @@ part of 'initialization_event.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$InitializationEventTearOff {
-  const _$InitializationEventTearOff();
-
-  InitializeTrying initializeTrying() {
-    return const InitializeTrying();
-  }
-
-  PaywallsFetchSuccess paywallsFetchSuccess(ApphudPaywalls paywalls) {
-    return PaywallsFetchSuccess(
-      paywalls,
-    );
-  }
-}
-
-/// @nodoc
-const $InitializationEvent = _$InitializationEventTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$InitializationEvent {
@@ -91,22 +74,22 @@ class _$InitializationEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $InitializeTryingCopyWith<$Res> {
-  factory $InitializeTryingCopyWith(
-          InitializeTrying value, $Res Function(InitializeTrying) then) =
-      _$InitializeTryingCopyWithImpl<$Res>;
+abstract class _$$InitializeTryingCopyWith<$Res> {
+  factory _$$InitializeTryingCopyWith(
+          _$InitializeTrying value, $Res Function(_$InitializeTrying) then) =
+      __$$InitializeTryingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$InitializeTryingCopyWithImpl<$Res>
+class __$$InitializeTryingCopyWithImpl<$Res>
     extends _$InitializationEventCopyWithImpl<$Res>
-    implements $InitializeTryingCopyWith<$Res> {
-  _$InitializeTryingCopyWithImpl(
-      InitializeTrying _value, $Res Function(InitializeTrying) _then)
-      : super(_value, (v) => _then(v as InitializeTrying));
+    implements _$$InitializeTryingCopyWith<$Res> {
+  __$$InitializeTryingCopyWithImpl(
+      _$InitializeTrying _value, $Res Function(_$InitializeTrying) _then)
+      : super(_value, (v) => _then(v as _$InitializeTrying));
 
   @override
-  InitializeTrying get _value => super._value as InitializeTrying;
+  _$InitializeTrying get _value => super._value as _$InitializeTrying;
 }
 
 /// @nodoc
@@ -121,7 +104,8 @@ class _$InitializeTrying extends InitializeTrying {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is InitializeTrying);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$InitializeTrying);
   }
 
   @override
@@ -196,29 +180,29 @@ abstract class InitializeTrying extends InitializationEvent {
 }
 
 /// @nodoc
-abstract class $PaywallsFetchSuccessCopyWith<$Res> {
-  factory $PaywallsFetchSuccessCopyWith(PaywallsFetchSuccess value,
-          $Res Function(PaywallsFetchSuccess) then) =
-      _$PaywallsFetchSuccessCopyWithImpl<$Res>;
+abstract class _$$PaywallsFetchSuccessCopyWith<$Res> {
+  factory _$$PaywallsFetchSuccessCopyWith(_$PaywallsFetchSuccess value,
+          $Res Function(_$PaywallsFetchSuccess) then) =
+      __$$PaywallsFetchSuccessCopyWithImpl<$Res>;
   $Res call({ApphudPaywalls paywalls});
 }
 
 /// @nodoc
-class _$PaywallsFetchSuccessCopyWithImpl<$Res>
+class __$$PaywallsFetchSuccessCopyWithImpl<$Res>
     extends _$InitializationEventCopyWithImpl<$Res>
-    implements $PaywallsFetchSuccessCopyWith<$Res> {
-  _$PaywallsFetchSuccessCopyWithImpl(
-      PaywallsFetchSuccess _value, $Res Function(PaywallsFetchSuccess) _then)
-      : super(_value, (v) => _then(v as PaywallsFetchSuccess));
+    implements _$$PaywallsFetchSuccessCopyWith<$Res> {
+  __$$PaywallsFetchSuccessCopyWithImpl(_$PaywallsFetchSuccess _value,
+      $Res Function(_$PaywallsFetchSuccess) _then)
+      : super(_value, (v) => _then(v as _$PaywallsFetchSuccess));
 
   @override
-  PaywallsFetchSuccess get _value => super._value as PaywallsFetchSuccess;
+  _$PaywallsFetchSuccess get _value => super._value as _$PaywallsFetchSuccess;
 
   @override
   $Res call({
     Object? paywalls = freezed,
   }) {
-    return _then(PaywallsFetchSuccess(
+    return _then(_$PaywallsFetchSuccess(
       paywalls == freezed
           ? _value.paywalls
           : paywalls // ignore: cast_nullable_to_non_nullable
@@ -243,20 +227,19 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is PaywallsFetchSuccess &&
-            (identical(other.paywalls, paywalls) ||
-                const DeepCollectionEquality()
-                    .equals(other.paywalls, paywalls)));
+        (other.runtimeType == runtimeType &&
+            other is _$PaywallsFetchSuccess &&
+            const DeepCollectionEquality().equals(other.paywalls, paywalls));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(paywalls);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(paywalls));
 
   @JsonKey(ignore: true)
   @override
-  $PaywallsFetchSuccessCopyWith<PaywallsFetchSuccess> get copyWith =>
-      _$PaywallsFetchSuccessCopyWithImpl<PaywallsFetchSuccess>(
+  _$$PaywallsFetchSuccessCopyWith<_$PaywallsFetchSuccess> get copyWith =>
+      __$$PaywallsFetchSuccessCopyWithImpl<_$PaywallsFetchSuccess>(
           this, _$identity);
 
   @override
@@ -323,12 +306,12 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
 }
 
 abstract class PaywallsFetchSuccess extends InitializationEvent {
-  const factory PaywallsFetchSuccess(ApphudPaywalls paywalls) =
+  const factory PaywallsFetchSuccess(final ApphudPaywalls paywalls) =
       _$PaywallsFetchSuccess;
   const PaywallsFetchSuccess._() : super._();
 
-  ApphudPaywalls get paywalls => throw _privateConstructorUsedError;
+  ApphudPaywalls get paywalls;
   @JsonKey(ignore: true)
-  $PaywallsFetchSuccessCopyWith<PaywallsFetchSuccess> get copyWith =>
+  _$$PaywallsFetchSuccessCopyWith<_$PaywallsFetchSuccess> get copyWith =>
       throw _privateConstructorUsedError;
 }

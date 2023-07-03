@@ -187,12 +187,18 @@ class Apphud {
   /// - parameter [productId] is identifier of the product that user wants to purchase. If you don't use Apphud paywalls, you can use this parameter.
   /// Best practise is not to use this method, but implement paywalls logic by adding your paywall configuration in Apphud Dashboard > Product Hub > Paywalls.
   /// - parameter [product] - is an `ApphudProduct` object from your `ApphudPaywall`. You must first configure paywalls in Apphud Dashboard > Product Hub > Paywalls.
+  /// - parameter [offerIdToken] - Android only. Optional. Specifies the identifier of the offer to initiate purchase with. You must manually select base plan and offer from ProductDetails and pass offer id token.
+  /// - parameter [oldToken] - Android only. Optional. Specifies the Google Play Billing purchase token that the user is upgrading or downgrading from.
+  /// - parameter [replacementMode] - Android only. Optional. Replacement mode (https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.SubscriptionUpdateParams.ReplacementMode?hl=en)
   /// Returns [ApphudPurchaseResult] object
   /// Note for iOS only:  You are not required to purchase product using Apphud SDK methods.
   /// You can purchase subscription or any in-app purchase using your own code. App Store receipt will be sent to Apphud anyway.
   static Future<ApphudPurchaseResult> purchase({
     String? productId,
     ApphudProduct? product,
+    String? offerIdToken,
+    String? oldToken,
+    int? replacementMode,
   }) async {
     try {
       assert(
@@ -207,14 +213,24 @@ class Apphud {
       if (productId != null) {
         json = await _channel.invokeMethod(
           'purchase',
-          {'productId': productId},
+          {
+            'productId': productId,
+            'offerIdToken': offerIdToken,
+            'oldToken': oldToken,
+            'replacementMode': replacementMode,
+          },
         );
       } else if (product != null) {
         json = await _channel.invokeMethod(
           'purchaseProduct',
           product.toJson()
-            ..remove('skuDetails')
-            ..remove('skProduct'),
+            ..remove('productDetails')
+            ..remove('skProduct')
+            ..addAll({
+              'offerIdToken': offerIdToken,
+              'oldToken': oldToken,
+              'replacementMode': replacementMode,
+            }),
         );
       }
       return ApphudPurchaseResult.fromJson(json);
@@ -266,7 +282,7 @@ class Apphud {
   /// Returns paywalls configured in Apphud Dashboard > Product Hub > Paywalls.
   ///
   /// Each paywall contains an array of `ApphudProduct` objects that you use for purchase.
-  /// `ApphudProduct` is Apphud's wrapper around `SkuDetails` or 'SkProduct'.
+  /// `ApphudProduct` is Apphud's wrapper around `ProductDetails` or 'SkProduct'.
   /// Returns empty array if paywalls are not yet fetched.
   /// To get notified when paywalls are ready to use, use ApphudListener's  `userDidLoad` or `paywallsDidFullyLoad` methods.
   /// Best practice is to use this method together with `paywallsDidFullyLoad` listener.
@@ -301,7 +317,7 @@ class Apphud {
 
   /// Returns permission groups configured in Apphud dashboard > Product Hub > Products. Groups are cached on device.
   ///
-  /// Note that this method returns empty array if `SkuDetails` or 'SkProduct' are not yet fetched from Google Play / App Store.
+  /// Note that this method returns empty array if `ProductDetails` or 'SkProduct' are not yet fetched from Google Play / App Store.
   /// To get notified when `permissionGroups` are ready to use, use ApphudListener's `paywallsDidFullyLoad` method
   /// Best practice is not to use this method at all, but use `paywalls()` instead.
   static Future<List<ApphudGroup>> permissionGroups() async {
