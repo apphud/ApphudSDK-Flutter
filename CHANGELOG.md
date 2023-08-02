@@ -1,3 +1,6 @@
+## 2.3.1
+- Fixed purchase result parsing issue in some cases
+
 ## 2.3.0
 - [Android] **BREAKING** SkuDetailsWrapper was replaced by ProductDetailsWrapper because of the migration to Billing v5.
 
