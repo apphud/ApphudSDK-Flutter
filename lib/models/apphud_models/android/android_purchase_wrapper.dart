@@ -8,7 +8,7 @@ class AndroidPurchaseWrapper {
   final int purchaseState;
   final int quantity;
   final int purchaseTime;
-  final List<AndroidAccountIdentifiersWrapper>? accountIdentifiers;
+  final AndroidAccountIdentifiersWrapper? accountIdentifiers;
   final String developerPayload;
   final String orderId;
   final String originalJson;
