@@ -1,26 +1,33 @@
 package com.apphud.fluttersdk.handlers
 
 import android.content.Context
+import android.os.Looper
+import android.util.Log
+import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
 import com.google.gson.Gson
 import io.flutter.plugin.common.MethodChannel
-import android.util.Log
-import com.apphud.fluttersdk.toMap
-import java.lang.IllegalStateException
 
 class HandlePurchasesHandler(override val routes: List<String>, val context: Context) : Handler {
 
     private val gson: Gson by lazy { Gson() }
 
-    override fun tryToHandle(method: String, args: Map<String, Any>?, result: MethodChannel.Result) {
+    override fun tryToHandle(
+        method: String,
+        args: Map<String, Any>?,
+        result: MethodChannel.Result
+    ) {
         when (method) {
             HandlePurchasesRoutes.hasActiveSubscription.name -> hasActiveSubscription(result)
             HandlePurchasesRoutes.subscription.name -> subscription(result)
             HandlePurchasesRoutes.subscriptions.name -> subscriptions(result)
             HandlePurchasesRoutes.nonRenewingPurchases.name -> nonRenewingPurchases(result)
-            HandlePurchasesRoutes.isNonRenewingPurchaseActive.name -> IsNonRenewingPurchaseActiveParser(result).parse(args) { productId ->
+            HandlePurchasesRoutes.isNonRenewingPurchaseActive.name -> IsNonRenewingPurchaseActiveParser(
+                result
+            ).parse(args) { productId ->
                 isNonRenewingPurchaseActive(productId, result)
             }
+
             HandlePurchasesRoutes.restorePurchases.name -> restorePurchases(result)
             HandlePurchasesRoutes.migratePurchasesIfNeeded.name -> result.notImplemented()
             HandlePurchasesRoutes.fetchRawReceiptInfo.name -> result.notImplemented()
@@ -91,10 +98,13 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             error?.let {
                 resultMap["error"] = it.toMap()
             }
-            try {
-                result.success(resultMap)
-            } catch (e: IllegalStateException) {
-                Log.e("Apphud", e.toString(), e)
+            val handler = android.os.Handler(Looper.getMainLooper())
+            handler.post {
+                try {
+                    result.success(resultMap)
+                } catch (e: IllegalStateException) {
+                    Log.e("Apphud", e.toString(), e)
+                }
             }
         }
     }
@@ -104,7 +114,7 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             try {
                 args ?: throw IllegalArgumentException("productIdentifier is required argument")
                 val productId = args["productIdentifier"] as? String
-                        ?: throw IllegalArgumentException("productIdentifier is required argument")
+                    ?: throw IllegalArgumentException("productIdentifier is required argument")
 
                 callback(productId)
             } catch (e: IllegalArgumentException) {
