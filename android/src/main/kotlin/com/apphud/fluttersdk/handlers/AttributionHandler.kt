@@ -4,7 +4,12 @@ import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudAttributionProvider
 import io.flutter.plugin.common.MethodChannel
 
-class AttributionHandler(override val routes: List<String>) : Handler {
+class AttributionHandler(
+    override val routes: List<String>,
+    handleOnMainThreadP: HandleOnMainThread
+) : Handler {
+    private var handleOnMainThread = handleOnMainThreadP
+
     override fun tryToHandle(
         method: String,
         args: Map<String, Any>?,
@@ -14,6 +19,7 @@ class AttributionHandler(override val routes: List<String>) : Handler {
             AttributionRoutes.addAttribution.name -> AttributionParser(result).parse(args) { provider, data, identifier ->
                 addAttribution(provider, data, identifier, result)
             }
+
             AttributionRoutes.collectSearchAdsAttribution.name -> result.notImplemented()
         }
     }
@@ -24,7 +30,7 @@ class AttributionHandler(override val routes: List<String>) : Handler {
         identifier: String?, result: MethodChannel.Result
     ) {
         Apphud.addAttribution(provider, data, identifier)
-        result.success(true)
+        handleOnMainThread { result.success(true) }
     }
 
     class AttributionParser(val result: MethodChannel.Result) {

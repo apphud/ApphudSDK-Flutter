@@ -8,9 +8,14 @@ import com.apphud.sdk.Apphud
 import com.google.gson.Gson
 import io.flutter.plugin.common.MethodChannel
 
-class HandlePurchasesHandler(override val routes: List<String>, val context: Context) : Handler {
+class HandlePurchasesHandler(
+    override val routes: List<String>,
+    val context: Context,
+    handleOnMainThreadP: HandleOnMainThread
+) : Handler {
 
     private val gson: Gson by lazy { Gson() }
+    private var handleOnMainThread = handleOnMainThreadP
 
     override fun tryToHandle(
         method: String,
@@ -39,17 +44,17 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
 
     private fun hasActiveSubscription(result: MethodChannel.Result) {
         val isHasActiveSubscription = Apphud.hasActiveSubscription()
-        result.success(isHasActiveSubscription)
+        handleOnMainThread { result.success(isHasActiveSubscription) }
     }
 
     private fun hasPremiumAccess(result: MethodChannel.Result) {
         val isHasActiveSubscription = Apphud.hasPremiumAccess()
-        result.success(isHasActiveSubscription)
+        handleOnMainThread { result.success(isHasActiveSubscription) }
     }
 
     private fun subscription(result: MethodChannel.Result) {
         val subscription = Apphud.subscription()
-        result.success(subscription?.toMap())
+        handleOnMainThread { result.success(subscription?.toMap()) }
     }
 
     private fun subscriptions(result: MethodChannel.Result) {
@@ -58,7 +63,7 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             it.toMap()
         }
 
-        result.success(jsonList)
+        handleOnMainThread { result.success(jsonList) }
     }
 
 
@@ -69,12 +74,12 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             it.toMap()
         }
 
-        result.success(jsonList)
+        handleOnMainThread { result.success(jsonList) }
     }
 
     private fun isNonRenewingPurchaseActive(productId: String, result: MethodChannel.Result) {
         val isNonRenewingPurchaseActive = Apphud.isNonRenewingPurchaseActive(productId = productId)
-        result.success(isNonRenewingPurchaseActive)
+        handleOnMainThread { result.success(isNonRenewingPurchaseActive) }
     }
 
     private fun restorePurchases(result: MethodChannel.Result) {
@@ -98,28 +103,21 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             error?.let {
                 resultMap["error"] = it.toMap()
             }
-            val handler = android.os.Handler(Looper.getMainLooper())
-            handler.post {
-                try {
-                    result.success(resultMap)
-                } catch (e: IllegalStateException) {
-                    Log.e("Apphud", e.toString(), e)
-                }
-            }
+            handleOnMainThread { result.success(resultMap) }
         }
     }
+}
 
-    class IsNonRenewingPurchaseActiveParser(val result: MethodChannel.Result) {
-        fun parse(args: Map<String, Any>?, callback: (productId: String) -> Unit) {
-            try {
-                args ?: throw IllegalArgumentException("productIdentifier is required argument")
-                val productId = args["productIdentifier"] as? String
-                    ?: throw IllegalArgumentException("productIdentifier is required argument")
+class IsNonRenewingPurchaseActiveParser(val result: MethodChannel.Result) {
+    fun parse(args: Map<String, Any>?, callback: (productId: String) -> Unit) {
+        try {
+            args ?: throw IllegalArgumentException("productIdentifier is required argument")
+            val productId = args["productIdentifier"] as? String
+                ?: throw IllegalArgumentException("productIdentifier is required argument")
 
-                callback(productId)
-            } catch (e: IllegalArgumentException) {
-                result.error("400", e.message, "")
-            }
+            callback(productId)
+        } catch (e: IllegalArgumentException) {
+            result.error("400", e.message, "")
         }
     }
 }

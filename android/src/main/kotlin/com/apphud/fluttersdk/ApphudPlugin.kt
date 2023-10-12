@@ -2,6 +2,7 @@ package com.apphud.fluttersdk
 
 import android.app.Activity
 import android.content.Context
+import android.os.Looper
 import android.util.Log
 import androidx.annotation.NonNull
 import com.apphud.fluttersdk.handlers.*
@@ -28,6 +29,26 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private var activity: Activity? = null
 
+    private var mainThreadHandler: android.os.Handler? = null
+
+    private var handleOnMainThread: HandleOnMainThread = { func ->
+        if (mainThreadHandler == null) {
+            try {
+                func()
+            } catch (e: IllegalStateException) {
+                Log.e("Apphud", e.toString(), e)
+            }
+        } else {
+            mainThreadHandler!!.post {
+                try {
+                    func()
+                } catch (e: IllegalStateException) {
+                    Log.e("Apphud", e.toString(), e)
+                }
+            }
+        }
+    }
+
 
     companion object {
         @JvmStatic
@@ -43,6 +64,8 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override
     fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        mainThreadHandler = android.os.Handler(Looper.getMainLooper())
+
         channel ?: run {
             channel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud")
             channel!!.setMethodCallHandler(this)
@@ -51,12 +74,11 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             listenerChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud/listener")
         }
         listenerHandler ?: run {
-            listenerHandler = ApphudListenerHandler()
+            listenerHandler = ApphudListenerHandler(handleOnMainThread)
             listenerHandler!!.setMethodCallHandler(listenerChannel)
         }
         this.context = flutterPluginBinding.applicationContext
     }
-
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         handlers.forEach { handler ->
@@ -84,14 +106,34 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         setHeaders()
 
         handlers = listOf(
-            InitializationHandler(InitializationRoutes.stringValues(), context = this.context),
-            MakePurchaseHandler(MakePurchaseRoutes.stringValues(), activity = sActivity),
-            HandlePurchasesHandler(HandlePurchasesRoutes.stringValues(), context = this.context),
-            AttributionHandler(AttributionRoutes.stringValues()),
-            OtherHandler(OtherRoutes.stringValues(), context = this.context),
-            UserPropertiesHandler(UserPropertiesRoutes.stringValues(), context = this.context),
-            PaywallLogsHandler(PaywallLogsRoutes.stringValues(), context = this.context),
-            PromotionalsHandler(PromotionalsRoutes.stringValues())
+            InitializationHandler(
+                InitializationRoutes.stringValues(),
+                context = this.context,
+                handleOnMainThread
+            ),
+            MakePurchaseHandler(
+                MakePurchaseRoutes.stringValues(),
+                activity = sActivity,
+                handleOnMainThread
+            ),
+            HandlePurchasesHandler(
+                HandlePurchasesRoutes.stringValues(),
+                context = this.context,
+                handleOnMainThread
+            ),
+            AttributionHandler(AttributionRoutes.stringValues(), handleOnMainThread),
+            OtherHandler(OtherRoutes.stringValues(), context = this.context, handleOnMainThread),
+            UserPropertiesHandler(
+                UserPropertiesRoutes.stringValues(),
+                context = this.context,
+                handleOnMainThread
+            ),
+            PaywallLogsHandler(
+                PaywallLogsRoutes.stringValues(),
+                context = this.context,
+                handleOnMainThread
+            ),
+            PromotionalsHandler(PromotionalsRoutes.stringValues(), handleOnMainThread)
         )
     }
 

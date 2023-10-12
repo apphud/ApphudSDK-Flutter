@@ -5,7 +5,11 @@ import com.apphud.sdk.domain.ApphudGroup
 import io.flutter.plugin.common.MethodChannel
 
 
-class PromotionalsHandler(override val routes: List<String>) : Handler {
+class PromotionalsHandler(
+    override val routes: List<String>,
+    handleOnMainThreadP: HandleOnMainThread
+) : Handler {
+    private var handleOnMainThread = handleOnMainThreadP
     override fun tryToHandle(
         method: String,
         args: Map<String, Any>?,
@@ -15,7 +19,7 @@ class PromotionalsHandler(override val routes: List<String>) : Handler {
             PromotionalsRoutes.grantPromotional.name ->
                 PromotionalsParser(result).parse(args) { daysCount, productId, permissionGroup ->
                     Apphud.grantPromotional(daysCount, productId, permissionGroup) { isGranted ->
-                        result.success(isGranted)
+                        handleOnMainThread { result.success(isGranted) }
                     }
                 }
         }
