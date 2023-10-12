@@ -7,7 +7,12 @@ import com.apphud.sdk.domain.ApphudPaywall
 import io.flutter.plugin.common.MethodChannel
 
 
-class PaywallLogsHandler(override val routes: List<String>, val context: Context) : Handler {
+class PaywallLogsHandler(
+    override val routes: List<String>,
+    val context: Context,
+    handleOnMainThreadP: HandleOnMainThread
+) : Handler {
+    private var handleOnMainThread = handleOnMainThreadP
 
     override fun tryToHandle(
         method: String,
@@ -18,6 +23,7 @@ class PaywallLogsHandler(override val routes: List<String>, val context: Context
             PaywallLogsRoutes.paywallShown.name -> PaywallParser(result).parse(args) { paywall ->
                 paywallShown(paywall, result)
             }
+
             PaywallLogsRoutes.paywallClosed.name -> PaywallParser(result).parse(args) { paywall ->
                 paywallClosed(paywall, result)
             }
@@ -26,12 +32,12 @@ class PaywallLogsHandler(override val routes: List<String>, val context: Context
 
     private fun paywallShown(paywall: ApphudPaywall, result: MethodChannel.Result) {
         Apphud.paywallShown(paywall)
-        result.success(null)
+        handleOnMainThread { result.success(null) }
     }
 
     private fun paywallClosed(paywall: ApphudPaywall, result: MethodChannel.Result) {
         Apphud.paywallClosed(paywall)
-        result.success(null)
+        handleOnMainThread { result.success(null) }
     }
 }
 

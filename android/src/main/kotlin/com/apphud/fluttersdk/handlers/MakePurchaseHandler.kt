@@ -13,8 +13,12 @@ import io.flutter.plugin.common.MethodChannel
 import java.lang.IllegalStateException
 
 
-class MakePurchaseHandler(override val routes: List<String>, val activity: Activity) : Handler {
-
+class MakePurchaseHandler(
+    override val routes: List<String>,
+    val activity: Activity,
+    handleOnMainThreadP: HandleOnMainThread
+) : Handler {
+    private var handleOnMainThread = handleOnMainThreadP
     override fun tryToHandle(
         method: String,
         args: Map<String, Any>?,
@@ -75,14 +79,14 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
 
     private fun getPermissionGroups(result: MethodChannel.Result) {
         val groups = Apphud.permissionGroups()
-        result.success(groups.map { it.toMap() })
+        handleOnMainThread { result.success(groups.map { it.toMap() }) }
     }
 
     private fun paywalls(result: MethodChannel.Result) {
         val paywalls: List<ApphudPaywall> = Apphud.paywalls()
         val resultMap = hashMapOf<String, Any?>()
         resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
-        activity.runOnUiThread { result.success(resultMap) }
+        handleOnMainThread { result.success(resultMap) }
     }
 
 
@@ -91,7 +95,7 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             val jsonList: List<HashMap<String, Any?>> = productDetails.map {
                 it.toMap()
             }
-            result.success(jsonList)
+            handleOnMainThread { result.success(jsonList) }
         }
     }
 
@@ -101,18 +105,18 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
             val jsonList: List<HashMap<String, Any?>> = productDetails.map {
                 it.toMap()
             }
-            result.success(jsonList)
+            handleOnMainThread { result.success(jsonList) }
         } else {
-            result.success(null)
+            handleOnMainThread { result.success(null) }
         }
     }
 
     private fun product(productIdentifier: String, result: MethodChannel.Result) {
         val productDetails = Apphud.product(productIdentifier = productIdentifier)
         if (productDetails != null) {
-            result.success(productDetails.toMap())
+            handleOnMainThread { result.success(productDetails.toMap()) }
         } else {
-            result.success(null)
+            handleOnMainThread { result.success(null) }
         }
     }
 
@@ -177,7 +181,7 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
         }
 
         try {
-            result.success(resultMap)
+            handleOnMainThread { result.success(resultMap) }
         } catch (e: IllegalStateException) {
             Log.e("Apphud", e.toString(), e)
         }
@@ -185,12 +189,12 @@ class MakePurchaseHandler(override val routes: List<String>, val activity: Activ
 
     private fun syncPurchases(paywallIdentifier: String?, result: MethodChannel.Result) {
         ApphudFlutter.syncPurchases(paywallIdentifier)
-        result.success(null)
+        handleOnMainThread { result.success(null) }
     }
 
     private fun refreshEntitlements(result: MethodChannel.Result) {
         Apphud.refreshEntitlements()
-        result.success(null)
+        handleOnMainThread { result.success(null) }
     }
 
     class ProductParser(private val result: MethodChannel.Result) {

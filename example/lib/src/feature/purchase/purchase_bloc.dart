@@ -241,6 +241,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
 
   Stream<PurchaseState> _mapRestorePurchases(RestorePurchases value) async* {
     yield PurchaseState.inProgress();
+    printAsJson('try to restore purchases', '');
     final ApphudComposite result = await Apphud.restorePurchases();
     printAsJson('restorePurchases()', result);
     if (result.error == null) {

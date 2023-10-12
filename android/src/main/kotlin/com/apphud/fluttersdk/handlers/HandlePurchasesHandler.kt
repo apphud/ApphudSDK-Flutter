@@ -1,26 +1,38 @@
 package com.apphud.fluttersdk.handlers
 
 import android.content.Context
+import android.os.Looper
+import android.util.Log
+import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
 import com.google.gson.Gson
 import io.flutter.plugin.common.MethodChannel
-import android.util.Log
-import com.apphud.fluttersdk.toMap
-import java.lang.IllegalStateException
 
-class HandlePurchasesHandler(override val routes: List<String>, val context: Context) : Handler {
+class HandlePurchasesHandler(
+    override val routes: List<String>,
+    val context: Context,
+    handleOnMainThreadP: HandleOnMainThread
+) : Handler {
 
     private val gson: Gson by lazy { Gson() }
+    private var handleOnMainThread = handleOnMainThreadP
 
-    override fun tryToHandle(method: String, args: Map<String, Any>?, result: MethodChannel.Result) {
+    override fun tryToHandle(
+        method: String,
+        args: Map<String, Any>?,
+        result: MethodChannel.Result
+    ) {
         when (method) {
             HandlePurchasesRoutes.hasActiveSubscription.name -> hasActiveSubscription(result)
             HandlePurchasesRoutes.subscription.name -> subscription(result)
             HandlePurchasesRoutes.subscriptions.name -> subscriptions(result)
             HandlePurchasesRoutes.nonRenewingPurchases.name -> nonRenewingPurchases(result)
-            HandlePurchasesRoutes.isNonRenewingPurchaseActive.name -> IsNonRenewingPurchaseActiveParser(result).parse(args) { productId ->
+            HandlePurchasesRoutes.isNonRenewingPurchaseActive.name -> IsNonRenewingPurchaseActiveParser(
+                result
+            ).parse(args) { productId ->
                 isNonRenewingPurchaseActive(productId, result)
             }
+
             HandlePurchasesRoutes.restorePurchases.name -> restorePurchases(result)
             HandlePurchasesRoutes.migratePurchasesIfNeeded.name -> result.notImplemented()
             HandlePurchasesRoutes.fetchRawReceiptInfo.name -> result.notImplemented()
@@ -32,17 +44,17 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
 
     private fun hasActiveSubscription(result: MethodChannel.Result) {
         val isHasActiveSubscription = Apphud.hasActiveSubscription()
-        result.success(isHasActiveSubscription)
+        handleOnMainThread { result.success(isHasActiveSubscription) }
     }
 
     private fun hasPremiumAccess(result: MethodChannel.Result) {
         val isHasActiveSubscription = Apphud.hasPremiumAccess()
-        result.success(isHasActiveSubscription)
+        handleOnMainThread { result.success(isHasActiveSubscription) }
     }
 
     private fun subscription(result: MethodChannel.Result) {
         val subscription = Apphud.subscription()
-        result.success(subscription?.toMap())
+        handleOnMainThread { result.success(subscription?.toMap()) }
     }
 
     private fun subscriptions(result: MethodChannel.Result) {
@@ -51,7 +63,7 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             it.toMap()
         }
 
-        result.success(jsonList)
+        handleOnMainThread { result.success(jsonList) }
     }
 
 
@@ -62,12 +74,12 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             it.toMap()
         }
 
-        result.success(jsonList)
+        handleOnMainThread { result.success(jsonList) }
     }
 
     private fun isNonRenewingPurchaseActive(productId: String, result: MethodChannel.Result) {
         val isNonRenewingPurchaseActive = Apphud.isNonRenewingPurchaseActive(productId = productId)
-        result.success(isNonRenewingPurchaseActive)
+        handleOnMainThread { result.success(isNonRenewingPurchaseActive) }
     }
 
     private fun restorePurchases(result: MethodChannel.Result) {
@@ -91,25 +103,21 @@ class HandlePurchasesHandler(override val routes: List<String>, val context: Con
             error?.let {
                 resultMap["error"] = it.toMap()
             }
-            try {
-                result.success(resultMap)
-            } catch (e: IllegalStateException) {
-                Log.e("Apphud", e.toString(), e)
-            }
+            handleOnMainThread { result.success(resultMap) }
         }
     }
+}
 
-    class IsNonRenewingPurchaseActiveParser(val result: MethodChannel.Result) {
-        fun parse(args: Map<String, Any>?, callback: (productId: String) -> Unit) {
-            try {
-                args ?: throw IllegalArgumentException("productIdentifier is required argument")
-                val productId = args["productIdentifier"] as? String
-                        ?: throw IllegalArgumentException("productIdentifier is required argument")
+class IsNonRenewingPurchaseActiveParser(val result: MethodChannel.Result) {
+    fun parse(args: Map<String, Any>?, callback: (productId: String) -> Unit) {
+        try {
+            args ?: throw IllegalArgumentException("productIdentifier is required argument")
+            val productId = args["productIdentifier"] as? String
+                ?: throw IllegalArgumentException("productIdentifier is required argument")
 
-                callback(productId)
-            } catch (e: IllegalArgumentException) {
-                result.error("400", e.message, "")
-            }
+            callback(productId)
+        } catch (e: IllegalArgumentException) {
+            result.error("400", e.message, "")
         }
     }
 }

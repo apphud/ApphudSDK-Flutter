@@ -9,3 +9,7 @@ interface Handler {
         return routes.contains(method)
     }
 }
+
+typealias FunctionToHandleOnMainThread = () -> Unit
+
+typealias HandleOnMainThread = (func: FunctionToHandleOnMainThread) -> Unit

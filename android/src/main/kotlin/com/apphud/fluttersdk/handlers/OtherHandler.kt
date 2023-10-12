@@ -5,8 +5,12 @@ import com.apphud.sdk.Apphud
 import io.flutter.plugin.common.MethodChannel
 
 
-class OtherHandler(override val routes: List<String>, val context: Context) : Handler {
-
+class OtherHandler(
+    override val routes: List<String>,
+    val context: Context,
+    handleOnMainThreadP: HandleOnMainThread
+) : Handler {
+    private var handleOnMainThread = handleOnMainThreadP
     override fun tryToHandle(
         method: String,
         args: Map<String, Any>?,
@@ -22,17 +26,17 @@ class OtherHandler(override val routes: List<String>, val context: Context) : Ha
 
     private fun enableDebugLogs(result: MethodChannel.Result) {
         Apphud.enableDebugLogs()
-        result.success(null)
+        handleOnMainThread { result.success(null) }
     }
 
     private fun optOutOfTracking(result: MethodChannel.Result) {
         Apphud.optOutOfTracking()
-        result.success(null)
+        handleOnMainThread { result.success(null) }
     }
 
     private fun collectDeviceIdentifiers(result: MethodChannel.Result) {
         Apphud.collectDeviceIdentifiers()
-        result.success(null)
+        handleOnMainThread { result.success(null) }
     }
 }
 

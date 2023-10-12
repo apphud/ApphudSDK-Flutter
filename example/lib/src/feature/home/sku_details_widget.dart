@@ -29,9 +29,8 @@ class ProductDetailsWidget extends StatelessWidget {
       onTap: onTap,
       child: _wrapInCard(
         child: ListTile(
-          title: Text(
+          title: Text('${productDetailsLocal.description}\n'
               '${productDetailsLocal.title} (${productDetailsLocal.productId})'),
-          leading: Text(productDetailsLocal.description),
           subtitle: _buildProductDetailsJson(productDetailsLocal),
           trailing: HeroMode(
             enabled: false,
