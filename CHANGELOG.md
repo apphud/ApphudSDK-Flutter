@@ -1,3 +1,6 @@
+## 2.3.2
+- [Android] Fixed restore purchase issue in some cases
+
 ## 2.3.1
 - Fixed purchase result parsing issue in some cases
 
