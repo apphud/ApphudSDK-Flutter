@@ -14,7 +14,6 @@ extension ApphudPaywall {
                 "json": json,
                 "products" : products.map({ (product:ApphudProduct) in product.toMap() }),
                 "experimentName" : experimentName,
-                "variationName" : variationName,
                 "fromPaywall" : fromPaywall,
         ]
     }

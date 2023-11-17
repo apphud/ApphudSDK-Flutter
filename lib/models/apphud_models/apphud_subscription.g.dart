@@ -30,7 +30,7 @@ Map<String, dynamic> _$ApphudSubscriptionWrapperToJson(
       'isAutorenewEnabled': instance.isAutorenewEnabled,
       'isIntroductoryActivated': instance.isIntroductoryActivated,
       'isActive': instance.isActive,
-      'status': _$ApphudSubscriptionStatusEnumMap[instance.status],
+      'status': _$ApphudSubscriptionStatusEnumMap[instance.status]!,
       'canceledAt': instance.canceledAt,
       'startedAt': instance.startedAt,
       'isSandbox': instance.isSandbox,

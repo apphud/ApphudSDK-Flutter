@@ -21,10 +21,13 @@ import 'models/apphud_models/composite/apphud_purchase_result.dart';
 import 'models/extensions.dart';
 export 'listener/apphud_listener.dart';
 
+// TODO: в example app добавить кнопку по нажатию на которую будут вызываться все методы по списку, кроме разве что purchase. я буду сам комментить нужные и смотреть то что нужно. пусть результаты всех методов принтятся в консоль. смотри пример: https://github.com/apphud/ApphudSDK-React-Native/blob/master/example/src/screens/ActionsScreen.tsx#L46-L103
+// TODO: добавить так же код, где будут слушаться все методы листенера и принтиться в консоль, чтобы я мог проверить все методы листенера
+// TODO: везде убрать проверку #available(iOS 12.2, *)
+
 class Apphud {
   static const MethodChannel _channel = MethodChannel('apphud');
-  static const MethodChannel _listenerChannel =
-      MethodChannel('apphud/listener');
+  static const MethodChannel _listenerChannel = MethodChannel('apphud/listener');
   static ApphudListenerHandler? _apphudListenerHandler;
 
 // Initialization
@@ -111,6 +114,7 @@ class Apphud {
 
 // Make Purchase
 
+// TODO: убрать, пусть используют только products() метод
   /// iOS only. This notification is sent when `SKProduct`s are fetched from the App Store.
   ///
   /// Note that you have to add all product identifiers in Apphud Dashboard > Product Hub > Products.
@@ -123,6 +127,7 @@ class Apphud {
     return (await _channel.invokeMethod('didFetchProductsNotification'))!;
   }
 
+// TODO: убрать, пусть используют только products() метод
   /// This callback is called when SKProducts are fetched from StoreKit (iOS) or Google Play Billing (Android).
   ///
   /// Note that you have to add all product identifiers in Apphud.
@@ -135,6 +140,7 @@ class Apphud {
         .toList();
   }
 
+// TODO: убрать, пусть используют только products() метод
   /// iOS only.  Refreshes `SKProduct`s from the App Store.
   ///
   /// You have to add all product identifiers in Apphud Dashboard > Product Hub > Products.
@@ -167,6 +173,7 @@ class Apphud {
     return json != null ? ApphudProductComposite.fromJson(json) : null;
   }
 
+// TODO: MAKE single method for iOS + Android. обновить products() метод чтобы под капотом вызывал fetchProducts() на iOS и productsFetchCallback() на Android, и в документации метода убрать текст про то, что он может вернуть nil, если продукты еще не загрузились, потому что используется колбек
   /// Returns array of [ApphudProductComposite] objects that you added in Apphud > Product Hub > Products.
   ///
   /// Note that this method will return `null` if products are not yet fetched from the App Store.
@@ -239,6 +246,7 @@ class Apphud {
     }
   }
 
+// TODO: JUST REMOVE
   /// Purchase product and automatically submits App Store Receipt (iOS) or Google Play purchase token (Android) to Apphud.
   ///
   /// This method doesn't wait until Apphud validates receipt from Apple (iOS) or Google Play (Android) and immediately returns result object.
@@ -254,6 +262,7 @@ class Apphud {
     return ApphudPurchaseResult.fromJson(json!);
   }
 
+// TODO: REMOVE EVERYWHERE iOS 12.2 check, because now we support minimum iOS 13
   /// iOS >=12.2 only. Purchases subscription (promotional) offer and automatically submits App Store Receipt to Apphud.
   ///
   /// This method automatically sends in-app purchase receipt to Apphud, so you don't need to call `submitReceipt` method.
@@ -292,6 +301,7 @@ class Apphud {
     return json != null ? ApphudPaywalls.fromJson(json) : null;
   }
 
+ // TODO: JUST REMOVE
   /// iOS only. If you want to use A/B experiments while running SDK in `Observer Mode` you should manually send paywall identifier to Apphud using this method.
   ///
   /// Note that you have to add paywalls in Apphud Dashboard > Product Hub > Paywalls.
@@ -303,6 +313,7 @@ class Apphud {
     );
   }
 
+// TODO: JUST REMOVE
   /// Android only. Refreshes current purchases: subscriptions and non-renewing purchases.
   ///
   /// To get notified about updates, you should listen for ApphudListener's
@@ -402,6 +413,7 @@ class Apphud {
         false;
   }
 
+// TODO: JUST REMOVE
   /// iOS only. Basically the same as restoring purchases.
   static Future<ApphudComposite> validateReceipt() async {
     final Map<dynamic, dynamic> json = (await _channel
@@ -421,6 +433,7 @@ class Apphud {
     return ApphudComposite.fromJson(json);
   }
 
+  // TODO: rename to syncPurchasesInObserverMode() and remove paywallIdentifier param, android only
   /// Android only. This method will send all the purchases to the Apphud server.
   ///
   /// Call this when using your own implementation for subscriptions anytime a sync is needed, like after a successful purchase.
@@ -433,6 +446,7 @@ class Apphud {
     );
   }
 
+// TODO: JUST REMOVE
   /// iOS only. If you already have a live app with paying users and you want Apphud to track their purchases, you should import their App Store receipts into Apphud. Call this method at launch of your app for your paying users. This method should be used only to migrate existing paying users that are not yet tracked by Apphud.
   ///
   /// Example:
@@ -452,11 +466,13 @@ class Apphud {
     return ApphudComposite.fromJson(json);
   }
 
+// TODO: JUST REMOVE
   /// iOS only. Returns base64 encoded App Store receipt string, if available.
   static Future<String?> appStoreReceipt() async {
     return (await _channel.invokeMethod('appStoreReceipt'))!;
   }
 
+// TODO: JUST REMOVE
   /// iOS only. Fetches raw receipt info. This might be useful to get `original_application_version` value.
   static Future<Map<String, dynamic>?> fetchRawReceiptInfo() async {
     final Map<dynamic, dynamic>? json = await _channel.invokeMethod(
@@ -467,6 +483,8 @@ class Apphud {
 
 // User Properties
 
+
+  // TODO: async?
   /// Set custom user property. Value must be one of: `int`, `float`, `bool`, `String`, `null`.
 
   /// Example:
@@ -503,6 +521,7 @@ class Apphud {
     );
   }
 
+// TODO: async?
   /// Increment custom user property. Value must be one of: `int`, `float`
   ///
   /// Example:
@@ -526,6 +545,7 @@ class Apphud {
 
 // Attribution
 
+  // TODO: можно ли убрать async?
   /// iOS only. Submit Advertising Identifier (IDFA) to Apphud.
   ///
   /// This is used to properly match user with attribution platforms (AppsFlyer, Facebook, etc.)
@@ -535,6 +555,8 @@ class Apphud {
       {'idfa': idfa},
     );
   }
+
+// TODO: addAttribution убрать facebook + добавить firebase. data может быть optional в случае например с firebase
 
   ///  Submit attribution data to Apphud from your attribution network provider.
   ///
@@ -555,6 +577,7 @@ class Apphud {
     return isAdded;
   }
 
+// TODO: код под капотом устарел, надо убрать iAd и AdClient код, и добавить код через AttributionToken: https://docs.apphud.com/docs/apple-search-ads#step-1 + убрать async если можно
   /// iOS only. Send search ads attribution data to Apphud.
   ///
   /// Returns [ApphudError] if an error occurred or null otherwise.
@@ -577,6 +600,7 @@ class Apphud {
         'level': level == ApphudDebugLevel.low ? 0 : 1,
       });
 
+// TODO: просто убрать
   ///  iOS only. Returns `true` if current build is running on simulator or Debug/TestFlight modes. Returns `false` if current build is App Store build.
   static Future<bool> isSandbox() async {
     final bool? value = await _channel.invokeMethod<bool>('isSandbox');
@@ -586,6 +610,7 @@ class Apphud {
 
 // Paywall logs
 
+// TODO: Maybe remove async?
   /// Paywall shown event will be displayed in AppHud dashboard.
   static Future<void> paywallShown(ApphudPaywall paywall) async {
     await _channel.invokeMethod(
@@ -594,6 +619,7 @@ class Apphud {
     );
   }
 
+// TODO: Maybe remove async?
   /// Paywall closed event will be displayed in AppHud dashboard.
   static Future<void> paywallClosed(ApphudPaywall paywall) async {
     await _channel.invokeMethod(

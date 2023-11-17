@@ -1,7 +1,7 @@
 import com.android.builder.internal.ClassFieldImpl
 import groovy.json.JsonSlurper
 
-group 'com.apphud.app'
+group 'com.apphud.demo'
 version '1.0-SNAPSHOT'
 
 String apphudFlutterSdkVersion = 'unknown'

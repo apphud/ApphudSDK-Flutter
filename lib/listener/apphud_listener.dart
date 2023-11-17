@@ -18,7 +18,7 @@ abstract class ApphudListener {
   ///
   /// This method is called once per app lifecycle.
   /// The `paywalls` array may not yet have `SKProducts`/'SkuDetails', so this method should not be used for paywalls management.
-  /// However, if using A/B Testing, `paywalls` can be used to fetch `experimentName`, `variationName` or other parameters
+  /// However, if using A/B Testing, `paywalls` can be used to fetch `experimentName` or other parameters
   /// like `json` from your experimental paywall.
   Future<void> userDidLoad(ApphudPaywalls paywalls);
 

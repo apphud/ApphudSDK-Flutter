@@ -17,7 +17,7 @@ Map<String, dynamic> _$SKProductSubscriptionPeriodWrapperToJson(
         SKProductSubscriptionPeriodWrapper instance) =>
     <String, dynamic>{
       'numberOfUnits': instance.numberOfUnits,
-      'unit': _$SKSubscriptionPeriodTimeEnumMap[instance.unit],
+      'unit': _$SKSubscriptionPeriodTimeEnumMap[instance.unit]!,
     };
 
 const _$SKSubscriptionPeriodTimeEnumMap = {

@@ -12,7 +12,11 @@ class ApphudSubscriptionWrapper {
   final bool isActive;
   final ApphudSubscriptionStatus status;
   final double? canceledAt;
+
+  // TODO: startedAt не может быть null, ошибка в Android либе. можно смело делать required
   final double? startedAt;
+
+  // TODO: remove isSandbox & isLocal, because they are not present in Android
   final bool? isSandbox;
   final bool? isLocal;
 

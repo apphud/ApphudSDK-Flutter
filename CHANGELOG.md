@@ -1,3 +1,6 @@
+## 2.4.0
+- [iOS], [Android] Property 'variationName' were removed from ApphudPaywall, which was confusing developers and lead to incorrect implementations.
+
 ## 2.3.2
 - [Android] Fixed restore purchase issue in some cases
 
