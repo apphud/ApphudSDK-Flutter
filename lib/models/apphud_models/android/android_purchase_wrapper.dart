@@ -6,18 +6,18 @@ part 'android_purchase_wrapper.g.dart';
 @JsonSerializable(anyMap: true)
 class AndroidPurchaseWrapper {
   final int purchaseState;
-  final int quantity;
-  final int purchaseTime;
-  final AndroidAccountIdentifiersWrapper? accountIdentifiers;
-  final String developerPayload;
+  final int quantity; // TODO: Remove, not needed
+  final int purchaseTime; 
+  final AndroidAccountIdentifiersWrapper? accountIdentifiers; // TODO: Remove, not needed
+  final String developerPayload; // TODO: Remove, not needed
   final String orderId;
-  final String originalJson;
-  final String packageName;
+  final String originalJson; // TODO: Remove, not needed
+  final String packageName; // TODO: Remove, not needed
   final String purchaseToken;
-  final String signature;
-  final List<String> products;
-  final bool isAcknowledged;
-  final bool isAutoRenewing;
+  final String signature;  // TODO: Remove, not needed
+  final List<String> products; // TODO: ADD optional String productId, grab first element from array
+  final bool isAcknowledged;  // TODO: Remove, not needed
+  final bool isAutoRenewing; // TODO: Remove, not needed
 
   AndroidPurchaseWrapper({
     required this.orderId,

@@ -8,6 +8,8 @@ class ApphudNonRenewingPurchase {
   final double purchasedAt;
   final double? canceledAt;
   final bool isActive;
+
+  // TODO: remove both, not present in Android
   final bool? isSandbox;
   final bool? isLocal;
 

@@ -10,7 +10,8 @@ import com.apphud.sdk.domain.ApphudSubscription
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
-class ApphudListenerHandler() : MethodChannel.MethodCallHandler,
+
+class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) : MethodChannel.MethodCallHandler,
     ApphudListener {
     private var isListeningStarted: Boolean = false
     private var channel: MethodChannel? = null
@@ -20,7 +21,7 @@ class ApphudListenerHandler() : MethodChannel.MethodCallHandler,
     private var didUserLoad: Boolean = false
     private var subscriptionsCached: List<ApphudSubscription>? = null
     private var purchasesCached: List<ApphudNonRenewingPurchase>? = null
-
+    private var handleOnMainThread = handleOnMainThreadP
 
     init {
         Apphud.setListener(this)
@@ -68,9 +69,12 @@ class ApphudListenerHandler() : MethodChannel.MethodCallHandler,
     override fun apphudDidChangeUserID(userId: String) {
         userIdCached = userId
         if (isListeningStarted) {
-            channel?.invokeMethod("didChangeUserID", userId)
+            handleOnMainThread {
+                channel?.invokeMethod("didChangeUserID", userId)
+            }
         }
     }
+
 
     override fun apphudFetchProductDetails(details: List<ProductDetails>) {
         detailsCached = details
@@ -78,7 +82,9 @@ class ApphudListenerHandler() : MethodChannel.MethodCallHandler,
             val resultMap: List<HashMap<String, Any?>> = details.map {
                 it.toMap()
             }
-            channel?.invokeMethod("fetchNativeProducts", resultMap)
+            handleOnMainThread {
+                channel?.invokeMethod("fetchNativeProducts", resultMap)
+            }
         }
     }
 
@@ -87,7 +93,9 @@ class ApphudListenerHandler() : MethodChannel.MethodCallHandler,
         if (isListeningStarted) {
             val resultMap = hashMapOf<String, Any?>()
             resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
-            channel?.invokeMethod("paywallsDidFullyLoad", resultMap)
+            handleOnMainThread {
+                channel?.invokeMethod("paywallsDidFullyLoad", resultMap)
+            }
         }
     }
 
@@ -96,7 +104,9 @@ class ApphudListenerHandler() : MethodChannel.MethodCallHandler,
         if (isListeningStarted) {
             val resultMap = hashMapOf<String, Any?>()
             resultMap["paywalls"] = Apphud.paywalls().map { paywall -> paywall.toMap() }
-            channel?.invokeMethod("userDidLoad", resultMap)
+            handleOnMainThread {
+                channel?.invokeMethod("userDidLoad", resultMap)
+            }
         }
     }
 
@@ -106,7 +116,9 @@ class ApphudListenerHandler() : MethodChannel.MethodCallHandler,
             val resultMap: List<HashMap<String, Any?>> = subscriptions.map {
                 it.toMap()
             }
-            channel?.invokeMethod("apphudSubscriptionsUpdated", resultMap)
+            handleOnMainThread {
+                channel?.invokeMethod("apphudSubscriptionsUpdated", resultMap)
+            }
         }
     }
 
@@ -116,7 +128,9 @@ class ApphudListenerHandler() : MethodChannel.MethodCallHandler,
             val resultMap: List<HashMap<String, Any?>> = purchases.map {
                 it.toMap()
             }
-            channel?.invokeMethod("apphudNonRenewingPurchasesUpdated", resultMap)
+            handleOnMainThread {
+                channel?.invokeMethod("apphudNonRenewingPurchasesUpdated", resultMap)
+            }
         }
     }
 }

@@ -6,7 +6,8 @@ part 'sk_payment_transaction_wrapper.g.dart';
 class SKPaymentTransactionWrapper {
   final String? transactionIdentifier;
   final double? transactionDate;
-  final SKPaymentWrapper? payment;
+  final SKPaymentWrapper? payment; // TODO: just grab productId from here
+  // TODO: Add int state which is skpaymenttransactionstate
 
   SKPaymentTransactionWrapper({
     this.transactionIdentifier,
@@ -26,11 +27,11 @@ class SKPaymentTransactionWrapper {
 }
 
 @JsonSerializable(anyMap: true)
-class SKPaymentWrapper {
-  String productIdentifier;
-  String description;
-  int quantity;
-  String? applicationUsername;
+class SKPaymentWrapper {  // TODO: Remove just add to SKPaymentTransactionWrapper
+  String productIdentifier; 
+  String description;  // TODO: Remove, not needed
+  int quantity;  // TODO: Remove, not needed
+  String? applicationUsername;  // TODO: Remove, not needed
 
   SKPaymentWrapper({
     required this.productIdentifier,

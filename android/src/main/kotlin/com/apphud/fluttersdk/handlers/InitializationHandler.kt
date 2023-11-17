@@ -6,7 +6,12 @@ import com.apphud.sdk.Apphud
 import io.flutter.plugin.common.MethodChannel
 
 
-class InitializationHandler(override val routes: List<String>, val context: Context) : Handler {
+class InitializationHandler(
+    override val routes: List<String>,
+    val context: Context,
+    handleOnMainThreadP: HandleOnMainThread
+) : Handler {
+    private var handleOnMainThread = handleOnMainThreadP
 
     override fun tryToHandle(
         method: String,
@@ -17,12 +22,15 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
             InitializationRoutes.start.name -> StartParser(result).parse(args) { apiKey, userId ->
                 start(apiKey, userId, result)
             }
+
             InitializationRoutes.startManually.name -> StartManuallyParser(result).parse(args) { apiKey, userId, deviceId ->
                 startManually(apiKey, userId, deviceId, result)
             }
+
             InitializationRoutes.updateUserID.name -> UpdateUserIDParser(result).parse(args) { userId ->
                 updateUserID(userId, result)
             }
+
             InitializationRoutes.userID.name -> userID(result)
             InitializationRoutes.deviceID.name -> deviceID(result)
             InitializationRoutes.logout.name -> logout(result)
@@ -31,7 +39,7 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
 
     private fun start(apiKey: String, userId: String?, result: MethodChannel.Result) {
         Apphud.start(context = context, apiKey = apiKey, userId = userId)
-        result.success(null)
+        handleOnMainThread { result.success(null) }
     }
 
     private fun startManually(
@@ -41,27 +49,27 @@ class InitializationHandler(override val routes: List<String>, val context: Cont
         result: MethodChannel.Result
     ) {
         Apphud.start(context = context, apiKey = apiKey, userId = userId, deviceId = deviceId)
-        result.success(null)
+        handleOnMainThread { result.success(null) }
     }
 
     private fun updateUserID(userId: String, result: MethodChannel.Result) {
         Apphud.updateUserId(userId = userId)
-        result.success(null)
+        handleOnMainThread { result.success(null) }
     }
 
     private fun userID(result: MethodChannel.Result) {
         val userId = Apphud.userId()
-        result.success(userId)
+        handleOnMainThread { result.success(userId) }
     }
 
     private fun deviceID(result: MethodChannel.Result) {
         val deviceId = Apphud.deviceId();
-        result.success(deviceId)
+        handleOnMainThread { result.success(deviceId) }
     }
 
     private fun logout(result: MethodChannel.Result) {
         Apphud.logout()
-        result.success(null)
+        handleOnMainThread { result.success(null) }
     }
 
     class StartParser(val result: MethodChannel.Result) {

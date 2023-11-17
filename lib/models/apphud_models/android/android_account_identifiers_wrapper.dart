@@ -3,6 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'android_account_identifiers_wrapper.g.dart';
 
 @JsonSerializable(anyMap: true)
+
+// TODO: Not needed, remove
 class AndroidAccountIdentifiersWrapper {
   final String obfuscatedAccountId;
   final String obfuscatedProfileId;

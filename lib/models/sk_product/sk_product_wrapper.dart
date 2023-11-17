@@ -7,9 +7,12 @@ part 'sk_product_wrapper.g.dart';
 
 @JsonSerializable(anyMap: true)
 class SKProductWrapper {
+  
   final String productIdentifier;
   final String localizedTitle;
   final String localizedDescription;
+
+  // TODO: can be double?
   final String price;
   final SKPriceLocaleWrapper priceLocale;
   final SKProductSubscriptionPeriodWrapper? subscriptionPeriod;

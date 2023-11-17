@@ -1,3 +1,12 @@
+## 2.4.0
+- [iOS], [Android] Property 'variationName' were removed from ApphudPaywall, which was confusing developers and lead to incorrect implementations.
+
+## 2.3.2
+- [Android] Fixed restore purchase issue in some cases
+
+## 2.3.1
+- Fixed purchase result parsing issue in some cases
+
 ## 2.3.0
 - [Android] **BREAKING** SkuDetailsWrapper was replaced by ProductDetailsWrapper because of the migration to Billing v5.
 

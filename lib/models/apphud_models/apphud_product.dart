@@ -11,7 +11,10 @@ class ApphudProduct {
   final String? name;
   final ProductDetailsWrapper? productDetails;
   final SKProductWrapper? skProduct;
+
+// TODO: remove or make it private, paywallId should not be used by clients
   final String? paywallId;
+
   final String? paywallIdentifier;
 
   ApphudProduct({

@@ -23,7 +23,7 @@ Map<String, dynamic> _$SKProductDiscountWrapperToJson(
       'price': instance.price,
       'numberOfPeriods': instance.numberOfPeriods,
       'paymentMode':
-          _$SKProductDiscountPaymentModeEnumMap[instance.paymentMode],
+          _$SKProductDiscountPaymentModeEnumMap[instance.paymentMode]!,
       'priceLocale': instance.priceLocale,
       'subscriptionPeriod': instance.subscriptionPeriod,
     };
