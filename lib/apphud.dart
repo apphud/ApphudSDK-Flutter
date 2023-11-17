@@ -24,6 +24,7 @@ export 'listener/apphud_listener.dart';
 // TODO: в example app добавить кнопку по нажатию на которую будут вызываться все методы по списку, кроме разве что purchase. я буду сам комментить нужные и смотреть то что нужно. пусть результаты всех методов принтятся в консоль. смотри пример: https://github.com/apphud/ApphudSDK-React-Native/blob/master/example/src/screens/ActionsScreen.tsx#L46-L103
 // TODO: добавить так же код, где будут слушаться все методы листенера и принтиться в консоль, чтобы я мог проверить все методы листенера
 // TODO: везде убрать проверку #available(iOS 12.2, *)
+// TODO: БАГ в example app, почему-то у меня не раскрывается пейвол при нажатии на кнопочку справа и все время шлется эвент paywall closed
 
 class Apphud {
   static const MethodChannel _channel = MethodChannel('apphud');
