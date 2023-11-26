@@ -23,7 +23,6 @@ fun ApphudProduct.toMap(): HashMap<String, Any?> {
         "productId" to product_id,
         "name" to name,
         "store" to store,
-        "paywallId" to paywall_id,
         "productDetails" to productDetails?.toMap(),
         "paywallIdentifier" to paywall_identifier
     )

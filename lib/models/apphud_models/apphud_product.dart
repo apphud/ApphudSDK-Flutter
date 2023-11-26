@@ -11,10 +11,6 @@ class ApphudProduct {
   final String? name;
   final ProductDetailsWrapper? productDetails;
   final SKProductWrapper? skProduct;
-
-// TODO: remove or make it private, paywallId should not be used by clients
-  final String? paywallId;
-
   final String? paywallIdentifier;
 
   ApphudProduct({
@@ -22,7 +18,6 @@ class ApphudProduct {
     required this.store,
     this.name,
     this.productDetails,
-    this.paywallId,
     this.paywallIdentifier,
     this.skProduct,
   });
@@ -34,6 +29,6 @@ class ApphudProduct {
 
   @override
   String toString() {
-    return 'ApphudProduct{productId: $productId, store: $store, name: $name, productDetails: $productDetails, skProduct: $skProduct, paywallId: $paywallId, paywallIdentifier: $paywallIdentifier}';
+    return 'ApphudProduct{productId: $productId, store: $store, name: $name, productDetails: $productDetails, skProduct: $skProduct, paywallIdentifier: $paywallIdentifier}';
   }
 }

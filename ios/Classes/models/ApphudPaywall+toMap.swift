@@ -23,7 +23,6 @@ extension ApphudProduct {
                 "name" : name,
                 "store" :store,
                 "paywallIdentifier" : paywallIdentifier,
-                "paywallId": paywallId,
                 "skProduct" : skProduct?.toMap()
         ]
     }
