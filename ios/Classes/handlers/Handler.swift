@@ -78,17 +78,12 @@ enum AppHudMethod {
     }
 
     enum MakePurchase: String, CaseIterable {
-        case didFetchProductsNotification
-        case productsDidFetchCallback
-        case refreshStoreKitProducts
         case products
         case product
         case purchase
-        case purchaseWithoutValidation
         case purchasePromo
         case presentOfferCodeRedemptionSheet
         case purchaseProduct
-        case didPurchaseFromPaywall
     }
 
     enum HandlePurchases: String, CaseIterable {
@@ -98,10 +93,6 @@ enum AppHudMethod {
         case nonRenewingPurchases
         case isNonRenewingPurchaseActive
         case restorePurchases
-        case migratePurchasesIfNeeded
-        case fetchRawReceiptInfo
-        case validateReceipt
-        case appStoreReceipt
         case getPaywalls
         case permissionGroups
         case paywalls
@@ -136,7 +127,6 @@ enum AppHudMethod {
 
     enum Others: String, CaseIterable {
        case enableDebugLogs
-       case isSandbox
     }
     
     enum PaywallLogs: String, CaseIterable {
