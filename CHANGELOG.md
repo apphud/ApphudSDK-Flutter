@@ -1,6 +1,19 @@
 ## 2.4.0
-- [iOS], [Android] Property 'variationName' were removed from ApphudPaywall, which was confusing developers and lead to incorrect implementations.
+- [iOS], [Android] **BREAKING** Property 'variationName' were removed from ApphudPaywall, which was confusing developers and lead to incorrect implementations.
+- [iOS] **BREAKING** Method 'didFetchProductsNotification' was removed.
+- [iOS], [Android] **BREAKING** Method 'productsDidFetchCallback' was removed.
+- [iOS] **BREAKING** Method 'refreshStoreKitProducts' was removed.
+- [iOS], [Android] **BREAKING** Method 'purchaseWithoutValidation' was removed.
+- [iOS] **BREAKING** Method 'didPurchaseFromPaywall' was removed.
+- [Android] **BREAKING** Method 'refreshEntitlements' was removed.
+- [iOS] **BREAKING** Method 'validateReceipt' was removed.
+- [iOS] **BREAKING** Method 'migratePurchasesIfNeeded' was removed.
+- [iOS] **BREAKING** Method 'appStoreReceipt' was removed.
+- [iOS] **BREAKING** Method 'fetchRawReceiptInfo' was removed.
+- [iOS] **BREAKING** Method 'isSandbox' was removed.
+- [Android] **BREAKING** Class 'AndroidAccountIdentifiersWrapper' was removed.
 
+ 
 ## 2.3.2
 - [Android] Fixed restore purchase issue in some cases
 

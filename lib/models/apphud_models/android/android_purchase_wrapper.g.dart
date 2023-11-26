@@ -17,10 +17,6 @@ AndroidPurchaseWrapper _$AndroidPurchaseWrapperFromJson(Map json) =>
           (json['products'] as List<dynamic>).map((e) => e as String).toList(),
       originalJson: json['originalJson'] as String,
       purchaseTime: json['purchaseTime'] as int,
-      accountIdentifiers: json['accountIdentifiers'] == null
-          ? null
-          : AndroidAccountIdentifiersWrapper.fromJson(
-              json['accountIdentifiers'] as Map),
       developerPayload: json['developerPayload'] as String,
       quantity: json['quantity'] as int,
       isAcknowledged: json['isAcknowledged'] as bool,
@@ -33,7 +29,6 @@ Map<String, dynamic> _$AndroidPurchaseWrapperToJson(
       'purchaseState': instance.purchaseState,
       'quantity': instance.quantity,
       'purchaseTime': instance.purchaseTime,
-      'accountIdentifiers': instance.accountIdentifiers,
       'developerPayload': instance.developerPayload,
       'orderId': instance.orderId,
       'originalJson': instance.originalJson,

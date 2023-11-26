@@ -84,7 +84,6 @@ fun Purchase.toMap(): HashMap<String, Any?> {
         "purchaseState" to purchaseState,
         "quantity" to quantity,
         "purchaseTime" to purchaseTime,
-        "accountIdentifiers" to accountIdentifiers?.toMap(),
         "developerPayload" to developerPayload,
         "orderId" to orderId,
         "originalJson" to originalJson,
@@ -96,14 +95,6 @@ fun Purchase.toMap(): HashMap<String, Any?> {
         "isAutoRenewing" to isAutoRenewing
     )
 }
-
-fun AccountIdentifiers.toMap(): HashMap<String, Any?> {
-    return hashMapOf(
-        "obfuscatedAccountId" to obfuscatedAccountId,
-        "obfuscatedProfileId" to obfuscatedProfileId,
-    )
-}
-
 
 fun ApphudNonRenewingPurchase.toMap(): HashMap<String, Any?> {
     return hashMapOf(

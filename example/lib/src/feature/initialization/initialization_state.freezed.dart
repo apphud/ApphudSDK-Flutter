@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'initialization_state.dart';
 
@@ -28,12 +28,12 @@ mixin _$InitializationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isStartSuccess, bool isPaywallsFetched,
+    TResult? Function(bool isStartSuccess, bool isPaywallsFetched,
             ApphudPaywalls paywalls)?
         trying,
-    TResult Function(ApphudPaywalls paywalls)? success,
-    TResult Function(String error)? startFail,
-    TResult Function(String error)? paywallsFetchFail,
+    TResult? Function(ApphudPaywalls paywalls)? success,
+    TResult? Function(String error)? startFail,
+    TResult? Function(String error)? paywallsFetchFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,10 +57,10 @@ mixin _$InitializationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Trying value)? trying,
-    TResult Function(Success value)? success,
-    TResult Function(StartFail value)? startFail,
-    TResult Function(PaywallsFetchFail value)? paywallsFetchFail,
+    TResult? Function(Trying value)? trying,
+    TResult? Function(Success value)? success,
+    TResult? Function(StartFail value)? startFail,
+    TResult? Function(PaywallsFetchFail value)? paywallsFetchFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -78,53 +78,55 @@ mixin _$InitializationState {
 abstract class $InitializationStateCopyWith<$Res> {
   factory $InitializationStateCopyWith(
           InitializationState value, $Res Function(InitializationState) then) =
-      _$InitializationStateCopyWithImpl<$Res>;
+      _$InitializationStateCopyWithImpl<$Res, InitializationState>;
 }
 
 /// @nodoc
-class _$InitializationStateCopyWithImpl<$Res>
+class _$InitializationStateCopyWithImpl<$Res, $Val extends InitializationState>
     implements $InitializationStateCopyWith<$Res> {
   _$InitializationStateCopyWithImpl(this._value, this._then);
 
-  final InitializationState _value;
   // ignore: unused_field
-  final $Res Function(InitializationState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$TryingCopyWith<$Res> {
-  factory _$$TryingCopyWith(_$Trying value, $Res Function(_$Trying) then) =
-      __$$TryingCopyWithImpl<$Res>;
+abstract class _$$TryingImplCopyWith<$Res> {
+  factory _$$TryingImplCopyWith(
+          _$TryingImpl value, $Res Function(_$TryingImpl) then) =
+      __$$TryingImplCopyWithImpl<$Res>;
+  @useResult
   $Res call(
       {bool isStartSuccess, bool isPaywallsFetched, ApphudPaywalls paywalls});
 }
 
 /// @nodoc
-class __$$TryingCopyWithImpl<$Res>
-    extends _$InitializationStateCopyWithImpl<$Res>
-    implements _$$TryingCopyWith<$Res> {
-  __$$TryingCopyWithImpl(_$Trying _value, $Res Function(_$Trying) _then)
-      : super(_value, (v) => _then(v as _$Trying));
+class __$$TryingImplCopyWithImpl<$Res>
+    extends _$InitializationStateCopyWithImpl<$Res, _$TryingImpl>
+    implements _$$TryingImplCopyWith<$Res> {
+  __$$TryingImplCopyWithImpl(
+      _$TryingImpl _value, $Res Function(_$TryingImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$Trying get _value => super._value as _$Trying;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isStartSuccess = freezed,
-    Object? isPaywallsFetched = freezed,
-    Object? paywalls = freezed,
+    Object? isStartSuccess = null,
+    Object? isPaywallsFetched = null,
+    Object? paywalls = null,
   }) {
-    return _then(_$Trying(
-      isStartSuccess: isStartSuccess == freezed
+    return _then(_$TryingImpl(
+      isStartSuccess: null == isStartSuccess
           ? _value.isStartSuccess
           : isStartSuccess // ignore: cast_nullable_to_non_nullable
               as bool,
-      isPaywallsFetched: isPaywallsFetched == freezed
+      isPaywallsFetched: null == isPaywallsFetched
           ? _value.isPaywallsFetched
           : isPaywallsFetched // ignore: cast_nullable_to_non_nullable
               as bool,
-      paywalls: paywalls == freezed
+      paywalls: null == paywalls
           ? _value.paywalls
           : paywalls // ignore: cast_nullable_to_non_nullable
               as ApphudPaywalls,
@@ -134,8 +136,8 @@ class __$$TryingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$Trying extends Trying {
-  const _$Trying(
+class _$TryingImpl extends Trying {
+  const _$TryingImpl(
       {this.isStartSuccess = false,
       this.isPaywallsFetched = false,
       this.paywalls = const ApphudPaywalls()})
@@ -160,25 +162,24 @@ class _$Trying extends Trying {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Trying &&
-            const DeepCollectionEquality()
-                .equals(other.isStartSuccess, isStartSuccess) &&
-            const DeepCollectionEquality()
-                .equals(other.isPaywallsFetched, isPaywallsFetched) &&
-            const DeepCollectionEquality().equals(other.paywalls, paywalls));
+            other is _$TryingImpl &&
+            (identical(other.isStartSuccess, isStartSuccess) ||
+                other.isStartSuccess == isStartSuccess) &&
+            (identical(other.isPaywallsFetched, isPaywallsFetched) ||
+                other.isPaywallsFetched == isPaywallsFetched) &&
+            (identical(other.paywalls, paywalls) ||
+                other.paywalls == paywalls));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(isStartSuccess),
-      const DeepCollectionEquality().hash(isPaywallsFetched),
-      const DeepCollectionEquality().hash(paywalls));
+  int get hashCode =>
+      Object.hash(runtimeType, isStartSuccess, isPaywallsFetched, paywalls);
 
   @JsonKey(ignore: true)
   @override
-  _$$TryingCopyWith<_$Trying> get copyWith =>
-      __$$TryingCopyWithImpl<_$Trying>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$TryingImplCopyWith<_$TryingImpl> get copyWith =>
+      __$$TryingImplCopyWithImpl<_$TryingImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -196,12 +197,12 @@ class _$Trying extends Trying {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isStartSuccess, bool isPaywallsFetched,
+    TResult? Function(bool isStartSuccess, bool isPaywallsFetched,
             ApphudPaywalls paywalls)?
         trying,
-    TResult Function(ApphudPaywalls paywalls)? success,
-    TResult Function(String error)? startFail,
-    TResult Function(String error)? paywallsFetchFail,
+    TResult? Function(ApphudPaywalls paywalls)? success,
+    TResult? Function(String error)? startFail,
+    TResult? Function(String error)? paywallsFetchFail,
   }) {
     return trying?.call(isStartSuccess, isPaywallsFetched, paywalls);
   }
@@ -237,10 +238,10 @@ class _$Trying extends Trying {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Trying value)? trying,
-    TResult Function(Success value)? success,
-    TResult Function(StartFail value)? startFail,
-    TResult Function(PaywallsFetchFail value)? paywallsFetchFail,
+    TResult? Function(Trying value)? trying,
+    TResult? Function(Success value)? success,
+    TResult? Function(StartFail value)? startFail,
+    TResult? Function(PaywallsFetchFail value)? paywallsFetchFail,
   }) {
     return trying?.call(this);
   }
@@ -265,40 +266,41 @@ abstract class Trying extends InitializationState {
   const factory Trying(
       {final bool isStartSuccess,
       final bool isPaywallsFetched,
-      final ApphudPaywalls paywalls}) = _$Trying;
+      final ApphudPaywalls paywalls}) = _$TryingImpl;
   const Trying._() : super._();
 
   bool get isStartSuccess;
   bool get isPaywallsFetched;
   ApphudPaywalls get paywalls;
   @JsonKey(ignore: true)
-  _$$TryingCopyWith<_$Trying> get copyWith =>
+  _$$TryingImplCopyWith<_$TryingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SuccessCopyWith<$Res> {
-  factory _$$SuccessCopyWith(_$Success value, $Res Function(_$Success) then) =
-      __$$SuccessCopyWithImpl<$Res>;
+abstract class _$$SuccessImplCopyWith<$Res> {
+  factory _$$SuccessImplCopyWith(
+          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
+      __$$SuccessImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({ApphudPaywalls paywalls});
 }
 
 /// @nodoc
-class __$$SuccessCopyWithImpl<$Res>
-    extends _$InitializationStateCopyWithImpl<$Res>
-    implements _$$SuccessCopyWith<$Res> {
-  __$$SuccessCopyWithImpl(_$Success _value, $Res Function(_$Success) _then)
-      : super(_value, (v) => _then(v as _$Success));
+class __$$SuccessImplCopyWithImpl<$Res>
+    extends _$InitializationStateCopyWithImpl<$Res, _$SuccessImpl>
+    implements _$$SuccessImplCopyWith<$Res> {
+  __$$SuccessImplCopyWithImpl(
+      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$Success get _value => super._value as _$Success;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? paywalls = freezed,
+    Object? paywalls = null,
   }) {
-    return _then(_$Success(
-      paywalls: paywalls == freezed
+    return _then(_$SuccessImpl(
+      paywalls: null == paywalls
           ? _value.paywalls
           : paywalls // ignore: cast_nullable_to_non_nullable
               as ApphudPaywalls,
@@ -308,8 +310,8 @@ class __$$SuccessCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$Success extends Success {
-  const _$Success({this.paywalls = const ApphudPaywalls()}) : super._();
+class _$SuccessImpl extends Success {
+  const _$SuccessImpl({this.paywalls = const ApphudPaywalls()}) : super._();
 
   @override
   @JsonKey()
@@ -324,18 +326,19 @@ class _$Success extends Success {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Success &&
-            const DeepCollectionEquality().equals(other.paywalls, paywalls));
+            other is _$SuccessImpl &&
+            (identical(other.paywalls, paywalls) ||
+                other.paywalls == paywalls));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(paywalls));
+  int get hashCode => Object.hash(runtimeType, paywalls);
 
   @JsonKey(ignore: true)
   @override
-  _$$SuccessCopyWith<_$Success> get copyWith =>
-      __$$SuccessCopyWithImpl<_$Success>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -353,12 +356,12 @@ class _$Success extends Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isStartSuccess, bool isPaywallsFetched,
+    TResult? Function(bool isStartSuccess, bool isPaywallsFetched,
             ApphudPaywalls paywalls)?
         trying,
-    TResult Function(ApphudPaywalls paywalls)? success,
-    TResult Function(String error)? startFail,
-    TResult Function(String error)? paywallsFetchFail,
+    TResult? Function(ApphudPaywalls paywalls)? success,
+    TResult? Function(String error)? startFail,
+    TResult? Function(String error)? paywallsFetchFail,
   }) {
     return success?.call(paywalls);
   }
@@ -394,10 +397,10 @@ class _$Success extends Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Trying value)? trying,
-    TResult Function(Success value)? success,
-    TResult Function(StartFail value)? startFail,
-    TResult Function(PaywallsFetchFail value)? paywallsFetchFail,
+    TResult? Function(Trying value)? trying,
+    TResult? Function(Success value)? success,
+    TResult? Function(StartFail value)? startFail,
+    TResult? Function(PaywallsFetchFail value)? paywallsFetchFail,
   }) {
     return success?.call(this);
   }
@@ -419,40 +422,39 @@ class _$Success extends Success {
 }
 
 abstract class Success extends InitializationState {
-  const factory Success({final ApphudPaywalls paywalls}) = _$Success;
+  const factory Success({final ApphudPaywalls paywalls}) = _$SuccessImpl;
   const Success._() : super._();
 
   ApphudPaywalls get paywalls;
   @JsonKey(ignore: true)
-  _$$SuccessCopyWith<_$Success> get copyWith =>
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$StartFailCopyWith<$Res> {
-  factory _$$StartFailCopyWith(
-          _$StartFail value, $Res Function(_$StartFail) then) =
-      __$$StartFailCopyWithImpl<$Res>;
+abstract class _$$StartFailImplCopyWith<$Res> {
+  factory _$$StartFailImplCopyWith(
+          _$StartFailImpl value, $Res Function(_$StartFailImpl) then) =
+      __$$StartFailImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({String error});
 }
 
 /// @nodoc
-class __$$StartFailCopyWithImpl<$Res>
-    extends _$InitializationStateCopyWithImpl<$Res>
-    implements _$$StartFailCopyWith<$Res> {
-  __$$StartFailCopyWithImpl(
-      _$StartFail _value, $Res Function(_$StartFail) _then)
-      : super(_value, (v) => _then(v as _$StartFail));
+class __$$StartFailImplCopyWithImpl<$Res>
+    extends _$InitializationStateCopyWithImpl<$Res, _$StartFailImpl>
+    implements _$$StartFailImplCopyWith<$Res> {
+  __$$StartFailImplCopyWithImpl(
+      _$StartFailImpl _value, $Res Function(_$StartFailImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$StartFail get _value => super._value as _$StartFail;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = freezed,
+    Object? error = null,
   }) {
-    return _then(_$StartFail(
-      error == freezed
+    return _then(_$StartFailImpl(
+      null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
@@ -462,8 +464,8 @@ class __$$StartFailCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StartFail extends StartFail {
-  const _$StartFail(this.error) : super._();
+class _$StartFailImpl extends StartFail {
+  const _$StartFailImpl(this.error) : super._();
 
   @override
   final String error;
@@ -477,18 +479,18 @@ class _$StartFail extends StartFail {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StartFail &&
-            const DeepCollectionEquality().equals(other.error, error));
+            other is _$StartFailImpl &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
+  int get hashCode => Object.hash(runtimeType, error);
 
   @JsonKey(ignore: true)
   @override
-  _$$StartFailCopyWith<_$StartFail> get copyWith =>
-      __$$StartFailCopyWithImpl<_$StartFail>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$StartFailImplCopyWith<_$StartFailImpl> get copyWith =>
+      __$$StartFailImplCopyWithImpl<_$StartFailImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -506,12 +508,12 @@ class _$StartFail extends StartFail {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isStartSuccess, bool isPaywallsFetched,
+    TResult? Function(bool isStartSuccess, bool isPaywallsFetched,
             ApphudPaywalls paywalls)?
         trying,
-    TResult Function(ApphudPaywalls paywalls)? success,
-    TResult Function(String error)? startFail,
-    TResult Function(String error)? paywallsFetchFail,
+    TResult? Function(ApphudPaywalls paywalls)? success,
+    TResult? Function(String error)? startFail,
+    TResult? Function(String error)? paywallsFetchFail,
   }) {
     return startFail?.call(error);
   }
@@ -547,10 +549,10 @@ class _$StartFail extends StartFail {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Trying value)? trying,
-    TResult Function(Success value)? success,
-    TResult Function(StartFail value)? startFail,
-    TResult Function(PaywallsFetchFail value)? paywallsFetchFail,
+    TResult? Function(Trying value)? trying,
+    TResult? Function(Success value)? success,
+    TResult? Function(StartFail value)? startFail,
+    TResult? Function(PaywallsFetchFail value)? paywallsFetchFail,
   }) {
     return startFail?.call(this);
   }
@@ -572,40 +574,39 @@ class _$StartFail extends StartFail {
 }
 
 abstract class StartFail extends InitializationState {
-  const factory StartFail(final String error) = _$StartFail;
+  const factory StartFail(final String error) = _$StartFailImpl;
   const StartFail._() : super._();
 
   String get error;
   @JsonKey(ignore: true)
-  _$$StartFailCopyWith<_$StartFail> get copyWith =>
+  _$$StartFailImplCopyWith<_$StartFailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PaywallsFetchFailCopyWith<$Res> {
-  factory _$$PaywallsFetchFailCopyWith(
-          _$PaywallsFetchFail value, $Res Function(_$PaywallsFetchFail) then) =
-      __$$PaywallsFetchFailCopyWithImpl<$Res>;
+abstract class _$$PaywallsFetchFailImplCopyWith<$Res> {
+  factory _$$PaywallsFetchFailImplCopyWith(_$PaywallsFetchFailImpl value,
+          $Res Function(_$PaywallsFetchFailImpl) then) =
+      __$$PaywallsFetchFailImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({String error});
 }
 
 /// @nodoc
-class __$$PaywallsFetchFailCopyWithImpl<$Res>
-    extends _$InitializationStateCopyWithImpl<$Res>
-    implements _$$PaywallsFetchFailCopyWith<$Res> {
-  __$$PaywallsFetchFailCopyWithImpl(
-      _$PaywallsFetchFail _value, $Res Function(_$PaywallsFetchFail) _then)
-      : super(_value, (v) => _then(v as _$PaywallsFetchFail));
+class __$$PaywallsFetchFailImplCopyWithImpl<$Res>
+    extends _$InitializationStateCopyWithImpl<$Res, _$PaywallsFetchFailImpl>
+    implements _$$PaywallsFetchFailImplCopyWith<$Res> {
+  __$$PaywallsFetchFailImplCopyWithImpl(_$PaywallsFetchFailImpl _value,
+      $Res Function(_$PaywallsFetchFailImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$PaywallsFetchFail get _value => super._value as _$PaywallsFetchFail;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = freezed,
+    Object? error = null,
   }) {
-    return _then(_$PaywallsFetchFail(
-      error == freezed
+    return _then(_$PaywallsFetchFailImpl(
+      null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
@@ -615,8 +616,8 @@ class __$$PaywallsFetchFailCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PaywallsFetchFail extends PaywallsFetchFail {
-  const _$PaywallsFetchFail(this.error) : super._();
+class _$PaywallsFetchFailImpl extends PaywallsFetchFail {
+  const _$PaywallsFetchFailImpl(this.error) : super._();
 
   @override
   final String error;
@@ -630,18 +631,19 @@ class _$PaywallsFetchFail extends PaywallsFetchFail {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PaywallsFetchFail &&
-            const DeepCollectionEquality().equals(other.error, error));
+            other is _$PaywallsFetchFailImpl &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
+  int get hashCode => Object.hash(runtimeType, error);
 
   @JsonKey(ignore: true)
   @override
-  _$$PaywallsFetchFailCopyWith<_$PaywallsFetchFail> get copyWith =>
-      __$$PaywallsFetchFailCopyWithImpl<_$PaywallsFetchFail>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$PaywallsFetchFailImplCopyWith<_$PaywallsFetchFailImpl> get copyWith =>
+      __$$PaywallsFetchFailImplCopyWithImpl<_$PaywallsFetchFailImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -659,12 +661,12 @@ class _$PaywallsFetchFail extends PaywallsFetchFail {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isStartSuccess, bool isPaywallsFetched,
+    TResult? Function(bool isStartSuccess, bool isPaywallsFetched,
             ApphudPaywalls paywalls)?
         trying,
-    TResult Function(ApphudPaywalls paywalls)? success,
-    TResult Function(String error)? startFail,
-    TResult Function(String error)? paywallsFetchFail,
+    TResult? Function(ApphudPaywalls paywalls)? success,
+    TResult? Function(String error)? startFail,
+    TResult? Function(String error)? paywallsFetchFail,
   }) {
     return paywallsFetchFail?.call(error);
   }
@@ -700,10 +702,10 @@ class _$PaywallsFetchFail extends PaywallsFetchFail {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Trying value)? trying,
-    TResult Function(Success value)? success,
-    TResult Function(StartFail value)? startFail,
-    TResult Function(PaywallsFetchFail value)? paywallsFetchFail,
+    TResult? Function(Trying value)? trying,
+    TResult? Function(Success value)? success,
+    TResult? Function(StartFail value)? startFail,
+    TResult? Function(PaywallsFetchFail value)? paywallsFetchFail,
   }) {
     return paywallsFetchFail?.call(this);
   }
@@ -725,11 +727,11 @@ class _$PaywallsFetchFail extends PaywallsFetchFail {
 }
 
 abstract class PaywallsFetchFail extends InitializationState {
-  const factory PaywallsFetchFail(final String error) = _$PaywallsFetchFail;
+  const factory PaywallsFetchFail(final String error) = _$PaywallsFetchFailImpl;
   const PaywallsFetchFail._() : super._();
 
   String get error;
   @JsonKey(ignore: true)
-  _$$PaywallsFetchFailCopyWith<_$PaywallsFetchFail> get copyWith =>
+  _$$PaywallsFetchFailImplCopyWith<_$PaywallsFetchFailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

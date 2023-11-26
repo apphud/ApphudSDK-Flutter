@@ -12,7 +12,6 @@ import com.apphud.sdk.flutter.ApphudFlutter
 import io.flutter.plugin.common.MethodChannel
 import java.lang.IllegalStateException
 
-
 class MakePurchaseHandler(
     override val routes: List<String>,
     val activity: Activity,
@@ -25,12 +24,6 @@ class MakePurchaseHandler(
         result: MethodChannel.Result
     ) {
         when (method) {
-            MakePurchaseRoutes.didFetchProductsNotification.name -> result.notImplemented()
-
-            MakePurchaseRoutes.productsDidFetchCallback.name -> productsDidFetchCallback(result)
-
-            MakePurchaseRoutes.refreshStoreKitProducts.name -> result.notImplemented()
-
             MakePurchaseRoutes.products.name -> products(result)
 
             MakePurchaseRoutes.product.name -> ProductParser(result).parse(args)
@@ -40,8 +33,6 @@ class MakePurchaseHandler(
             { productId, offerIdToken, oldToken, replacementMode ->
                 purchase(productId, offerIdToken, oldToken, replacementMode, result)
             }
-
-            MakePurchaseRoutes.purchaseWithoutValidation.name -> result.notImplemented()
 
             MakePurchaseRoutes.purchasePromo.name -> result.notImplemented()
 
@@ -70,10 +61,6 @@ class MakePurchaseHandler(
             }
 
             MakePurchaseRoutes.permissionGroups.name -> getPermissionGroups(result)
-
-            MakePurchaseRoutes.didPurchaseFromPaywall.name -> result.notImplemented()
-
-            MakePurchaseRoutes.refreshEntitlements.name -> refreshEntitlements(result)
         }
     }
 
@@ -87,16 +74,6 @@ class MakePurchaseHandler(
         val resultMap = hashMapOf<String, Any?>()
         resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
         handleOnMainThread { result.success(resultMap) }
-    }
-
-
-    private fun productsDidFetchCallback(result: MethodChannel.Result) {
-        Apphud.productsFetchCallback { productDetails ->
-            val jsonList: List<HashMap<String, Any?>> = productDetails.map {
-                it.toMap()
-            }
-            handleOnMainThread { result.success(jsonList) }
-        }
     }
 
     private fun products(result: MethodChannel.Result) {
@@ -192,11 +169,6 @@ class MakePurchaseHandler(
         handleOnMainThread { result.success(null) }
     }
 
-    private fun refreshEntitlements(result: MethodChannel.Result) {
-        Apphud.refreshEntitlements()
-        handleOnMainThread { result.success(null) }
-    }
-
     class ProductParser(private val result: MethodChannel.Result) {
         fun parse(args: Map<String, Any>?, callback: (productIdentifier: String) -> Unit) {
             try {
@@ -278,22 +250,16 @@ class MakePurchaseHandler(
 }
 
 enum class MakePurchaseRoutes {
-    didFetchProductsNotification,
-    productsDidFetchCallback,
-    refreshStoreKitProducts,
     products,
     product,
     purchase,
-    purchaseWithoutValidation,
     purchasePromo,
     syncPurchases,
     presentOfferCodeRedemptionSheet,
     getPaywalls,
     paywalls,
     purchaseProduct,
-    permissionGroups,
-    didPurchaseFromPaywall,
-    refreshEntitlements;
+    permissionGroups;
 
     companion object Mapper {
         fun stringValues(): List<String> {

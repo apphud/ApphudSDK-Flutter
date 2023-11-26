@@ -81,13 +81,6 @@ class HomeScreen extends StatelessWidget {
               label: Text('Restore purchases'),
             ),
             if (Platform.isAndroid) const SizedBox(height: 10),
-            if (Platform.isAndroid)
-              FloatingActionButton.extended(
-                onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
-                  PurchaseEvent.refreshEntitlements(),
-                ),
-                label: Text('Refresh entitlements'),
-              ),
             if (Platform.isAndroid) const SizedBox(height: 10),
             if (Platform.isAndroid)
               FloatingActionButton.extended(

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
@@ -9,7 +8,6 @@ import 'package:apphud_example/src/feature/home/sku_details_widget.dart';
 import 'package:apphud_example/src/feature/purchase/purchase_bloc.dart';
 import 'package:apphud_example/src/feature/purchase/purchase_event.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaywallListWidget extends StatefulWidget {
@@ -113,16 +111,7 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
             'experimentName: ${paywall.experimentName}\n'
             'fromPaywall: ${paywall.fromPaywall}',
       ),
-      isThreeLine: true,
-      trailing: Platform.isIOS ? _buildABWidget(paywall) : null,
     );
-  }
-
-  Widget _buildABWidget(ApphudPaywall paywall) {
-    return TextButton(onPressed: () {
-      Apphud.didPurchaseFromPaywall(paywall.identifier);
-    },
-      child: Text('Send\nA/B paywallId'),);
   }
 
   Widget _buildProductList(List<ApphudProduct> products) {
