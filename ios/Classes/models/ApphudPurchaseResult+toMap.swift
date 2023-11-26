@@ -71,7 +71,8 @@ extension SKPaymentTransaction {
     func toMap() -> [String: Any?] {
         return ["transactionIdentifier":transactionIdentifier,
                 "transactionDate":transactionDate?.timeIntervalSince1970,
-                "payment": payment.toMap()
+                "productIdentifier": payment.productIdentifier,
+                "state":transactionState.rawValue
         ]
     }
 }

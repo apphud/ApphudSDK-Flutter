@@ -71,25 +71,3 @@ extension SKProductDiscount {
     ]
   }
 }
-
-
-
-
-//@available(iOS 12.2, *)
-//open var identifier: String? { get }
-//
-//
-//@available(iOS 11.2, *)
-//open var subscriptionPeriod: SKProductSubscriptionPeriod { get }
-//
-//
-//@available(iOS 11.2, *)
-//open var numberOfPeriods: Int { get }
-//
-//
-//@available(iOS 11.2, *)
-//open var paymentMode: SKProductDiscount.PaymentMode { get }
-//
-//
-//@available(iOS 12.2, *)
-//open var type: SKProductDiscount.`Type` { get }
