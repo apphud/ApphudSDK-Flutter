@@ -15,10 +15,8 @@ ApphudSubscriptionWrapper _$ApphudSubscriptionWrapperFromJson(Map json) =>
       isIntroductoryActivated: json['isIntroductoryActivated'] as bool,
       isActive: json['isActive'] as bool,
       status: $enumDecode(_$ApphudSubscriptionStatusEnumMap, json['status']),
-      startedAt: (json['startedAt'] as num?)?.toDouble(),
+      startedAt: (json['startedAt'] as num).toDouble(),
       canceledAt: (json['canceledAt'] as num?)?.toDouble(),
-      isSandbox: json['isSandbox'] as bool?,
-      isLocal: json['isLocal'] as bool?,
     );
 
 Map<String, dynamic> _$ApphudSubscriptionWrapperToJson(
@@ -33,8 +31,6 @@ Map<String, dynamic> _$ApphudSubscriptionWrapperToJson(
       'status': _$ApphudSubscriptionStatusEnumMap[instance.status]!,
       'canceledAt': instance.canceledAt,
       'startedAt': instance.startedAt,
-      'isSandbox': instance.isSandbox,
-      'isLocal': instance.isLocal,
     };
 
 const _$ApphudSubscriptionStatusEnumMap = {

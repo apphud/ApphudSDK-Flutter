@@ -28,9 +28,7 @@ extension ApphudSubscription {
                 "isAutorenewEnabled": isAutorenewEnabled,
                 "isIntroductoryActivated": isIntroductoryActivated,
                 "isActive" : isActive(),
-                "status" : status.toString(),
-                "isSandbox" : isSandbox,
-                "isLocal" : isLocal
+                "status" : status.toString()
         ]
     }
 }
