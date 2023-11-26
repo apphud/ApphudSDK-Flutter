@@ -8,8 +8,7 @@ part 'discount_wrapper.g.dart';
 
 @JsonSerializable(anyMap: true)
 class SKProductDiscountWrapper {
-  // TODO: можно ли price сделать double?
-  final String price;
+  final double price;
   final int numberOfPeriods;
   final SKProductDiscountPaymentMode paymentMode;
   final SKPriceLocaleWrapper priceLocale;

@@ -63,7 +63,7 @@ extension SKProductDiscount {
   func toMap() -> [String: Any] {
 
     return [
-        "price": price.description,
+        "price": price,
         "priceLocale": ["":""],
         "numberOfPeriods": numberOfPeriods,
         "subscriptionPeriod": subscriptionPeriod.toMap(),
