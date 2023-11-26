@@ -100,16 +100,11 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
       key: ValueKey(paywall.identifier),
       title: Text(
         paywall.identifier,
-        style: Theme
-            .of(context)
-            .textTheme
-            .headline5,
+        style: Theme.of(context).textTheme.headline5,
       ),
       subtitle: Text(
-        'isDefault: ${paywall.isDefault}\n'
-            'products: ${paywall.products?.length ?? 0}\n'
-            'experimentName: ${paywall.experimentName}\n'
-            'fromPaywall: ${paywall.fromPaywall}',
+        'products: ${paywall.products?.length ?? 0}\n'
+        'experimentName: ${paywall.experimentName}\n',
       ),
     );
   }
@@ -129,27 +124,23 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
       content = SkProductWidget(
         skProduct: product.skProduct,
         wrapInCard: false,
-        onTap: () =>
-            BlocProvider.of<PurchaseBloc>(context).add(
-              PurchaseEvent.purchaseProduct(product),
-            ),
-        onPromote: () =>
-            BlocProvider.of<PurchaseBloc>(context).add(
-              PurchaseEvent.grantPromotional(product),
-            ),
+        onTap: () => BlocProvider.of<PurchaseBloc>(context).add(
+          PurchaseEvent.purchaseProduct(product),
+        ),
+        onPromote: () => BlocProvider.of<PurchaseBloc>(context).add(
+          PurchaseEvent.grantPromotional(product),
+        ),
       );
     } else if (Platform.isAndroid) {
       content = ProductDetailsWidget(
         wrapInCard: false,
         productDetails: product.productDetails,
-        onTap: () =>
-            BlocProvider.of<PurchaseBloc>(context).add(
-              PurchaseEvent.purchaseProduct(product),
-            ),
-        onPromote: () =>
-            BlocProvider.of<PurchaseBloc>(context).add(
-              PurchaseEvent.grantPromotional(product),
-            ),
+        onTap: () => BlocProvider.of<PurchaseBloc>(context).add(
+          PurchaseEvent.purchaseProduct(product),
+        ),
+        onPromote: () => BlocProvider.of<PurchaseBloc>(context).add(
+          PurchaseEvent.grantPromotional(product),
+        ),
       );
     } else {
       content = Text('No product for this platform');
@@ -163,10 +154,7 @@ class _PaywallListWidgetState extends State<PaywallListWidget> {
           children: [
             Text(
               product.name ?? 'No name',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headline6,
+              style: Theme.of(context).textTheme.headline6,
             ),
             content,
           ],

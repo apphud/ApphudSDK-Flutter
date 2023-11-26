@@ -15,8 +15,9 @@
 - [Android] **BREAKING** Method 'syncPurchases' was renamed to 'syncPurchasesInObserverMode'. The 'paywallIdentifier' parameter was removed.
 - [Android] **BREAKING** Class 'AndroidPurchaseWrapper' was modified.
 - [Android], [iOS] **BREAKING** Class 'ApphudNonRenewingPurchase' was modified.
+- [Android], [iOS] **BREAKING** Class 'ApphudPaywall' was modified.
 
- 
+
 ## 2.3.2
 - [Android] Fixed restore purchase issue in some cases
 

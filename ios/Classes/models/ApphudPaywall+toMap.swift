@@ -10,11 +10,9 @@ import ApphudSDK
 extension ApphudPaywall {
     func toMap() -> [String: Any?] {
         return ["identifier": identifier,
-                "isDefault": isDefault,
                 "json": json,
                 "products" : products.map({ (product:ApphudProduct) in product.toMap() }),
-                "experimentName" : experimentName,
-                "fromPaywall" : fromPaywall,
+                "experimentName" : experimentName,                
         ]
     }
 }

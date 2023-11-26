@@ -12,7 +12,6 @@ import kotlin.collections.HashMap
 fun ApphudPaywall.toMap(): HashMap<String, Any?> {
     return hashMapOf(
         "identifier" to identifier,
-        "isDefault" to default,
         "experimentName" to experimentName,
         "json" to json,
         "products" to products?.map { it.toMap() }
