@@ -14,7 +14,7 @@ extension SKProduct {
         "localizedTitle": localizedTitle,
         "localizedDescription": localizedDescription,
         "priceLocale": priceLocale.toMap(),
-        "price": price.description,
+        "price": price,
         "subscriptionPeriod": subscriptionPeriod?.toMap(),
         "introductoryPrice": introductoryPrice?.toMap(),
         "isDownloadable": isDownloadable,

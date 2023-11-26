@@ -10,7 +10,7 @@ SKProductWrapper _$SKProductWrapperFromJson(Map json) => SKProductWrapper(
       productIdentifier: json['productIdentifier'] as String,
       localizedTitle: json['localizedTitle'] as String,
       localizedDescription: json['localizedDescription'] as String,
-      price: json['price'] as String,
+      price: (json['price'] as num).toDouble(),
       priceLocale: SKPriceLocaleWrapper.fromJson(json['priceLocale'] as Map),
       subscriptionPeriod: json['subscriptionPeriod'] == null
           ? null

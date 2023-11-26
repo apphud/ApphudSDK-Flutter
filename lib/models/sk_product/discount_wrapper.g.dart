@@ -8,7 +8,7 @@ part of 'discount_wrapper.dart';
 
 SKProductDiscountWrapper _$SKProductDiscountWrapperFromJson(Map json) =>
     SKProductDiscountWrapper(
-      price: json['price'] as String,
+      price: (json['price'] as num).toDouble(),
       numberOfPeriods: json['numberOfPeriods'] as int,
       paymentMode: $enumDecode(
           _$SKProductDiscountPaymentModeEnumMap, json['paymentMode']),

@@ -11,9 +11,7 @@ class SKProductWrapper {
   final String productIdentifier;
   final String localizedTitle;
   final String localizedDescription;
-
-  // TODO: can be double?
-  final String price;
+  final double price;
   final SKPriceLocaleWrapper priceLocale;
   final SKProductSubscriptionPeriodWrapper? subscriptionPeriod;
   final SKProductDiscountWrapper? introductoryPrice;

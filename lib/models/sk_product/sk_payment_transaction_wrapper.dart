@@ -23,6 +23,6 @@ class SKPaymentTransactionWrapper {
 
   @override
   String toString() {
-    return 'SKPaymentTransactionWrapper{transactionIdentifier: $transactionIdentifier, transactionDate: $transactionDate, payment: $payment}';
+    return 'SKPaymentTransactionWrapper{transactionIdentifier: $transactionIdentifier, transactionDate: $transactionDate, productIdentifier: $productIdentifier, state: $state}';
   }
 }
