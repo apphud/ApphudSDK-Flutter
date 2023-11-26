@@ -82,18 +82,11 @@ fun ApphudError.toMap(): HashMap<String, Any?> {
 fun Purchase.toMap(): HashMap<String, Any?> {
     return hashMapOf(
         "purchaseState" to purchaseState,
-        "quantity" to quantity,
         "purchaseTime" to purchaseTime,
-        "developerPayload" to developerPayload,
         "orderId" to orderId,
-        "originalJson" to originalJson,
-        "packageName" to packageName,
         "purchaseToken" to purchaseToken,
-        "signature" to signature,
-        "products" to products,
-        "isAcknowledged" to isAcknowledged,
-        "isAutoRenewing" to isAutoRenewing
-    )
+        "productId" to if (products.isEmpty()) null else products[0],
+        )
 }
 
 fun ApphudNonRenewingPurchase.toMap(): HashMap<String, Any?> {

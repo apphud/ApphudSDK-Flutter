@@ -64,8 +64,6 @@ extension ApphudNonRenewingPurchase {
         return ["productId": productId as Any,
                 "purchasedAt": purchasedAt.timeIntervalSince1970,
                 "canceledAt": canceledAt?.timeIntervalSince1970,
-                "isSandbox" : isSandbox,
-                "isLocal" : isLocal,
                 "isActive" : isActive()
         ]
     }

@@ -344,17 +344,11 @@ class Apphud {
     return ApphudComposite.fromJson(json);
   }
 
-  // TODO: rename to syncPurchasesInObserverMode() and remove paywallIdentifier param, android only
   /// Android only. This method will send all the purchases to the Apphud server.
   ///
   /// Call this when using your own implementation for subscriptions anytime a sync is needed, like after a successful purchase.
-  static Future<void> syncPurchases({String? paywallIdentifier}) async {
-    await _channel.invokeMethod(
-      'syncPurchases',
-      {
-        'paywallIdentifier': paywallIdentifier,
-      },
-    );
+  static Future<void> syncPurchasesInObserverMode() async {
+    await _channel.invokeMethod('syncPurchasesInObserverMode');
   }
 
 // User Properties

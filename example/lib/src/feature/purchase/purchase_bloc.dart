@@ -293,7 +293,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   }
 
   Stream<PurchaseState> _mapSyncPurchase(SyncPurchase event) async* {
-    unawaited(Apphud.syncPurchases().then(
+    unawaited(Apphud.syncPurchasesInObserverMode().then(
       (value) => printAsJson(
         'syncPurchases()',
         'success',

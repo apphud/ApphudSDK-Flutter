@@ -36,12 +36,10 @@ class MakePurchaseHandler(
 
             MakePurchaseRoutes.purchasePromo.name -> result.notImplemented()
 
-            MakePurchaseRoutes.syncPurchases.name -> SyncPurchasesParser(result).parse(args) { paywallIdentifier ->
-                syncPurchases(
-                    paywallIdentifier,
-                    result
-                )
-            }
+            MakePurchaseRoutes.syncPurchasesInObserverMode.name -> syncPurchasesInObserverMode(
+                result
+            )
+
 
             MakePurchaseRoutes.presentOfferCodeRedemptionSheet.name -> result.notImplemented()
 
@@ -164,8 +162,8 @@ class MakePurchaseHandler(
         }
     }
 
-    private fun syncPurchases(paywallIdentifier: String?, result: MethodChannel.Result) {
-        ApphudFlutter.syncPurchases(paywallIdentifier)
+    private fun syncPurchasesInObserverMode(result: MethodChannel.Result) {
+        ApphudFlutter.syncPurchases()
         handleOnMainThread { result.success(null) }
     }
 
@@ -240,13 +238,6 @@ class MakePurchaseHandler(
             }
         }
     }
-
-    class SyncPurchasesParser(private val result: MethodChannel.Result) {
-        fun parse(args: Map<String, Any>?, callback: (paywallIdentifier: String?) -> Unit) {
-            val paywallIdentifier = args?.get("paywallIdentifier") as String?
-            callback(paywallIdentifier)
-        }
-    }
 }
 
 enum class MakePurchaseRoutes {
@@ -254,7 +245,7 @@ enum class MakePurchaseRoutes {
     product,
     purchase,
     purchasePromo,
-    syncPurchases,
+    syncPurchasesInObserverMode,
     presentOfferCodeRedemptionSheet,
     getPaywalls,
     paywalls,

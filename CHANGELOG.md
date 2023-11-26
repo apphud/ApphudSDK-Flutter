@@ -12,6 +12,9 @@
 - [iOS] **BREAKING** Method 'fetchRawReceiptInfo' was removed.
 - [iOS] **BREAKING** Method 'isSandbox' was removed.
 - [Android] **BREAKING** Class 'AndroidAccountIdentifiersWrapper' was removed.
+- [Android] **BREAKING** Method 'syncPurchases' was renamed to 'syncPurchasesInObserverMode'. The 'paywallIdentifier' parameter was removed.
+- [Android] **BREAKING** Class 'AndroidPurchaseWrapper' was modified.
+- [Android], [iOS] **BREAKING** Class 'ApphudNonRenewingPurchase' was modified.
 
  
 ## 2.3.2

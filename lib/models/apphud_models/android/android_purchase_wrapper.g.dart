@@ -9,33 +9,18 @@ part of 'android_purchase_wrapper.dart';
 AndroidPurchaseWrapper _$AndroidPurchaseWrapperFromJson(Map json) =>
     AndroidPurchaseWrapper(
       orderId: json['orderId'] as String,
-      packageName: json['packageName'] as String,
       purchaseState: json['purchaseState'] as int,
       purchaseToken: json['purchaseToken'] as String,
-      signature: json['signature'] as String,
-      products:
-          (json['products'] as List<dynamic>).map((e) => e as String).toList(),
-      originalJson: json['originalJson'] as String,
+      productId: json['productId'] as String?,
       purchaseTime: json['purchaseTime'] as int,
-      developerPayload: json['developerPayload'] as String,
-      quantity: json['quantity'] as int,
-      isAcknowledged: json['isAcknowledged'] as bool,
-      isAutoRenewing: json['isAutoRenewing'] as bool,
     );
 
 Map<String, dynamic> _$AndroidPurchaseWrapperToJson(
         AndroidPurchaseWrapper instance) =>
     <String, dynamic>{
       'purchaseState': instance.purchaseState,
-      'quantity': instance.quantity,
       'purchaseTime': instance.purchaseTime,
-      'developerPayload': instance.developerPayload,
       'orderId': instance.orderId,
-      'originalJson': instance.originalJson,
-      'packageName': instance.packageName,
       'purchaseToken': instance.purchaseToken,
-      'signature': instance.signature,
-      'products': instance.products,
-      'isAcknowledged': instance.isAcknowledged,
-      'isAutoRenewing': instance.isAutoRenewing,
+      'productId': instance.productId,
     };
