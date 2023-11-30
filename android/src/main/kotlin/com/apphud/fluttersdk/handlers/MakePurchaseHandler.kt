@@ -75,14 +75,9 @@ class MakePurchaseHandler(
     }
 
     private fun products(result: MethodChannel.Result) {
-        val productDetails = Apphud.products()
-        if (productDetails != null) {
-            val jsonList: List<HashMap<String, Any?>> = productDetails.map {
-                it.toMap()
-            }
+        Apphud.productsFetchCallback { productDetails ->
+            val jsonList: List<HashMap<String, Any?>> = productDetails.map { it.toMap() }
             handleOnMainThread { result.success(jsonList) }
-        } else {
-            handleOnMainThread { result.success(null) }
         }
     }
 

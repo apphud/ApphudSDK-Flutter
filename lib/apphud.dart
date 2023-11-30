@@ -21,7 +21,6 @@ import 'models/extensions.dart';
 export 'listener/apphud_listener.dart';
 
 // TODO: в example app добавить кнопку по нажатию на которую будут вызываться все методы по списку, кроме разве что purchase. я буду сам комментить нужные и смотреть то что нужно. пусть результаты всех методов принтятся в консоль. смотри пример: https://github.com/apphud/ApphudSDK-React-Native/blob/master/example/src/screens/ActionsScreen.tsx#L46-L103
-// TODO: добавить так же код, где будут слушаться все методы листенера и принтиться в консоль, чтобы я мог проверить все методы листенера
 // TODO: везде убрать проверку #available(iOS 12.2, *)
 // TODO: БАГ в example app, почему-то у меня не раскрывается пейвол при нажатии на кнопочку справа и все время шлется эвент paywall closed
 
@@ -132,20 +131,12 @@ class Apphud {
     return json != null ? ApphudProductComposite.fromJson(json) : null;
   }
 
-// TODO: MAKE single method for iOS + Android. обновить products() метод чтобы под капотом вызывал fetchProducts() на iOS и productsFetchCallback() на Android, и в документации метода убрать текст про то, что он может вернуть nil, если продукты еще не загрузились, потому что используется колбек
   /// Returns array of [ApphudProductComposite] objects that you added in Apphud > Product Hub > Products.
-  ///
-  /// Note that this method will return `null` if products are not yet fetched from the App Store.
-  /// You should observe for `didFetchProductsNotification()` notification on iOS or implement
-  /// `apphudFetchProducts` method of 'ApphudListener' or use `productsDidFetchCallback`.
-  /// Best practise is not to use this method, but implement paywalls logic by adding your
-  /// paywall configuration in Apphud Dashboard > Product Hub > Paywalls.
-  static Future<List<ApphudProductComposite>?> products() async {
+  static Future<List<ApphudProductComposite>> products() async {
     List<Map<dynamic, dynamic>>? products =
         (await _channel.invokeMethod<List<dynamic>>('products'))?.toMapList;
-    return products
-        ?.map((json) => ApphudProductComposite.fromJson(json))
-        .toList();
+    if (products == null) return const [];
+    return products.map(ApphudProductComposite.fromJson).toList();
   }
 
   ///  Purchase product and automatically submits App Store Receipt (iOS) or Google Play purchase token (Android) to Apphud.

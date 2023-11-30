@@ -18,6 +18,7 @@
 - [Android], [iOS] **BREAKING** Class 'ApphudPaywall' was modified.
 - [Android], [iOS] **BREAKING** Class 'ApphudProduct' was modified.
 - [Android], [iOS] **BREAKING** Class 'ApphudSubscriptionWrapper' was modified.
+- [Android], [iOS] Method 'products' always returns 'ApphudProductComposite' list. 
 
 ## 2.3.2
 - [Android] Fixed restore purchase issue in some cases

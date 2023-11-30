@@ -24,6 +24,7 @@ mixin _$PurchaseEvent {
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -34,6 +35,7 @@ mixin _$PurchaseEvent {
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,6 +46,7 @@ mixin _$PurchaseEvent {
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -55,6 +58,7 @@ mixin _$PurchaseEvent {
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,6 +69,7 @@ mixin _$PurchaseEvent {
     TResult? Function(PaywallShown value)? paywallShown,
     TResult? Function(PaywallClosed value)? paywallClosed,
     TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -75,6 +80,7 @@ mixin _$PurchaseEvent {
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -142,6 +148,7 @@ class _$RestorePurchasesImpl extends RestorePurchases {
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) {
     return restorePurchases();
   }
@@ -155,6 +162,7 @@ class _$RestorePurchasesImpl extends RestorePurchases {
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) {
     return restorePurchases?.call();
   }
@@ -168,6 +176,7 @@ class _$RestorePurchasesImpl extends RestorePurchases {
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) {
     if (restorePurchases != null) {
@@ -185,6 +194,7 @@ class _$RestorePurchasesImpl extends RestorePurchases {
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) {
     return restorePurchases(this);
   }
@@ -198,6 +208,7 @@ class _$RestorePurchasesImpl extends RestorePurchases {
     TResult? Function(PaywallShown value)? paywallShown,
     TResult? Function(PaywallClosed value)? paywallClosed,
     TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) {
     return restorePurchases?.call(this);
   }
@@ -211,6 +222,7 @@ class _$RestorePurchasesImpl extends RestorePurchases {
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) {
     if (restorePurchases != null) {
@@ -296,6 +308,7 @@ class _$PurchaseProductImpl extends PurchaseProduct {
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) {
     return purchaseProduct(product);
   }
@@ -309,6 +322,7 @@ class _$PurchaseProductImpl extends PurchaseProduct {
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) {
     return purchaseProduct?.call(product);
   }
@@ -322,6 +336,7 @@ class _$PurchaseProductImpl extends PurchaseProduct {
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) {
     if (purchaseProduct != null) {
@@ -339,6 +354,7 @@ class _$PurchaseProductImpl extends PurchaseProduct {
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) {
     return purchaseProduct(this);
   }
@@ -352,6 +368,7 @@ class _$PurchaseProductImpl extends PurchaseProduct {
     TResult? Function(PaywallShown value)? paywallShown,
     TResult? Function(PaywallClosed value)? paywallClosed,
     TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) {
     return purchaseProduct?.call(this);
   }
@@ -365,6 +382,7 @@ class _$PurchaseProductImpl extends PurchaseProduct {
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) {
     if (purchaseProduct != null) {
@@ -456,6 +474,7 @@ class _$GrantPromotionalImpl extends GrantPromotional {
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) {
     return grantPromotional(product);
   }
@@ -469,6 +488,7 @@ class _$GrantPromotionalImpl extends GrantPromotional {
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) {
     return grantPromotional?.call(product);
   }
@@ -482,6 +502,7 @@ class _$GrantPromotionalImpl extends GrantPromotional {
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) {
     if (grantPromotional != null) {
@@ -499,6 +520,7 @@ class _$GrantPromotionalImpl extends GrantPromotional {
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) {
     return grantPromotional(this);
   }
@@ -512,6 +534,7 @@ class _$GrantPromotionalImpl extends GrantPromotional {
     TResult? Function(PaywallShown value)? paywallShown,
     TResult? Function(PaywallClosed value)? paywallClosed,
     TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) {
     return grantPromotional?.call(this);
   }
@@ -525,6 +548,7 @@ class _$GrantPromotionalImpl extends GrantPromotional {
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) {
     if (grantPromotional != null) {
@@ -615,6 +639,7 @@ class _$PaywallShownImpl extends PaywallShown {
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) {
     return paywallShown(paywall);
   }
@@ -628,6 +653,7 @@ class _$PaywallShownImpl extends PaywallShown {
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) {
     return paywallShown?.call(paywall);
   }
@@ -641,6 +667,7 @@ class _$PaywallShownImpl extends PaywallShown {
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) {
     if (paywallShown != null) {
@@ -658,6 +685,7 @@ class _$PaywallShownImpl extends PaywallShown {
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) {
     return paywallShown(this);
   }
@@ -671,6 +699,7 @@ class _$PaywallShownImpl extends PaywallShown {
     TResult? Function(PaywallShown value)? paywallShown,
     TResult? Function(PaywallClosed value)? paywallClosed,
     TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) {
     return paywallShown?.call(this);
   }
@@ -684,6 +713,7 @@ class _$PaywallShownImpl extends PaywallShown {
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) {
     if (paywallShown != null) {
@@ -773,6 +803,7 @@ class _$PaywallClosedImpl extends PaywallClosed {
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) {
     return paywallClosed(paywall);
   }
@@ -786,6 +817,7 @@ class _$PaywallClosedImpl extends PaywallClosed {
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) {
     return paywallClosed?.call(paywall);
   }
@@ -799,6 +831,7 @@ class _$PaywallClosedImpl extends PaywallClosed {
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) {
     if (paywallClosed != null) {
@@ -816,6 +849,7 @@ class _$PaywallClosedImpl extends PaywallClosed {
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) {
     return paywallClosed(this);
   }
@@ -829,6 +863,7 @@ class _$PaywallClosedImpl extends PaywallClosed {
     TResult? Function(PaywallShown value)? paywallShown,
     TResult? Function(PaywallClosed value)? paywallClosed,
     TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) {
     return paywallClosed?.call(this);
   }
@@ -842,6 +877,7 @@ class _$PaywallClosedImpl extends PaywallClosed {
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) {
     if (paywallClosed != null) {
@@ -906,6 +942,7 @@ class _$SyncPurchaseImpl extends SyncPurchase {
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) {
     return syncPurchase();
   }
@@ -919,6 +956,7 @@ class _$SyncPurchaseImpl extends SyncPurchase {
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) {
     return syncPurchase?.call();
   }
@@ -932,6 +970,7 @@ class _$SyncPurchaseImpl extends SyncPurchase {
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) {
     if (syncPurchase != null) {
@@ -949,6 +988,7 @@ class _$SyncPurchaseImpl extends SyncPurchase {
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) {
     return syncPurchase(this);
   }
@@ -962,6 +1002,7 @@ class _$SyncPurchaseImpl extends SyncPurchase {
     TResult? Function(PaywallShown value)? paywallShown,
     TResult? Function(PaywallClosed value)? paywallClosed,
     TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) {
     return syncPurchase?.call(this);
   }
@@ -975,6 +1016,7 @@ class _$SyncPurchaseImpl extends SyncPurchase {
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) {
     if (syncPurchase != null) {
@@ -987,4 +1029,137 @@ class _$SyncPurchaseImpl extends SyncPurchase {
 abstract class SyncPurchase extends PurchaseEvent {
   const factory SyncPurchase() = _$SyncPurchaseImpl;
   const SyncPurchase._() : super._();
+}
+
+/// @nodoc
+abstract class _$$CallAllImplCopyWith<$Res> {
+  factory _$$CallAllImplCopyWith(
+          _$CallAllImpl value, $Res Function(_$CallAllImpl) then) =
+      __$$CallAllImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$CallAllImplCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res, _$CallAllImpl>
+    implements _$$CallAllImplCopyWith<$Res> {
+  __$$CallAllImplCopyWithImpl(
+      _$CallAllImpl _value, $Res Function(_$CallAllImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$CallAllImpl extends CallAll {
+  const _$CallAllImpl() : super._();
+
+  @override
+  String toString() {
+    return 'PurchaseEvent.callAll()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$CallAllImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() restorePurchases,
+    required TResult Function(ApphudProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudPaywall paywall) paywallShown,
+    required TResult Function(ApphudPaywall paywall) paywallClosed,
+    required TResult Function() syncPurchase,
+    required TResult Function() callAll,
+  }) {
+    return callAll();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? restorePurchases,
+    TResult? Function(ApphudProduct product)? purchaseProduct,
+    TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudPaywall paywall)? paywallShown,
+    TResult? Function(ApphudPaywall paywall)? paywallClosed,
+    TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
+  }) {
+    return callAll?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudPaywall paywall)? paywallShown,
+    TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? syncPurchase,
+    TResult Function()? callAll,
+    required TResult orElse(),
+  }) {
+    if (callAll != null) {
+      return callAll();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RestorePurchases value) restorePurchases,
+    required TResult Function(PurchaseProduct value) purchaseProduct,
+    required TResult Function(GrantPromotional value) grantPromotional,
+    required TResult Function(PaywallShown value) paywallShown,
+    required TResult Function(PaywallClosed value) paywallClosed,
+    required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
+  }) {
+    return callAll(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RestorePurchases value)? restorePurchases,
+    TResult? Function(PurchaseProduct value)? purchaseProduct,
+    TResult? Function(GrantPromotional value)? grantPromotional,
+    TResult? Function(PaywallShown value)? paywallShown,
+    TResult? Function(PaywallClosed value)? paywallClosed,
+    TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
+  }) {
+    return callAll?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
+    TResult Function(PaywallShown value)? paywallShown,
+    TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
+    required TResult orElse(),
+  }) {
+    if (callAll != null) {
+      return callAll(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CallAll extends PurchaseEvent {
+  const factory CallAll() = _$CallAllImpl;
+  const CallAll._() : super._();
 }

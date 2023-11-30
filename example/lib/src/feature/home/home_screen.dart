@@ -73,14 +73,14 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             FloatingActionButton.extended(
               onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
-                PurchaseEvent.restorePurchases(),
+                PurchaseEvent.callAll(),
               ),
-              label: Text('Restore purchases'),
+              label: Text('Call all'),
             ),
-            if (Platform.isAndroid) const SizedBox(height: 10),
             if (Platform.isAndroid) const SizedBox(height: 10),
             if (Platform.isAndroid)
               FloatingActionButton.extended(
@@ -89,6 +89,13 @@ class HomeScreen extends StatelessWidget {
                 ),
                 label: Text('Sync purchases'),
               ),
+            if (Platform.isAndroid) const SizedBox(height: 10),
+            FloatingActionButton.extended(
+              onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
+                PurchaseEvent.restorePurchases(),
+              ),
+              label: Text('Restore purchases'),
+            ),
           ],
         ),
       ),

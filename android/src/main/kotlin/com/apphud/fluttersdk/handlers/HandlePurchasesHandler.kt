@@ -27,11 +27,10 @@ class HandlePurchasesHandler(
             HandlePurchasesRoutes.subscription.name -> subscription(result)
             HandlePurchasesRoutes.subscriptions.name -> subscriptions(result)
             HandlePurchasesRoutes.nonRenewingPurchases.name -> nonRenewingPurchases(result)
-            HandlePurchasesRoutes.isNonRenewingPurchaseActive.name -> IsNonRenewingPurchaseActiveParser(
-                result
-            ).parse(args) { productId ->
-                isNonRenewingPurchaseActive(productId, result)
-            }
+            HandlePurchasesRoutes.isNonRenewingPurchaseActive.name ->
+                IsNonRenewingPurchaseActiveParser(result).parse(args) { productId ->
+                    isNonRenewingPurchaseActive(productId, result)
+                }
 
             HandlePurchasesRoutes.restorePurchases.name -> restorePurchases(result)
             HandlePurchasesRoutes.hasPremiumAccess.name -> hasPremiumAccess(result)
