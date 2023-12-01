@@ -89,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 label: Text('Sync purchases'),
               ),
-            if (Platform.isAndroid) const SizedBox(height: 10),
+            const SizedBox(height: 10),
             FloatingActionButton.extended(
               onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
                 PurchaseEvent.restorePurchases(),

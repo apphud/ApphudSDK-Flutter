@@ -16,8 +16,8 @@ final class StartManuallyRequest: Request {
                                  userID: arguments.userID,
                                  deviceID: arguments.deviceID,
                                  observerMode: arguments.observerMode)
-        }.get()
-        result(nil)
+            result(nil)
+        }
     }
 }
 

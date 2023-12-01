@@ -14,8 +14,8 @@ final class StartRequest: Request {
             await Apphud.start(apiKey: arguments.apiKey,
                                userID: arguments.userID,
                                observerMode: arguments.observerMode)
-        }.get()
-        result(nil)
+            result(nil)
+        }
     }
 }
 
