@@ -10,7 +10,7 @@ import ApphudSDK
 final class AddAttributionRequest: Request {
     typealias ArgumentProvider = AddAttributionArgumentParser
 
-    func startRequest(arguments: (data: [AnyHashable : Any], from: ApphudAttributionProvider, identifer: String?), result: @escaping FlutterResult) {
+    func startRequest(arguments: (data: [AnyHashable : Any]?, from: ApphudAttributionProvider, identifer: String?), result: @escaping FlutterResult) {
         Apphud.addAttribution(data: arguments.data, from: arguments.from, identifer: arguments.identifer) { (isAdded) in
             result(isAdded)
         }
@@ -18,9 +18,9 @@ final class AddAttributionRequest: Request {
 }
 
 final class AddAttributionArgumentParser: Parser {
-    typealias ArgumentType = (data: [AnyHashable : Any], from: ApphudAttributionProvider, identifer: String?)
+    typealias ArgumentType = (data: [AnyHashable : Any]?, from: ApphudAttributionProvider, identifer: String?)
 
-    func parse(args: [String : Any]?) throws -> (data: [AnyHashable : Any], from: ApphudAttributionProvider, identifer: String?) {
+    func parse(args: [String : Any]?) throws -> (data: [AnyHashable : Any]?, from: ApphudAttributionProvider, identifer: String?) {
         guard let args = args,
               let data = args["data"] as? [AnyHashable : Any],
               let fromString = args["from"] as? String,
@@ -42,10 +42,6 @@ extension ApphudAttributionProvider {
             return ApphudAttributionProvider.appsFlyer
         case "adjust":
             return ApphudAttributionProvider.adjust
-        case "facebook":
-            return ApphudAttributionProvider.facebook
-        case "appleSearchAds":
-            return ApphudAttributionProvider.appleSearchAds
         case "appleAdsAttribution":
             return ApphudAttributionProvider.appleAdsAttribution
         case "firebase":

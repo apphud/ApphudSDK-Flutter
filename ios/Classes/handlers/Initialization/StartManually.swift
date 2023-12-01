@@ -11,10 +11,12 @@ final class StartManuallyRequest: Request {
     typealias ArgumentProvider = StartManuallyArgumentParser
 
     func startRequest(arguments: (apiKey: String, userID: String?, deviceID: String?, observerMode: Bool), result: @escaping FlutterResult) {
-        Apphud.startManually(apiKey: arguments.apiKey,
-                             userID: arguments.userID,
-                             deviceID: arguments.deviceID,
-                             observerMode: arguments.observerMode)
+        UnsafeTask{
+            await Apphud.startManually(apiKey: arguments.apiKey,
+                                 userID: arguments.userID,
+                                 deviceID: arguments.deviceID,
+                                 observerMode: arguments.observerMode)
+        }.get()
         result(nil)
     }
 }

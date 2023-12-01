@@ -20,16 +20,10 @@ extension SKProduct {
         "isDownloadable": isDownloadable,
         "downloadContentLengths": downloadContentLengths.map {$0.intValue},
         "contentVersion": contentVersion,
-        "downloadContentVersion": downloadContentVersion
+        "downloadContentVersion": downloadContentVersion,
+        "subscriptionGroupIdentifier": subscriptionGroupIdentifier,
+        "discounts": discounts.map {$0.toMap()}
     ]
-
-    if #available(iOS 12.0, *) {
-      map["subscriptionGroupIdentifier"] = subscriptionGroupIdentifier
-    }
-
-    if #available(iOS 12.2, *) {
-        map["discounts"] = discounts.map {$0.toMap()}
-    }
 
     if #available(iOS 14.0, *) {
       map["isFamilyShareable"] = isFamilyShareable
@@ -48,7 +42,6 @@ extension Locale {
   }
 }
 
-@available(iOS 11.2, *)
 extension SKProductSubscriptionPeriod {
   func toMap() -> [String: Any] {
     return [
@@ -58,7 +51,7 @@ extension SKProductSubscriptionPeriod {
   }
 }
 
-@available(iOS 11.2, *)
+
 extension SKProductDiscount {
   func toMap() -> [String: Any] {
 

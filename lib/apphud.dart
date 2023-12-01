@@ -421,11 +421,11 @@ class Apphud {
   ///  Submit attribution data to Apphud from your attribution network provider.
   ///
   /// - parameter [data] is required. Attribution 'map'.
-  /// - parameter [provider] is required. Attribution provider name. Available values: `ApphudAttributionProvider.appsFlyer`, `ApphudAttributionProvider.adjust`, `ApphudAttributionProvider.appleSearchAds`, `ApphudAttributionProvider.facebook`.
+  /// - parameter [provider] is required. Attribution provider name. Available values: `ApphudAttributionProvider.appsFlyer`, `ApphudAttributionProvider.adjust`, `ApphudAttributionProvider.appleSearchAds`, `ApphudAttributionProvider.firebase`.
   /// - parameter [identifier] is optional. Identifier that matches Apphud and Attribution provider. Required for AppsFlyer.
   /// Returns true if successfully sent.
   static Future<bool> addAttribution({
-    required Map<String, dynamic> data,
+    Map<String, dynamic>? data,
     required ApphudAttributionProvider provider,
     String? identifier,
   }) async {
@@ -437,7 +437,7 @@ class Apphud {
     return isAdded;
   }
 
-// TODO: код под капотом устарел, надо убрать iAd и AdClient код, и добавить код через AttributionToken: https://docs.apphud.com/docs/apple-search-ads#step-1 + убрать async если можно
+
   /// iOS only. Send search ads attribution data to Apphud.
   ///
   /// Returns [ApphudError] if an error occurred or null otherwise.

@@ -31,7 +31,9 @@ final class  PurchaseProductArgumentParser: Parser {
         
         var product:ApphudProduct?
         
-        let paywalls = Apphud.paywalls ?? []
+        let paywalls = UnsafeTask{
+            return await Apphud.paywalls()
+        }.get()
         
         for paywall in paywalls where product==nil {
             product = paywall.products.first { product in

@@ -10,9 +10,11 @@ import ApphudSDK
 final class StartRequest: Request {
     typealias ArgumentProvider = StartArgumentParser
     func startRequest(arguments: (apiKey: String, userID: String?, observerMode: Bool), result: @escaping FlutterResult) {
-        Apphud.start(apiKey: arguments.apiKey,
-                     userID: arguments.userID,
-                     observerMode: arguments.observerMode)
+        UnsafeTask{
+            await Apphud.start(apiKey: arguments.apiKey,
+                               userID: arguments.userID,
+                               observerMode: arguments.observerMode)
+        }.get()
         result(nil)
     }
 }
