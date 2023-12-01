@@ -20,10 +20,6 @@ import 'models/apphud_models/composite/apphud_purchase_result.dart';
 import 'models/extensions.dart';
 export 'listener/apphud_listener.dart';
 
-// TODO: в example app добавить кнопку по нажатию на которую будут вызываться все методы по списку, кроме разве что purchase. я буду сам комментить нужные и смотреть то что нужно. пусть результаты всех методов принтятся в консоль. смотри пример: https://github.com/apphud/ApphudSDK-React-Native/blob/master/example/src/screens/ActionsScreen.tsx#L46-L103
-// TODO: везде убрать проверку #available(iOS 12.2, *)
-// TODO: БАГ в example app, почему-то у меня не раскрывается пейвол при нажатии на кнопочку справа и все время шлется эвент paywall closed
-
 class Apphud {
   static const MethodChannel _channel = MethodChannel('apphud');
   static const MethodChannel _listenerChannel =
@@ -196,9 +192,6 @@ class Apphud {
     }
   }
 
-// TODO: REMOVE EVERYWHERE iOS 12.2 check, because now we support minimum iOS 13
-  /// iOS >=12.2 only. Purchases subscription (promotional) offer and automatically submits App Store Receipt to Apphud.
-  ///
   /// This method automatically sends in-app purchase receipt to Apphud, so you don't need to call `submitReceipt` method.
   /// - parameter [productId] is required. This is an [productId] that user wants to purchase.
   /// - parameter [discountID] is required. This is a Identifier String object that you would like to apply.
@@ -344,7 +337,6 @@ class Apphud {
 
 // User Properties
 
-  // TODO: async?
   /// Set custom user property. Value must be one of: `int`, `float`, `bool`, `String`, `null`.
 
   /// Example:
@@ -370,18 +362,16 @@ class Apphud {
     required ApphudUserPropertyKey key,
     dynamic value,
     bool setOnce = false,
-  }) async {
-    await _channel.invokeMethod(
-      'setUserProperty',
-      {
-        'key': key.keyName,
-        'value': value,
-        'setOnce': setOnce,
-      },
-    );
-  }
+  }) =>
+      _channel.invokeMethod(
+        'setUserProperty',
+        {
+          'key': key.keyName,
+          'value': value,
+          'setOnce': setOnce,
+        },
+      );
 
-// TODO: async?
   /// Increment custom user property. Value must be one of: `int`, `float`
   ///
   /// Example:
@@ -393,30 +383,25 @@ class Apphud {
   static Future<void> incrementUserProperty({
     required ApphudUserPropertyKey key,
     required dynamic by,
-  }) async {
-    await _channel.invokeMethod(
-      'incrementUserProperty',
-      {
-        'key': key.keyName,
-        'by': by,
-      },
-    );
-  }
+  }) =>
+      _channel.invokeMethod(
+        'incrementUserProperty',
+        {
+          'key': key.keyName,
+          'by': by,
+        },
+      );
 
 // Attribution
 
-  // TODO: можно ли убрать async?
   /// iOS only. Submit Advertising Identifier (IDFA) to Apphud.
   ///
   /// This is used to properly match user with attribution platforms (AppsFlyer, Facebook, etc.)
-  static Future<void> setAdvertisingIdentifier(String idfa) async {
-    await _channel.invokeMethod(
-      'setAdvertisingIdentifier',
-      {'idfa': idfa},
-    );
-  }
-
-// TODO: addAttribution убрать facebook + добавить firebase. data может быть optional в случае например с firebase
+  static Future<void> setAdvertisingIdentifier(String idfa) =>
+      _channel.invokeMethod(
+        'setAdvertisingIdentifier',
+        {'idfa': idfa},
+      );
 
   ///  Submit attribution data to Apphud from your attribution network provider.
   ///
@@ -436,7 +421,6 @@ class Apphud {
     });
     return isAdded;
   }
-
 
   /// iOS only. Send search ads attribution data to Apphud.
   ///
@@ -462,23 +446,19 @@ class Apphud {
 
 // Paywall logs
 
-// TODO: Maybe remove async?
   /// Paywall shown event will be displayed in AppHud dashboard.
-  static Future<void> paywallShown(ApphudPaywall paywall) async {
-    await _channel.invokeMethod(
-      'paywallShown',
-      {'identifier': paywall.identifier},
-    );
-  }
+  static Future<void> paywallShown(ApphudPaywall paywall) =>
+      _channel.invokeMethod(
+        'paywallShown',
+        {'identifier': paywall.identifier},
+      );
 
-// TODO: Maybe remove async?
   /// Paywall closed event will be displayed in AppHud dashboard.
-  static Future<void> paywallClosed(ApphudPaywall paywall) async {
-    await _channel.invokeMethod(
-      'paywallClosed',
-      {'identifier': paywall.identifier},
-    );
-  }
+  static Future<void> paywallClosed(ApphudPaywall paywall) =>
+      _channel.invokeMethod(
+        'paywallClosed',
+        {'identifier': paywall.identifier},
+      );
 
   /// Android only. Must be called before SDK initialization.
   ///
