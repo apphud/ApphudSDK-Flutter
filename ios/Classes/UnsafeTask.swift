@@ -8,9 +8,9 @@
 class UnsafeTask<T> {
     let semaphore = DispatchSemaphore(value: 0)
     private var result: T?
-    init(block: @escaping () async -> T) {
+    init(block: @escaping () async throws -> T) {
         Task {
-            result = await block()
+            result = try await block()
             semaphore.signal()
         }
     }

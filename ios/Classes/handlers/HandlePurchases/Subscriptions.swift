@@ -10,7 +10,7 @@ import ApphudSDK
 final class SubscriptionsRequest: Request {
     typealias ArgumentProvider = SubscriptionsArgumentParser
 
-    func startRequest(arguments: SubscriptionsArgumentParser.ArgumentType, result: @escaping FlutterResult) {
+    @MainActor func startRequest(arguments: SubscriptionsArgumentParser.ArgumentType, result: @escaping FlutterResult) {
         let response = Apphud.subscriptions()
         result(response?.map{ sub in sub.toMap()})
     }

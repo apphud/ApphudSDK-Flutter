@@ -14,7 +14,7 @@ final class PaywallsDidLoadCallbackRequest: Request {
 
     typealias ArgumentProvider = PaywallsDidLoadCallbackArgumentParser
 
-    func startRequest(arguments: (), result: @escaping FlutterResult) {
+    @MainActor func startRequest(arguments: (), result: @escaping FlutterResult) {
         Apphud.paywallsDidLoadCallback{ (paywalls: [ApphudPaywall]) in
             result([
                 "paywalls" : paywalls.map({ (paywall: ApphudPaywall) in paywall.toMap() }),

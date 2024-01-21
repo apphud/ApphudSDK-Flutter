@@ -10,14 +10,11 @@ import ApphudSDK
 final class StartManuallyRequest: Request {
     typealias ArgumentProvider = StartManuallyArgumentParser
 
-    func startRequest(arguments: (apiKey: String, userID: String?, deviceID: String?, observerMode: Bool), result: @escaping FlutterResult) {
-        UnsafeTask{
-            await Apphud.startManually(apiKey: arguments.apiKey,
+    @MainActor func startRequest(arguments: (apiKey: String, userID: String?, deviceID: String?, observerMode: Bool), result: @escaping FlutterResult) {
+        Apphud.startManually(apiKey: arguments.apiKey,
                                  userID: arguments.userID,
                                  deviceID: arguments.deviceID,
-                                 observerMode: arguments.observerMode)
-            result(nil)
-        }
+                             observerMode: arguments.observerMode) { (user) in result(user.toMap()) }
     }
 }
 

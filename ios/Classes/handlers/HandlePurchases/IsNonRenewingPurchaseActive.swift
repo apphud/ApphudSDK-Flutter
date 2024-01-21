@@ -10,7 +10,7 @@ import ApphudSDK
 final class IsNonRenewingPurchaseActiveRequest: Request {
     typealias ArgumentProvider = IsNonRenewingPurchaseActiveArgumentParser
 
-    func startRequest(arguments: (String), result: @escaping FlutterResult) {
+    @MainActor func startRequest(arguments: (String), result: @escaping FlutterResult) {
         let response: Bool = Apphud.isNonRenewingPurchaseActive(productIdentifier: arguments)
         result(response)
     }

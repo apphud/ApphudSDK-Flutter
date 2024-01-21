@@ -11,7 +11,7 @@ final class LogoutRequest: Request {
     typealias ArgumentProvider = LogoutRequestArgumentParser
 
     func startRequest(arguments: LogoutRequestArgumentParser.ArgumentType, result: @escaping FlutterResult) {
-        Apphud.logout()
+        UnsafeTask{await Apphud.logout()}
         result(nil)
     }
 }

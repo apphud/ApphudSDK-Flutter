@@ -27,7 +27,11 @@ final class  GrantPromotionalArgumentParser: Parser {
         }
         let productId = args["productId"] as? String
         let permissionGroupName = args["permissionGroupName"] as? String
-        let permissionGroup = Apphud.permissionGroups.first { group in
+        let permissionGroups = UnsafeTask {
+            let groups = await Apphud.permissionGroups()
+            return groups ?? []
+        }.get()
+        let permissionGroup = permissionGroups.first { group in
             return group.name == permissionGroupName
         }
         return (daysCount:daysCount, productId:productId, permissionGroup:permissionGroup)

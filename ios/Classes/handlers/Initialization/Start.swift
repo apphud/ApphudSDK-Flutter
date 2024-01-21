@@ -9,13 +9,10 @@ import ApphudSDK
 
 final class StartRequest: Request {
     typealias ArgumentProvider = StartArgumentParser
-    func startRequest(arguments: (apiKey: String, userID: String?, observerMode: Bool), result: @escaping FlutterResult) {
-        UnsafeTask{
-            await Apphud.start(apiKey: arguments.apiKey,
+    @MainActor func startRequest(arguments: (apiKey: String, userID: String?, observerMode: Bool), result: @escaping FlutterResult) {
+        Apphud.start(apiKey: arguments.apiKey,
                                userID: arguments.userID,
-                               observerMode: arguments.observerMode)
-            result(nil)
-        }
+                               observerMode: arguments.observerMode) { (user) in result(user.toMap()) }
     }
 }
 
