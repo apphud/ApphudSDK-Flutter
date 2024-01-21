@@ -4,7 +4,9 @@ import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
+import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
+import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:apphud_example/src/feature/common/app_secrets_base.dart';
 import 'package:apphud_example/src/feature/common/debug_print_mixin.dart';
@@ -46,13 +48,14 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
     try {
       await Apphud.enableDebugLogs(level: ApphudDebugLevel.high);
 
-      await Apphud.startManually(
+      final user = await Apphud.startManually(
         apiKey: _appSecrets.apiKey,
         userID: _appSecrets.userID,
         deviceID: _appSecrets.deviceID,
         observerMode: _appSecrets.observeMode,
       );
 
+      printAsJson('startManually', user);
       printAsJson('UserId after start', await Apphud.userID());
       printAsJson('Subscriptions after start', await Apphud.subscriptions());
 
@@ -108,8 +111,8 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
   }
 
   @override
-  Future<void> userDidLoad(ApphudPaywalls paywalls) async {
-    printAsJson('ApphudListener.userDidLoad', paywalls);
+  Future<void> userDidLoad(ApphudUser user) async {
+    printAsJson('ApphudListener.userDidLoad', user);
   }
 
   @override
@@ -124,5 +127,10 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
     List<ApphudSubscriptionWrapper> subscriptions,
   ) async {
     printAsJson('ApphudListener.apphudSubscriptionsUpdated', subscriptions);
+  }
+
+  @override
+  Future<void> placementsDidFullyLoad(List<ApphudPlacement> placements) async {
+    printAsJson('ApphudListener.placementsDidFullyLoad', placements);
   }
 }

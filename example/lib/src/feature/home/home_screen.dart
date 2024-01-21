@@ -75,26 +75,35 @@ class HomeScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            FloatingActionButton.extended(
-              onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
-                PurchaseEvent.callAll(),
+            HeroMode(
+              enabled: false,
+              child: FloatingActionButton.extended(
+                onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
+                  PurchaseEvent.callAll(),
+                ),
+                label: Text('Call all'),
               ),
-              label: Text('Call all'),
             ),
             if (Platform.isAndroid) const SizedBox(height: 10),
             if (Platform.isAndroid)
-              FloatingActionButton.extended(
-                onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
-                  PurchaseEvent.syncPurchase(),
+              HeroMode(
+                enabled: false,
+                child: FloatingActionButton.extended(
+                  onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
+                    PurchaseEvent.syncPurchase(),
+                  ),
+                  label: Text('Sync purchases'),
                 ),
-                label: Text('Sync purchases'),
               ),
             const SizedBox(height: 10),
-            FloatingActionButton.extended(
-              onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
-                PurchaseEvent.restorePurchases(),
+            HeroMode(
+              enabled: false,
+              child: FloatingActionButton.extended(
+                onPressed: () => BlocProvider.of<PurchaseBloc>(context).add(
+                  PurchaseEvent.restorePurchases(),
+                ),
+                label: Text('Restore purchases'),
               ),
-              label: Text('Restore purchases'),
             ),
           ],
         ),

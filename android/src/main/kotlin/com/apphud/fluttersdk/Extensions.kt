@@ -20,11 +20,11 @@ fun ApphudPaywall.toMap(): HashMap<String, Any?> {
 
 fun ApphudProduct.toMap(): HashMap<String, Any?> {
     return hashMapOf(
-        "productId" to product_id,
+        "productId" to productId,
         "name" to name,
         "store" to store,
         "productDetails" to productDetails?.toMap(),
-        "paywallIdentifier" to paywall_identifier
+        "paywallIdentifier" to paywallIdentifier
     )
 }
 
@@ -84,7 +84,7 @@ fun Purchase.toMap(): HashMap<String, Any?> {
         "orderId" to orderId,
         "purchaseToken" to purchaseToken,
         "productId" to if (products.isEmpty()) null else products[0],
-        )
+    )
 }
 
 fun ApphudNonRenewingPurchase.toMap(): HashMap<String, Any?> {
@@ -130,11 +130,35 @@ fun Map<String, Any>.toApphudProduct(): ApphudProduct {
 
     return ApphudProduct(
         id = id,
-        product_id = productId,
+        productId = productId,
         name = name,
         store = store,
-        paywall_id = paywallId,
+        paywallId = paywallId,
         productDetails = null,
-        paywall_identifier = paywallIdentifier
+        paywallIdentifier = paywallIdentifier,
+        placementIdentifier = null,
+        placementId = null,
+        basePlanId = null
+    )
+}
+
+fun ApphudPlacement.toMap(): HashMap<String, Any?> {
+    return hashMapOf(
+        "identifier" to identifier,
+        "paywall" to paywall?.toMap(),
+        "experimentName" to experimentName
+    )
+}
+
+fun ApphudUser.toMap(): HashMap<String, Any?> {
+    return hashMapOf(
+        "userId" to userId,
+        "currencyCode" to currencyCode,
+        "countryCode" to countryCode,
+        "subscriptions" to subscriptions.map { s -> s.toMap() },
+        "purchases" to purchases.map { p -> p.toMap() },
+        "rawPlacements" to rawPlacements().map { p -> p.toMap() },
+        "rawPaywalls" to rawPaywalls().map { p -> p.toMap() },
+        "hasPurchases" to hasPurchases()
     )
 }

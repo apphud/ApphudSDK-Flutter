@@ -5,6 +5,7 @@ import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudError
 import com.apphud.sdk.domain.ApphudPaywall
 import io.flutter.plugin.common.MethodChannel
+import kotlinx.coroutines.runBlocking
 
 
 class PaywallLogsHandler(
@@ -47,7 +48,8 @@ class PaywallParser(private val result: MethodChannel.Result) {
             args ?: throw IllegalArgumentException("arguments are required")
             val identifier = args["identifier"] as? String
                 ?: throw IllegalArgumentException("identifier is required argument")
-            val paywall = Apphud.paywalls().firstOrNull { it.identifier == identifier }
+            val paywalls = runBlocking { Apphud.paywalls() }
+            val paywall = paywalls.firstOrNull { it.identifier == identifier }
                 ?: throw IllegalArgumentException(
                     "There isn't the paywall with identifier $identifier"
                 )

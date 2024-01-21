@@ -10,6 +10,7 @@ import com.apphud.sdk.domain.ApphudPaywall
 import com.apphud.sdk.domain.ApphudProduct
 import com.apphud.sdk.flutter.ApphudFlutter
 import io.flutter.plugin.common.MethodChannel
+import kotlinx.coroutines.runBlocking
 import java.lang.IllegalStateException
 
 class MakePurchaseHandler(
@@ -70,7 +71,7 @@ class MakePurchaseHandler(
     }
 
     private fun paywalls(result: MethodChannel.Result) {
-        val paywalls: List<ApphudPaywall> = Apphud.paywalls()
+        val paywalls: List<ApphudPaywall> = runBlocking { Apphud.paywalls() }
         val resultMap = hashMapOf<String, Any?>()
         resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
         handleOnMainThread { result.success(resultMap) }
@@ -199,10 +200,10 @@ class MakePurchaseHandler(
                 args ?: throw IllegalArgumentException("arguments are required")
 
                 val product = args.toApphudProduct()
-                val paywalls = Apphud.paywalls()
+                val paywalls = runBlocking { Apphud.paywalls() }
                 for (pw in paywalls) {
                     val apphudProduct =
-                        pw.products?.firstOrNull { pr -> pr.product_id == product.product_id }
+                        pw.products?.firstOrNull { pr -> pr.productId == product.productId }
                     if (apphudProduct != null) {
                         product.productDetails = apphudProduct.productDetails
                         break

@@ -9,6 +9,7 @@ import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
+import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
 import 'package:flutter/services.dart';
 
@@ -33,16 +34,18 @@ class Apphud {
   /// - parameter [apiKey] is required. Your api key.
   /// - parameter [userID] is optional. You can provide your own unique user identifier. If null passed then UUID will be generated instead.
   /// - parameter [observerMode] is optional, iOS only. Sets SDK to Observer (i.e. Analytics) mode. If you purchase products by other code, then pass `true`. If you purchase products using `Apphud.purchase(..)` method, then pass `false`. Default value is `false`.
-  static Future<void> start({
+  static Future<ApphudUser> start({
     required String apiKey,
     String? userID,
     bool? observerMode,
-  }) =>
-      _channel.invokeMethod('start', {
-        'apiKey': apiKey,
-        'userID': userID,
-        'observerMode': observerMode ?? false,
-      });
+  }) async {
+    final json = await _channel.invokeMethod('start', {
+      'apiKey': apiKey,
+      'userID': userID,
+      'observerMode': observerMode ?? false,
+    });
+    return ApphudUser.fromJson(json);
+  }
 
   /// Initializes Apphud SDK with User ID & Device ID pair. Not recommended for use unless you know what you are doing.
   ///
@@ -50,18 +53,20 @@ class Apphud {
   /// - parameter [userID] is optional. You can provide your own unique user identifier. If null passed then UUID will be generated instead.
   /// - parameter [deviceID] is optional. You can provide your own unique device identifier. If null passed then UUID will be generated instead.
   /// - parameter [observerMode] is optional, iOS only. Sets SDK to Observer (Analytics) mode. If you purchase products by your own code, then pass `true`. If you purchase products using `Apphud.purchase(product)` method, then pass `false`. Default value is `false`.
-  static Future<void> startManually({
+  static Future<ApphudUser> startManually({
     required String apiKey,
     String? userID,
     String? deviceID,
     bool? observerMode,
-  }) =>
-      _channel.invokeMethod('startManually', {
-        'apiKey': apiKey,
-        'deviceID': deviceID,
-        'userID': userID,
-        'observerMode': observerMode ?? false,
-      });
+  }) async {
+    final json = await _channel.invokeMethod('startManually', {
+      'apiKey': apiKey,
+      'deviceID': deviceID,
+      'userID': userID,
+      'observerMode': observerMode ?? false,
+    });
+    return ApphudUser.fromJson(json);
+  }
 
   /// Updates user ID value.
   ///

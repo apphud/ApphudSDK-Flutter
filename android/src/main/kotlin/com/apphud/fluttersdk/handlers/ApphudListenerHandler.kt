@@ -6,21 +6,25 @@ import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudListener
 import com.apphud.sdk.domain.ApphudNonRenewingPurchase
 import com.apphud.sdk.domain.ApphudPaywall
+import com.apphud.sdk.domain.ApphudPlacement
 import com.apphud.sdk.domain.ApphudSubscription
+import com.apphud.sdk.domain.ApphudUser
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
 
-class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) : MethodChannel.MethodCallHandler,
+class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) :
+    MethodChannel.MethodCallHandler,
     ApphudListener {
     private var isListeningStarted: Boolean = false
     private var channel: MethodChannel? = null
     private var userIdCached: String? = null
     private var detailsCached: List<ProductDetails>? = null
     private var paywallsCached: List<ApphudPaywall>? = null
-    private var didUserLoad: Boolean = false
+    private var userCached: ApphudUser? = null
     private var subscriptionsCached: List<ApphudSubscription>? = null
     private var purchasesCached: List<ApphudNonRenewingPurchase>? = null
+    private var placementsCached: List<ApphudPlacement>? = null
     private var handleOnMainThread = handleOnMainThreadP
 
     init {
@@ -57,9 +61,10 @@ class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) : MethodCha
         userIdCached?.let { v -> apphudDidChangeUserID(v) }
         detailsCached?.let { v -> apphudFetchProductDetails(v) }
         paywallsCached?.let { v -> paywallsDidFullyLoad(v) }
-        if (didUserLoad) userDidLoad()
+        userCached?.let { v -> userDidLoad(v) }
         subscriptionsCached?.let { v -> apphudSubscriptionsUpdated(v) }
         purchasesCached?.let { v -> apphudNonRenewingPurchasesUpdated(v) }
+        placementsCached?.let { v -> placementsDidFullyLoad(v) }
     }
 
     private fun stop() {
@@ -99,11 +104,20 @@ class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) : MethodCha
         }
     }
 
-    override fun userDidLoad() {
-        didUserLoad = true
+    override fun placementsDidFullyLoad(placements: List<ApphudPlacement>) {
+        placementsCached = placements
         if (isListeningStarted) {
-            val resultMap = hashMapOf<String, Any?>()
-            resultMap["paywalls"] = Apphud.paywalls().map { paywall -> paywall.toMap() }
+            val resultMap = placements.map { p -> p.toMap() }
+            handleOnMainThread {
+                channel?.invokeMethod("placementsDidFullyLoad", resultMap)
+            }
+        }
+    }
+
+    override fun userDidLoad(user: ApphudUser) {
+        userCached = user
+        if (isListeningStarted) {
+            val resultMap = user.toMap()
             handleOnMainThread {
                 channel?.invokeMethod("userDidLoad", resultMap)
             }

@@ -1,6 +1,8 @@
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
+import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
+import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 
 abstract class ApphudListener {
@@ -14,13 +16,12 @@ abstract class ApphudListener {
   /// Called when paywalls are fully loaded with their SkuDetails or SkProducts
   Future<void> paywallsDidFullyLoad(ApphudPaywalls paywalls);
 
-  /// Called when user is registered in Apphud [or used from cache].
+  /// This method is invoked when a user is registered in Apphud or retrieved from the cache. It is called once per app lifecycle.
   ///
-  /// This method is called once per app lifecycle.
-  /// The `paywalls` array may not yet have `SKProducts`/'SkuDetails', so this method should not be used for paywalls management.
-  /// However, if using A/B Testing, `paywalls` can be used to fetch `experimentName` or other parameters
-  /// like `json` from your experimental paywall.
-  Future<void> userDidLoad(ApphudPaywalls paywalls);
+  /// The ApphudUser object passed as a parameter contains a record of all
+  /// purchases tracked by Apphud and associated raw placements and paywalls for that user.
+  /// These lists may or may not have their inner Google Play products fully loaded at the time of this method's call.
+  Future<void> userDidLoad(ApphudUser user);
 
   /// Returns array of subscriptions that user ever purchased. Empty array means user never purchased a subscription.
   ///
@@ -36,4 +37,8 @@ abstract class ApphudListener {
   Future<void> apphudNonRenewingPurchasesUpdated(
     List<ApphudNonRenewingPurchase> purchases,
   );
+
+  /// Called when placements are fully loaded with their ApphudPaywalls and inner ProductDetails.
+
+  Future<void> placementsDidFullyLoad(List<ApphudPlacement> placements);
 }

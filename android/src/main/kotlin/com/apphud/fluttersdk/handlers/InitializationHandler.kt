@@ -1,6 +1,7 @@
 package com.apphud.fluttersdk.handlers
 
 import android.content.Context
+import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
 //import com.apphud.sdk.client.HttpUrlConnectionExecutor
 import io.flutter.plugin.common.MethodChannel
@@ -38,8 +39,9 @@ class InitializationHandler(
     }
 
     private fun start(apiKey: String, userId: String?, result: MethodChannel.Result) {
-        Apphud.start(context = context, apiKey = apiKey, userId = userId)
-        handleOnMainThread { result.success(null) }
+        Apphud.start(context = context, apiKey = apiKey, userId = userId) { user ->
+            handleOnMainThread { result.success(user.toMap()) }
+        }
     }
 
     private fun startManually(
@@ -48,8 +50,14 @@ class InitializationHandler(
         deviceId: String?,
         result: MethodChannel.Result
     ) {
-        Apphud.start(context = context, apiKey = apiKey, userId = userId, deviceId = deviceId)
-        handleOnMainThread { result.success(null) }
+        Apphud.start(
+            context = context,
+            apiKey = apiKey,
+            userId = userId,
+            deviceId = deviceId
+        ) { user ->
+            handleOnMainThread { result.success(user.toMap()) }
+        }
     }
 
     private fun updateUserID(userId: String, result: MethodChannel.Result) {
