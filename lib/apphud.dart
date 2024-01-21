@@ -228,6 +228,22 @@ class Apphud {
     return json != null ? ApphudPaywalls.fromJson(json) : null;
   }
 
+  /// Returns paywalls configured in Apphud Dashboard > Product Hub > Paywalls.
+  ///
+  /// Each paywall contains an array of ApphudProduct objects that you use for purchase.
+  /// This callback is called when paywalls are populated with their ProductDetails objects.
+  /// Callback is called immediately if paywalls are already loaded.
+  static Future<ApphudPaywalls> paywallsDidLoadCallback() async {
+    final Map<dynamic, dynamic>? json = await _channel
+        .invokeMethod<Map<dynamic, dynamic>>('paywallsDidLoadCallback');
+    if (json == null) {
+      return ApphudPaywalls(
+        error: ApphudError(message: 'paywallsDidLoadCallback error'),
+      );
+    }
+    return ApphudPaywalls.fromJson(json);
+  }
+
 // Handle Purchases
 
   /// Returns permission groups configured in Apphud dashboard > Product Hub > Products. Groups are cached on device.

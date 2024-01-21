@@ -411,5 +411,12 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //   ),
     //   onError: (e) => printError('grantPromotional', e),
     // );
+    Apphud.paywallsDidLoadCallback().then(
+      (value) => printAsJson(
+        'paywallsDidLoadCallback',
+        value,
+      ),
+      onError: (e) => printError('paywallsDidLoadCallback', e),
+    );
   }
 }

@@ -47,6 +47,8 @@ class MakePurchaseHandler(
 
             MakePurchaseRoutes.paywalls.name -> paywalls(result)
 
+            MakePurchaseRoutes.paywallsDidLoadCallback.name -> paywallsDidLoadCallback(result)
+
             MakePurchaseRoutes.purchaseProduct.name -> PurchaseProductParser(result).parse(args)
             { product, offerIdToken, oldToken, replacementMode ->
                 purchaseProduct(
@@ -72,6 +74,14 @@ class MakePurchaseHandler(
         val resultMap = hashMapOf<String, Any?>()
         resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
         handleOnMainThread { result.success(resultMap) }
+    }
+
+    private fun paywallsDidLoadCallback(result: MethodChannel.Result) {
+        Apphud.paywallsDidLoadCallback { paywalls ->
+            val resultMap = hashMapOf<String, Any?>()
+            resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
+            handleOnMainThread { result.success(resultMap) }
+        }
     }
 
     private fun products(result: MethodChannel.Result) {
@@ -245,7 +255,8 @@ enum class MakePurchaseRoutes {
     getPaywalls,
     paywalls,
     purchaseProduct,
-    permissionGroups;
+    permissionGroups,
+    paywallsDidLoadCallback;
 
     companion object Mapper {
         fun stringValues(): List<String> {
