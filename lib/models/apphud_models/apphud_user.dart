@@ -9,7 +9,6 @@ part 'apphud_user.g.dart';
 @JsonSerializable(anyMap: true)
 class ApphudUser {
   final String userId;
-  final String? currencyCode;
   final List<ApphudSubscriptionWrapper> subscriptions;
   final List<ApphudNonRenewingPurchase> purchases;
   final List<ApphudPlacement> rawPlacements;
@@ -18,7 +17,6 @@ class ApphudUser {
 
   ApphudUser({
     required this.userId,
-    required this.currencyCode,
     required this.subscriptions,
     required this.purchases,
     required this.rawPlacements,
@@ -28,7 +26,7 @@ class ApphudUser {
 
   @override
   String toString() {
-    return 'ApphudUser{userId: $userId, currencyCode: $currencyCode, subscriptions: $subscriptions, purchases: $purchases, rawPlacements: $rawPlacements, rawPaywalls: $rawPaywalls, hasPurchases: $hasPurchases}';
+    return 'ApphudUser{userId: $userId, subscriptions: $subscriptions, purchases: $purchases, rawPlacements: $rawPlacements, rawPaywalls: $rawPaywalls, hasPurchases: $hasPurchases}';
   }
 
   factory ApphudUser.fromJson(Map<dynamic, dynamic> json) =>

@@ -153,8 +153,6 @@ fun ApphudPlacement.toMap(): HashMap<String, Any?> {
 fun ApphudUser.toMap(): HashMap<String, Any?> {
     return hashMapOf(
         "userId" to userId,
-        "currencyCode" to currencyCode,
-        "countryCode" to countryCode,
         "subscriptions" to subscriptions.map { s -> s.toMap() },
         "purchases" to purchases.map { p -> p.toMap() },
         "rawPlacements" to rawPlacements().map { p -> p.toMap() },
