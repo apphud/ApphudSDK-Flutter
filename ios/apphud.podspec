@@ -3,17 +3,9 @@
 # Run `pod lib lint appHud.podspec' to validate before publishing.
 #
 
-begin
-    require 'yaml'
-    pubspec = YAML.load_file('../pubspec.yaml')
-    flutterSdkVersion = pubspec['version']
-rescue
-    flutterSdkVersion = '0.0.1'
-end
-
 Pod::Spec.new do |s|
   s.name             = 'apphud'
-  s.version          = flutterSdkVersion
+  s.version          = '2.4.0'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
