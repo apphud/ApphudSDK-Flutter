@@ -13,8 +13,11 @@ final class PermissionGroupsRequest: Request {
     typealias ArgumentProvider = PermissionGroupsArgumentParser
 
     @MainActor func startRequest(arguments: (), result: @escaping FlutterResult) {
-        let groups = UnsafeTask{ return await Apphud.permissionGroups()}.get()
-        result( groups?.map({ group in group.toMap() }) )
+        let groups = UnsafeTask{
+            let groups = await Apphud.permissionGroups()
+            return groups ?? [ApphudGroup]()
+        }.get()
+        result( groups.map({ group in group.toMap() }) )
     }
 }
 

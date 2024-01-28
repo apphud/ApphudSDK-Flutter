@@ -98,6 +98,7 @@ enum AppHudMethod {
         case paywalls
         case paywallsDidLoadCallback
         case hasPremiumAccess
+        case rawPaywalls
     }
 
     enum UserProperties: String, CaseIterable {
@@ -141,6 +142,8 @@ enum AppHudMethod {
     enum Placements: String, CaseIterable {
         case placements
         case placement
+        case rawPlacements
+        case placementsDidLoadCallback
     }
 }
 

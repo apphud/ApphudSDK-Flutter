@@ -422,8 +422,8 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     printAsJson('placements', placements);
 
     if (placements.isNotEmpty) {
-      final placement = await Apphud.placement(placements.first.identifier);
-      printAsJson('placement', placement);
+       final placement = await Apphud.placement(placements.first.identifier);
+       printAsJson('placement', placement);
     }
 
     Apphud.placementsDidLoadCallback().then(

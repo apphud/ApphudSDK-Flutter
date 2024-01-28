@@ -33,6 +33,8 @@ class HandlePurchasesHandler: Handler {
         case AssociatedEnum.paywallsDidLoadCallback.rawValue:         Action<PaywallsDidLoadCallbackRequest,PaywallsDidLoadCallbackArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.hasPremiumAccess.rawValue:
             Action<HasPremiumAccessRequest,HasPremiumAccessArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.rawPaywalls.rawValue:
+            Action<RawPaywallsRequest,RawPaywallsArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }
