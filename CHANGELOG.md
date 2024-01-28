@@ -1,4 +1,5 @@
 ## 2.4.0
+- Placements: Offers a strategic method to integrate paywalls throughout your app. This feature allows developers to position paywalls effectively in different app sections, such as onboarding or settings, targeting distinct user audiences. For more comprehensive information, please refer to our Placements guide.
 - [iOS], [Android] **BREAKING** Property 'variationName' were removed from ApphudPaywall, which was confusing developers and lead to incorrect implementations.
 - [iOS] **BREAKING** Method 'didFetchProductsNotification' was removed.
 - [iOS], [Android] **BREAKING** Method 'productsDidFetchCallback' was removed.
@@ -21,6 +22,19 @@
 - [Android], [iOS] Method 'products' always returns 'ApphudProductComposite' list. 
 - [Android], [iOS] **BREAKING**  'ApphudAttributionProvider.appleSearchAds', 'ApphudAttributionProvider.facebook' were modified.
 - [Android], [iOS] some fixes of the example app
+- [iOS], [Android] 'paywallsDidLoadCallback' method was introduced.
+- [iOS], [Android] 'placements' method was introduced.
+- [iOS], [Android] 'placement' method was introduced.
+- [iOS], [Android] 'placementsDidLoadCallback' method was introduced.
+- [iOS], [Android] 'rawPlacements' method was introduced.
+- [iOS], [Android] 'rawPaywalls' method was introduced.
+- [iOS], [Android] The 'start' and 'startManually' methods now return an ApphudUser object.
+- [iOS], [Android] The 'ApphudListener' 'placementsDidFullyLoad' method was introduced.
+- [iOS], [Android] **BREAKING** The 'ApphudListener' 'userDidLoad' method now returns an ApphudUser object.
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 2.3.2
+  - [iOS] 3.2.6
 
 ## 2.3.2
 - [Android] Fixed restore purchase issue in some cases
