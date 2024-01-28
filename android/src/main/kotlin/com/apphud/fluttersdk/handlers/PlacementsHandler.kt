@@ -22,6 +22,10 @@ class PlacementsHandler(
             PlacementsRoutes.placement.name -> PlacementIdentifierParser(result).parse(args) { identifier ->
                 placement(identifier, result)
             }
+
+            PlacementsRoutes.placementsDidLoadCallback.name -> placementsDidLoadCallback(result)
+
+            PlacementsRoutes.rawPlacements.name -> rawPlacements(result)
         }
     }
 
@@ -33,6 +37,18 @@ class PlacementsHandler(
     private fun placement(identifier: String, result: MethodChannel.Result) {
         val placement = runBlocking { Apphud.placement(identifier) }
         handleOnMainThread { result.success(placement?.toMap()) }
+    }
+
+    private fun placementsDidLoadCallback(result: MethodChannel.Result) {
+        Apphud.placementsDidLoadCallback { placements ->
+            val map = placements.map { p -> p.toMap() }
+            handleOnMainThread { result.success(map) }
+        }
+    }
+
+    private fun rawPlacements(result: MethodChannel.Result) {
+        val placements = Apphud.rawPlacements()
+        handleOnMainThread { result.success(placements.map { p -> p.toMap() }) }
     }
 }
 
@@ -51,7 +67,9 @@ class PlacementIdentifierParser(private val result: MethodChannel.Result) {
 
 enum class PlacementsRoutes {
     placements,
-    placement;
+    placement,
+    placementsDidLoadCallback,
+    rawPlacements;
 
     companion object Mapper {
         fun stringValues(): List<String> {

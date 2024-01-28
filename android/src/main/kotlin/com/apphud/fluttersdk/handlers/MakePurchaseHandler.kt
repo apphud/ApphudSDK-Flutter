@@ -62,6 +62,8 @@ class MakePurchaseHandler(
             }
 
             MakePurchaseRoutes.permissionGroups.name -> getPermissionGroups(result)
+
+            MakePurchaseRoutes.rawPaywalls.name -> rawPaywalls(result)
         }
     }
 
@@ -72,6 +74,13 @@ class MakePurchaseHandler(
 
     private fun paywalls(result: MethodChannel.Result) {
         val paywalls: List<ApphudPaywall> = runBlocking { Apphud.paywalls() }
+        val resultMap = hashMapOf<String, Any?>()
+        resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
+        handleOnMainThread { result.success(resultMap) }
+    }
+
+    private fun rawPaywalls(result: MethodChannel.Result) {
+        val paywalls = Apphud.rawPaywalls()
         val resultMap = hashMapOf<String, Any?>()
         resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
         handleOnMainThread { result.success(resultMap) }
@@ -257,7 +266,8 @@ enum class MakePurchaseRoutes {
     paywalls,
     purchaseProduct,
     permissionGroups,
-    paywallsDidLoadCallback;
+    paywallsDidLoadCallback,
+    rawPaywalls;
 
     companion object Mapper {
         fun stringValues(): List<String> {

@@ -425,5 +425,29 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       final placement = await Apphud.placement(placements.first.identifier);
       printAsJson('placement', placement);
     }
+
+    Apphud.placementsDidLoadCallback().then(
+      (value) => printAsJson(
+        'placementsDidLoadCallback',
+        value,
+      ),
+      onError: (e) => printError('placementsDidLoadCallback', e),
+    );
+
+    Apphud.rawPlacements().then(
+      (value) => printAsJson(
+        'rawPlacements',
+        value,
+      ),
+      onError: (e) => printError('rawPlacements', e),
+    );
+
+    Apphud.rawPaywalls().then(
+      (value) => printAsJson(
+        'rawPaywalls',
+        value,
+      ),
+      onError: (e) => printError('rawPaywalls', e),
+    );
   }
 }
