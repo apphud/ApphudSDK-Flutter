@@ -6,6 +6,7 @@ import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
 import 'package:apphud/models/apphud_models/apphud_group.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywall.dart';
+import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
@@ -520,5 +521,27 @@ class Apphud {
       },
     );
     return value!;
+  }
+
+// Placements
+
+  static Future<List<ApphudPlacement>> placements() async {
+    final List<Map<dynamic, dynamic>>? placements =
+        (await _channel.invokeMethod<List<dynamic>>('placements'))?.toMapList;
+
+    if (placements != null) {
+      return placements.map((json) => ApphudPlacement.fromJson(json)).toList();
+    }
+    return const [];
+  }
+
+  static Future<ApphudPlacement?> placement(String identifier) async {
+    final Map<dynamic, dynamic>? json = await _channel.invokeMethod(
+      'placement',
+      {
+        'identifier': identifier,
+      },
+    );
+    return json == null ? null : ApphudPlacement.fromJson(json);
   }
 }

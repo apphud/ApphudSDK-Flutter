@@ -131,11 +131,10 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   }
 
   Stream<PurchaseState> _mapCallAll(CallAll event) async* {
-    Apphud.hasActiveSubscription().then(
-      (value) => printAsJson('hasActiveSubscription()', value),
-      onError: (e) => printError('hasActiveSubscription()', e),
-    );
-
+    // Apphud.hasActiveSubscription().then(
+    //   (value) => printAsJson('hasActiveSubscription()', value),
+    //   onError: (e) => printError('hasActiveSubscription()', e),
+    // );
     // Apphud.subscription().then(
     //   (value) => printAsJson('subscription()', value),
     //   onError: (e) => printError('subscription()', e),
@@ -411,12 +410,20 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //   ),
     //   onError: (e) => printError('grantPromotional', e),
     // );
-    Apphud.paywallsDidLoadCallback().then(
-      (value) => printAsJson(
-        'paywallsDidLoadCallback',
-        value,
-      ),
-      onError: (e) => printError('paywallsDidLoadCallback', e),
-    );
+    // Apphud.paywallsDidLoadCallback().then(
+    //   (value) => printAsJson(
+    //     'paywallsDidLoadCallback',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('paywallsDidLoadCallback', e),
+    // );
+
+    final placements = await Apphud.placements();
+    printAsJson('placements', placements);
+
+    if (placements.isNotEmpty) {
+      final placement = await Apphud.placement(placements.first.identifier);
+      printAsJson('placement', placement);
+    }
   }
 }

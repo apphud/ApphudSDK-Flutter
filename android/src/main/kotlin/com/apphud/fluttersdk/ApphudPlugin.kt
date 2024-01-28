@@ -133,7 +133,8 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 context = this.context,
                 handleOnMainThread
             ),
-            PromotionalsHandler(PromotionalsRoutes.stringValues(), handleOnMainThread)
+            PromotionalsHandler(PromotionalsRoutes.stringValues(), handleOnMainThread),
+            PlacementsHandler(handleOnMainThread)
         )
     }
 
