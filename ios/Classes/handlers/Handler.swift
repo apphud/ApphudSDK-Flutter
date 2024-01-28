@@ -137,5 +137,10 @@ enum AppHudMethod {
     enum Promotionals: String, CaseIterable {
         case grantPromotional
     }
+    
+    enum Placements: String, CaseIterable {
+        case placements
+        case placement
+    }
 }
 

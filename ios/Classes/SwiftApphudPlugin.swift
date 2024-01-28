@@ -15,6 +15,7 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         OthersHandler(),
         PaywallLogsHandler(),
         PromotionalsHandler(),
+        PlacementsHandler(),
     ]
 
     public static func register(with registrar: FlutterPluginRegistrar) {
