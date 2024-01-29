@@ -13,11 +13,11 @@ final class PaywallsRequest: Request {
     typealias ArgumentProvider = PaywallsArgumentParser
 
     func startRequest(arguments: (), result: @escaping FlutterResult) {
-        let paywalls = UnsafeTask{
-            return await Apphud.paywalls()
-        }.get()
-        let paywallsMap = paywalls.map({ (paywall: ApphudPaywall) in paywall.toMap() })
-        result(["paywalls" : paywallsMap])
+        Task{@MainActor in
+            let paywalls = await Apphud.paywalls()
+            let paywallsMap = paywalls.map({ (paywall: ApphudPaywall) in paywall.toMap() })
+            result(["paywalls" : paywallsMap])
+        }
     }
 }
 

@@ -12,16 +12,37 @@ final class PurchaseProductRequest: Request {
     typealias ArgumentProvider = PurchaseProductArgumentParser
     
     @MainActor func startRequest(arguments: PurchaseProductArgumentParser.ArgumentType, result: @escaping FlutterResult) {
-        Apphud.purchase(arguments) { (response) in
-            result(response.toMap())
+        Task {@MainActor in
+            let productId = arguments.productId
+            let paywallId = arguments.paywallId
+            
+            var product:ApphudProduct?
+            
+            let paywalls = await Apphud.paywalls()
+            
+            for paywall in paywalls where product==nil {
+                product = paywall.products.first { product in
+                    return product.productId == productId && product.paywallId == paywallId
+                }
+            }
+            
+            guard let product = product else {
+                result("Cant find product with productId:\(productId) and paywallId:\(paywallId)")
+                return
+            }
+            
+            Apphud.purchase(product) { (response) in
+                result(response.toMap())
+            }
+
         }
     }
 }
 
 final class  PurchaseProductArgumentParser: Parser {
-    typealias ArgumentType = (ApphudProduct)
+    typealias ArgumentType = (productId:String, paywallId:String)
     
-    func parse(args: [String : Any]?) throws -> (ApphudProduct) {
+    func parse(args: [String : Any]?) throws -> (productId:String, paywallId:String) {
         guard let args = args, let productId = args["productId"] as? String else {
             throw(InternalError(code: "400", message: "productId is required argument"))
         }
@@ -29,22 +50,6 @@ final class  PurchaseProductArgumentParser: Parser {
             throw(InternalError(code: "400", message: "paywallId is required argument"))
         }
         
-        var product:ApphudProduct?
-        
-        let paywalls = UnsafeTask{
-            return await Apphud.paywalls()
-        }.get()
-        
-        for paywall in paywalls where product==nil {
-            product = paywall.products.first { product in
-                return product.productId == productId && product.paywallId == paywallId
-            }
-        }
-        
-        guard let product = product else {
-            throw(InternalError(code: "400", message: "Cant find product with productId:\(productId) and paywallId:\(paywallId)"))
-        }
-        
-        return product
+        return (productId, paywallId)
     }
 }

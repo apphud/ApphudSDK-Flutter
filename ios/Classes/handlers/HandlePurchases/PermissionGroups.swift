@@ -9,15 +9,14 @@ import ApphudSDK
 import StoreKit
 
 final class PermissionGroupsRequest: Request {
-
+    
     typealias ArgumentProvider = PermissionGroupsArgumentParser
-
+    
     @MainActor func startRequest(arguments: (), result: @escaping FlutterResult) {
-        let groups = UnsafeTask{
-            let groups = await Apphud.permissionGroups()
-            return groups ?? [ApphudGroup]()
-        }.get()
-        result( groups.map({ group in group.toMap() }) )
+        Task{
+            let groups = await Apphud.permissionGroups() ?? [ApphudGroup]()
+            result(groups.map({ group in group.toMap() }))
+        }
     }
 }
 

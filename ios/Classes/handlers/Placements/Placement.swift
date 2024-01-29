@@ -12,10 +12,10 @@ final class PlacementRequest: Request {
     typealias ArgumentProvider = PlacementArgumentParser
 
     func startRequest(arguments: (String), result: @escaping FlutterResult) {
-        let placement = UnsafeTaskNullable{
-            return await Apphud.placement(arguments)
-        }.get()
-        result(placement?.toMap())
+        Task{@MainActor in
+            let placement = await Apphud.placement(arguments)
+            result(placement?.toMap())
+        }
     }
 }
 

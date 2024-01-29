@@ -12,12 +12,12 @@ final class PaywallShownRequest: Request {
     typealias ArgumentProvider = PaywallArgumentParser
 
     func startRequest(arguments: PaywallArgumentParser.ArgumentType, result: @escaping FlutterResult) {
-        let paywalls = UnsafeTask{
-            return await Apphud.paywalls()
-        }.get()
-        if let paywall = paywalls.first(where: { pw in return pw.identifier==arguments }) {
+        Task{@MainActor in
+            let paywalls = await Apphud.paywalls()
+            if let paywall = paywalls.first(where: { pw in return pw.identifier==arguments }) {
                 Apphud.paywallShown(paywall)
+            }
+            result(nil)
         }
-        result(nil)
     }
 }

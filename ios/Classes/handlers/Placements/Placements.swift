@@ -13,10 +13,10 @@ final class PlacementsRequest: Request {
     typealias ArgumentProvider = PlacementsArgumentParser
 
     func startRequest(arguments: (), result: @escaping FlutterResult) {
-        let placements = UnsafeTask{
-            return await Apphud.placements()
-        }.get()
-        result(placements.map({p in p.toMap()}))
+        Task { @MainActor in
+            let placements = await Apphud.placements()
+            result(placements.map({p in p.toMap()}))
+        }
     }
 }
 
