@@ -14,20 +14,33 @@ final class PurchaseProductRequest: Request {
     @MainActor func startRequest(arguments: PurchaseProductArgumentParser.ArgumentType, result: @escaping FlutterResult) {
         Task {@MainActor in
             let productId = arguments.productId
-            let paywallId = arguments.paywallId
+            let paywallIdentifier = arguments.paywallIdentifier
             
             var product:ApphudProduct?
             
-            let paywalls = await Apphud.paywalls()
+            let placements = await Apphud.placements()
             
-            for paywall in paywalls where product==nil {
-                product = paywall.products.first { product in
-                    return product.productId == productId && product.paywallId == paywallId
+            for placemnt in placements where product==nil {
+                let paywall = placemnt.paywall
+                if(paywall != nil) {
+                    product = paywall!.products.first { product in
+                        return product.productId == productId && (paywallIdentifier == nil || product.paywallIdentifier == paywallIdentifier)
+                    }
+                }
+            }
+            
+            if(product == nil) {
+                let paywalls = await Apphud.paywalls()
+                
+                for paywall in paywalls where product==nil {
+                    product = paywall.products.first { product in
+                        return product.productId == productId && (paywallIdentifier == nil || product.paywallIdentifier == paywallIdentifier)
+                    }
                 }
             }
             
             guard let product = product else {
-                result("Cant find product with productId:\(productId) and paywallId:\(paywallId)")
+                result("Cant find product with productId:\(productId) and paywallIdentifier:\(String(describing: paywallIdentifier))")
                 return
             }
             
@@ -40,16 +53,14 @@ final class PurchaseProductRequest: Request {
 }
 
 final class  PurchaseProductArgumentParser: Parser {
-    typealias ArgumentType = (productId:String, paywallId:String)
+    typealias ArgumentType = (productId:String, paywallIdentifier:String?)
     
-    func parse(args: [String : Any]?) throws -> (productId:String, paywallId:String) {
+    func parse(args: [String : Any]?) throws -> (productId:String, paywallIdentifier:String?) {
         guard let args = args, let productId = args["productId"] as? String else {
             throw(InternalError(code: "400", message: "productId is required argument"))
         }
-        guard let paywallId = args["paywallId"] as? String else {
-            throw(InternalError(code: "400", message: "paywallId is required argument"))
-        }
+        let paywallIdentifier = args["paywallIdentifier"] as? String
         
-        return (productId, paywallId)
+        return (productId, paywallIdentifier)
     }
 }
