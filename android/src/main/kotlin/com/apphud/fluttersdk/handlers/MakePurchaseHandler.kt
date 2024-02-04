@@ -208,14 +208,35 @@ class MakePurchaseHandler(
             try {
                 args ?: throw IllegalArgumentException("arguments are required")
 
-                val product = args.toApphudProduct()
-                val paywalls = runBlocking { Apphud.paywalls() }
-                for (pw in paywalls) {
-                    val apphudProduct =
-                        pw.products?.firstOrNull { pr -> pr.productId == product.productId }
-                    if (apphudProduct != null) {
-                        product.productDetails = apphudProduct.productDetails
-                        break
+                var product = args.toApphudProduct()
+                val placements = runBlocking { Apphud.placements() }
+                var findProduct: ApphudProduct? = null
+                for (pl in placements) {
+                    val paywall = pl.paywall
+                    if (paywall != null) {
+                        findProduct =
+                            paywall.products?.firstOrNull { pr ->
+                                pr.productId == product.productId && (
+                                        product.paywallIdentifier == null || product.paywallIdentifier == pr.paywallIdentifier)
+                            }
+                        if (findProduct != null) {
+                            product = findProduct
+                            break
+                        }
+                    }
+                }
+                if (findProduct == null) {
+                    val paywalls = runBlocking { Apphud.paywalls() }
+                    for (paywall in paywalls) {
+                        findProduct =
+                            paywall.products?.firstOrNull { pr ->
+                                pr.productId == product.productId && (
+                                        product.paywallIdentifier == null || product.paywallIdentifier == pr.paywallIdentifier)
+                            }
+                        if (findProduct != null) {
+                            product = findProduct
+                            break
+                        }
                     }
                 }
                 val offerIdToken = args["offerIdToken"] as? String

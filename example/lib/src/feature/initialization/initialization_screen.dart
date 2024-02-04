@@ -37,10 +37,6 @@ class InitializationStartScreen extends StatelessWidget {
               title: 'SDK initialization failed with error:',
               error: f.error,
             ),
-            paywallsFetchFail: (f) => _buildFail(
-              title: 'Paywalls fetching failed with error:',
-              error: f.error,
-            ),
           );
         },
       ),
@@ -51,12 +47,14 @@ class InitializationStartScreen extends StatelessWidget {
     return _buildStatus(
       isStartSuccess: value.isStartSuccess,
       isPaywallsFetched: value.isPaywallsFetched,
+      isPlacementsFetched: value.isPlacementsFetched,
     );
   }
 
   Padding _buildStatus({
     required bool isStartSuccess,
     required bool isPaywallsFetched,
+    required bool isPlacementsFetched,
   }) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -80,6 +78,15 @@ class InitializationStartScreen extends StatelessWidget {
               title: Text('Paywalls fetching'),
             ),
           ),
+          const SizedBox(height: 20),
+          Card(
+            child: ListTile(
+              leading: isPlacementsFetched
+                  ? Icon(Icons.check)
+                  : CircularProgressIndicator(),
+              title: Text('Placements fetching'),
+            ),
+          ),
         ],
       ),
     );
@@ -89,6 +96,7 @@ class InitializationStartScreen extends StatelessWidget {
     return _buildStatus(
       isStartSuccess: true,
       isPaywallsFetched: true,
+      isPlacementsFetched: true,
     );
   }
 

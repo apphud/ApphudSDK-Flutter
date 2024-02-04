@@ -50,9 +50,9 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         ? null
         : subscriptionOfferDetails.first.offerToken;
     final ApphudPurchaseResult result = await Apphud.purchase(
-      productId: event.product.productId,
+      //productId: event.product.productId,
       // or we can use
-      // product: event.product,
+      product: event.product,
       offerIdToken: offerIdToken,
     );
     printAsJson('purchaseProduct(${event.product.productId})', result);

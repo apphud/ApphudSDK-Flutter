@@ -31,7 +31,7 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
         super(InitializationState.trying());
 
   void _fetchPaywalls() async {
-    unawaited(Apphud.setListener(listener: this));
+    Apphud.setListener(listener: this);
   }
 
   @override
@@ -41,6 +41,7 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
       event.map(
         initializeTrying: _mapInitializeTrying,
         paywallsFetchSuccess: _mapPaywallsFetchSuccess,
+        placementsFetchSuccess: _mapPlacementsFetchSuccess,
       );
 
   Stream<InitializationState> _mapInitializeTrying(
@@ -77,9 +78,10 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
     yield* state.maybeMap(
       orElse: () async* {},
       trying: (s) async* {
-        if (s.isStartSuccess) {
+        if (s.isStartSuccess && s.isPlacementsFetched) {
           yield InitializationState.success(
             paywalls: event.paywalls,
+            placements: s.placements,
           );
           _navigationBloc.add(NavigationEvent.toHome());
         } else {
@@ -132,5 +134,28 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
   @override
   Future<void> placementsDidFullyLoad(List<ApphudPlacement> placements) async {
     printAsJson('ApphudListener.placementsDidFullyLoad', placements);
+    add(InitializationEvent.placementsFetchSuccess(placements));
+  }
+
+  Stream<InitializationState> _mapPlacementsFetchSuccess(
+    PlacementsFetchSuccess event,
+  ) async* {
+    yield* state.maybeMap(
+      orElse: () async* {},
+      trying: (s) async* {
+        if (s.isStartSuccess && s.isPaywallsFetched) {
+          yield InitializationState.success(
+            paywalls: s.paywalls,
+            placements: event.placements,
+          );
+          _navigationBloc.add(NavigationEvent.toHome());
+        } else {
+          yield s.copyWith(
+            isPaywallsFetched: true,
+            placements: event.placements,
+          );
+        }
+      },
+    );
   }
 }
