@@ -209,33 +209,32 @@ class MakePurchaseHandler(
                 args ?: throw IllegalArgumentException("arguments are required")
 
                 var product = args.toApphudProduct()
-                val placements = runBlocking { Apphud.placements() }
-                var findProduct: ApphudProduct? = null
-                for (pl in placements) {
-                    val paywall = pl.paywall
-                    if (paywall != null) {
-                        findProduct =
-                            paywall.products?.firstOrNull { pr ->
-                                pr.productId == product.productId && (
-                                        product.paywallIdentifier == null || product.paywallIdentifier == pr.paywallIdentifier)
+                if (product.placementIdentifier != null) {
+                    val placements = runBlocking { Apphud.placements() }
+                    for (pl in placements) {
+                        if (pl.identifier == product.placementIdentifier) {
+                            val findProduct =
+                                pl.paywall?.products?.firstOrNull { pr ->
+                                    pr.productId == product.productId
+                                }
+                            if (findProduct != null) {
+                                product = findProduct
+                                break
                             }
-                        if (findProduct != null) {
-                            product = findProduct
-                            break
                         }
                     }
-                }
-                if (findProduct == null) {
+                } else {
                     val paywalls = runBlocking { Apphud.paywalls() }
                     for (paywall in paywalls) {
-                        findProduct =
-                            paywall.products?.firstOrNull { pr ->
-                                pr.productId == product.productId && (
-                                        product.paywallIdentifier == null || product.paywallIdentifier == pr.paywallIdentifier)
+                        if (product.paywallIdentifier == paywall.identifier) {
+                            val findProduct =
+                                paywall.products?.firstOrNull { pr ->
+                                    pr.productId == product.productId
+                                }
+                            if (findProduct != null) {
+                                product = findProduct
+                                break
                             }
-                        if (findProduct != null) {
-                            product = findProduct
-                            break
                         }
                     }
                 }

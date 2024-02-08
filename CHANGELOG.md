@@ -33,7 +33,7 @@
 - [iOS], [Android] **BREAKING** The 'ApphudListener' 'userDidLoad' method now returns an ApphudUser object.
 
 - Dependencies of Native SDK's were updated to:
-  - [Android] 2.3.2
+  - [Android] 2.3.5
   - [iOS] 3.2.6
 
 ## 2.3.2

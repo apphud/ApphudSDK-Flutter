@@ -17,6 +17,7 @@ ApphudProduct _$ApphudProductFromJson(Map json) => ApphudProduct(
       skProduct: json['skProduct'] == null
           ? null
           : SKProductWrapper.fromJson(json['skProduct'] as Map),
+      placementIdentifier: json['placementIdentifier'] as String?,
     );
 
 Map<String, dynamic> _$ApphudProductToJson(ApphudProduct instance) =>
@@ -27,4 +28,5 @@ Map<String, dynamic> _$ApphudProductToJson(ApphudProduct instance) =>
       'productDetails': instance.productDetails,
       'skProduct': instance.skProduct,
       'paywallIdentifier': instance.paywallIdentifier,
+      'placementIdentifier': instance.placementIdentifier,
     };

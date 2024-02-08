@@ -12,6 +12,7 @@ class ApphudProduct {
   final ProductDetailsWrapper? productDetails;
   final SKProductWrapper? skProduct;
   final String? paywallIdentifier;
+  final String? placementIdentifier;
 
   ApphudProduct({
     required this.productId,
@@ -20,6 +21,7 @@ class ApphudProduct {
     this.productDetails,
     this.paywallIdentifier,
     this.skProduct,
+    this.placementIdentifier,
   });
 
   factory ApphudProduct.fromJson(Map<dynamic, dynamic> map) =>
@@ -29,6 +31,6 @@ class ApphudProduct {
 
   @override
   String toString() {
-    return 'ApphudProduct{productId: $productId, store: $store, name: $name, productDetails: $productDetails, skProduct: $skProduct, paywallIdentifier: $paywallIdentifier}';
+    return 'ApphudProduct{productId: $productId, store: $store, name: $name, productDetails: $productDetails, skProduct: $skProduct, paywallIdentifier: $paywallIdentifier, placementIdentifier: $placementIdentifier}';
   }
 }

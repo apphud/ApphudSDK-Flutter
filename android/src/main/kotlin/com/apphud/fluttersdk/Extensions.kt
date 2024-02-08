@@ -1,9 +1,7 @@
 package com.apphud.fluttersdk
 
-import com.android.billingclient.api.AccountIdentifiers
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
-import com.android.billingclient.api.SkuDetails
 import com.apphud.sdk.ApphudError
 import com.apphud.sdk.domain.*
 import java.util.*
@@ -24,7 +22,8 @@ fun ApphudProduct.toMap(): HashMap<String, Any?> {
         "name" to name,
         "store" to store,
         "productDetails" to productDetails?.toMap(),
-        "paywallIdentifier" to paywallIdentifier
+        "paywallIdentifier" to paywallIdentifier,
+        "placementIdentifier" to placementIdentifier
     )
 }
 
@@ -127,7 +126,7 @@ fun Map<String, Any>.toApphudProduct(): ApphudProduct {
         ?: throw IllegalArgumentException("store is required argument")
     val paywallId = this["paywallId"] as? String
     val paywallIdentifier = this["paywallIdentifier"] as? String
-
+    val placementIdentifier = this["placementIdentifier"] as? String
     return ApphudProduct(
         id = id,
         productId = productId,
@@ -136,7 +135,7 @@ fun Map<String, Any>.toApphudProduct(): ApphudProduct {
         paywallId = paywallId,
         productDetails = null,
         paywallIdentifier = paywallIdentifier,
-        placementIdentifier = null,
+        placementIdentifier = placementIdentifier,
         placementId = null,
         basePlanId = null
     )
