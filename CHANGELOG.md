@@ -34,7 +34,7 @@
 
 - Dependencies of Native SDK's were updated to:
   - [Android] 2.3.5
-  - [iOS] 3.2.6
+  - [iOS] 3.2.8
 
 ## 2.3.2
 - [Android] Fixed restore purchase issue in some cases

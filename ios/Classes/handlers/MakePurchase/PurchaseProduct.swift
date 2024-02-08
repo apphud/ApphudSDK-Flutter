@@ -15,32 +15,34 @@ final class PurchaseProductRequest: Request {
         Task {@MainActor in
             let productId = arguments.productId
             let paywallIdentifier = arguments.paywallIdentifier
+            let placementIdentifier = arguments.placementIdentifier
             
             var product:ApphudProduct?
             
-            let placements = await Apphud.placements()
-            
-            for placemnt in placements where product==nil {
-                let paywall = placemnt.paywall
-                if(paywall != nil) {
-                    product = paywall!.products.first { product in
-                        return product.productId == productId && (paywallIdentifier == nil || product.paywallIdentifier == paywallIdentifier)
+            if(placementIdentifier != nil) {
+                let placements = await Apphud.placements()
+                
+                for placemnt in placements where product==nil {
+                    let paywall = placemnt.paywall
+                    if(paywall != nil) {
+                        product = paywall!.products.first { product in
+                            return product.productId == productId && product.placementIdentifier == placementIdentifier
+                        }
                     }
                 }
             }
-            
-            if(product == nil) {
+            else if(paywallIdentifier != nil) {
                 let paywalls = await Apphud.paywalls()
                 
                 for paywall in paywalls where product==nil {
                     product = paywall.products.first { product in
-                        return product.productId == productId && (paywallIdentifier == nil || product.paywallIdentifier == paywallIdentifier)
+                        return product.productId == productId && product.paywallIdentifier == paywallIdentifier
                     }
                 }
             }
             
             guard let product = product else {
-                result("Cant find product with productId:\(productId) and paywallIdentifier:\(String(describing: paywallIdentifier))")
+                result("Cant find product with productId:\(productId), paywallIdentifier:\(String(describing: paywallIdentifier)), placementIdentifier:\(String(describing: placementIdentifier))")
                 return
             }
             
@@ -53,14 +55,15 @@ final class PurchaseProductRequest: Request {
 }
 
 final class  PurchaseProductArgumentParser: Parser {
-    typealias ArgumentType = (productId:String, paywallIdentifier:String?)
+    typealias ArgumentType = (productId:String, paywallIdentifier:String?, placementIdentifier:String?)
     
-    func parse(args: [String : Any]?) throws -> (productId:String, paywallIdentifier:String?) {
+    func parse(args: [String : Any]?) throws -> (productId:String, paywallIdentifier:String?, placementIdentifier:String?) {
         guard let args = args, let productId = args["productId"] as? String else {
             throw(InternalError(code: "400", message: "productId is required argument"))
         }
         let paywallIdentifier = args["paywallIdentifier"] as? String
+        let placementIdentifier = args["placementIdentifier"] as? String
         
-        return (productId, paywallIdentifier)
+        return (productId, paywallIdentifier, placementIdentifier)
     }
 }
