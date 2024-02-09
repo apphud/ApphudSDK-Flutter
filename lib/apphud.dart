@@ -484,14 +484,20 @@ class Apphud {
   static Future<void> paywallShown(ApphudPaywall paywall) =>
       _channel.invokeMethod(
         'paywallShown',
-        {'identifier': paywall.identifier},
+        {
+          'identifier': paywall.identifier,
+          'placementIdentifier': paywall.placementIdentifier,
+        },
       );
 
   /// Paywall closed event will be displayed in AppHud dashboard.
   static Future<void> paywallClosed(ApphudPaywall paywall) =>
       _channel.invokeMethod(
         'paywallClosed',
-        {'identifier': paywall.identifier},
+        {
+          'identifier': paywall.identifier,
+          'placementIdentifier': paywall.placementIdentifier,
+        },
       );
 
   /// Android only. Must be called before SDK initialization.

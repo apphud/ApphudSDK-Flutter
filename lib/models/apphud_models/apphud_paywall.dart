@@ -9,12 +9,14 @@ class ApphudPaywall {
   final String? experimentName;
   final Map<String, dynamic>? json;
   final List<ApphudProduct>? products;
+  final String? placementIdentifier;
 
   ApphudPaywall({
     required this.identifier,
     this.experimentName,
     this.json,
     this.products,
+    this.placementIdentifier,
   });
 
   factory ApphudPaywall.fromJson(Map<dynamic, dynamic> map) =>
@@ -24,6 +26,6 @@ class ApphudPaywall {
 
   @override
   String toString() {
-    return 'ApphudPaywall{identifier: $identifier, experimentName: $experimentName, json: $json, products: $products}';
+    return 'ApphudPaywall{identifier: $identifier, experimentName: $experimentName, json: $json, products: $products, placementIdentifier: $placementIdentifier}';
   }
 }

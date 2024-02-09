@@ -12,7 +12,8 @@ extension ApphudPaywall {
         return ["identifier": identifier,
                 "json": json,
                 "products" : products.map({ (product:ApphudProduct) in product.toMap() }),
-                "experimentName" : experimentName,                
+                "experimentName" : experimentName,
+                "placementIdentifier" : placementIdentifier,
         ]
     }
 }

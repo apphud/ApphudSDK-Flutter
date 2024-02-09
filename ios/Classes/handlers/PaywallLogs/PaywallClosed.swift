@@ -13,10 +13,20 @@ final class PaywallClosedRequest: Request {
 
     func startRequest(arguments: PaywallArgumentParser.ArgumentType, result: @escaping FlutterResult) {
         Task{@MainActor in
-            let paywalls = await Apphud.paywalls()
+            let paywallIdentifier = arguments.paywallIdentifier
+            let placementIdentifier = arguments.placementIdentifier
             
-            if let paywall = paywalls.first(where: { pw in return pw.identifier==arguments }) {
-                Apphud.paywallClosed(paywall)
+            var paywall:ApphudPaywall?
+            
+            if(placementIdentifier != nil) {
+                let placements = await Apphud.placements()
+                paywall = placements.first(where: {pl in pl.identifier == placementIdentifier})?.paywall
+            } else {
+            let paywalls = await Apphud.paywalls()
+            paywall = paywalls.first(where: { pw in return pw.identifier == paywallIdentifier })
+            }
+            if(paywall != nil) {
+                Apphud.paywallClosed(paywall!)
             }
             result(nil)
         }

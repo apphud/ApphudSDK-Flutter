@@ -13,9 +13,20 @@ final class PaywallShownRequest: Request {
 
     func startRequest(arguments: PaywallArgumentParser.ArgumentType, result: @escaping FlutterResult) {
         Task{@MainActor in
+            let paywallIdentifier = arguments.paywallIdentifier
+            let placementIdentifier = arguments.placementIdentifier
+            
+            var paywall:ApphudPaywall?
+            
+            if(placementIdentifier != nil) {
+                let placements = await Apphud.placements()
+                paywall = placements.first(where: {pl in pl.identifier == placementIdentifier})?.paywall
+            } else {
             let paywalls = await Apphud.paywalls()
-            if let paywall = paywalls.first(where: { pw in return pw.identifier==arguments }) {
-                Apphud.paywallShown(paywall)
+            paywall = paywalls.first(where: { pw in return pw.identifier == paywallIdentifier })
+            }
+            if(paywall != nil) {
+                Apphud.paywallShown(paywall!)
             }
             result(nil)
         }
