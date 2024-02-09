@@ -26,16 +26,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   static const ApphudAttributionProvider _attributionProvider =
       ApphudAttributionProvider.appleAdsAttribution;
 
-  PurchaseBloc() : super(PurchaseState.init()) {
-    _fetchSubscriptions();
-    _setUserProperties();
-    _setAttribution();
-    _collectSearchAdsAttribution();
-    _fetchPermissionGroups();
-    _paywalls();
-    _deviceId();
-    _setAdvertisingIdentifier();
-  }
+  PurchaseBloc() : super(PurchaseState.init());
 
   @override
   Stream<PurchaseState> mapEventToState(
@@ -47,176 +38,9 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         paywallShown: _mapPaywallShown,
         paywallClosed: _mapPaywallClosed,
         grantPromotional: _mapGrantPromotional,
-        refreshEntitlements: _mapRefreshEntitlements,
         syncPurchase: _mapSyncPurchase,
+        callAll: _mapCallAll,
       );
-
-  void _fetchSubscriptions() {
-    Apphud.hasActiveSubscription().then(
-      (value) => printAsJson('hasActiveSubscription()', value),
-      onError: (e) => printError('hasActiveSubscription()', e),
-    );
-
-    Apphud.subscription().then(
-      (value) => printAsJson('subscription()', value),
-      onError: (e) => printError('subscription()', e),
-    );
-
-    Apphud.subscriptions().then(
-      (value) => printAsJson('subscriptions()', value),
-      onError: (e) => printError('subscriptions()', e),
-    );
-
-    Apphud.nonRenewingPurchases().then(
-      (value) => printAsJson('nonRenewingPurchases()', value),
-      onError: (e) => printError('nonRenewingPurchases()', e),
-    );
-
-    Apphud.hasPremiumAccess().then(
-      (value) => printAsJson('hasPremiumAccess()', value),
-      onError: (e) => printError('hasPremiumAccess()', e),
-    );
-  }
-
-  void _setUserProperties() async {
-    await Apphud.setUserProperty(
-      key: ApphudUserPropertyKey.name,
-      value: _nameParameterValue,
-    );
-    printAsJson(
-      'setUserProperty(name)',
-      _nameParameterValue,
-      printOnlyMethodName: true,
-    );
-
-    await Apphud.setUserProperty(
-      key: ApphudUserPropertyKey.email,
-      value: _emailParameterValue,
-    );
-    printAsJson(
-      'setUserProperty(email)',
-      _emailParameterValue,
-      printOnlyMethodName: true,
-    );
-
-    await Apphud.setUserProperty(
-      key: ApphudUserPropertyKey.phone,
-      value: _phoneParameterValue,
-    );
-    printAsJson(
-      'setUserProperty(phone)',
-      _phoneParameterValue,
-      printOnlyMethodName: true,
-    );
-
-    await Apphud.setUserProperty(
-      key: ApphudUserPropertyKey.age,
-      value: _ageParameterValue,
-    );
-    printAsJson(
-      'setUserProperty(age)',
-      _ageParameterValue,
-      printOnlyMethodName: true,
-    );
-
-    await Apphud.setUserProperty(
-      key: ApphudUserPropertyKey.gender,
-      value: _genderParameterValue,
-    );
-    printAsJson(
-      'setUserProperty(gender)',
-      _genderParameterValue,
-      printOnlyMethodName: true,
-    );
-
-    await Apphud.setUserProperty(
-      key: ApphudUserPropertyKey.customProperty(_customParameterName),
-      value: _customParameterValue,
-    );
-    printAsJson(
-      'setUserProperty(customProperty($_customParameterName))',
-      _customParameterValue,
-      printOnlyMethodName: true,
-    );
-
-    await Future.delayed(Duration(seconds: 2));
-    await Apphud.incrementUserProperty(
-      key: ApphudUserPropertyKey.age,
-      by: _ageIncreaseParameterValue,
-    );
-    printAsJson(
-      'incrementUserProperty(age)',
-      _ageIncreaseParameterValue,
-      printOnlyMethodName: true,
-    );
-  }
-
-  void _setAttribution() {
-    Apphud.addAttribution(
-      data: _attributionData,
-      provider: _attributionProvider,
-    ).then(
-      (value) => printAsJson(
-        'Parameters and the result of _setAttribution()',
-        <String, dynamic>{
-          'parameters': <String, dynamic>{
-            'data': _attributionData,
-            'provider': _attributionProvider.convertToString,
-          },
-          'result': value,
-        },
-        printOnlyMethodName: true,
-      ),
-      onError: (e) => printError('_setAttribution()', e),
-    );
-  }
-
-  void _collectSearchAdsAttribution() {
-    Apphud.collectSearchAdsAttribution().then(
-      (value) => printAsJson(
-        'collectSearchAdsAttribution()',
-        value ?? 'Ok',
-      ),
-      onError: (e) => printError('collectSearchAdsAttribution()', e),
-    );
-  }
-
-  void _fetchPermissionGroups() {
-    Apphud.permissionGroups().then(
-      (value) => printAsJson('permissionGroups()', value),
-      onError: (e) => printError('permissionGroups()', e),
-    );
-  }
-
-  void _paywalls() {
-    Apphud.paywalls().then(
-      (value) => printAsJson(
-        'paywalls',
-        value,
-      ),
-      onError: (e) => printError('paywalls', e),
-    );
-  }
-
-  void _deviceId() {
-    Apphud.deviceID().then(
-      (value) => printAsJson(
-        'deviceID',
-        value,
-      ),
-      onError: (e) => printError('deviceID', e),
-    );
-  }
-
-  void _setAdvertisingIdentifier() {
-    Apphud.setAdvertisingIdentifier(_idfa).then(
-      (value) => printAsJson(
-        'setAdvertisingIdentifier',
-        'Ok',
-      ),
-      onError: (e) => printError('setAdvertisingIdentifier', e),
-    );
-  }
 
   Stream<PurchaseState> _mapPurchaseProduct(PurchaseProduct event) async* {
     yield PurchaseState.inProgress();
@@ -226,9 +50,9 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         ? null
         : subscriptionOfferDetails.first.offerToken;
     final ApphudPurchaseResult result = await Apphud.purchase(
-      productId: event.product.productId,
+      //productId: event.product.productId,
       // or we can use
-      // product: event.product,
+      product: event.product,
       offerIdToken: offerIdToken,
     );
     printAsJson('purchaseProduct(${event.product.productId})', result);
@@ -293,31 +117,337 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     ));
   }
 
-  Stream<PurchaseState> _mapRefreshEntitlements(
-    RefreshEntitlements event,
-  ) async* {
-    unawaited(Apphud.refreshEntitlements().then(
+  Stream<PurchaseState> _mapSyncPurchase(SyncPurchase event) async* {
+    unawaited(Apphud.syncPurchasesInObserverMode().then(
       (value) => printAsJson(
-        'refreshEntitlements()',
+        'syncPurchases()',
         'success',
       ),
       onError: (e) => printError(
-        'refreshEntitlements()',
+        'syncPurchases()',
         e,
       ),
     ));
   }
 
-  Stream<PurchaseState> _mapSyncPurchase(SyncPurchase event) async* {
-    unawaited(Apphud.syncPurchases().then(
+  Stream<PurchaseState> _mapCallAll(CallAll event) async* {
+    // Apphud.hasActiveSubscription().then(
+    //   (value) => printAsJson('hasActiveSubscription()', value),
+    //   onError: (e) => printError('hasActiveSubscription()', e),
+    // );
+    // Apphud.subscription().then(
+    //   (value) => printAsJson('subscription()', value),
+    //   onError: (e) => printError('subscription()', e),
+    // );
+    //
+    // Apphud.subscriptions().then(
+    //   (value) => printAsJson('subscriptions()', value),
+    //   onError: (e) => printError('subscriptions()', e),
+    // );
+    //
+    // Apphud.nonRenewingPurchases().then(
+    //   (value) => printAsJson('nonRenewingPurchases()', value),
+    //   onError: (e) => printError('nonRenewingPurchases()', e),
+    // );
+    //
+    // Apphud.hasPremiumAccess().then(
+    //   (value) => printAsJson('hasPremiumAccess()', value),
+    //   onError: (e) => printError('hasPremiumAccess()', e),
+    // );
+    //
+    // await Apphud.setUserProperty(
+    //   key: ApphudUserPropertyKey.name,
+    //   value: _nameParameterValue,
+    // );
+    // printAsJson(
+    //   'setUserProperty(name)',
+    //   _nameParameterValue,
+    //   printOnlyMethodName: true,
+    // );
+    //
+    // await Apphud.setUserProperty(
+    //   key: ApphudUserPropertyKey.email,
+    //   value: _emailParameterValue,
+    // );
+    // printAsJson(
+    //   'setUserProperty(email)',
+    //   _emailParameterValue,
+    //   printOnlyMethodName: true,
+    // );
+    //
+    // await Apphud.setUserProperty(
+    //   key: ApphudUserPropertyKey.phone,
+    //   value: _phoneParameterValue,
+    // );
+    // printAsJson(
+    //   'setUserProperty(phone)',
+    //   _phoneParameterValue,
+    //   printOnlyMethodName: true,
+    // );
+    //
+    // await Apphud.setUserProperty(
+    //   key: ApphudUserPropertyKey.age,
+    //   value: _ageParameterValue,
+    // );
+    // printAsJson(
+    //   'setUserProperty(age)',
+    //   _ageParameterValue,
+    //   printOnlyMethodName: true,
+    // );
+    //
+    // await Apphud.setUserProperty(
+    //   key: ApphudUserPropertyKey.gender,
+    //   value: _genderParameterValue,
+    // );
+    // printAsJson(
+    //   'setUserProperty(gender)',
+    //   _genderParameterValue,
+    //   printOnlyMethodName: true,
+    // );
+    //
+    // await Apphud.setUserProperty(
+    //   key: ApphudUserPropertyKey.customProperty(_customParameterName),
+    //   value: _customParameterValue,
+    // );
+    // printAsJson(
+    //   'setUserProperty(customProperty($_customParameterName))',
+    //   _customParameterValue,
+    //   printOnlyMethodName: true,
+    // );
+    //
+    // await Apphud.incrementUserProperty(
+    //   key: ApphudUserPropertyKey.age,
+    //   by: _ageIncreaseParameterValue,
+    // );
+    // printAsJson(
+    //   'incrementUserProperty(age)',
+    //   _ageIncreaseParameterValue,
+    //   printOnlyMethodName: true,
+    // );
+    //
+    // Apphud.addAttribution(
+    //   data: _attributionData,
+    //   provider: _attributionProvider,
+    // ).then(
+    //   (value) => printAsJson(
+    //     'Parameters and the result of _setAttribution()',
+    //     <String, dynamic>{
+    //       'parameters': <String, dynamic>{
+    //         'data': _attributionData,
+    //         'provider': _attributionProvider.convertToString,
+    //       },
+    //       'result': value,
+    //     },
+    //     printOnlyMethodName: true,
+    //   ),
+    //   onError: (e) => printError('_setAttribution()', e),
+    // );
+    //
+    // Apphud.collectSearchAdsAttribution().then(
+    //   (value) => printAsJson(
+    //     'collectSearchAdsAttribution()',
+    //     value ?? 'Ok',
+    //   ),
+    //   onError: (e) => printError('collectSearchAdsAttribution()', e),
+    // );
+    //
+    // Apphud.permissionGroups().then(
+    //   (value) => printAsJson('permissionGroups()', value),
+    //   onError: (e) => printError('permissionGroups()', e),
+    // );
+    //
+    // Apphud.paywalls().then(
+    //   (value) => printAsJson(
+    //     'paywalls',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('paywalls', e),
+    // );
+    //
+    // Apphud.deviceID().then(
+    //   (value) => printAsJson(
+    //     'deviceID',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('deviceID', e),
+    // );
+    //
+    // Apphud.setAdvertisingIdentifier(_idfa).then(
+    //   (value) => printAsJson(
+    //     'setAdvertisingIdentifier',
+    //     'Ok',
+    //   ),
+    //   onError: (e) => printError('setAdvertisingIdentifier', e),
+    // );
+    //
+    // Apphud.updateUserID('userID').then(
+    //   (value) => printAsJson(
+    //     'updateUserID',
+    //     'Ok',
+    //   ),
+    //   onError: (e) => printError('updateUserID', e),
+    // );
+    //
+    // Apphud.userID().then(
+    //   (value) => printAsJson(
+    //     'userID',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('userID', e),
+    // );
+    //
+    // Apphud.logout().then(
+    //   (value) => printAsJson(
+    //     'logout',
+    //     'Ok',
+    //   ),
+    //   onError: (e) => printError('logout', e),
+    // );
+    //
+    // Apphud.product('productIdentifier').then(
+    //   (value) => printAsJson(
+    //     'product',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('product', e),
+    // );
+    //
+    // Apphud.products().then(
+    //   (value) => printAsJson(
+    //     'products',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('products', e),
+    // );
+    //
+    // Apphud.purchasePromo(
+    //   productId: 'productId',
+    //   discountID: 'discountID',
+    // ).then(
+    //   (value) => printAsJson(
+    //     'purchasePromo',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('purchasePromo', e),
+    // );
+    //
+    // Apphud.presentOfferCodeRedemptionSheet().then(
+    //   (value) => printAsJson(
+    //     'presentOfferCodeRedemptionSheet',
+    //     'Ok',
+    //   ),
+    //   onError: (e) => printError('presentOfferCodeRedemptionSheet', e),
+    // );
+    //
+    // Apphud.isNonRenewingPurchaseActive('productIdentifier').then(
+    //   (value) => printAsJson(
+    //     'isNonRenewingPurchaseActive()',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('isNonRenewingPurchaseActive()', e),
+    // );
+    //
+    // Apphud.restorePurchases().then(
+    //   (value) => printAsJson(
+    //     'restorePurchases',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('restorePurchases', e),
+    // );
+    //
+    // Apphud.syncPurchasesInObserverMode().then(
+    //   (value) => printAsJson(
+    //     'syncPurchasesInObserverMode',
+    //     'Ok',
+    //   ),
+    //   onError: (e) => printError('syncPurchasesInObserverMode', e),
+    // );
+    //
+    // Apphud.enableDebugLogs().then(
+    //   (value) => printAsJson(
+    //     'enableDebugLogs',
+    //     'Ok',
+    //   ),
+    //   onError: (e) => printError('enableDebugLogs', e),
+    // );
+    //
+    // Apphud.paywallShown(paywall).then(
+    //   (value) => printAsJson(
+    //     'paywallShown',
+    //     'Ok',
+    //   ),
+    //   onError: (e) => printError('paywallShown', e),
+    // );
+    //
+    // Apphud.paywallClosed(paywall).then(
+    //   (value) => printAsJson(
+    //     'paywallClosed',
+    //     'Ok',
+    //   ),
+    //   onError: (e) => printError('paywallClosed', e),
+    // );
+    //
+    // Apphud.optOutOfTracking().then(
+    //   (value) => printAsJson(
+    //     'optOutOfTracking',
+    //     'Ok',
+    //   ),
+    //   onError: (e) => printError('optOutOfTracking', e),
+    // );
+    //
+    // Apphud.collectDeviceIdentifiers().then(
+    //   (value) => printAsJson(
+    //     'collectDeviceIdentifiers',
+    //     'Ok',
+    //   ),
+    //   onError: (e) => printError('collectDeviceIdentifiers', e),
+    // );
+    //
+    // Apphud.grantPromotional(daysCount: 1).then(
+    //   (value) => printAsJson(
+    //     'grantPromotional',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('grantPromotional', e),
+    // );
+    // Apphud.paywallsDidLoadCallback().then(
+    //   (value) => printAsJson(
+    //     'paywallsDidLoadCallback',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('paywallsDidLoadCallback', e),
+    // );
+
+    final placements = await Apphud.placements();
+    printAsJson('placements', placements);
+
+    if (placements.isNotEmpty) {
+       final placement = await Apphud.placement(placements.first.identifier);
+       printAsJson('placement', placement);
+    }
+
+    Apphud.placementsDidLoadCallback().then(
       (value) => printAsJson(
-        'syncPurchases()',
-        'success',
+        'placementsDidLoadCallback',
+        value,
       ),
-      onError: (e) => printError(
-        'syncPurchases()',
-        e,
+      onError: (e) => printError('placementsDidLoadCallback', e),
+    );
+
+    Apphud.rawPlacements().then(
+      (value) => printAsJson(
+        'rawPlacements',
+        value,
       ),
-    ));
+      onError: (e) => printError('rawPlacements', e),
+    );
+
+    Apphud.rawPaywalls().then(
+      (value) => printAsJson(
+        'rawPaywalls',
+        value,
+      ),
+      onError: (e) => printError('rawPaywalls', e),
+    );
   }
 }

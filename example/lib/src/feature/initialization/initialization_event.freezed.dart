@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'initialization_event.dart';
 
@@ -20,18 +20,22 @@ mixin _$InitializationEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
+    required TResult Function(List<ApphudPlacement> placements)
+        placementsFetchSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initializeTrying,
-    TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult? Function()? initializeTrying,
+    TResult? Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult? Function(List<ApphudPlacement> placements)? placementsFetchSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult Function(List<ApphudPlacement> placements)? placementsFetchSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +43,22 @@ mixin _$InitializationEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(InitializeTrying value) initializeTrying,
     required TResult Function(PaywallsFetchSuccess value) paywallsFetchSuccess,
+    required TResult Function(PlacementsFetchSuccess value)
+        placementsFetchSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InitializeTrying value)? initializeTrying,
-    TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult? Function(InitializeTrying value)? initializeTrying,
+    TResult? Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult? Function(PlacementsFetchSuccess value)? placementsFetchSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InitializeTrying value)? initializeTrying,
     TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult Function(PlacementsFetchSuccess value)? placementsFetchSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -60,42 +68,40 @@ mixin _$InitializationEvent {
 abstract class $InitializationEventCopyWith<$Res> {
   factory $InitializationEventCopyWith(
           InitializationEvent value, $Res Function(InitializationEvent) then) =
-      _$InitializationEventCopyWithImpl<$Res>;
+      _$InitializationEventCopyWithImpl<$Res, InitializationEvent>;
 }
 
 /// @nodoc
-class _$InitializationEventCopyWithImpl<$Res>
+class _$InitializationEventCopyWithImpl<$Res, $Val extends InitializationEvent>
     implements $InitializationEventCopyWith<$Res> {
   _$InitializationEventCopyWithImpl(this._value, this._then);
 
-  final InitializationEvent _value;
   // ignore: unused_field
-  final $Res Function(InitializationEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$InitializeTryingCopyWith<$Res> {
-  factory _$$InitializeTryingCopyWith(
-          _$InitializeTrying value, $Res Function(_$InitializeTrying) then) =
-      __$$InitializeTryingCopyWithImpl<$Res>;
+abstract class _$$InitializeTryingImplCopyWith<$Res> {
+  factory _$$InitializeTryingImplCopyWith(_$InitializeTryingImpl value,
+          $Res Function(_$InitializeTryingImpl) then) =
+      __$$InitializeTryingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$InitializeTryingCopyWithImpl<$Res>
-    extends _$InitializationEventCopyWithImpl<$Res>
-    implements _$$InitializeTryingCopyWith<$Res> {
-  __$$InitializeTryingCopyWithImpl(
-      _$InitializeTrying _value, $Res Function(_$InitializeTrying) _then)
-      : super(_value, (v) => _then(v as _$InitializeTrying));
-
-  @override
-  _$InitializeTrying get _value => super._value as _$InitializeTrying;
+class __$$InitializeTryingImplCopyWithImpl<$Res>
+    extends _$InitializationEventCopyWithImpl<$Res, _$InitializeTryingImpl>
+    implements _$$InitializeTryingImplCopyWith<$Res> {
+  __$$InitializeTryingImplCopyWithImpl(_$InitializeTryingImpl _value,
+      $Res Function(_$InitializeTryingImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$InitializeTrying extends InitializeTrying {
-  const _$InitializeTrying() : super._();
+class _$InitializeTryingImpl extends InitializeTrying {
+  const _$InitializeTryingImpl() : super._();
 
   @override
   String toString() {
@@ -105,7 +111,7 @@ class _$InitializeTrying extends InitializeTrying {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitializeTrying);
+        (other.runtimeType == runtimeType && other is _$InitializeTryingImpl);
   }
 
   @override
@@ -116,6 +122,8 @@ class _$InitializeTrying extends InitializeTrying {
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
+    required TResult Function(List<ApphudPlacement> placements)
+        placementsFetchSuccess,
   }) {
     return initializeTrying();
   }
@@ -123,8 +131,9 @@ class _$InitializeTrying extends InitializeTrying {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initializeTrying,
-    TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult? Function()? initializeTrying,
+    TResult? Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult? Function(List<ApphudPlacement> placements)? placementsFetchSuccess,
   }) {
     return initializeTrying?.call();
   }
@@ -134,6 +143,7 @@ class _$InitializeTrying extends InitializeTrying {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult Function(List<ApphudPlacement> placements)? placementsFetchSuccess,
     required TResult orElse(),
   }) {
     if (initializeTrying != null) {
@@ -147,6 +157,8 @@ class _$InitializeTrying extends InitializeTrying {
   TResult map<TResult extends Object?>({
     required TResult Function(InitializeTrying value) initializeTrying,
     required TResult Function(PaywallsFetchSuccess value) paywallsFetchSuccess,
+    required TResult Function(PlacementsFetchSuccess value)
+        placementsFetchSuccess,
   }) {
     return initializeTrying(this);
   }
@@ -154,8 +166,9 @@ class _$InitializeTrying extends InitializeTrying {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InitializeTrying value)? initializeTrying,
-    TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult? Function(InitializeTrying value)? initializeTrying,
+    TResult? Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult? Function(PlacementsFetchSuccess value)? placementsFetchSuccess,
   }) {
     return initializeTrying?.call(this);
   }
@@ -165,6 +178,7 @@ class _$InitializeTrying extends InitializeTrying {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InitializeTrying value)? initializeTrying,
     TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult Function(PlacementsFetchSuccess value)? placementsFetchSuccess,
     required TResult orElse(),
   }) {
     if (initializeTrying != null) {
@@ -175,35 +189,34 @@ class _$InitializeTrying extends InitializeTrying {
 }
 
 abstract class InitializeTrying extends InitializationEvent {
-  const factory InitializeTrying() = _$InitializeTrying;
+  const factory InitializeTrying() = _$InitializeTryingImpl;
   const InitializeTrying._() : super._();
 }
 
 /// @nodoc
-abstract class _$$PaywallsFetchSuccessCopyWith<$Res> {
-  factory _$$PaywallsFetchSuccessCopyWith(_$PaywallsFetchSuccess value,
-          $Res Function(_$PaywallsFetchSuccess) then) =
-      __$$PaywallsFetchSuccessCopyWithImpl<$Res>;
+abstract class _$$PaywallsFetchSuccessImplCopyWith<$Res> {
+  factory _$$PaywallsFetchSuccessImplCopyWith(_$PaywallsFetchSuccessImpl value,
+          $Res Function(_$PaywallsFetchSuccessImpl) then) =
+      __$$PaywallsFetchSuccessImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({ApphudPaywalls paywalls});
 }
 
 /// @nodoc
-class __$$PaywallsFetchSuccessCopyWithImpl<$Res>
-    extends _$InitializationEventCopyWithImpl<$Res>
-    implements _$$PaywallsFetchSuccessCopyWith<$Res> {
-  __$$PaywallsFetchSuccessCopyWithImpl(_$PaywallsFetchSuccess _value,
-      $Res Function(_$PaywallsFetchSuccess) _then)
-      : super(_value, (v) => _then(v as _$PaywallsFetchSuccess));
+class __$$PaywallsFetchSuccessImplCopyWithImpl<$Res>
+    extends _$InitializationEventCopyWithImpl<$Res, _$PaywallsFetchSuccessImpl>
+    implements _$$PaywallsFetchSuccessImplCopyWith<$Res> {
+  __$$PaywallsFetchSuccessImplCopyWithImpl(_$PaywallsFetchSuccessImpl _value,
+      $Res Function(_$PaywallsFetchSuccessImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$PaywallsFetchSuccess get _value => super._value as _$PaywallsFetchSuccess;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? paywalls = freezed,
+    Object? paywalls = null,
   }) {
-    return _then(_$PaywallsFetchSuccess(
-      paywalls == freezed
+    return _then(_$PaywallsFetchSuccessImpl(
+      null == paywalls
           ? _value.paywalls
           : paywalls // ignore: cast_nullable_to_non_nullable
               as ApphudPaywalls,
@@ -213,8 +226,8 @@ class __$$PaywallsFetchSuccessCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
-  const _$PaywallsFetchSuccess(this.paywalls) : super._();
+class _$PaywallsFetchSuccessImpl extends PaywallsFetchSuccess {
+  const _$PaywallsFetchSuccessImpl(this.paywalls) : super._();
 
   @override
   final ApphudPaywalls paywalls;
@@ -228,25 +241,29 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PaywallsFetchSuccess &&
-            const DeepCollectionEquality().equals(other.paywalls, paywalls));
+            other is _$PaywallsFetchSuccessImpl &&
+            (identical(other.paywalls, paywalls) ||
+                other.paywalls == paywalls));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(paywalls));
+  int get hashCode => Object.hash(runtimeType, paywalls);
 
   @JsonKey(ignore: true)
   @override
-  _$$PaywallsFetchSuccessCopyWith<_$PaywallsFetchSuccess> get copyWith =>
-      __$$PaywallsFetchSuccessCopyWithImpl<_$PaywallsFetchSuccess>(
-          this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$PaywallsFetchSuccessImplCopyWith<_$PaywallsFetchSuccessImpl>
+      get copyWith =>
+          __$$PaywallsFetchSuccessImplCopyWithImpl<_$PaywallsFetchSuccessImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeTrying,
     required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
+    required TResult Function(List<ApphudPlacement> placements)
+        placementsFetchSuccess,
   }) {
     return paywallsFetchSuccess(paywalls);
   }
@@ -254,8 +271,9 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initializeTrying,
-    TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult? Function()? initializeTrying,
+    TResult? Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult? Function(List<ApphudPlacement> placements)? placementsFetchSuccess,
   }) {
     return paywallsFetchSuccess?.call(paywalls);
   }
@@ -265,6 +283,7 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeTrying,
     TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult Function(List<ApphudPlacement> placements)? placementsFetchSuccess,
     required TResult orElse(),
   }) {
     if (paywallsFetchSuccess != null) {
@@ -278,6 +297,8 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
   TResult map<TResult extends Object?>({
     required TResult Function(InitializeTrying value) initializeTrying,
     required TResult Function(PaywallsFetchSuccess value) paywallsFetchSuccess,
+    required TResult Function(PlacementsFetchSuccess value)
+        placementsFetchSuccess,
   }) {
     return paywallsFetchSuccess(this);
   }
@@ -285,8 +306,9 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InitializeTrying value)? initializeTrying,
-    TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult? Function(InitializeTrying value)? initializeTrying,
+    TResult? Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult? Function(PlacementsFetchSuccess value)? placementsFetchSuccess,
   }) {
     return paywallsFetchSuccess?.call(this);
   }
@@ -296,6 +318,7 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InitializeTrying value)? initializeTrying,
     TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult Function(PlacementsFetchSuccess value)? placementsFetchSuccess,
     required TResult orElse(),
   }) {
     if (paywallsFetchSuccess != null) {
@@ -307,11 +330,167 @@ class _$PaywallsFetchSuccess extends PaywallsFetchSuccess {
 
 abstract class PaywallsFetchSuccess extends InitializationEvent {
   const factory PaywallsFetchSuccess(final ApphudPaywalls paywalls) =
-      _$PaywallsFetchSuccess;
+      _$PaywallsFetchSuccessImpl;
   const PaywallsFetchSuccess._() : super._();
 
   ApphudPaywalls get paywalls;
   @JsonKey(ignore: true)
-  _$$PaywallsFetchSuccessCopyWith<_$PaywallsFetchSuccess> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$PaywallsFetchSuccessImplCopyWith<_$PaywallsFetchSuccessImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PlacementsFetchSuccessImplCopyWith<$Res> {
+  factory _$$PlacementsFetchSuccessImplCopyWith(
+          _$PlacementsFetchSuccessImpl value,
+          $Res Function(_$PlacementsFetchSuccessImpl) then) =
+      __$$PlacementsFetchSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<ApphudPlacement> placements});
+}
+
+/// @nodoc
+class __$$PlacementsFetchSuccessImplCopyWithImpl<$Res>
+    extends _$InitializationEventCopyWithImpl<$Res,
+        _$PlacementsFetchSuccessImpl>
+    implements _$$PlacementsFetchSuccessImplCopyWith<$Res> {
+  __$$PlacementsFetchSuccessImplCopyWithImpl(
+      _$PlacementsFetchSuccessImpl _value,
+      $Res Function(_$PlacementsFetchSuccessImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? placements = null,
+  }) {
+    return _then(_$PlacementsFetchSuccessImpl(
+      null == placements
+          ? _value._placements
+          : placements // ignore: cast_nullable_to_non_nullable
+              as List<ApphudPlacement>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$PlacementsFetchSuccessImpl extends PlacementsFetchSuccess {
+  const _$PlacementsFetchSuccessImpl(final List<ApphudPlacement> placements)
+      : _placements = placements,
+        super._();
+
+  final List<ApphudPlacement> _placements;
+  @override
+  List<ApphudPlacement> get placements {
+    if (_placements is EqualUnmodifiableListView) return _placements;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_placements);
+  }
+
+  @override
+  String toString() {
+    return 'InitializationEvent.placementsFetchSuccess(placements: $placements)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PlacementsFetchSuccessImpl &&
+            const DeepCollectionEquality()
+                .equals(other._placements, _placements));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_placements));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PlacementsFetchSuccessImplCopyWith<_$PlacementsFetchSuccessImpl>
+      get copyWith => __$$PlacementsFetchSuccessImplCopyWithImpl<
+          _$PlacementsFetchSuccessImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initializeTrying,
+    required TResult Function(ApphudPaywalls paywalls) paywallsFetchSuccess,
+    required TResult Function(List<ApphudPlacement> placements)
+        placementsFetchSuccess,
+  }) {
+    return placementsFetchSuccess(placements);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initializeTrying,
+    TResult? Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult? Function(List<ApphudPlacement> placements)? placementsFetchSuccess,
+  }) {
+    return placementsFetchSuccess?.call(placements);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initializeTrying,
+    TResult Function(ApphudPaywalls paywalls)? paywallsFetchSuccess,
+    TResult Function(List<ApphudPlacement> placements)? placementsFetchSuccess,
+    required TResult orElse(),
+  }) {
+    if (placementsFetchSuccess != null) {
+      return placementsFetchSuccess(placements);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InitializeTrying value) initializeTrying,
+    required TResult Function(PaywallsFetchSuccess value) paywallsFetchSuccess,
+    required TResult Function(PlacementsFetchSuccess value)
+        placementsFetchSuccess,
+  }) {
+    return placementsFetchSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InitializeTrying value)? initializeTrying,
+    TResult? Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult? Function(PlacementsFetchSuccess value)? placementsFetchSuccess,
+  }) {
+    return placementsFetchSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InitializeTrying value)? initializeTrying,
+    TResult Function(PaywallsFetchSuccess value)? paywallsFetchSuccess,
+    TResult Function(PlacementsFetchSuccess value)? placementsFetchSuccess,
+    required TResult orElse(),
+  }) {
+    if (placementsFetchSuccess != null) {
+      return placementsFetchSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PlacementsFetchSuccess extends InitializationEvent {
+  const factory PlacementsFetchSuccess(final List<ApphudPlacement> placements) =
+      _$PlacementsFetchSuccessImpl;
+  const PlacementsFetchSuccess._() : super._();
+
+  List<ApphudPlacement> get placements;
+  @JsonKey(ignore: true)
+  _$$PlacementsFetchSuccessImplCopyWith<_$PlacementsFetchSuccessImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

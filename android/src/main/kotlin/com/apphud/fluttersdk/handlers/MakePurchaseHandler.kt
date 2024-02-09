@@ -10,8 +10,8 @@ import com.apphud.sdk.domain.ApphudPaywall
 import com.apphud.sdk.domain.ApphudProduct
 import com.apphud.sdk.flutter.ApphudFlutter
 import io.flutter.plugin.common.MethodChannel
+import kotlinx.coroutines.runBlocking
 import java.lang.IllegalStateException
-
 
 class MakePurchaseHandler(
     override val routes: List<String>,
@@ -25,12 +25,6 @@ class MakePurchaseHandler(
         result: MethodChannel.Result
     ) {
         when (method) {
-            MakePurchaseRoutes.didFetchProductsNotification.name -> result.notImplemented()
-
-            MakePurchaseRoutes.productsDidFetchCallback.name -> productsDidFetchCallback(result)
-
-            MakePurchaseRoutes.refreshStoreKitProducts.name -> result.notImplemented()
-
             MakePurchaseRoutes.products.name -> products(result)
 
             MakePurchaseRoutes.product.name -> ProductParser(result).parse(args)
@@ -41,22 +35,20 @@ class MakePurchaseHandler(
                 purchase(productId, offerIdToken, oldToken, replacementMode, result)
             }
 
-            MakePurchaseRoutes.purchaseWithoutValidation.name -> result.notImplemented()
-
             MakePurchaseRoutes.purchasePromo.name -> result.notImplemented()
 
-            MakePurchaseRoutes.syncPurchases.name -> SyncPurchasesParser(result).parse(args) { paywallIdentifier ->
-                syncPurchases(
-                    paywallIdentifier,
-                    result
-                )
-            }
+            MakePurchaseRoutes.syncPurchasesInObserverMode.name -> syncPurchasesInObserverMode(
+                result
+            )
+
 
             MakePurchaseRoutes.presentOfferCodeRedemptionSheet.name -> result.notImplemented()
 
             MakePurchaseRoutes.getPaywalls.name -> result.notImplemented()
 
             MakePurchaseRoutes.paywalls.name -> paywalls(result)
+
+            MakePurchaseRoutes.paywallsDidLoadCallback.name -> paywallsDidLoadCallback(result)
 
             MakePurchaseRoutes.purchaseProduct.name -> PurchaseProductParser(result).parse(args)
             { product, offerIdToken, oldToken, replacementMode ->
@@ -71,9 +63,7 @@ class MakePurchaseHandler(
 
             MakePurchaseRoutes.permissionGroups.name -> getPermissionGroups(result)
 
-            MakePurchaseRoutes.didPurchaseFromPaywall.name -> result.notImplemented()
-
-            MakePurchaseRoutes.refreshEntitlements.name -> refreshEntitlements(result)
+            MakePurchaseRoutes.rawPaywalls.name -> rawPaywalls(result)
         }
     }
 
@@ -83,31 +73,31 @@ class MakePurchaseHandler(
     }
 
     private fun paywalls(result: MethodChannel.Result) {
-        val paywalls: List<ApphudPaywall> = Apphud.paywalls()
+        val paywalls: List<ApphudPaywall> = runBlocking { Apphud.paywalls() }
         val resultMap = hashMapOf<String, Any?>()
         resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
         handleOnMainThread { result.success(resultMap) }
     }
 
+    private fun rawPaywalls(result: MethodChannel.Result) {
+        val paywalls = Apphud.rawPaywalls()
+        val resultMap = hashMapOf<String, Any?>()
+        resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
+        handleOnMainThread { result.success(resultMap) }
+    }
 
-    private fun productsDidFetchCallback(result: MethodChannel.Result) {
-        Apphud.productsFetchCallback { productDetails ->
-            val jsonList: List<HashMap<String, Any?>> = productDetails.map {
-                it.toMap()
-            }
-            handleOnMainThread { result.success(jsonList) }
+    private fun paywallsDidLoadCallback(result: MethodChannel.Result) {
+        Apphud.paywallsDidLoadCallback { paywalls ->
+            val resultMap = hashMapOf<String, Any?>()
+            resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
+            handleOnMainThread { result.success(resultMap) }
         }
     }
 
     private fun products(result: MethodChannel.Result) {
-        val productDetails = Apphud.products()
-        if (productDetails != null) {
-            val jsonList: List<HashMap<String, Any?>> = productDetails.map {
-                it.toMap()
-            }
+        Apphud.productsFetchCallback { productDetails ->
+            val jsonList: List<HashMap<String, Any?>> = productDetails.map { it.toMap() }
             handleOnMainThread { result.success(jsonList) }
-        } else {
-            handleOnMainThread { result.success(null) }
         }
     }
 
@@ -187,13 +177,8 @@ class MakePurchaseHandler(
         }
     }
 
-    private fun syncPurchases(paywallIdentifier: String?, result: MethodChannel.Result) {
-        ApphudFlutter.syncPurchases(paywallIdentifier)
-        handleOnMainThread { result.success(null) }
-    }
-
-    private fun refreshEntitlements(result: MethodChannel.Result) {
-        Apphud.refreshEntitlements()
+    private fun syncPurchasesInObserverMode(result: MethodChannel.Result) {
+        ApphudFlutter.syncPurchases()
         handleOnMainThread { result.success(null) }
     }
 
@@ -223,14 +208,34 @@ class MakePurchaseHandler(
             try {
                 args ?: throw IllegalArgumentException("arguments are required")
 
-                val product = args.toApphudProduct()
-                val paywalls = Apphud.paywalls()
-                for (pw in paywalls) {
-                    val apphudProduct =
-                        pw.products?.firstOrNull { pr -> pr.product_id == product.product_id }
-                    if (apphudProduct != null) {
-                        product.productDetails = apphudProduct.productDetails
-                        break
+                var product = args.toApphudProduct()
+                if (product.placementIdentifier != null) {
+                    val placements = runBlocking { Apphud.placements() }
+                    for (pl in placements) {
+                        if (pl.identifier == product.placementIdentifier) {
+                            val findProduct =
+                                pl.paywall?.products?.firstOrNull { pr ->
+                                    pr.productId == product.productId
+                                }
+                            if (findProduct != null) {
+                                product = findProduct
+                                break
+                            }
+                        }
+                    }
+                } else {
+                    val paywalls = runBlocking { Apphud.paywalls() }
+                    for (paywall in paywalls) {
+                        if (product.paywallIdentifier == paywall.identifier) {
+                            val findProduct =
+                                paywall.products?.firstOrNull { pr ->
+                                    pr.productId == product.productId
+                                }
+                            if (findProduct != null) {
+                                product = findProduct
+                                break
+                            }
+                        }
                     }
                 }
                 val offerIdToken = args["offerIdToken"] as? String
@@ -268,32 +273,21 @@ class MakePurchaseHandler(
             }
         }
     }
-
-    class SyncPurchasesParser(private val result: MethodChannel.Result) {
-        fun parse(args: Map<String, Any>?, callback: (paywallIdentifier: String?) -> Unit) {
-            val paywallIdentifier = args?.get("paywallIdentifier") as String?
-            callback(paywallIdentifier)
-        }
-    }
 }
 
 enum class MakePurchaseRoutes {
-    didFetchProductsNotification,
-    productsDidFetchCallback,
-    refreshStoreKitProducts,
     products,
     product,
     purchase,
-    purchaseWithoutValidation,
     purchasePromo,
-    syncPurchases,
+    syncPurchasesInObserverMode,
     presentOfferCodeRedemptionSheet,
     getPaywalls,
     paywalls,
     purchaseProduct,
     permissionGroups,
-    didPurchaseFromPaywall,
-    refreshEntitlements;
+    paywallsDidLoadCallback,
+    rawPaywalls;
 
     companion object Mapper {
         fun stringValues(): List<String> {

@@ -8,7 +8,7 @@
 import ApphudSDK
 
 extension ApphudGroup {
-    func toMap() -> [String: Any?] {
+    @MainActor func toMap() -> [String: Any?] {
         return [
                 "name": name,
                 "hasAccess": hasAccess,

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'navigation_state.dart';
 
@@ -24,8 +24,8 @@ mixin _$NavigationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? start,
-    TResult Function()? home,
+    TResult? Function()? start,
+    TResult? Function()? home,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$NavigationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Start value)? start,
-    TResult Function(Home value)? home,
+    TResult? Function(Start value)? start,
+    TResult? Function(Home value)? home,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,39 +60,40 @@ mixin _$NavigationState {
 abstract class $NavigationStateCopyWith<$Res> {
   factory $NavigationStateCopyWith(
           NavigationState value, $Res Function(NavigationState) then) =
-      _$NavigationStateCopyWithImpl<$Res>;
+      _$NavigationStateCopyWithImpl<$Res, NavigationState>;
 }
 
 /// @nodoc
-class _$NavigationStateCopyWithImpl<$Res>
+class _$NavigationStateCopyWithImpl<$Res, $Val extends NavigationState>
     implements $NavigationStateCopyWith<$Res> {
   _$NavigationStateCopyWithImpl(this._value, this._then);
 
-  final NavigationState _value;
   // ignore: unused_field
-  final $Res Function(NavigationState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$StartCopyWith<$Res> {
-  factory _$$StartCopyWith(_$Start value, $Res Function(_$Start) then) =
-      __$$StartCopyWithImpl<$Res>;
+abstract class _$$StartImplCopyWith<$Res> {
+  factory _$$StartImplCopyWith(
+          _$StartImpl value, $Res Function(_$StartImpl) then) =
+      __$$StartImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$StartCopyWithImpl<$Res> extends _$NavigationStateCopyWithImpl<$Res>
-    implements _$$StartCopyWith<$Res> {
-  __$$StartCopyWithImpl(_$Start _value, $Res Function(_$Start) _then)
-      : super(_value, (v) => _then(v as _$Start));
-
-  @override
-  _$Start get _value => super._value as _$Start;
+class __$$StartImplCopyWithImpl<$Res>
+    extends _$NavigationStateCopyWithImpl<$Res, _$StartImpl>
+    implements _$$StartImplCopyWith<$Res> {
+  __$$StartImplCopyWithImpl(
+      _$StartImpl _value, $Res Function(_$StartImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$Start extends Start {
-  const _$Start() : super._();
+class _$StartImpl extends Start {
+  const _$StartImpl() : super._();
 
   @override
   String toString() {
@@ -102,7 +103,7 @@ class _$Start extends Start {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Start);
+        (other.runtimeType == runtimeType && other is _$StartImpl);
   }
 
   @override
@@ -120,8 +121,8 @@ class _$Start extends Start {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? start,
-    TResult Function()? home,
+    TResult? Function()? start,
+    TResult? Function()? home,
   }) {
     return start?.call();
   }
@@ -151,8 +152,8 @@ class _$Start extends Start {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Start value)? start,
-    TResult Function(Home value)? home,
+    TResult? Function(Start value)? start,
+    TResult? Function(Home value)? home,
   }) {
     return start?.call(this);
   }
@@ -172,30 +173,29 @@ class _$Start extends Start {
 }
 
 abstract class Start extends NavigationState {
-  const factory Start() = _$Start;
+  const factory Start() = _$StartImpl;
   const Start._() : super._();
 }
 
 /// @nodoc
-abstract class _$$HomeCopyWith<$Res> {
-  factory _$$HomeCopyWith(_$Home value, $Res Function(_$Home) then) =
-      __$$HomeCopyWithImpl<$Res>;
+abstract class _$$HomeImplCopyWith<$Res> {
+  factory _$$HomeImplCopyWith(
+          _$HomeImpl value, $Res Function(_$HomeImpl) then) =
+      __$$HomeImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$HomeCopyWithImpl<$Res> extends _$NavigationStateCopyWithImpl<$Res>
-    implements _$$HomeCopyWith<$Res> {
-  __$$HomeCopyWithImpl(_$Home _value, $Res Function(_$Home) _then)
-      : super(_value, (v) => _then(v as _$Home));
-
-  @override
-  _$Home get _value => super._value as _$Home;
+class __$$HomeImplCopyWithImpl<$Res>
+    extends _$NavigationStateCopyWithImpl<$Res, _$HomeImpl>
+    implements _$$HomeImplCopyWith<$Res> {
+  __$$HomeImplCopyWithImpl(_$HomeImpl _value, $Res Function(_$HomeImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$Home extends Home {
-  const _$Home() : super._();
+class _$HomeImpl extends Home {
+  const _$HomeImpl() : super._();
 
   @override
   String toString() {
@@ -205,7 +205,7 @@ class _$Home extends Home {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Home);
+        (other.runtimeType == runtimeType && other is _$HomeImpl);
   }
 
   @override
@@ -223,8 +223,8 @@ class _$Home extends Home {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? start,
-    TResult Function()? home,
+    TResult? Function()? start,
+    TResult? Function()? home,
   }) {
     return home?.call();
   }
@@ -254,8 +254,8 @@ class _$Home extends Home {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Start value)? start,
-    TResult Function(Home value)? home,
+    TResult? Function(Start value)? start,
+    TResult? Function(Home value)? home,
   }) {
     return home?.call(this);
   }
@@ -275,6 +275,6 @@ class _$Home extends Home {
 }
 
 abstract class Home extends NavigationState {
-  const factory Home() = _$Home;
+  const factory Home() = _$HomeImpl;
   const Home._() : super._();
 }

@@ -78,12 +78,14 @@ public class ApphudDelegateHandler: NSObject, FlutterPlugin, ApphudDelegate {
         }
     }
     
-    public func userDidLoad(rawPaywalls:[ApphudPaywall]) {
+    @MainActor public func userDidLoad(user:ApphudUser) {
         if(isListeningStarted){
-            channel.invokeMethod("userDidLoad",
-                                 arguments: [
-                                            "paywalls" : rawPaywalls.map({ (paywall: ApphudPaywall) in paywall.toMap() }),
-                                            ])
+            channel.invokeMethod("userDidLoad", arguments: user.toMap())
+        }
+    }
+    public func placementsDidFullyLoad(placements: [ApphudPlacement]) {
+        if(isListeningStarted){
+            channel.invokeMethod("placementsDidFullyLoad", arguments: placements.map{p in p.toMap()})
         }
     }
 }

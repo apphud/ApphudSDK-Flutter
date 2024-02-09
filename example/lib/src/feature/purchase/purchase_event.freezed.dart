@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'purchase_event.dart';
 
@@ -23,19 +23,19 @@ mixin _$PurchaseEvent {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
-    required TResult Function() refreshEntitlements,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? restorePurchases,
-    TResult Function(ApphudProduct product)? purchaseProduct,
-    TResult Function(ApphudProduct product)? grantPromotional,
-    TResult Function(ApphudPaywall paywall)? paywallShown,
-    TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
-    TResult Function()? syncPurchase,
+    TResult? Function()? restorePurchases,
+    TResult? Function(ApphudProduct product)? purchaseProduct,
+    TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudPaywall paywall)? paywallShown,
+    TResult? Function(ApphudPaywall paywall)? paywallClosed,
+    TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -45,8 +45,8 @@ mixin _$PurchaseEvent {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -57,19 +57,19 @@ mixin _$PurchaseEvent {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
-    required TResult Function(RefreshEntitlements value) refreshEntitlements,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(RestorePurchases value)? restorePurchases,
-    TResult Function(PurchaseProduct value)? purchaseProduct,
-    TResult Function(GrantPromotional value)? grantPromotional,
-    TResult Function(PaywallShown value)? paywallShown,
-    TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
-    TResult Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(RestorePurchases value)? restorePurchases,
+    TResult? Function(PurchaseProduct value)? purchaseProduct,
+    TResult? Function(GrantPromotional value)? grantPromotional,
+    TResult? Function(PaywallShown value)? paywallShown,
+    TResult? Function(PaywallClosed value)? paywallClosed,
+    TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -79,8 +79,8 @@ mixin _$PurchaseEvent {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -90,42 +90,40 @@ mixin _$PurchaseEvent {
 abstract class $PurchaseEventCopyWith<$Res> {
   factory $PurchaseEventCopyWith(
           PurchaseEvent value, $Res Function(PurchaseEvent) then) =
-      _$PurchaseEventCopyWithImpl<$Res>;
+      _$PurchaseEventCopyWithImpl<$Res, PurchaseEvent>;
 }
 
 /// @nodoc
-class _$PurchaseEventCopyWithImpl<$Res>
+class _$PurchaseEventCopyWithImpl<$Res, $Val extends PurchaseEvent>
     implements $PurchaseEventCopyWith<$Res> {
   _$PurchaseEventCopyWithImpl(this._value, this._then);
 
-  final PurchaseEvent _value;
   // ignore: unused_field
-  final $Res Function(PurchaseEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$RestorePurchasesCopyWith<$Res> {
-  factory _$$RestorePurchasesCopyWith(
-          _$RestorePurchases value, $Res Function(_$RestorePurchases) then) =
-      __$$RestorePurchasesCopyWithImpl<$Res>;
+abstract class _$$RestorePurchasesImplCopyWith<$Res> {
+  factory _$$RestorePurchasesImplCopyWith(_$RestorePurchasesImpl value,
+          $Res Function(_$RestorePurchasesImpl) then) =
+      __$$RestorePurchasesImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$RestorePurchasesCopyWithImpl<$Res>
-    extends _$PurchaseEventCopyWithImpl<$Res>
-    implements _$$RestorePurchasesCopyWith<$Res> {
-  __$$RestorePurchasesCopyWithImpl(
-      _$RestorePurchases _value, $Res Function(_$RestorePurchases) _then)
-      : super(_value, (v) => _then(v as _$RestorePurchases));
-
-  @override
-  _$RestorePurchases get _value => super._value as _$RestorePurchases;
+class __$$RestorePurchasesImplCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res, _$RestorePurchasesImpl>
+    implements _$$RestorePurchasesImplCopyWith<$Res> {
+  __$$RestorePurchasesImplCopyWithImpl(_$RestorePurchasesImpl _value,
+      $Res Function(_$RestorePurchasesImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$RestorePurchases extends RestorePurchases {
-  const _$RestorePurchases() : super._();
+class _$RestorePurchasesImpl extends RestorePurchases {
+  const _$RestorePurchasesImpl() : super._();
 
   @override
   String toString() {
@@ -135,7 +133,7 @@ class _$RestorePurchases extends RestorePurchases {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$RestorePurchases);
+        (other.runtimeType == runtimeType && other is _$RestorePurchasesImpl);
   }
 
   @override
@@ -149,8 +147,8 @@ class _$RestorePurchases extends RestorePurchases {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
-    required TResult Function() refreshEntitlements,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) {
     return restorePurchases();
   }
@@ -158,13 +156,13 @@ class _$RestorePurchases extends RestorePurchases {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? restorePurchases,
-    TResult Function(ApphudProduct product)? purchaseProduct,
-    TResult Function(ApphudProduct product)? grantPromotional,
-    TResult Function(ApphudPaywall paywall)? paywallShown,
-    TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
-    TResult Function()? syncPurchase,
+    TResult? Function()? restorePurchases,
+    TResult? Function(ApphudProduct product)? purchaseProduct,
+    TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudPaywall paywall)? paywallShown,
+    TResult? Function(ApphudPaywall paywall)? paywallClosed,
+    TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) {
     return restorePurchases?.call();
   }
@@ -177,8 +175,8 @@ class _$RestorePurchases extends RestorePurchases {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) {
     if (restorePurchases != null) {
@@ -195,8 +193,8 @@ class _$RestorePurchases extends RestorePurchases {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
-    required TResult Function(RefreshEntitlements value) refreshEntitlements,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) {
     return restorePurchases(this);
   }
@@ -204,13 +202,13 @@ class _$RestorePurchases extends RestorePurchases {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(RestorePurchases value)? restorePurchases,
-    TResult Function(PurchaseProduct value)? purchaseProduct,
-    TResult Function(GrantPromotional value)? grantPromotional,
-    TResult Function(PaywallShown value)? paywallShown,
-    TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
-    TResult Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(RestorePurchases value)? restorePurchases,
+    TResult? Function(PurchaseProduct value)? purchaseProduct,
+    TResult? Function(GrantPromotional value)? grantPromotional,
+    TResult? Function(PaywallShown value)? paywallShown,
+    TResult? Function(PaywallClosed value)? paywallClosed,
+    TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) {
     return restorePurchases?.call(this);
   }
@@ -223,8 +221,8 @@ class _$RestorePurchases extends RestorePurchases {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) {
     if (restorePurchases != null) {
@@ -235,35 +233,34 @@ class _$RestorePurchases extends RestorePurchases {
 }
 
 abstract class RestorePurchases extends PurchaseEvent {
-  const factory RestorePurchases() = _$RestorePurchases;
+  const factory RestorePurchases() = _$RestorePurchasesImpl;
   const RestorePurchases._() : super._();
 }
 
 /// @nodoc
-abstract class _$$PurchaseProductCopyWith<$Res> {
-  factory _$$PurchaseProductCopyWith(
-          _$PurchaseProduct value, $Res Function(_$PurchaseProduct) then) =
-      __$$PurchaseProductCopyWithImpl<$Res>;
+abstract class _$$PurchaseProductImplCopyWith<$Res> {
+  factory _$$PurchaseProductImplCopyWith(_$PurchaseProductImpl value,
+          $Res Function(_$PurchaseProductImpl) then) =
+      __$$PurchaseProductImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({ApphudProduct product});
 }
 
 /// @nodoc
-class __$$PurchaseProductCopyWithImpl<$Res>
-    extends _$PurchaseEventCopyWithImpl<$Res>
-    implements _$$PurchaseProductCopyWith<$Res> {
-  __$$PurchaseProductCopyWithImpl(
-      _$PurchaseProduct _value, $Res Function(_$PurchaseProduct) _then)
-      : super(_value, (v) => _then(v as _$PurchaseProduct));
+class __$$PurchaseProductImplCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res, _$PurchaseProductImpl>
+    implements _$$PurchaseProductImplCopyWith<$Res> {
+  __$$PurchaseProductImplCopyWithImpl(
+      _$PurchaseProductImpl _value, $Res Function(_$PurchaseProductImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$PurchaseProduct get _value => super._value as _$PurchaseProduct;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? product = freezed,
+    Object? product = null,
   }) {
-    return _then(_$PurchaseProduct(
-      product == freezed
+    return _then(_$PurchaseProductImpl(
+      null == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as ApphudProduct,
@@ -273,8 +270,8 @@ class __$$PurchaseProductCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PurchaseProduct extends PurchaseProduct {
-  const _$PurchaseProduct(this.product) : super._();
+class _$PurchaseProductImpl extends PurchaseProduct {
+  const _$PurchaseProductImpl(this.product) : super._();
 
   @override
   final ApphudProduct product;
@@ -288,18 +285,19 @@ class _$PurchaseProduct extends PurchaseProduct {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PurchaseProduct &&
-            const DeepCollectionEquality().equals(other.product, product));
+            other is _$PurchaseProductImpl &&
+            (identical(other.product, product) || other.product == product));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(product));
+  int get hashCode => Object.hash(runtimeType, product);
 
   @JsonKey(ignore: true)
   @override
-  _$$PurchaseProductCopyWith<_$PurchaseProduct> get copyWith =>
-      __$$PurchaseProductCopyWithImpl<_$PurchaseProduct>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$PurchaseProductImplCopyWith<_$PurchaseProductImpl> get copyWith =>
+      __$$PurchaseProductImplCopyWithImpl<_$PurchaseProductImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -309,8 +307,8 @@ class _$PurchaseProduct extends PurchaseProduct {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
-    required TResult Function() refreshEntitlements,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) {
     return purchaseProduct(product);
   }
@@ -318,13 +316,13 @@ class _$PurchaseProduct extends PurchaseProduct {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? restorePurchases,
-    TResult Function(ApphudProduct product)? purchaseProduct,
-    TResult Function(ApphudProduct product)? grantPromotional,
-    TResult Function(ApphudPaywall paywall)? paywallShown,
-    TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
-    TResult Function()? syncPurchase,
+    TResult? Function()? restorePurchases,
+    TResult? Function(ApphudProduct product)? purchaseProduct,
+    TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudPaywall paywall)? paywallShown,
+    TResult? Function(ApphudPaywall paywall)? paywallClosed,
+    TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) {
     return purchaseProduct?.call(product);
   }
@@ -337,8 +335,8 @@ class _$PurchaseProduct extends PurchaseProduct {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) {
     if (purchaseProduct != null) {
@@ -355,8 +353,8 @@ class _$PurchaseProduct extends PurchaseProduct {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
-    required TResult Function(RefreshEntitlements value) refreshEntitlements,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) {
     return purchaseProduct(this);
   }
@@ -364,13 +362,13 @@ class _$PurchaseProduct extends PurchaseProduct {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(RestorePurchases value)? restorePurchases,
-    TResult Function(PurchaseProduct value)? purchaseProduct,
-    TResult Function(GrantPromotional value)? grantPromotional,
-    TResult Function(PaywallShown value)? paywallShown,
-    TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
-    TResult Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(RestorePurchases value)? restorePurchases,
+    TResult? Function(PurchaseProduct value)? purchaseProduct,
+    TResult? Function(GrantPromotional value)? grantPromotional,
+    TResult? Function(PaywallShown value)? paywallShown,
+    TResult? Function(PaywallClosed value)? paywallClosed,
+    TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) {
     return purchaseProduct?.call(this);
   }
@@ -383,8 +381,8 @@ class _$PurchaseProduct extends PurchaseProduct {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) {
     if (purchaseProduct != null) {
@@ -396,40 +394,39 @@ class _$PurchaseProduct extends PurchaseProduct {
 
 abstract class PurchaseProduct extends PurchaseEvent {
   const factory PurchaseProduct(final ApphudProduct product) =
-      _$PurchaseProduct;
+      _$PurchaseProductImpl;
   const PurchaseProduct._() : super._();
 
   ApphudProduct get product;
   @JsonKey(ignore: true)
-  _$$PurchaseProductCopyWith<_$PurchaseProduct> get copyWith =>
+  _$$PurchaseProductImplCopyWith<_$PurchaseProductImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$GrantPromotionalCopyWith<$Res> {
-  factory _$$GrantPromotionalCopyWith(
-          _$GrantPromotional value, $Res Function(_$GrantPromotional) then) =
-      __$$GrantPromotionalCopyWithImpl<$Res>;
+abstract class _$$GrantPromotionalImplCopyWith<$Res> {
+  factory _$$GrantPromotionalImplCopyWith(_$GrantPromotionalImpl value,
+          $Res Function(_$GrantPromotionalImpl) then) =
+      __$$GrantPromotionalImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({ApphudProduct product});
 }
 
 /// @nodoc
-class __$$GrantPromotionalCopyWithImpl<$Res>
-    extends _$PurchaseEventCopyWithImpl<$Res>
-    implements _$$GrantPromotionalCopyWith<$Res> {
-  __$$GrantPromotionalCopyWithImpl(
-      _$GrantPromotional _value, $Res Function(_$GrantPromotional) _then)
-      : super(_value, (v) => _then(v as _$GrantPromotional));
+class __$$GrantPromotionalImplCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res, _$GrantPromotionalImpl>
+    implements _$$GrantPromotionalImplCopyWith<$Res> {
+  __$$GrantPromotionalImplCopyWithImpl(_$GrantPromotionalImpl _value,
+      $Res Function(_$GrantPromotionalImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$GrantPromotional get _value => super._value as _$GrantPromotional;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? product = freezed,
+    Object? product = null,
   }) {
-    return _then(_$GrantPromotional(
-      product == freezed
+    return _then(_$GrantPromotionalImpl(
+      null == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as ApphudProduct,
@@ -439,8 +436,8 @@ class __$$GrantPromotionalCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$GrantPromotional extends GrantPromotional {
-  const _$GrantPromotional(this.product) : super._();
+class _$GrantPromotionalImpl extends GrantPromotional {
+  const _$GrantPromotionalImpl(this.product) : super._();
 
   @override
   final ApphudProduct product;
@@ -454,18 +451,19 @@ class _$GrantPromotional extends GrantPromotional {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GrantPromotional &&
-            const DeepCollectionEquality().equals(other.product, product));
+            other is _$GrantPromotionalImpl &&
+            (identical(other.product, product) || other.product == product));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(product));
+  int get hashCode => Object.hash(runtimeType, product);
 
   @JsonKey(ignore: true)
   @override
-  _$$GrantPromotionalCopyWith<_$GrantPromotional> get copyWith =>
-      __$$GrantPromotionalCopyWithImpl<_$GrantPromotional>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$GrantPromotionalImplCopyWith<_$GrantPromotionalImpl> get copyWith =>
+      __$$GrantPromotionalImplCopyWithImpl<_$GrantPromotionalImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -475,8 +473,8 @@ class _$GrantPromotional extends GrantPromotional {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
-    required TResult Function() refreshEntitlements,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) {
     return grantPromotional(product);
   }
@@ -484,13 +482,13 @@ class _$GrantPromotional extends GrantPromotional {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? restorePurchases,
-    TResult Function(ApphudProduct product)? purchaseProduct,
-    TResult Function(ApphudProduct product)? grantPromotional,
-    TResult Function(ApphudPaywall paywall)? paywallShown,
-    TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
-    TResult Function()? syncPurchase,
+    TResult? Function()? restorePurchases,
+    TResult? Function(ApphudProduct product)? purchaseProduct,
+    TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudPaywall paywall)? paywallShown,
+    TResult? Function(ApphudPaywall paywall)? paywallClosed,
+    TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) {
     return grantPromotional?.call(product);
   }
@@ -503,8 +501,8 @@ class _$GrantPromotional extends GrantPromotional {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) {
     if (grantPromotional != null) {
@@ -521,8 +519,8 @@ class _$GrantPromotional extends GrantPromotional {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
-    required TResult Function(RefreshEntitlements value) refreshEntitlements,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) {
     return grantPromotional(this);
   }
@@ -530,13 +528,13 @@ class _$GrantPromotional extends GrantPromotional {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(RestorePurchases value)? restorePurchases,
-    TResult Function(PurchaseProduct value)? purchaseProduct,
-    TResult Function(GrantPromotional value)? grantPromotional,
-    TResult Function(PaywallShown value)? paywallShown,
-    TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
-    TResult Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(RestorePurchases value)? restorePurchases,
+    TResult? Function(PurchaseProduct value)? purchaseProduct,
+    TResult? Function(GrantPromotional value)? grantPromotional,
+    TResult? Function(PaywallShown value)? paywallShown,
+    TResult? Function(PaywallClosed value)? paywallClosed,
+    TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) {
     return grantPromotional?.call(this);
   }
@@ -549,8 +547,8 @@ class _$GrantPromotional extends GrantPromotional {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) {
     if (grantPromotional != null) {
@@ -562,40 +560,39 @@ class _$GrantPromotional extends GrantPromotional {
 
 abstract class GrantPromotional extends PurchaseEvent {
   const factory GrantPromotional(final ApphudProduct product) =
-      _$GrantPromotional;
+      _$GrantPromotionalImpl;
   const GrantPromotional._() : super._();
 
   ApphudProduct get product;
   @JsonKey(ignore: true)
-  _$$GrantPromotionalCopyWith<_$GrantPromotional> get copyWith =>
+  _$$GrantPromotionalImplCopyWith<_$GrantPromotionalImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PaywallShownCopyWith<$Res> {
-  factory _$$PaywallShownCopyWith(
-          _$PaywallShown value, $Res Function(_$PaywallShown) then) =
-      __$$PaywallShownCopyWithImpl<$Res>;
+abstract class _$$PaywallShownImplCopyWith<$Res> {
+  factory _$$PaywallShownImplCopyWith(
+          _$PaywallShownImpl value, $Res Function(_$PaywallShownImpl) then) =
+      __$$PaywallShownImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({ApphudPaywall paywall});
 }
 
 /// @nodoc
-class __$$PaywallShownCopyWithImpl<$Res>
-    extends _$PurchaseEventCopyWithImpl<$Res>
-    implements _$$PaywallShownCopyWith<$Res> {
-  __$$PaywallShownCopyWithImpl(
-      _$PaywallShown _value, $Res Function(_$PaywallShown) _then)
-      : super(_value, (v) => _then(v as _$PaywallShown));
+class __$$PaywallShownImplCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res, _$PaywallShownImpl>
+    implements _$$PaywallShownImplCopyWith<$Res> {
+  __$$PaywallShownImplCopyWithImpl(
+      _$PaywallShownImpl _value, $Res Function(_$PaywallShownImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$PaywallShown get _value => super._value as _$PaywallShown;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? paywall = freezed,
+    Object? paywall = null,
   }) {
-    return _then(_$PaywallShown(
-      paywall == freezed
+    return _then(_$PaywallShownImpl(
+      null == paywall
           ? _value.paywall
           : paywall // ignore: cast_nullable_to_non_nullable
               as ApphudPaywall,
@@ -605,8 +602,8 @@ class __$$PaywallShownCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PaywallShown extends PaywallShown {
-  const _$PaywallShown(this.paywall) : super._();
+class _$PaywallShownImpl extends PaywallShown {
+  const _$PaywallShownImpl(this.paywall) : super._();
 
   @override
   final ApphudPaywall paywall;
@@ -620,18 +617,18 @@ class _$PaywallShown extends PaywallShown {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PaywallShown &&
-            const DeepCollectionEquality().equals(other.paywall, paywall));
+            other is _$PaywallShownImpl &&
+            (identical(other.paywall, paywall) || other.paywall == paywall));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(paywall));
+  int get hashCode => Object.hash(runtimeType, paywall);
 
   @JsonKey(ignore: true)
   @override
-  _$$PaywallShownCopyWith<_$PaywallShown> get copyWith =>
-      __$$PaywallShownCopyWithImpl<_$PaywallShown>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$PaywallShownImplCopyWith<_$PaywallShownImpl> get copyWith =>
+      __$$PaywallShownImplCopyWithImpl<_$PaywallShownImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -641,8 +638,8 @@ class _$PaywallShown extends PaywallShown {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
-    required TResult Function() refreshEntitlements,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) {
     return paywallShown(paywall);
   }
@@ -650,13 +647,13 @@ class _$PaywallShown extends PaywallShown {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? restorePurchases,
-    TResult Function(ApphudProduct product)? purchaseProduct,
-    TResult Function(ApphudProduct product)? grantPromotional,
-    TResult Function(ApphudPaywall paywall)? paywallShown,
-    TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
-    TResult Function()? syncPurchase,
+    TResult? Function()? restorePurchases,
+    TResult? Function(ApphudProduct product)? purchaseProduct,
+    TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudPaywall paywall)? paywallShown,
+    TResult? Function(ApphudPaywall paywall)? paywallClosed,
+    TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) {
     return paywallShown?.call(paywall);
   }
@@ -669,8 +666,8 @@ class _$PaywallShown extends PaywallShown {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) {
     if (paywallShown != null) {
@@ -687,8 +684,8 @@ class _$PaywallShown extends PaywallShown {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
-    required TResult Function(RefreshEntitlements value) refreshEntitlements,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) {
     return paywallShown(this);
   }
@@ -696,13 +693,13 @@ class _$PaywallShown extends PaywallShown {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(RestorePurchases value)? restorePurchases,
-    TResult Function(PurchaseProduct value)? purchaseProduct,
-    TResult Function(GrantPromotional value)? grantPromotional,
-    TResult Function(PaywallShown value)? paywallShown,
-    TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
-    TResult Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(RestorePurchases value)? restorePurchases,
+    TResult? Function(PurchaseProduct value)? purchaseProduct,
+    TResult? Function(GrantPromotional value)? grantPromotional,
+    TResult? Function(PaywallShown value)? paywallShown,
+    TResult? Function(PaywallClosed value)? paywallClosed,
+    TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) {
     return paywallShown?.call(this);
   }
@@ -715,8 +712,8 @@ class _$PaywallShown extends PaywallShown {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) {
     if (paywallShown != null) {
@@ -727,40 +724,39 @@ class _$PaywallShown extends PaywallShown {
 }
 
 abstract class PaywallShown extends PurchaseEvent {
-  const factory PaywallShown(final ApphudPaywall paywall) = _$PaywallShown;
+  const factory PaywallShown(final ApphudPaywall paywall) = _$PaywallShownImpl;
   const PaywallShown._() : super._();
 
   ApphudPaywall get paywall;
   @JsonKey(ignore: true)
-  _$$PaywallShownCopyWith<_$PaywallShown> get copyWith =>
+  _$$PaywallShownImplCopyWith<_$PaywallShownImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PaywallClosedCopyWith<$Res> {
-  factory _$$PaywallClosedCopyWith(
-          _$PaywallClosed value, $Res Function(_$PaywallClosed) then) =
-      __$$PaywallClosedCopyWithImpl<$Res>;
+abstract class _$$PaywallClosedImplCopyWith<$Res> {
+  factory _$$PaywallClosedImplCopyWith(
+          _$PaywallClosedImpl value, $Res Function(_$PaywallClosedImpl) then) =
+      __$$PaywallClosedImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({ApphudPaywall paywall});
 }
 
 /// @nodoc
-class __$$PaywallClosedCopyWithImpl<$Res>
-    extends _$PurchaseEventCopyWithImpl<$Res>
-    implements _$$PaywallClosedCopyWith<$Res> {
-  __$$PaywallClosedCopyWithImpl(
-      _$PaywallClosed _value, $Res Function(_$PaywallClosed) _then)
-      : super(_value, (v) => _then(v as _$PaywallClosed));
+class __$$PaywallClosedImplCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res, _$PaywallClosedImpl>
+    implements _$$PaywallClosedImplCopyWith<$Res> {
+  __$$PaywallClosedImplCopyWithImpl(
+      _$PaywallClosedImpl _value, $Res Function(_$PaywallClosedImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$PaywallClosed get _value => super._value as _$PaywallClosed;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? paywall = freezed,
+    Object? paywall = null,
   }) {
-    return _then(_$PaywallClosed(
-      paywall == freezed
+    return _then(_$PaywallClosedImpl(
+      null == paywall
           ? _value.paywall
           : paywall // ignore: cast_nullable_to_non_nullable
               as ApphudPaywall,
@@ -770,8 +766,8 @@ class __$$PaywallClosedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PaywallClosed extends PaywallClosed {
-  const _$PaywallClosed(this.paywall) : super._();
+class _$PaywallClosedImpl extends PaywallClosed {
+  const _$PaywallClosedImpl(this.paywall) : super._();
 
   @override
   final ApphudPaywall paywall;
@@ -785,18 +781,18 @@ class _$PaywallClosed extends PaywallClosed {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PaywallClosed &&
-            const DeepCollectionEquality().equals(other.paywall, paywall));
+            other is _$PaywallClosedImpl &&
+            (identical(other.paywall, paywall) || other.paywall == paywall));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(paywall));
+  int get hashCode => Object.hash(runtimeType, paywall);
 
   @JsonKey(ignore: true)
   @override
-  _$$PaywallClosedCopyWith<_$PaywallClosed> get copyWith =>
-      __$$PaywallClosedCopyWithImpl<_$PaywallClosed>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$PaywallClosedImplCopyWith<_$PaywallClosedImpl> get copyWith =>
+      __$$PaywallClosedImplCopyWithImpl<_$PaywallClosedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -806,8 +802,8 @@ class _$PaywallClosed extends PaywallClosed {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
-    required TResult Function() refreshEntitlements,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) {
     return paywallClosed(paywall);
   }
@@ -815,13 +811,13 @@ class _$PaywallClosed extends PaywallClosed {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? restorePurchases,
-    TResult Function(ApphudProduct product)? purchaseProduct,
-    TResult Function(ApphudProduct product)? grantPromotional,
-    TResult Function(ApphudPaywall paywall)? paywallShown,
-    TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
-    TResult Function()? syncPurchase,
+    TResult? Function()? restorePurchases,
+    TResult? Function(ApphudProduct product)? purchaseProduct,
+    TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudPaywall paywall)? paywallShown,
+    TResult? Function(ApphudPaywall paywall)? paywallClosed,
+    TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) {
     return paywallClosed?.call(paywall);
   }
@@ -834,8 +830,8 @@ class _$PaywallClosed extends PaywallClosed {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) {
     if (paywallClosed != null) {
@@ -852,8 +848,8 @@ class _$PaywallClosed extends PaywallClosed {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
-    required TResult Function(RefreshEntitlements value) refreshEntitlements,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) {
     return paywallClosed(this);
   }
@@ -861,13 +857,13 @@ class _$PaywallClosed extends PaywallClosed {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(RestorePurchases value)? restorePurchases,
-    TResult Function(PurchaseProduct value)? purchaseProduct,
-    TResult Function(GrantPromotional value)? grantPromotional,
-    TResult Function(PaywallShown value)? paywallShown,
-    TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
-    TResult Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(RestorePurchases value)? restorePurchases,
+    TResult? Function(PurchaseProduct value)? purchaseProduct,
+    TResult? Function(GrantPromotional value)? grantPromotional,
+    TResult? Function(PaywallShown value)? paywallShown,
+    TResult? Function(PaywallClosed value)? paywallClosed,
+    TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) {
     return paywallClosed?.call(this);
   }
@@ -880,8 +876,8 @@ class _$PaywallClosed extends PaywallClosed {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) {
     if (paywallClosed != null) {
@@ -892,174 +888,36 @@ class _$PaywallClosed extends PaywallClosed {
 }
 
 abstract class PaywallClosed extends PurchaseEvent {
-  const factory PaywallClosed(final ApphudPaywall paywall) = _$PaywallClosed;
+  const factory PaywallClosed(final ApphudPaywall paywall) =
+      _$PaywallClosedImpl;
   const PaywallClosed._() : super._();
 
   ApphudPaywall get paywall;
   @JsonKey(ignore: true)
-  _$$PaywallClosedCopyWith<_$PaywallClosed> get copyWith =>
+  _$$PaywallClosedImplCopyWith<_$PaywallClosedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$RefreshEntitlementsCopyWith<$Res> {
-  factory _$$RefreshEntitlementsCopyWith(_$RefreshEntitlements value,
-          $Res Function(_$RefreshEntitlements) then) =
-      __$$RefreshEntitlementsCopyWithImpl<$Res>;
+abstract class _$$SyncPurchaseImplCopyWith<$Res> {
+  factory _$$SyncPurchaseImplCopyWith(
+          _$SyncPurchaseImpl value, $Res Function(_$SyncPurchaseImpl) then) =
+      __$$SyncPurchaseImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$RefreshEntitlementsCopyWithImpl<$Res>
-    extends _$PurchaseEventCopyWithImpl<$Res>
-    implements _$$RefreshEntitlementsCopyWith<$Res> {
-  __$$RefreshEntitlementsCopyWithImpl(
-      _$RefreshEntitlements _value, $Res Function(_$RefreshEntitlements) _then)
-      : super(_value, (v) => _then(v as _$RefreshEntitlements));
-
-  @override
-  _$RefreshEntitlements get _value => super._value as _$RefreshEntitlements;
+class __$$SyncPurchaseImplCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res, _$SyncPurchaseImpl>
+    implements _$$SyncPurchaseImplCopyWith<$Res> {
+  __$$SyncPurchaseImplCopyWithImpl(
+      _$SyncPurchaseImpl _value, $Res Function(_$SyncPurchaseImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$RefreshEntitlements extends RefreshEntitlements {
-  const _$RefreshEntitlements() : super._();
-
-  @override
-  String toString() {
-    return 'PurchaseEvent.refreshEntitlements()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$RefreshEntitlements);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() restorePurchases,
-    required TResult Function(ApphudProduct product) purchaseProduct,
-    required TResult Function(ApphudProduct product) grantPromotional,
-    required TResult Function(ApphudPaywall paywall) paywallShown,
-    required TResult Function(ApphudPaywall paywall) paywallClosed,
-    required TResult Function() refreshEntitlements,
-    required TResult Function() syncPurchase,
-  }) {
-    return refreshEntitlements();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? restorePurchases,
-    TResult Function(ApphudProduct product)? purchaseProduct,
-    TResult Function(ApphudProduct product)? grantPromotional,
-    TResult Function(ApphudPaywall paywall)? paywallShown,
-    TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
-    TResult Function()? syncPurchase,
-  }) {
-    return refreshEntitlements?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? restorePurchases,
-    TResult Function(ApphudProduct product)? purchaseProduct,
-    TResult Function(ApphudProduct product)? grantPromotional,
-    TResult Function(ApphudPaywall paywall)? paywallShown,
-    TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
-    TResult Function()? syncPurchase,
-    required TResult orElse(),
-  }) {
-    if (refreshEntitlements != null) {
-      return refreshEntitlements();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(RestorePurchases value) restorePurchases,
-    required TResult Function(PurchaseProduct value) purchaseProduct,
-    required TResult Function(GrantPromotional value) grantPromotional,
-    required TResult Function(PaywallShown value) paywallShown,
-    required TResult Function(PaywallClosed value) paywallClosed,
-    required TResult Function(RefreshEntitlements value) refreshEntitlements,
-    required TResult Function(SyncPurchase value) syncPurchase,
-  }) {
-    return refreshEntitlements(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(RestorePurchases value)? restorePurchases,
-    TResult Function(PurchaseProduct value)? purchaseProduct,
-    TResult Function(GrantPromotional value)? grantPromotional,
-    TResult Function(PaywallShown value)? paywallShown,
-    TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
-    TResult Function(SyncPurchase value)? syncPurchase,
-  }) {
-    return refreshEntitlements?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(RestorePurchases value)? restorePurchases,
-    TResult Function(PurchaseProduct value)? purchaseProduct,
-    TResult Function(GrantPromotional value)? grantPromotional,
-    TResult Function(PaywallShown value)? paywallShown,
-    TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
-    TResult Function(SyncPurchase value)? syncPurchase,
-    required TResult orElse(),
-  }) {
-    if (refreshEntitlements != null) {
-      return refreshEntitlements(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class RefreshEntitlements extends PurchaseEvent {
-  const factory RefreshEntitlements() = _$RefreshEntitlements;
-  const RefreshEntitlements._() : super._();
-}
-
-/// @nodoc
-abstract class _$$SyncPurchaseCopyWith<$Res> {
-  factory _$$SyncPurchaseCopyWith(
-          _$SyncPurchase value, $Res Function(_$SyncPurchase) then) =
-      __$$SyncPurchaseCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$SyncPurchaseCopyWithImpl<$Res>
-    extends _$PurchaseEventCopyWithImpl<$Res>
-    implements _$$SyncPurchaseCopyWith<$Res> {
-  __$$SyncPurchaseCopyWithImpl(
-      _$SyncPurchase _value, $Res Function(_$SyncPurchase) _then)
-      : super(_value, (v) => _then(v as _$SyncPurchase));
-
-  @override
-  _$SyncPurchase get _value => super._value as _$SyncPurchase;
-}
-
-/// @nodoc
-
-class _$SyncPurchase extends SyncPurchase {
-  const _$SyncPurchase() : super._();
+class _$SyncPurchaseImpl extends SyncPurchase {
+  const _$SyncPurchaseImpl() : super._();
 
   @override
   String toString() {
@@ -1069,7 +927,7 @@ class _$SyncPurchase extends SyncPurchase {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SyncPurchase);
+        (other.runtimeType == runtimeType && other is _$SyncPurchaseImpl);
   }
 
   @override
@@ -1083,8 +941,8 @@ class _$SyncPurchase extends SyncPurchase {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
-    required TResult Function() refreshEntitlements,
     required TResult Function() syncPurchase,
+    required TResult Function() callAll,
   }) {
     return syncPurchase();
   }
@@ -1092,13 +950,13 @@ class _$SyncPurchase extends SyncPurchase {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? restorePurchases,
-    TResult Function(ApphudProduct product)? purchaseProduct,
-    TResult Function(ApphudProduct product)? grantPromotional,
-    TResult Function(ApphudPaywall paywall)? paywallShown,
-    TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
-    TResult Function()? syncPurchase,
+    TResult? Function()? restorePurchases,
+    TResult? Function(ApphudProduct product)? purchaseProduct,
+    TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudPaywall paywall)? paywallShown,
+    TResult? Function(ApphudPaywall paywall)? paywallClosed,
+    TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
   }) {
     return syncPurchase?.call();
   }
@@ -1111,8 +969,8 @@ class _$SyncPurchase extends SyncPurchase {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
-    TResult Function()? refreshEntitlements,
     TResult Function()? syncPurchase,
+    TResult Function()? callAll,
     required TResult orElse(),
   }) {
     if (syncPurchase != null) {
@@ -1129,8 +987,8 @@ class _$SyncPurchase extends SyncPurchase {
     required TResult Function(GrantPromotional value) grantPromotional,
     required TResult Function(PaywallShown value) paywallShown,
     required TResult Function(PaywallClosed value) paywallClosed,
-    required TResult Function(RefreshEntitlements value) refreshEntitlements,
     required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
   }) {
     return syncPurchase(this);
   }
@@ -1138,13 +996,13 @@ class _$SyncPurchase extends SyncPurchase {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(RestorePurchases value)? restorePurchases,
-    TResult Function(PurchaseProduct value)? purchaseProduct,
-    TResult Function(GrantPromotional value)? grantPromotional,
-    TResult Function(PaywallShown value)? paywallShown,
-    TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
-    TResult Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(RestorePurchases value)? restorePurchases,
+    TResult? Function(PurchaseProduct value)? purchaseProduct,
+    TResult? Function(GrantPromotional value)? grantPromotional,
+    TResult? Function(PaywallShown value)? paywallShown,
+    TResult? Function(PaywallClosed value)? paywallClosed,
+    TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
   }) {
     return syncPurchase?.call(this);
   }
@@ -1157,8 +1015,8 @@ class _$SyncPurchase extends SyncPurchase {
     TResult Function(GrantPromotional value)? grantPromotional,
     TResult Function(PaywallShown value)? paywallShown,
     TResult Function(PaywallClosed value)? paywallClosed,
-    TResult Function(RefreshEntitlements value)? refreshEntitlements,
     TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
     required TResult orElse(),
   }) {
     if (syncPurchase != null) {
@@ -1169,6 +1027,139 @@ class _$SyncPurchase extends SyncPurchase {
 }
 
 abstract class SyncPurchase extends PurchaseEvent {
-  const factory SyncPurchase() = _$SyncPurchase;
+  const factory SyncPurchase() = _$SyncPurchaseImpl;
   const SyncPurchase._() : super._();
+}
+
+/// @nodoc
+abstract class _$$CallAllImplCopyWith<$Res> {
+  factory _$$CallAllImplCopyWith(
+          _$CallAllImpl value, $Res Function(_$CallAllImpl) then) =
+      __$$CallAllImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$CallAllImplCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res, _$CallAllImpl>
+    implements _$$CallAllImplCopyWith<$Res> {
+  __$$CallAllImplCopyWithImpl(
+      _$CallAllImpl _value, $Res Function(_$CallAllImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$CallAllImpl extends CallAll {
+  const _$CallAllImpl() : super._();
+
+  @override
+  String toString() {
+    return 'PurchaseEvent.callAll()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$CallAllImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() restorePurchases,
+    required TResult Function(ApphudProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudPaywall paywall) paywallShown,
+    required TResult Function(ApphudPaywall paywall) paywallClosed,
+    required TResult Function() syncPurchase,
+    required TResult Function() callAll,
+  }) {
+    return callAll();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? restorePurchases,
+    TResult? Function(ApphudProduct product)? purchaseProduct,
+    TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudPaywall paywall)? paywallShown,
+    TResult? Function(ApphudPaywall paywall)? paywallClosed,
+    TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
+  }) {
+    return callAll?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudPaywall paywall)? paywallShown,
+    TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? syncPurchase,
+    TResult Function()? callAll,
+    required TResult orElse(),
+  }) {
+    if (callAll != null) {
+      return callAll();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RestorePurchases value) restorePurchases,
+    required TResult Function(PurchaseProduct value) purchaseProduct,
+    required TResult Function(GrantPromotional value) grantPromotional,
+    required TResult Function(PaywallShown value) paywallShown,
+    required TResult Function(PaywallClosed value) paywallClosed,
+    required TResult Function(SyncPurchase value) syncPurchase,
+    required TResult Function(CallAll value) callAll,
+  }) {
+    return callAll(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RestorePurchases value)? restorePurchases,
+    TResult? Function(PurchaseProduct value)? purchaseProduct,
+    TResult? Function(GrantPromotional value)? grantPromotional,
+    TResult? Function(PaywallShown value)? paywallShown,
+    TResult? Function(PaywallClosed value)? paywallClosed,
+    TResult? Function(SyncPurchase value)? syncPurchase,
+    TResult? Function(CallAll value)? callAll,
+  }) {
+    return callAll?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RestorePurchases value)? restorePurchases,
+    TResult Function(PurchaseProduct value)? purchaseProduct,
+    TResult Function(GrantPromotional value)? grantPromotional,
+    TResult Function(PaywallShown value)? paywallShown,
+    TResult Function(PaywallClosed value)? paywallClosed,
+    TResult Function(SyncPurchase value)? syncPurchase,
+    TResult Function(CallAll value)? callAll,
+    required TResult orElse(),
+  }) {
+    if (callAll != null) {
+      return callAll(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CallAll extends PurchaseEvent {
+  const factory CallAll() = _$CallAllImpl;
+  const CallAll._() : super._();
 }

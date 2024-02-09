@@ -12,14 +12,21 @@ final class GrantPromotionalRequest: Request {
     typealias ArgumentProvider = GrantPromotionalArgumentParser
 
     func startRequest(arguments: ArgumentProvider.ArgumentType, result: @escaping FlutterResult) {
-        Apphud.grantPromotional(daysCount: arguments.daysCount, productId: arguments.productId, permissionGroup:arguments.permissionGroup){
-            retValue in result(retValue)
+        Task {
+            let permissionGroups = await Apphud.permissionGroups()
+            let permissionGroup = permissionGroups?.first { group in
+                return group.name == arguments.permissionGroupName
+            }
+            
+            Apphud.grantPromotional(daysCount: arguments.daysCount, productId: arguments.productId, permissionGroup:permissionGroup){
+                retValue in result(retValue)
+            }
         }
     }
 }
 
 final class  GrantPromotionalArgumentParser: Parser {
-    typealias ArgumentType = (daysCount: Int, productId: String?, permissionGroup: ApphudGroup?)
+    typealias ArgumentType = (daysCount: Int, productId: String?, permissionGroupName: String?)
 
     func parse(args: [String : Any]?) throws -> (ArgumentType) {
         guard let args = args, let daysCount = args["daysCount"] as? Int else {
@@ -27,9 +34,6 @@ final class  GrantPromotionalArgumentParser: Parser {
         }
         let productId = args["productId"] as? String
         let permissionGroupName = args["permissionGroupName"] as? String
-        let permissionGroup = Apphud.permissionGroups.first { group in
-            return group.name == permissionGroupName
-        }
-        return (daysCount:daysCount, productId:productId, permissionGroup:permissionGroup)
+        return (daysCount:daysCount, productId:productId, permissionGroupName:permissionGroupName)
     }
 }

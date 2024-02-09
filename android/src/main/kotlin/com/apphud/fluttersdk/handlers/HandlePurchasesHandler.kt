@@ -27,17 +27,12 @@ class HandlePurchasesHandler(
             HandlePurchasesRoutes.subscription.name -> subscription(result)
             HandlePurchasesRoutes.subscriptions.name -> subscriptions(result)
             HandlePurchasesRoutes.nonRenewingPurchases.name -> nonRenewingPurchases(result)
-            HandlePurchasesRoutes.isNonRenewingPurchaseActive.name -> IsNonRenewingPurchaseActiveParser(
-                result
-            ).parse(args) { productId ->
-                isNonRenewingPurchaseActive(productId, result)
-            }
+            HandlePurchasesRoutes.isNonRenewingPurchaseActive.name ->
+                IsNonRenewingPurchaseActiveParser(result).parse(args) { productId ->
+                    isNonRenewingPurchaseActive(productId, result)
+                }
 
             HandlePurchasesRoutes.restorePurchases.name -> restorePurchases(result)
-            HandlePurchasesRoutes.migratePurchasesIfNeeded.name -> result.notImplemented()
-            HandlePurchasesRoutes.fetchRawReceiptInfo.name -> result.notImplemented()
-            HandlePurchasesRoutes.validateReceipt.name -> result.notImplemented()
-            HandlePurchasesRoutes.appStoreReceipt.name -> result.notImplemented()
             HandlePurchasesRoutes.hasPremiumAccess.name -> hasPremiumAccess(result)
         }
     }
@@ -130,10 +125,6 @@ enum class HandlePurchasesRoutes {
     nonRenewingPurchases,
     isNonRenewingPurchaseActive,
     restorePurchases,
-    migratePurchasesIfNeeded,
-    fetchRawReceiptInfo,
-    validateReceipt,
-    appStoreReceipt,
     hasPremiumAccess;
 
     companion object Mapper {

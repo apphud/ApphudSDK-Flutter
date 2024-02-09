@@ -1,21 +1,25 @@
 import ApphudSDK
-import iAd
+import AdServices
 
 final class CollectSearchAdsAttributionRequest: Request {
     typealias ArgumentProvider = CollectSearchAdsAttributionParser
-
-   func startRequest(arguments: CollectSearchAdsAttributionParser.ArgumentType, result: @escaping FlutterResult) {
-        ADClient.shared().requestAttributionDetails { (data, error) in
-                 if let data = data {
-                     Apphud.addAttribution(data: data, from: .appleSearchAds, callback: nil)
-                     result(nil)
-                 } else {
-                      result(error == nil ? nil : ["message": error?.localizedDescription])
-                 }
-             }
-       }
+    
+    func startRequest(arguments: CollectSearchAdsAttributionParser.ArgumentType, result: @escaping FlutterResult) {
+        if #available(iOS 14.3, *) {
+            DispatchQueue.global(qos: .default).async {
+                if let token = try? AAAttribution.attributionToken() {
+                    DispatchQueue.main.async {
+                        Apphud.addAttribution(data: nil, from: .appleAdsAttribution, identifer: token, callback: nil)
+                        result(nil)
+                    }
+                }
+            }
+        } else {
+            result(nil)
+        }
+    }
 }
-
+    
 final class CollectSearchAdsAttributionParser: Parser {
-    typealias ArgumentType = ()
+     typealias ArgumentType = ()
 }

@@ -13,11 +13,11 @@ ApphudProduct _$ApphudProductFromJson(Map json) => ApphudProduct(
       productDetails: json['productDetails'] == null
           ? null
           : ProductDetailsWrapper.fromJson(json['productDetails'] as Map),
-      paywallId: json['paywallId'] as String?,
       paywallIdentifier: json['paywallIdentifier'] as String?,
       skProduct: json['skProduct'] == null
           ? null
           : SKProductWrapper.fromJson(json['skProduct'] as Map),
+      placementIdentifier: json['placementIdentifier'] as String?,
     );
 
 Map<String, dynamic> _$ApphudProductToJson(ApphudProduct instance) =>
@@ -27,6 +27,6 @@ Map<String, dynamic> _$ApphudProductToJson(ApphudProduct instance) =>
       'name': instance.name,
       'productDetails': instance.productDetails,
       'skProduct': instance.skProduct,
-      'paywallId': instance.paywallId,
       'paywallIdentifier': instance.paywallIdentifier,
+      'placementIdentifier': instance.placementIdentifier,
     };

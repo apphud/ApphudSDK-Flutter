@@ -11,7 +11,7 @@ import StoreKit
 final class PurchaseRequest: Request {
     typealias ArgumentProvider = PurchaseArgumentParser
 
-    func startRequest(arguments: (String), result: @escaping FlutterResult) {
+    @MainActor func startRequest(arguments: (String), result: @escaping FlutterResult) {
         Apphud.purchase(arguments) { (response) in
                 result(response.toMap())
         }

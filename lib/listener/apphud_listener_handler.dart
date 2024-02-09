@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:apphud/listener/apphud_listener.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
+import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
+import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:flutter/services.dart';
 import 'package:apphud/models/extensions.dart';
@@ -46,6 +48,9 @@ class ApphudListenerHandler {
       case 'apphudNonRenewingPurchasesUpdated':
         unawaited(_handleApphudNonRenewingPurchasesUpdated(call.arguments));
         break;
+      case 'placementsDidFullyLoad':
+        unawaited(_handlePlacementsDidFullyLoad(call.arguments));
+        break;
     }
   }
 
@@ -70,7 +75,7 @@ class ApphudListenerHandler {
 
   Future<void> _handleUserDidLoad(dynamic arguments) async {
     final Map<dynamic, dynamic> map = arguments;
-    unawaited(_listener.userDidLoad(ApphudPaywalls.fromJson(map)));
+    unawaited(_listener.userDidLoad(ApphudUser.fromJson(map)));
   }
 
   Future<void> _handleApphudSubscriptionsUpdated(dynamic arguments) async {
@@ -94,6 +99,16 @@ class ApphudListenerHandler {
         .toList();
 
     unawaited(_listener.apphudNonRenewingPurchasesUpdated(purchases));
+  }
+
+  Future<void> _handlePlacementsDidFullyLoad(dynamic arguments) async {
+    final List<Map<dynamic, dynamic>> placementsMap =
+        (arguments as List<dynamic>).toMapList;
+
+    final List<ApphudPlacement> placements =
+        placementsMap.map((json) => ApphudPlacement.fromJson(json)).toList();
+
+    unawaited(_listener.placementsDidFullyLoad(placements));
   }
 
   void dispose() {

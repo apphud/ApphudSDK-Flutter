@@ -11,7 +11,7 @@ final class UserIDRequest: Request {
 
     typealias ArgumentProvider = UserIDArgumentParser
 
-    func startRequest(arguments: (), result: @escaping FlutterResult) {
+    @MainActor func startRequest(arguments: (), result: @escaping FlutterResult) {
         let response = Apphud.userID()
         result(response)
     }

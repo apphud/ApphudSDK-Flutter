@@ -10,7 +10,7 @@ import ApphudSDK
 final class RestorePurchasesRequest: Request {
     typealias ArgumentProvider = RestorePurchasesArgumentParser
     
-    func startRequest(arguments: RestorePurchasesArgumentParser.ArgumentType, result: @escaping FlutterResult) {
+    @MainActor func startRequest(arguments: RestorePurchasesArgumentParser.ArgumentType, result: @escaping FlutterResult) {
         Apphud.restorePurchases { (subscriptions, nrPurchases, error) in
                 let subscriptionsJson = subscriptions?.map({ subscription in
                     subscription.toMap()

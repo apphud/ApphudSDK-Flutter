@@ -22,7 +22,7 @@ class PurchaseEvent with _$PurchaseEvent {
   const factory PurchaseEvent.paywallClosed(ApphudPaywall paywall) =
       PaywallClosed;
 
-  const factory PurchaseEvent.refreshEntitlements() = RefreshEntitlements;
-
   const factory PurchaseEvent.syncPurchase() = SyncPurchase;
+
+  const factory PurchaseEvent.callAll() = CallAll;
 }

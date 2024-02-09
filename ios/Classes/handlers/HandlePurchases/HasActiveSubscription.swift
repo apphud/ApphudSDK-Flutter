@@ -10,7 +10,7 @@ import ApphudSDK
 final class HasActiveSubscriptionRequest: Request {
     typealias ArgumentProvider = HasActiveSubscriptionArgumentParser
 
-    func startRequest(arguments: DeviceIDArgumentParser.ArgumentType, result: @escaping FlutterResult) {
+    @MainActor func startRequest(arguments: DeviceIDArgumentParser.ArgumentType, result: @escaping FlutterResult) {
         let response = Apphud.hasActiveSubscription()
         result(response)
     }

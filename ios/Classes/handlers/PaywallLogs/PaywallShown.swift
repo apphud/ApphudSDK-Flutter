@@ -12,11 +12,23 @@ final class PaywallShownRequest: Request {
     typealias ArgumentProvider = PaywallArgumentParser
 
     func startRequest(arguments: PaywallArgumentParser.ArgumentType, result: @escaping FlutterResult) {
-        Apphud.getPaywalls { (paywalls:[ApphudPaywall]?, _ ) in
-            if let paywall = paywalls?.first(where: { pw in return pw.identifier==arguments }) {
-                Apphud.paywallShown(paywall)
+        Task{@MainActor in
+            let paywallIdentifier = arguments.paywallIdentifier
+            let placementIdentifier = arguments.placementIdentifier
+            
+            var paywall:ApphudPaywall?
+            
+            if(placementIdentifier != nil) {
+                let placements = await Apphud.placements()
+                paywall = placements.first(where: {pl in pl.identifier == placementIdentifier})?.paywall
+            } else {
+            let paywalls = await Apphud.paywalls()
+            paywall = paywalls.first(where: { pw in return pw.identifier == paywallIdentifier })
             }
+            if(paywall != nil) {
+                Apphud.paywallShown(paywall!)
+            }
+            result(nil)
         }
-        result(nil)
     }
 }

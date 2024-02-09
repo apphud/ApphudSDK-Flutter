@@ -28,9 +28,7 @@ extension ApphudSubscription {
                 "isAutorenewEnabled": isAutorenewEnabled,
                 "isIntroductoryActivated": isIntroductoryActivated,
                 "isActive" : isActive(),
-                "status" : status.toString(),
-                "isSandbox" : isSandbox,
-                "isLocal" : isLocal
+                "status" : status.toString()
         ]
     }
 }
@@ -64,8 +62,6 @@ extension ApphudNonRenewingPurchase {
         return ["productId": productId as Any,
                 "purchasedAt": purchasedAt.timeIntervalSince1970,
                 "canceledAt": canceledAt?.timeIntervalSince1970,
-                "isSandbox" : isSandbox,
-                "isLocal" : isLocal,
                 "isActive" : isActive()
         ]
     }
@@ -75,7 +71,8 @@ extension SKPaymentTransaction {
     func toMap() -> [String: Any?] {
         return ["transactionIdentifier":transactionIdentifier,
                 "transactionDate":transactionDate?.timeIntervalSince1970,
-                "payment": payment.toMap()
+                "productIdentifier": payment.productIdentifier,
+                "state":transactionState.rawValue
         ]
     }
 }

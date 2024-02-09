@@ -1,9 +1,7 @@
 package com.apphud.fluttersdk
 
-import com.android.billingclient.api.AccountIdentifiers
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
-import com.android.billingclient.api.SkuDetails
 import com.apphud.sdk.ApphudError
 import com.apphud.sdk.domain.*
 import java.util.*
@@ -12,22 +10,21 @@ import kotlin.collections.HashMap
 fun ApphudPaywall.toMap(): HashMap<String, Any?> {
     return hashMapOf(
         "identifier" to identifier,
-        "isDefault" to default,
         "experimentName" to experimentName,
-        "variationName" to variationName,
         "json" to json,
-        "products" to products?.map { it.toMap() }
+        "products" to products?.map { it.toMap() },
+        "placementIdentifier" to placementIdentifier
     )
 }
 
 fun ApphudProduct.toMap(): HashMap<String, Any?> {
     return hashMapOf(
-        "productId" to product_id,
+        "productId" to productId,
         "name" to name,
         "store" to store,
-        "paywallId" to paywall_id,
         "productDetails" to productDetails?.toMap(),
-        "paywallIdentifier" to paywall_identifier
+        "paywallIdentifier" to paywallIdentifier,
+        "placementIdentifier" to placementIdentifier
     )
 }
 
@@ -83,28 +80,12 @@ fun ApphudError.toMap(): HashMap<String, Any?> {
 fun Purchase.toMap(): HashMap<String, Any?> {
     return hashMapOf(
         "purchaseState" to purchaseState,
-        "quantity" to quantity,
         "purchaseTime" to purchaseTime,
-        "accountIdentifiers" to accountIdentifiers?.toMap(),
-        "developerPayload" to developerPayload,
         "orderId" to orderId,
-        "originalJson" to originalJson,
-        "packageName" to packageName,
         "purchaseToken" to purchaseToken,
-        "signature" to signature,
-        "products" to products,
-        "isAcknowledged" to isAcknowledged,
-        "isAutoRenewing" to isAutoRenewing
+        "productId" to if (products.isEmpty()) null else products[0],
     )
 }
-
-fun AccountIdentifiers.toMap(): HashMap<String, Any?> {
-    return hashMapOf(
-        "obfuscatedAccountId" to obfuscatedAccountId,
-        "obfuscatedProfileId" to obfuscatedProfileId,
-    )
-}
-
 
 fun ApphudNonRenewingPurchase.toMap(): HashMap<String, Any?> {
     return hashMapOf(
@@ -146,14 +127,36 @@ fun Map<String, Any>.toApphudProduct(): ApphudProduct {
         ?: throw IllegalArgumentException("store is required argument")
     val paywallId = this["paywallId"] as? String
     val paywallIdentifier = this["paywallIdentifier"] as? String
-
+    val placementIdentifier = this["placementIdentifier"] as? String
     return ApphudProduct(
         id = id,
-        product_id = productId,
+        productId = productId,
         name = name,
         store = store,
-        paywall_id = paywallId,
+        paywallId = paywallId,
         productDetails = null,
-        paywall_identifier = paywallIdentifier
+        paywallIdentifier = paywallIdentifier,
+        placementIdentifier = placementIdentifier,
+        placementId = null,
+        basePlanId = null
+    )
+}
+
+fun ApphudPlacement.toMap(): HashMap<String, Any?> {
+    return hashMapOf(
+        "identifier" to identifier,
+        "paywall" to paywall?.toMap(),
+        "experimentName" to experimentName
+    )
+}
+
+fun ApphudUser.toMap(): HashMap<String, Any?> {
+    return hashMapOf(
+        "userId" to userId,
+        "subscriptions" to subscriptions.map { s -> s.toMap() },
+        "purchases" to purchases.map { p -> p.toMap() },
+        "rawPlacements" to rawPlacements().map { p -> p.toMap() },
+        "rawPaywalls" to rawPaywalls().map { p -> p.toMap() },
+        "hasPurchases" to hasPurchases()
     )
 }

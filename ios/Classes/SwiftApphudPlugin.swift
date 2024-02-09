@@ -15,6 +15,7 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         OthersHandler(),
         PaywallLogsHandler(),
         PromotionalsHandler(),
+        PlacementsHandler(),
     ]
 
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -36,8 +37,7 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         }
     }
     private static func setHeaders() {
-        let sdkVersion = Bundle(identifier: "org.cocoapods.apphud")?.infoDictionary?["CFBundleShortVersionString"] as? String
         ApphudHttpClient.shared.sdkType = "Flutter"
-        ApphudHttpClient.shared.sdkVersion = sdkVersion ?? "unknown"
+        ApphudHttpClient.shared.sdkVersion = "2.4.0"
     }
 }

@@ -9,15 +9,15 @@ import ApphudSDK
 import StoreKit
 
 final class ProductsRequest: Request {
-
+    
     typealias ArgumentProvider = ProductsArgumentParser
-
+    
     func startRequest(arguments: (), result: @escaping FlutterResult) {
         if let products = Apphud.products {
             result(products.map{ product in product.toMap()})
             return
         }
-        Apphud.productsDidFetchCallback { (products,error) in
+        Apphud.fetchProducts{(products,error) in
             if(error == nil){
                 result(products.map{ product in product.toMap()})
             } else {

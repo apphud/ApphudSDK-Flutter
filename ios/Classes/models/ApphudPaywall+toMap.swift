@@ -10,12 +10,10 @@ import ApphudSDK
 extension ApphudPaywall {
     func toMap() -> [String: Any?] {
         return ["identifier": identifier,
-                "isDefault": isDefault,
                 "json": json,
                 "products" : products.map({ (product:ApphudProduct) in product.toMap() }),
                 "experimentName" : experimentName,
-                "variationName" : variationName,
-                "fromPaywall" : fromPaywall,
+                "placementIdentifier" : placementIdentifier,
         ]
     }
 }
@@ -26,7 +24,7 @@ extension ApphudProduct {
                 "name" : name,
                 "store" :store,
                 "paywallIdentifier" : paywallIdentifier,
-                "paywallId": paywallId,
+                "placementIdentifier" : placementIdentifier,
                 "skProduct" : skProduct?.toMap()
         ]
     }

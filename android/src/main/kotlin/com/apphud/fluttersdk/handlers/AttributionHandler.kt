@@ -19,14 +19,13 @@ class AttributionHandler(
             AttributionRoutes.addAttribution.name -> AttributionParser(result).parse(args) { provider, data, identifier ->
                 addAttribution(provider, data, identifier, result)
             }
-
             AttributionRoutes.collectSearchAdsAttribution.name -> result.notImplemented()
         }
     }
 
     private fun addAttribution(
         provider: ApphudAttributionProvider,
-        data: Map<String, Any>,
+        data: Map<String, Any>?,
         identifier: String?, result: MethodChannel.Result
     ) {
         Apphud.addAttribution(provider, data, identifier)
@@ -37,7 +36,7 @@ class AttributionHandler(
         fun parse(
             args: Map<String, Any>?, callback: (
                 provider: ApphudAttributionProvider,
-                data: Map<String, Any>,
+                data: Map<String, Any>?,
                 identifier: String?
             ) -> Unit
         ) {
@@ -47,8 +46,7 @@ class AttributionHandler(
                     ?: throw IllegalArgumentException("provider is required argument")
                 val provider = getProviderFromString(providerString)
                     ?: throw IllegalArgumentException("You need to pass correct attribution provider")
-                val data = args["data"] as? Map<String, Any>
-                    ?: throw IllegalArgumentException("data is required argument")
+                val data = args["data"] as? Map<String, Any>?
                 val identifier = args["identifier"] as? String
 
                 callback(provider, data, identifier)
@@ -61,9 +59,7 @@ class AttributionHandler(
             return when (providerString) {
                 "appsFlyer" -> ApphudAttributionProvider.appsFlyer
                 "adjust" -> ApphudAttributionProvider.adjust
-                "facebook" -> ApphudAttributionProvider.facebook
                 "firebase" -> ApphudAttributionProvider.firebase
-                "appleSearchAds" -> throw IllegalArgumentException("appleSearchAds can not be provider for android platform")
                 "appleAdsAttribution" -> throw IllegalArgumentException("appleAdsAttribution can not be provider for android platform")
                 else -> {
                     return null

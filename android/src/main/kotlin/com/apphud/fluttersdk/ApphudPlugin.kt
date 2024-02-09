@@ -133,13 +133,14 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 context = this.context,
                 handleOnMainThread
             ),
-            PromotionalsHandler(PromotionalsRoutes.stringValues(), handleOnMainThread)
+            PromotionalsHandler(PromotionalsRoutes.stringValues(), handleOnMainThread),
+            PlacementsHandler(handleOnMainThread)
         )
     }
 
     private fun setHeaders() {
         HeadersInterceptor.X_SDK = "Flutter"
-        HeadersInterceptor.X_SDK_VERSION = BuildConfig.APPHUD_FLUTTER_SDK_VERSION
+        HeadersInterceptor.X_SDK_VERSION = "2.4.0"
     }
 
     override fun onDetachedFromActivityForConfigChanges() {

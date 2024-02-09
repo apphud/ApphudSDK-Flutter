@@ -13,10 +13,10 @@ final class GetPaywallsRequest: Request {
     typealias ArgumentProvider = GetPaywallsArgumentParser
 
     func startRequest(arguments: (), result: @escaping FlutterResult) {
-        Apphud.getPaywalls { (paywalls: [ApphudPaywall]?,error: Error?) in
+        Task{ @MainActor in
+            let paywalls = await Apphud.paywalls()
             result([
-                "paywalls" : paywalls?.map({ (paywall: ApphudPaywall) in paywall.toMap() }),
-                "error": error == nil ? nil : ["message": error?.localizedDescription]
+                "paywalls" : paywalls.map({ (paywall: ApphudPaywall) in paywall.toMap() }),
             ])
         }
     }

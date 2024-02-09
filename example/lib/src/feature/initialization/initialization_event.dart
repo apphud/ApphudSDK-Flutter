@@ -1,4 +1,5 @@
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
+import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'initialization_event.freezed.dart';
@@ -11,4 +12,7 @@ class InitializationEvent with _$InitializationEvent {
 
   const factory InitializationEvent.paywallsFetchSuccess(
       ApphudPaywalls paywalls) = PaywallsFetchSuccess;
+
+  const factory InitializationEvent.placementsFetchSuccess(
+      List<ApphudPlacement> placements) = PlacementsFetchSuccess;
 }

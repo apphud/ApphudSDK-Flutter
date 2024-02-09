@@ -10,7 +10,7 @@ import ApphudSDK
 final class UpdateUserIDRequest: Request {
     typealias ArgumentProvider = UpdateUserIDArgumentParser
 
-    func startRequest(arguments: (String), result: @escaping FlutterResult) {
+    @MainActor func startRequest(arguments: (String), result: @escaping FlutterResult) {
         Apphud.updateUserID(arguments)
         result(nil)
     }

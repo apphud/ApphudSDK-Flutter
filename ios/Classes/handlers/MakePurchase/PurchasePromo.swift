@@ -12,7 +12,6 @@ final class PurchasePromoRequest: Request {
     typealias ArgumentProvider = PurchasePromoArgumentParser
 
     func startRequest(arguments: (productId: String, discountID: String), result: @escaping FlutterResult) {
-        if #available(iOS 12.2, *) {
             if Apphud.products != nil {
                 guard let product = Apphud.product(productIdentifier: arguments.productId) else {
                     result(["error" : "product with id \(arguments.productId) does not exist"])
@@ -25,10 +24,6 @@ final class PurchasePromoRequest: Request {
             else {
                 result(["error" : "product with id \(arguments.productId) have not loaded yet or does not exist"])
             }
-        }
-        else {
-            result(["error" : "Apphud.purchasePromo is available only on iOS >= 12.2"])
-        }
     }
 }
 

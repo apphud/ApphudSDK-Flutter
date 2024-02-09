@@ -9,12 +9,13 @@ import ApphudSDK
 import StoreKit
 
 final class  PaywallArgumentParser: Parser {
-    typealias ArgumentType = (String)
+    typealias ArgumentType = (paywallIdentifier:String, placementIdentifier: String?)
 
-    func parse(args: [String : Any]?) throws -> (String) {
-        guard let args = args, let identifier = args["identifier"] as? String else {
+    func parse(args: [String : Any]?) throws -> (paywallIdentifier:String, placementIdentifier: String?) {
+        guard let args = args, let paywallIdentifier = args["identifier"] as? String else {
             throw(InternalError(code: "400", message: "identifier is required argument"))
         }
-        return identifier
+        let placementIdentifier = args["placementIdentifier"] as? String
+        return (paywallIdentifier, placementIdentifier)
     }
 }

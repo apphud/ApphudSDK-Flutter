@@ -1,3 +1,41 @@
+## 2.4.0
+- Placements: Offers a strategic method to integrate paywalls throughout your app. This feature allows developers to position paywalls effectively in different app sections, such as onboarding or settings, targeting distinct user audiences. For more comprehensive information, please refer to our Placements guide.
+- [iOS], [Android] **BREAKING** Property 'variationName' were removed from ApphudPaywall, which was confusing developers and lead to incorrect implementations.
+- [iOS] **BREAKING** Method 'didFetchProductsNotification' was removed.
+- [iOS], [Android] **BREAKING** Method 'productsDidFetchCallback' was removed.
+- [iOS] **BREAKING** Method 'refreshStoreKitProducts' was removed.
+- [iOS], [Android] **BREAKING** Method 'purchaseWithoutValidation' was removed.
+- [iOS] **BREAKING** Method 'didPurchaseFromPaywall' was removed.
+- [Android] **BREAKING** Method 'refreshEntitlements' was removed.
+- [iOS] **BREAKING** Method 'validateReceipt' was removed.
+- [iOS] **BREAKING** Method 'migratePurchasesIfNeeded' was removed.
+- [iOS] **BREAKING** Method 'appStoreReceipt' was removed.
+- [iOS] **BREAKING** Method 'fetchRawReceiptInfo' was removed.
+- [iOS] **BREAKING** Method 'isSandbox' was removed.
+- [Android] **BREAKING** Class 'AndroidAccountIdentifiersWrapper' was removed.
+- [Android] **BREAKING** Method 'syncPurchases' was renamed to 'syncPurchasesInObserverMode'. The 'paywallIdentifier' parameter was removed.
+- [Android] **BREAKING** Class 'AndroidPurchaseWrapper' was modified.
+- [Android], [iOS] **BREAKING** Class 'ApphudNonRenewingPurchase' was modified.
+- [Android], [iOS] **BREAKING** Class 'ApphudPaywall' was modified.
+- [Android], [iOS] **BREAKING** Class 'ApphudProduct' was modified.
+- [Android], [iOS] **BREAKING** Class 'ApphudSubscriptionWrapper' was modified.
+- [Android], [iOS] Method 'products' always returns 'ApphudProductComposite' list. 
+- [Android], [iOS] **BREAKING**  'ApphudAttributionProvider.appleSearchAds', 'ApphudAttributionProvider.facebook' were modified.
+- [Android], [iOS] some fixes of the example app
+- [iOS], [Android] 'paywallsDidLoadCallback' method was introduced.
+- [iOS], [Android] 'placements' method was introduced.
+- [iOS], [Android] 'placement' method was introduced.
+- [iOS], [Android] 'placementsDidLoadCallback' method was introduced.
+- [iOS], [Android] 'rawPlacements' method was introduced.
+- [iOS], [Android] 'rawPaywalls' method was introduced.
+- [iOS], [Android] The 'start' and 'startManually' methods now return an ApphudUser object.
+- [iOS], [Android] The 'ApphudListener' 'placementsDidFullyLoad' method was introduced.
+- [iOS], [Android] **BREAKING** The 'ApphudListener' 'userDidLoad' method now returns an ApphudUser object.
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 2.3.7
+  - [iOS] 3.2.8
+
 ## 2.3.2
 - [Android] Fixed restore purchase issue in some cases
 

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'navigation_event.dart';
 
@@ -24,8 +24,8 @@ mixin _$NavigationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? toStart,
-    TResult Function()? toHome,
+    TResult? Function()? toStart,
+    TResult? Function()? toHome,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$NavigationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ToStart value)? toStart,
-    TResult Function(ToHome value)? toHome,
+    TResult? Function(ToStart value)? toStart,
+    TResult? Function(ToHome value)? toHome,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,39 +60,40 @@ mixin _$NavigationEvent {
 abstract class $NavigationEventCopyWith<$Res> {
   factory $NavigationEventCopyWith(
           NavigationEvent value, $Res Function(NavigationEvent) then) =
-      _$NavigationEventCopyWithImpl<$Res>;
+      _$NavigationEventCopyWithImpl<$Res, NavigationEvent>;
 }
 
 /// @nodoc
-class _$NavigationEventCopyWithImpl<$Res>
+class _$NavigationEventCopyWithImpl<$Res, $Val extends NavigationEvent>
     implements $NavigationEventCopyWith<$Res> {
   _$NavigationEventCopyWithImpl(this._value, this._then);
 
-  final NavigationEvent _value;
   // ignore: unused_field
-  final $Res Function(NavigationEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$ToStartCopyWith<$Res> {
-  factory _$$ToStartCopyWith(_$ToStart value, $Res Function(_$ToStart) then) =
-      __$$ToStartCopyWithImpl<$Res>;
+abstract class _$$ToStartImplCopyWith<$Res> {
+  factory _$$ToStartImplCopyWith(
+          _$ToStartImpl value, $Res Function(_$ToStartImpl) then) =
+      __$$ToStartImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ToStartCopyWithImpl<$Res> extends _$NavigationEventCopyWithImpl<$Res>
-    implements _$$ToStartCopyWith<$Res> {
-  __$$ToStartCopyWithImpl(_$ToStart _value, $Res Function(_$ToStart) _then)
-      : super(_value, (v) => _then(v as _$ToStart));
-
-  @override
-  _$ToStart get _value => super._value as _$ToStart;
+class __$$ToStartImplCopyWithImpl<$Res>
+    extends _$NavigationEventCopyWithImpl<$Res, _$ToStartImpl>
+    implements _$$ToStartImplCopyWith<$Res> {
+  __$$ToStartImplCopyWithImpl(
+      _$ToStartImpl _value, $Res Function(_$ToStartImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$ToStart extends ToStart {
-  const _$ToStart() : super._();
+class _$ToStartImpl extends ToStart {
+  const _$ToStartImpl() : super._();
 
   @override
   String toString() {
@@ -102,7 +103,7 @@ class _$ToStart extends ToStart {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ToStart);
+        (other.runtimeType == runtimeType && other is _$ToStartImpl);
   }
 
   @override
@@ -120,8 +121,8 @@ class _$ToStart extends ToStart {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? toStart,
-    TResult Function()? toHome,
+    TResult? Function()? toStart,
+    TResult? Function()? toHome,
   }) {
     return toStart?.call();
   }
@@ -151,8 +152,8 @@ class _$ToStart extends ToStart {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ToStart value)? toStart,
-    TResult Function(ToHome value)? toHome,
+    TResult? Function(ToStart value)? toStart,
+    TResult? Function(ToHome value)? toHome,
   }) {
     return toStart?.call(this);
   }
@@ -172,30 +173,30 @@ class _$ToStart extends ToStart {
 }
 
 abstract class ToStart extends NavigationEvent {
-  const factory ToStart() = _$ToStart;
+  const factory ToStart() = _$ToStartImpl;
   const ToStart._() : super._();
 }
 
 /// @nodoc
-abstract class _$$ToHomeCopyWith<$Res> {
-  factory _$$ToHomeCopyWith(_$ToHome value, $Res Function(_$ToHome) then) =
-      __$$ToHomeCopyWithImpl<$Res>;
+abstract class _$$ToHomeImplCopyWith<$Res> {
+  factory _$$ToHomeImplCopyWith(
+          _$ToHomeImpl value, $Res Function(_$ToHomeImpl) then) =
+      __$$ToHomeImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ToHomeCopyWithImpl<$Res> extends _$NavigationEventCopyWithImpl<$Res>
-    implements _$$ToHomeCopyWith<$Res> {
-  __$$ToHomeCopyWithImpl(_$ToHome _value, $Res Function(_$ToHome) _then)
-      : super(_value, (v) => _then(v as _$ToHome));
-
-  @override
-  _$ToHome get _value => super._value as _$ToHome;
+class __$$ToHomeImplCopyWithImpl<$Res>
+    extends _$NavigationEventCopyWithImpl<$Res, _$ToHomeImpl>
+    implements _$$ToHomeImplCopyWith<$Res> {
+  __$$ToHomeImplCopyWithImpl(
+      _$ToHomeImpl _value, $Res Function(_$ToHomeImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$ToHome extends ToHome {
-  const _$ToHome() : super._();
+class _$ToHomeImpl extends ToHome {
+  const _$ToHomeImpl() : super._();
 
   @override
   String toString() {
@@ -205,7 +206,7 @@ class _$ToHome extends ToHome {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ToHome);
+        (other.runtimeType == runtimeType && other is _$ToHomeImpl);
   }
 
   @override
@@ -223,8 +224,8 @@ class _$ToHome extends ToHome {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? toStart,
-    TResult Function()? toHome,
+    TResult? Function()? toStart,
+    TResult? Function()? toHome,
   }) {
     return toHome?.call();
   }
@@ -254,8 +255,8 @@ class _$ToHome extends ToHome {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ToStart value)? toStart,
-    TResult Function(ToHome value)? toHome,
+    TResult? Function(ToStart value)? toStart,
+    TResult? Function(ToHome value)? toHome,
   }) {
     return toHome?.call(this);
   }
@@ -275,6 +276,6 @@ class _$ToHome extends ToHome {
 }
 
 abstract class ToHome extends NavigationEvent {
-  const factory ToHome() = _$ToHome;
+  const factory ToHome() = _$ToHomeImpl;
   const ToHome._() : super._();
 }

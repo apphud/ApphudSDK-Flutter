@@ -14,22 +14,16 @@ extension SKProduct {
         "localizedTitle": localizedTitle,
         "localizedDescription": localizedDescription,
         "priceLocale": priceLocale.toMap(),
-        "price": price.description,
+        "price": price,
         "subscriptionPeriod": subscriptionPeriod?.toMap(),
         "introductoryPrice": introductoryPrice?.toMap(),
         "isDownloadable": isDownloadable,
         "downloadContentLengths": downloadContentLengths.map {$0.intValue},
         "contentVersion": contentVersion,
-        "downloadContentVersion": downloadContentVersion
+        "downloadContentVersion": downloadContentVersion,
+        "subscriptionGroupIdentifier": subscriptionGroupIdentifier,
+        "discounts": discounts.map {$0.toMap()}
     ]
-
-    if #available(iOS 12.0, *) {
-      map["subscriptionGroupIdentifier"] = subscriptionGroupIdentifier
-    }
-
-    if #available(iOS 12.2, *) {
-        map["discounts"] = discounts.map {$0.toMap()}
-    }
 
     if #available(iOS 14.0, *) {
       map["isFamilyShareable"] = isFamilyShareable
@@ -48,7 +42,6 @@ extension Locale {
   }
 }
 
-@available(iOS 11.2, *)
 extension SKProductSubscriptionPeriod {
   func toMap() -> [String: Any] {
     return [
@@ -58,12 +51,12 @@ extension SKProductSubscriptionPeriod {
   }
 }
 
-@available(iOS 11.2, *)
+
 extension SKProductDiscount {
   func toMap() -> [String: Any] {
 
     return [
-        "price": price.description,
+        "price": price,
         "priceLocale": ["":""],
         "numberOfPeriods": numberOfPeriods,
         "subscriptionPeriod": subscriptionPeriod.toMap(),
@@ -71,25 +64,3 @@ extension SKProductDiscount {
     ]
   }
 }
-
-
-
-
-//@available(iOS 12.2, *)
-//open var identifier: String? { get }
-//
-//
-//@available(iOS 11.2, *)
-//open var subscriptionPeriod: SKProductSubscriptionPeriod { get }
-//
-//
-//@available(iOS 11.2, *)
-//open var numberOfPeriods: Int { get }
-//
-//
-//@available(iOS 11.2, *)
-//open var paymentMode: SKProductDiscount.PaymentMode { get }
-//
-//
-//@available(iOS 12.2, *)
-//open var type: SKProductDiscount.`Type` { get }
