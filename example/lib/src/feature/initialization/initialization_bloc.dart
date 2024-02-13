@@ -56,6 +56,7 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
         observerMode: _appSecrets.observeMode,
       );
 
+      printAsJson('Paywalls', await Apphud.paywalls());
       printAsJson('startManually', user);
       printAsJson('UserId after start', await Apphud.userID());
       printAsJson('Subscriptions after start', await Apphud.subscriptions());

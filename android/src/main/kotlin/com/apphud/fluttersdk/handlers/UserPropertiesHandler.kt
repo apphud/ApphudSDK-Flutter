@@ -1,6 +1,5 @@
 package com.apphud.fluttersdk.handlers
 
-import android.content.Context
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudUserPropertyKey
 import io.flutter.plugin.common.MethodChannel
@@ -8,7 +7,6 @@ import io.flutter.plugin.common.MethodChannel
 
 class UserPropertiesHandler(
     override val routes: List<String>,
-    val context: Context,
     handleOnMainThreadP: HandleOnMainThread
 ) : Handler {
     private var handleOnMainThread = handleOnMainThreadP

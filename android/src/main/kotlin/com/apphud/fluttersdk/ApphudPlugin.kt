@@ -15,6 +15,9 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /** AppHudPlugin */
 class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -29,22 +32,12 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private var activity: Activity? = null
 
-    private var mainThreadHandler: android.os.Handler? = null
-
     private var handleOnMainThread: HandleOnMainThread = { func ->
-        if (mainThreadHandler == null) {
-            try {
+        CoroutineScope(Dispatchers.Main).launch {
+        try {
                 func()
             } catch (e: IllegalStateException) {
                 Log.e("Apphud", e.toString(), e)
-            }
-        } else {
-            mainThreadHandler!!.post {
-                try {
-                    func()
-                } catch (e: IllegalStateException) {
-                    Log.e("Apphud", e.toString(), e)
-                }
             }
         }
     }
@@ -64,8 +57,6 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override
     fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        mainThreadHandler = android.os.Handler(Looper.getMainLooper())
-
         channel ?: run {
             channel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud")
             channel!!.setMethodCallHandler(this)
@@ -118,19 +109,16 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             ),
             HandlePurchasesHandler(
                 HandlePurchasesRoutes.stringValues(),
-                context = this.context,
                 handleOnMainThread
             ),
             AttributionHandler(AttributionRoutes.stringValues(), handleOnMainThread),
-            OtherHandler(OtherRoutes.stringValues(), context = this.context, handleOnMainThread),
+            OtherHandler(OtherRoutes.stringValues(),handleOnMainThread),
             UserPropertiesHandler(
                 UserPropertiesRoutes.stringValues(),
-                context = this.context,
                 handleOnMainThread
             ),
             PaywallLogsHandler(
                 PaywallLogsRoutes.stringValues(),
-                context = this.context,
                 handleOnMainThread
             ),
             PromotionalsHandler(PromotionalsRoutes.stringValues(), handleOnMainThread),
@@ -140,7 +128,7 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun setHeaders() {
         HeadersInterceptor.X_SDK = "Flutter"
-        HeadersInterceptor.X_SDK_VERSION = "2.4.0"
+        HeadersInterceptor.X_SDK_VERSION = "2.4.1"
     }
 
     override fun onDetachedFromActivityForConfigChanges() {

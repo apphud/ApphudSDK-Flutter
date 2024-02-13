@@ -7,7 +7,6 @@ import io.flutter.plugin.common.MethodChannel
 
 class OtherHandler(
     override val routes: List<String>,
-    val context: Context,
     handleOnMainThreadP: HandleOnMainThread
 ) : Handler {
     private var handleOnMainThread = handleOnMainThreadP

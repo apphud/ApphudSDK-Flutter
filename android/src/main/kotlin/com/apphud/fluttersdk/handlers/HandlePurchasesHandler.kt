@@ -1,20 +1,13 @@
 package com.apphud.fluttersdk.handlers
 
-import android.content.Context
-import android.os.Looper
-import android.util.Log
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
-import com.google.gson.Gson
 import io.flutter.plugin.common.MethodChannel
 
 class HandlePurchasesHandler(
     override val routes: List<String>,
-    val context: Context,
     handleOnMainThreadP: HandleOnMainThread
 ) : Handler {
-
-    private val gson: Gson by lazy { Gson() }
     private var handleOnMainThread = handleOnMainThreadP
 
     override fun tryToHandle(
