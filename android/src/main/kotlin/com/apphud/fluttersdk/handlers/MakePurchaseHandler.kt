@@ -2,6 +2,7 @@ package com.apphud.fluttersdk.handlers
 
 import android.app.Activity
 import android.util.Log
+import com.apphud.fluttersdk.FlutterSdkCommon
 import com.apphud.fluttersdk.toApphudProduct
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
@@ -10,9 +11,12 @@ import com.apphud.sdk.domain.ApphudPaywall
 import com.apphud.sdk.domain.ApphudProduct
 import com.apphud.sdk.flutter.ApphudFlutter
 import io.flutter.plugin.common.MethodChannel
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.lang.IllegalStateException
 
+@OptIn(DelicateCoroutinesApi::class)
 class MakePurchaseHandler(
     override val routes: List<String>,
     val activity: Activity,
@@ -73,10 +77,12 @@ class MakePurchaseHandler(
     }
 
     private fun paywalls(result: MethodChannel.Result) {
-        val paywalls: List<ApphudPaywall> = runBlocking { Apphud.paywalls() }
-        val resultMap = hashMapOf<String, Any?>()
-        resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
-        handleOnMainThread { result.success(resultMap) }
+        GlobalScope.launch {
+            val paywalls: List<ApphudPaywall> = Apphud.paywalls()
+            val resultMap = hashMapOf<String, Any?>()
+            resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
+            handleOnMainThread { result.success(resultMap) }
+        }
     }
 
     private fun rawPaywalls(result: MethodChannel.Result) {
@@ -136,14 +142,33 @@ class MakePurchaseHandler(
         replacementMode: Int? = null,
         result: MethodChannel.Result
     ) {
-        Apphud.purchase(
-            activity,
-            product,
-            offerIdToken,
-            oldToken,
-            replacementMode
-        ) { purchaseResult ->
-            processPurchaseResult(purchaseResult, result)
+        GlobalScope.launch {
+            val paywallIdentifier = product.paywallIdentifier
+            val placementIdentifier = product.placementIdentifier
+            val paywall =
+                FlutterSdkCommon.getPaywall(paywallIdentifier, placementIdentifier)
+            val foundProduct =
+                paywall?.products?.firstOrNull { pr ->
+                    pr.productId == product.productId
+                }
+
+            if (foundProduct != null) {
+                Apphud.purchase(
+                    activity,
+                    foundProduct,
+                    offerIdToken,
+                    oldToken,
+                    replacementMode
+                ) { purchaseResult ->
+                    processPurchaseResult(purchaseResult, result)
+                }
+            } else {
+                result.error(
+                    "400",
+                    "There isn't the product with productID ${product.productId}, paywallIdentifier $paywallIdentifier | placementIdentifier $placementIdentifier",
+                    ""
+                )
+            }
         }
     }
 
@@ -209,35 +234,6 @@ class MakePurchaseHandler(
                 args ?: throw IllegalArgumentException("arguments are required")
 
                 var product = args.toApphudProduct()
-                if (product.placementIdentifier != null) {
-                    val placements = runBlocking { Apphud.placements() }
-                    for (pl in placements) {
-                        if (pl.identifier == product.placementIdentifier) {
-                            val findProduct =
-                                pl.paywall?.products?.firstOrNull { pr ->
-                                    pr.productId == product.productId
-                                }
-                            if (findProduct != null) {
-                                product = findProduct
-                                break
-                            }
-                        }
-                    }
-                } else {
-                    val paywalls = runBlocking { Apphud.paywalls() }
-                    for (paywall in paywalls) {
-                        if (product.paywallIdentifier == paywall.identifier) {
-                            val findProduct =
-                                paywall.products?.firstOrNull { pr ->
-                                    pr.productId == product.productId
-                                }
-                            if (findProduct != null) {
-                                product = findProduct
-                                break
-                            }
-                        }
-                    }
-                }
                 val offerIdToken = args["offerIdToken"] as? String
                 val oldToken = args["oldToken"] as? String
                 val replacementMode = args["replacementMode"] as? Int

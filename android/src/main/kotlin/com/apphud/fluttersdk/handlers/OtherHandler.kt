@@ -2,12 +2,12 @@ package com.apphud.fluttersdk.handlers
 
 import android.content.Context
 import com.apphud.sdk.Apphud
+import com.apphud.sdk.ApphudUtils
 import io.flutter.plugin.common.MethodChannel
 
 
 class OtherHandler(
     override val routes: List<String>,
-    val context: Context,
     handleOnMainThreadP: HandleOnMainThread
 ) : Handler {
     private var handleOnMainThread = handleOnMainThreadP
@@ -25,7 +25,7 @@ class OtherHandler(
     }
 
     private fun enableDebugLogs(result: MethodChannel.Result) {
-        Apphud.enableDebugLogs()
+        ApphudUtils.enableAllLogs()
         handleOnMainThread { result.success(null) }
     }
 

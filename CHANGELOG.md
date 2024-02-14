@@ -1,3 +1,6 @@
+## 2.4.1
+- [Android] Fixed 'paywalls' calling issue in some cases
+
 ## 2.4.0
 - Placements: Offers a strategic method to integrate paywalls throughout your app. This feature allows developers to position paywalls effectively in different app sections, such as onboarding or settings, targeting distinct user audiences. For more comprehensive information, please refer to our Placements guide.
 - [iOS], [Android] **BREAKING** Property 'variationName' were removed from ApphudPaywall, which was confusing developers and lead to incorrect implementations.

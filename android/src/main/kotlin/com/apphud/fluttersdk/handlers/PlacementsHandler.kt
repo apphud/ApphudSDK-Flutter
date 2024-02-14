@@ -3,8 +3,11 @@ package com.apphud.fluttersdk.handlers
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
 import io.flutter.plugin.common.MethodChannel
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
+@OptIn(DelicateCoroutinesApi::class)
 class PlacementsHandler(
     handleOnMainThreadP: HandleOnMainThread
 ) : Handler {
@@ -30,13 +33,17 @@ class PlacementsHandler(
     }
 
     private fun placements(result: MethodChannel.Result) {
-        val placements = runBlocking { Apphud.placements() }
-        handleOnMainThread { result.success(placements.map { p -> p.toMap() }) }
+        GlobalScope.launch {
+            val placements = Apphud.placements()
+            handleOnMainThread { result.success(placements.map { p -> p.toMap() }) }
+        }
     }
 
     private fun placement(identifier: String, result: MethodChannel.Result) {
-        val placement = runBlocking { Apphud.placement(identifier) }
-        handleOnMainThread { result.success(placement?.toMap()) }
+        GlobalScope.launch {
+            val placement = Apphud.placement(identifier)
+            handleOnMainThread { result.success(placement?.toMap()) }
+        }
     }
 
     private fun placementsDidLoadCallback(result: MethodChannel.Result) {
