@@ -151,10 +151,11 @@ class MakePurchaseHandler(
                 paywall?.products?.firstOrNull { pr ->
                     pr.productId == product.productId
                 }
+
             if (foundProduct != null) {
                 Apphud.purchase(
                     activity,
-                    product,
+                    foundProduct,
                     offerIdToken,
                     oldToken,
                     replacementMode
