@@ -38,6 +38,6 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
     }
     private static func setHeaders() {
         ApphudHttpClient.shared.sdkType = "Flutter"
-        ApphudHttpClient.shared.sdkVersion = "2.4.0"
+        ApphudHttpClient.shared.sdkVersion = "2.4.1"
     }
 }
