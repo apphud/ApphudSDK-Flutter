@@ -30,7 +30,7 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
         _navigationBloc = navigationBloc,
         super(InitializationState.trying());
 
-  void _fetchPaywalls() async {
+  void _setupListener() async {
     Apphud.setListener(listener: this);
   }
 
@@ -56,7 +56,8 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
         observerMode: _appSecrets.observeMode,
       );
 
-      printAsJson('Paywalls', await Apphud.paywalls());
+      printAsJson('Paywalls Awaited', await Apphud.paywalls());
+      printAsJson('Placements Awaited', await Apphud.placements());
       printAsJson('startManually', user);
       printAsJson('UserId after start', await Apphud.userID());
       printAsJson('Subscriptions after start', await Apphud.subscriptions());
@@ -68,7 +69,7 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
         },
       );
 
-      _fetchPaywalls();
+      _setupListener();
     } catch (e) {
       yield InitializationState.startFail(e.toString());
     }

@@ -2,6 +2,7 @@ package com.apphud.fluttersdk.handlers
 
 import android.content.Context
 import com.apphud.sdk.Apphud
+import com.apphud.sdk.ApphudUtils
 import io.flutter.plugin.common.MethodChannel
 
 
@@ -24,7 +25,7 @@ class OtherHandler(
     }
 
     private fun enableDebugLogs(result: MethodChannel.Result) {
-        Apphud.enableDebugLogs()
+        ApphudUtils.enableAllLogs()
         handleOnMainThread { result.success(null) }
     }
 
