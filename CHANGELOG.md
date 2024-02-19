@@ -1,3 +1,6 @@
+## 2.4.2
+- [iOS] Fixed 'addAttribution' calling issue in some cases
+
 ## 2.4.1
 - [Android] Fixed 'paywalls' calling issue in some cases
 
