@@ -22,12 +22,13 @@ final class AddAttributionArgumentParser: Parser {
 
     func parse(args: [String : Any]?) throws -> (data: [AnyHashable : Any]?, from: ApphudAttributionProvider, identifer: String?) {
         guard let args = args,
-              let data = args["data"] as? [AnyHashable : Any],
               let fromString = args["from"] as? String,
               let from = ApphudAttributionProvider.fromString(fromString) else {
-            throw(InternalError(code: "400", message: "data and attibution provider are required arguments"))
+            throw(InternalError(code: "400", message: "attibution provider is required argument"))
         }
         let identifier = args["identifier"] as? String
+        let data = args["data"] as? [AnyHashable : Any]
+        
         return (data,
                 from,
                 identifier)

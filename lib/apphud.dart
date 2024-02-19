@@ -24,7 +24,8 @@ export 'listener/apphud_listener.dart';
 
 class Apphud {
   static const MethodChannel _channel = MethodChannel('apphud');
-  static const MethodChannel _listenerChannel = MethodChannel('apphud/listener');
+  static const MethodChannel _listenerChannel =
+      MethodChannel('apphud/listener');
   static ApphudListenerHandler? _apphudListenerHandler;
 
   // Initialization
@@ -176,7 +177,7 @@ class Apphud {
   /// For immediate access without awaiting `SKProduct`s or `ProductDetails`, use `rawPlacements()` method.
   static Future<List<ApphudPlacement>> placementsDidLoadCallback() async {
     final List<Map<dynamic, dynamic>>? placements = (await _channel
-        .invokeMethod<List<dynamic>>('placementsDidLoadCallback'))
+            .invokeMethod<List<dynamic>>('placementsDidLoadCallback'))
         ?.toMapList;
 
     if (placements != null) {
@@ -220,7 +221,7 @@ class Apphud {
   /// you can use `rawPaywalls()` method.
   static Future<ApphudPaywalls?> paywalls() async {
     final Map<dynamic, dynamic>? json =
-    await _channel.invokeMethod<Map<dynamic, dynamic>>('paywalls');
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('paywalls');
     return json != null ? ApphudPaywalls.fromJson(json) : null;
   }
 
@@ -234,7 +235,7 @@ class Apphud {
   /// To get paywalls with awaiting for native products, use await Apphud.paywalls() or Apphud.paywallsDidLoadCallback(...) functions.
   static Future<ApphudPaywalls?> rawPaywalls() async {
     final Map<dynamic, dynamic>? json =
-    await _channel.invokeMethod<Map<dynamic, dynamic>>('rawPaywalls');
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('rawPaywalls');
     return json != null ? ApphudPaywalls.fromJson(json) : null;
   }
 
@@ -365,7 +366,7 @@ class Apphud {
   static Future<ApphudProductComposite?> product(
       String productIdentifier) async {
     final Map<dynamic, dynamic>? json =
-    await _channel.invokeMethod<Map<dynamic, dynamic>>(
+        await _channel.invokeMethod<Map<dynamic, dynamic>>(
       'product',
       {'productIdentifier': productIdentifier},
     );
@@ -416,7 +417,6 @@ class Apphud {
   static Future<bool> hasActiveSubscription() async {
     return (await _channel.invokeMethod('hasActiveSubscription')) ?? false;
   }
-
 
   ///  Returns [ApphudSubscriptionWrapper] subscription object that current user has ever purchased. Subscriptions are cached on device.
   ///
@@ -565,7 +565,7 @@ class Apphud {
 
   ///  Submit attribution data to Apphud from your attribution network provider.
   ///
-  /// - parameter [data] is required. Attribution 'map'.
+  /// - parameter [data] is optional. Attribution 'map'.
   /// - parameter [provider] is required. Attribution provider name. Available values: `ApphudAttributionProvider.appsFlyer`, `ApphudAttributionProvider.adjust`, `ApphudAttributionProvider.appleSearchAds`, `ApphudAttributionProvider.firebase`.
   /// - parameter [identifier] is optional. Identifier that matches Apphud and Attribution provider. Required for AppsFlyer.
   /// Returns true if successfully sent.
@@ -574,6 +574,11 @@ class Apphud {
     required ApphudAttributionProvider provider,
     String? identifier,
   }) async {
+    if (data == null && identifier == null) {
+      return Future.error(
+        'Please provide \'data\' or \'identifier\' or both parameters',
+      );
+    }
     final bool isAdded = await _channel.invokeMethod('addAttribution', {
       'data': data,
       'from': provider.convertToString,

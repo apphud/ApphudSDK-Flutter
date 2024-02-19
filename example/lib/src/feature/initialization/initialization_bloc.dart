@@ -28,7 +28,9 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
     required NavigationBloc navigationBloc,
   })  : _appSecrets = appSecrets,
         _navigationBloc = navigationBloc,
-        super(InitializationState.trying());
+        super(InitializationState.trying()){
+    _setupListener();
+  }
 
   void _setupListener() async {
     Apphud.setListener(listener: this);
@@ -68,8 +70,6 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
           yield s.copyWith(isStartSuccess: true);
         },
       );
-
-      _setupListener();
     } catch (e) {
       yield InitializationState.startFail(e.toString());
     }
