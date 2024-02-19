@@ -225,23 +225,22 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //   printOnlyMethodName: true,
     // );
     //
-    // Apphud.addAttribution(
-    //   data: _attributionData,
-    //   provider: _attributionProvider,
-    // ).then(
-    //   (value) => printAsJson(
-    //     'Parameters and the result of _setAttribution()',
-    //     <String, dynamic>{
-    //       'parameters': <String, dynamic>{
-    //         'data': _attributionData,
-    //         'provider': _attributionProvider.convertToString,
-    //       },
-    //       'result': value,
-    //     },
-    //     printOnlyMethodName: true,
-    //   ),
-    //   onError: (e) => printError('_setAttribution()', e),
-    // );
+     Apphud.addAttribution(
+       provider: _attributionProvider,
+     ).then(
+       (value) => printAsJson(
+         'Parameters and the result of addAttribution()',
+         <String, dynamic>{
+           'parameters': <String, dynamic>{
+             'data': _attributionData,
+             'provider': _attributionProvider.convertToString,
+           },
+           'result': value,
+         },
+         printOnlyMethodName: true,
+       ),
+       onError: (e) => printError('_setAttribution()', e),
+     );
     //
     // Apphud.collectSearchAdsAttribution().then(
     //   (value) => printAsJson(
