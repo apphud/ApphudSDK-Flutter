@@ -41,7 +41,7 @@ class AttributionHandler(
             ) -> Unit
         ) {
             try {
-                args ?: throw IllegalArgumentException("provider and data are required arguments")
+                args ?: throw IllegalArgumentException("provider is required arguments")
                 val providerString = args["from"] as? String
                     ?: throw IllegalArgumentException("provider is required argument")
                 val provider = getProviderFromString(providerString)
