@@ -1,3 +1,9 @@
+## 2.4.3
+- [Android] fixed some build issues
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 2.3.9
+
 ## 2.4.2
 - [iOS] Fixed 'addAttribution' calling issue in some cases
 

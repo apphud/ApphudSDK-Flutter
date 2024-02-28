@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:8.1.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
@@ -28,13 +28,15 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 31
+    namespace 'com.apphud.fluttersdk'
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 26
+        targetSdk 34
+        compileSdk 34
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -51,7 +53,7 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "com.apphud:ApphudSDK-Android:2.3.7"
-    implementation 'com.android.billingclient:billing:5.2.0'
+    implementation "com.apphud:ApphudSDK-Android:2.3.9"
+    implementation 'com.android.billingclient:billing:6.1.0'
     implementation 'com.google.code.gson:gson:2.8.8'
 }
