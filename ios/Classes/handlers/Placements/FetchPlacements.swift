@@ -8,18 +8,20 @@
 import ApphudSDK
 import StoreKit
 
-final class PlacementsDidLoadCallbackRequest: Request {
+final class FetchPlacementsRequest: Request {
 
-    typealias ArgumentProvider = PlacementsDidLoadCallbackArgumentParser
+    typealias ArgumentProvider = FetchPlacementsArgumentParser
 
     @MainActor func startRequest(arguments: (), result: @escaping FlutterResult) {
         Apphud.placementsDidLoadCallback({ (placements) in
-            result(placements.map({p in p.toMap()}))
+            result([
+                "placements": placements.map({p in p.toMap()})
+            ])
         })
     }
 }
 
-final class PlacementsDidLoadCallbackArgumentParser: Parser {
+final class FetchPlacementsArgumentParser: Parser {
     typealias ArgumentType = ()
 }
 

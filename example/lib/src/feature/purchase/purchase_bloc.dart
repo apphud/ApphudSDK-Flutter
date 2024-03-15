@@ -449,13 +449,13 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //     ),
     //     onError: (e) => printError('rawPaywalls', e),
     //   );
-    // Apphud.paywallsDidLoadCallback().then(
-    //   (value) => printAsJson(
-    //     'paywallsDidLoadCallback',
-    //     value,
-    //   ),
-    //   onError: (e) => printError('paywallsDidLoadCallback', e),
-    // );
+    Apphud.paywallsDidLoadCallback().then(
+      (value) => printAsJson(
+        'paywallsDidLoadCallback',
+        value,
+      ),
+      onError: (e) => printError('paywallsDidLoadCallback', e),
+    );
     // Apphud.refreshUserData().then(
     //   (value) => printAsJson(
     //     'refreshUserData',

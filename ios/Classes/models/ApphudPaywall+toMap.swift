@@ -14,6 +14,8 @@ extension ApphudPaywall {
                 "products" : products.map({ (product:ApphudProduct) in product.toMap() }),
                 "experimentName" : experimentName,
                 "placementIdentifier" : placementIdentifier,
+                "variationName" : variationName,
+                "parentPaywallIdentifier" : parentPaywallIdentifier
         ]
     }
 }
