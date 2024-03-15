@@ -1,3 +1,14 @@
+## 2.4.4
+
+- [Android] **BREAKING** `Future<List<ApphudPlacement>> placementsDidLoadCallback()` renamed to `Future<ApphudPlacements> fetchPlacements()`
+- [Android] `paywallsDidLoadCallback` call result contains optional `ApphudError`
+- [Android] `refreshUserData` method was introduced
+- [Android] `ApphudError` now contains `networkIssue`, `billingResponseCode` and `billingErrorTitle` attributes 
+- [iOS], [Android] `ApphudPaywall` now contains `variationName` and `parentPaywallIdentifier` attributes
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 2.4.2
+   
 ## 2.4.3
 - [Android] fixed some build issues
 
