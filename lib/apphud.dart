@@ -7,6 +7,7 @@ import 'package:apphud/models/apphud_models/apphud_group.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
+import 'package:apphud/models/apphud_models/apphud_placements.dart';
 import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
@@ -175,15 +176,16 @@ class Apphud {
   ///
   /// See documentation for details: https://docs.apphud.com/docs/placements
   /// For immediate access without awaiting `SKProduct`s or `ProductDetails`, use `rawPlacements()` method.
-  static Future<List<ApphudPlacement>> placementsDidLoadCallback() async {
-    final List<Map<dynamic, dynamic>>? placements = (await _channel
-            .invokeMethod<List<dynamic>>('placementsDidLoadCallback'))
-        ?.toMapList;
-
-    if (placements != null) {
-      return placements.map((json) => ApphudPlacement.fromJson(json)).toList();
+  static Future<ApphudPlacements> fetchPlacements() async {
+    final Map<dynamic, dynamic>? json =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('fetchPlacements');
+    if (json == null) {
+      return ApphudPlacements(
+        placements: const [],
+        error: ApphudError(message: 'fetchPlacements error'),
+      );
     }
-    return const [];
+    return ApphudPlacements.fromJson(json);
   }
 
   /// A list of paywall placements, potentially altered based on the user's involvement in A/B testing, if any.
@@ -381,6 +383,16 @@ class Apphud {
     if (products == null) return const [];
     return products.map(ApphudProductComposite.fromJson).toList();
   }
+
+  /// Android only. Refreshes current user data, which includes:
+  ///
+  /// paywalls, placements, subscriptions, non-renewing purchases, or promotionals.
+  /// To be notified about updates, listen for `ApphudListener`'s `apphudSubscriptionsUpdated` and
+  /// `apphudNonRenewingPurchasesUpdated` methods.
+  /// Do not call this method on app launch, as Apphud SDK does it automatically.
+  /// You can call this method, when the app reactivates from the background, if needed.
+  static Future<void> refreshUserData() =>
+      _channel.invokeMethod('refreshUserData');
 
 // Handle Purchases
 

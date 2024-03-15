@@ -16,6 +16,8 @@ ApphudPaywall _$ApphudPaywallFromJson(Map json) => ApphudPaywall(
           ?.map((e) => ApphudProduct.fromJson(e as Map))
           .toList(),
       placementIdentifier: json['placementIdentifier'] as String?,
+      variationName: json['variationName'] as String?,
+      parentPaywallIdentifier: json['parentPaywallIdentifier'] as String?,
     );
 
 Map<String, dynamic> _$ApphudPaywallToJson(ApphudPaywall instance) =>
@@ -25,4 +27,6 @@ Map<String, dynamic> _$ApphudPaywallToJson(ApphudPaywall instance) =>
       'json': instance.json,
       'products': instance.products,
       'placementIdentifier': instance.placementIdentifier,
+      'variationName': instance.variationName,
+      'parentPaywallIdentifier': instance.parentPaywallIdentifier,
     };
