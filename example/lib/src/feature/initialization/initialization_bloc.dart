@@ -28,7 +28,7 @@ class InitializationBloc extends Bloc<InitializationEvent, InitializationState>
     required NavigationBloc navigationBloc,
   })  : _appSecrets = appSecrets,
         _navigationBloc = navigationBloc,
-        super(InitializationState.trying()){
+        super(InitializationState.trying()) {
     _setupListener();
   }
 

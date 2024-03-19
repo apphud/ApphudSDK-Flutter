@@ -13,7 +13,9 @@ fun ApphudPaywall.toMap(): HashMap<String, Any?> {
         "experimentName" to experimentName,
         "json" to json,
         "products" to products?.map { it.toMap() },
-        "placementIdentifier" to placementIdentifier
+        "placementIdentifier" to placementIdentifier,
+        "variationName" to variationName,
+        "parentPaywallIdentifier" to parentPaywallIdentifier,
     )
 }
 
@@ -73,7 +75,10 @@ fun ProductDetails.PricingPhase.toMap(): HashMap<String, Any?> {
 fun ApphudError.toMap(): HashMap<String, Any?> {
     return hashMapOf(
         "message" to message,
-        "errorCode" to errorCode
+        "errorCode" to errorCode,
+        "networkIssue" to networkIssue(),
+        "billingResponseCode" to billingResponseCode(),
+        "billingErrorTitle" to billingErrorTitle(),
     )
 }
 

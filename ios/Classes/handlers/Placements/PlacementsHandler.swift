@@ -16,8 +16,8 @@ class PlacementsHandler: Handler {
             Action<PlacementRequest,PlacementArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.rawPlacements.rawValue:
             Action<RawPlacementsRequest,RawPlacementsArgumentParser>(args: args, result: result).startFlow()
-        case AssociatedEnum.placementsDidLoadCallback.rawValue:
-            Action<PlacementsDidLoadCallbackRequest,PlacementsDidLoadCallbackArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.fetchPlacements.rawValue:
+            Action<FetchPlacementsRequest,FetchPlacementsArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

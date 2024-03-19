@@ -143,7 +143,7 @@ enum AppHudMethod {
         case placements
         case placement
         case rawPlacements
-        case placementsDidLoadCallback
+        case fetchPlacements
     }
 }
 

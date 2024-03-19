@@ -7,12 +7,18 @@ part of 'apphud_error.dart';
 // **************************************************************************
 
 ApphudError _$ApphudErrorFromJson(Map json) => ApphudError(
+      networkIssue: json['networkIssue'] as bool? ?? false,
       message: json['message'] as String?,
       errorCode: json['errorCode'] as int?,
+      billingResponseCode: json['billingResponseCode'] as int?,
+      billingErrorTitle: json['billingErrorTitle'] as String?,
     );
 
 Map<String, dynamic> _$ApphudErrorToJson(ApphudError instance) =>
     <String, dynamic>{
+      'networkIssue': instance.networkIssue,
       'message': instance.message,
       'errorCode': instance.errorCode,
+      'billingResponseCode': instance.billingResponseCode,
+      'billingErrorTitle': instance.billingErrorTitle,
     };

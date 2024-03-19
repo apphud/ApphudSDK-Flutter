@@ -225,22 +225,23 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //   printOnlyMethodName: true,
     // );
     //
-     Apphud.addAttribution(
-       provider: _attributionProvider,
-     ).then(
-       (value) => printAsJson(
-         'Parameters and the result of addAttribution()',
-         <String, dynamic>{
-           'parameters': <String, dynamic>{
-             'data': _attributionData,
-             'provider': _attributionProvider.convertToString,
-           },
-           'result': value,
-         },
-         printOnlyMethodName: true,
-       ),
-       onError: (e) => printError('_setAttribution()', e),
-     );
+    // Apphud.addAttribution(
+    //   provider: _attributionProvider,
+    // ).then(
+    //       (value) =>
+    //       printAsJson(
+    //         'Parameters and the result of addAttribution()',
+    //         <String, dynamic>{
+    //           'parameters': <String, dynamic>{
+    //             'data': _attributionData,
+    //             'provider': _attributionProvider.convertToString,
+    //           },
+    //           'result': value,
+    //         },
+    //         printOnlyMethodName: true,
+    //       ),
+    //   onError: (e) => printError('_setAttribution()', e),
+    // );
     //
     // Apphud.collectSearchAdsAttribution().then(
     //   (value) => printAsJson(
@@ -417,36 +418,50 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //   onError: (e) => printError('paywallsDidLoadCallback', e),
     // );
 
-    final placements = await Apphud.placements();
-    printAsJson('placements', placements);
-
-    if (placements.isNotEmpty) {
-       final placement = await Apphud.placement(placements.first.identifier);
-       printAsJson('placement', placement);
-    }
-
-    Apphud.placementsDidLoadCallback().then(
+    //   final placements = await Apphud.placements();
+    //   printAsJson('placements', placements);
+    //
+    //   if (placements.isNotEmpty) {
+    //      final placement = await Apphud.placement(placements.first.identifier);
+    //      printAsJson('placement', placement);
+    //   }
+    //
+    Apphud.fetchPlacements().then(
       (value) => printAsJson(
-        'placementsDidLoadCallback',
+        'fetchPlacements',
         value,
       ),
-      onError: (e) => printError('placementsDidLoadCallback', e),
+      onError: (e) => printError('fetchPlacements', e),
     );
-
-    Apphud.rawPlacements().then(
+    //
+    //   Apphud.rawPlacements().then(
+    //     (value) => printAsJson(
+    //       'rawPlacements',
+    //       value,
+    //     ),
+    //     onError: (e) => printError('rawPlacements', e),
+    //   );
+    //
+    //   Apphud.rawPaywalls().then(
+    //     (value) => printAsJson(
+    //       'rawPaywalls',
+    //       value,
+    //     ),
+    //     onError: (e) => printError('rawPaywalls', e),
+    //   );
+    Apphud.paywallsDidLoadCallback().then(
       (value) => printAsJson(
-        'rawPlacements',
+        'paywallsDidLoadCallback',
         value,
       ),
-      onError: (e) => printError('rawPlacements', e),
+      onError: (e) => printError('paywallsDidLoadCallback', e),
     );
-
-    Apphud.rawPaywalls().then(
-      (value) => printAsJson(
-        'rawPaywalls',
-        value,
-      ),
-      onError: (e) => printError('rawPaywalls', e),
-    );
+    // Apphud.refreshUserData().then(
+    //   (value) => printAsJson(
+    //     'refreshUserData',
+    //     'Ok',
+    //   ),
+    //   onError: (e) => printError('refreshUserData', e),
+    // );
   }
 }

@@ -5,14 +5,14 @@
 
 Pod::Spec.new do |s|
   s.name             = 'apphud'
-  s.version          = '2.4.1'
-  s.summary          = 'A new flutter plugin project.'
+  s.version          = '2.4.4'
+  s.summary          = 'Apphud SDK flutter plugin.'
   s.description      = <<-DESC
-A new flutter plugin project.
+Apphud SDK flutter plugin.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://apphud.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'Apphud' => 'support@apphud.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'

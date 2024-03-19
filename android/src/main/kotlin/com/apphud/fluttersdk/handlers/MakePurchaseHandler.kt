@@ -6,6 +6,7 @@ import com.apphud.fluttersdk.FlutterSdkCommon
 import com.apphud.fluttersdk.toApphudProduct
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
+import com.apphud.sdk.ApphudError
 import com.apphud.sdk.ApphudPurchaseResult
 import com.apphud.sdk.domain.ApphudPaywall
 import com.apphud.sdk.domain.ApphudProduct
@@ -68,6 +69,8 @@ class MakePurchaseHandler(
             MakePurchaseRoutes.permissionGroups.name -> getPermissionGroups(result)
 
             MakePurchaseRoutes.rawPaywalls.name -> rawPaywalls(result)
+
+            MakePurchaseRoutes.refreshUserData.name -> refreshUserData(result)
         }
     }
 
@@ -93,9 +96,10 @@ class MakePurchaseHandler(
     }
 
     private fun paywallsDidLoadCallback(result: MethodChannel.Result) {
-        Apphud.paywallsDidLoadCallback { paywalls ->
+        Apphud.paywallsDidLoadCallback { paywalls, error ->
             val resultMap = hashMapOf<String, Any?>()
             resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
+            resultMap["error"] = error?.toMap()
             handleOnMainThread { result.success(resultMap) }
         }
     }
@@ -207,6 +211,11 @@ class MakePurchaseHandler(
         handleOnMainThread { result.success(null) }
     }
 
+    private fun refreshUserData(result: MethodChannel.Result) {
+        Apphud.refreshUserData()
+        handleOnMainThread { result.success(null) }
+    }
+
     class ProductParser(private val result: MethodChannel.Result) {
         fun parse(args: Map<String, Any>?, callback: (productIdentifier: String) -> Unit) {
             try {
@@ -283,7 +292,8 @@ enum class MakePurchaseRoutes {
     purchaseProduct,
     permissionGroups,
     paywallsDidLoadCallback,
-    rawPaywalls;
+    rawPaywalls,
+    refreshUserData;
 
     companion object Mapper {
         fun stringValues(): List<String> {
