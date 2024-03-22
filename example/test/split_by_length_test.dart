@@ -1,4 +1,4 @@
-import 'package:apphud_example/src/feature/common/debug_print_mixin.dart';
+import 'package:apphud_example/src/common/debug_print_mixin.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class TestSplitter with DebugPrintMixin {}

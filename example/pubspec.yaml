@@ -24,7 +24,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.3
 
-  flutter_bloc: ^7.3.0
+  flutter_bloc: ^8.1.2
+
+  bloc_concurrency: ^0.2.4
 
   freezed_annotation: ^2.4.1
 

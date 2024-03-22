@@ -1,10 +1,9 @@
 import 'dart:io';
 
 import 'package:apphud/models/apphud_models/apphud_product.dart';
-import 'package:apphud_example/src/feature/home/sk_product_widget.dart';
-import 'package:apphud_example/src/feature/home/sku_details_widget.dart';
-import 'package:apphud_example/src/feature/purchase/purchase_bloc.dart';
-import 'package:apphud_example/src/feature/purchase/purchase_event.dart';
+import 'package:apphud_example/src/purchase_bloc/purchase_bloc.dart';
+import 'package:apphud_example/src/view/widgets/sk_product_widget.dart';
+import 'package:apphud_example/src/view/widgets/sku_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -72,7 +71,7 @@ class ProductListWidget extends StatelessWidget {
           children: [
             Text(
               product.name ?? 'No name',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             content,
           ],

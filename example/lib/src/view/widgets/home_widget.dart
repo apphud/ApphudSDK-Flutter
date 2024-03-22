@@ -1,47 +1,27 @@
 import 'dart:io';
 
-import 'package:apphud_example/src/feature/common/widgets/overlay_progress_indicator.dart';
-import 'package:apphud_example/src/feature/home/paywalls_list_widget.dart';
-import 'package:apphud_example/src/feature/home/placement_list_widget.dart';
-import 'package:apphud_example/src/feature/home/purchase_message_widget.dart';
-import 'package:apphud_example/src/feature/initialization/initialization_bloc.dart';
-import 'package:apphud_example/src/feature/initialization/initialization_state.dart';
-import 'package:apphud_example/src/feature/purchase/purchase_bloc.dart';
-import 'package:apphud_example/src/feature/purchase/purchase_state.dart';
-import 'package:apphud_example/src/feature/purchase/purchase_event.dart';
+import 'package:apphud_example/src/purchase_bloc/purchase_bloc.dart';
+import 'package:apphud_example/src/view/widgets/overlay_progress_indicator.dart';
+import 'package:apphud_example/src/view/widgets/paywalls_list_widget.dart';
+import 'package:apphud_example/src/view/widgets/placement_list_widget.dart';
+import 'package:apphud_example/src/view/widgets/purchase_message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeScreenPage extends Page {
-  @override
-  Route createRoute(BuildContext context) {
-    return MaterialPageRoute(
-      settings: this,
-      builder: (BuildContext context) {
-        return BlocProvider(
-          create: (context) => PurchaseBloc(),
-          lazy: false,
-          child: HomeScreen(),
-        );
-      },
-    );
-  }
-}
-
-class HomeScreen extends StatefulWidget {
+class HomeWidget extends StatefulWidget {
   static const String pathName = 'home';
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeWidget> createState() => _HomeWidgetState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeWidgetState extends State<HomeWidget> {
   int _pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<InitializationBloc, InitializationState>(
-      builder: (BuildContext context, InitializationState state) {
+    return BlocBuilder<PurchaseBloc, PurchaseState>(
+      builder: (context,state) {
         return state.maybeMap(
           orElse: () => _buildProgressIndicator(),
           success: (s) => _buildProductsTabs(context, s),
@@ -53,13 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildProgressIndicator() =>
       Scaffold(body: Center(child: CircularProgressIndicator()));
 
-  Widget _buildProductsTabs(BuildContext context, Success value) {
+  Widget _buildProductsTabs(BuildContext context, PurchaseSuccessState state) {
     return Scaffold(
       appBar: AppBar(
         title: Text(_pageIndex == 0 ? 'Placements' : 'Paywalls'),
         actions: [_buildMenu()],
       ),
-      body: _buildBody(context, value),
+      body: _buildBody(context, state),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -67,9 +47,9 @@ class _HomeScreenState extends State<HomeScreen> {
               'Placements',
               style: _pageIndex == 0
                   ? TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    )
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              )
                   : null,
             ),
             label: '',
@@ -79,9 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
               'Paywalls',
               style: _pageIndex == 1
                   ? TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    )
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              )
                   : null,
             ),
             label: '',
@@ -100,22 +80,22 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildBody(BuildContext context, Success value) {
+  Widget _buildBody(BuildContext context, PurchaseSuccessState state) {
     return OverlayProgressIndicator<PurchaseBloc, PurchaseState>(
       child: PurchaseMessageWidget(
         child: _pageIndex == 0
-            ? _buildPlacements(context, value)
-            : _buildPaywalls(context, value),
+            ? _buildPlacements(context, state)
+            : _buildPaywalls(context, state),
       ),
     );
   }
 
-  Widget _buildPaywalls(BuildContext context, Success value) {
-    return PaywallsListWidget(paywalls: value.paywalls.paywalls);
+  Widget _buildPaywalls(BuildContext context, PurchaseSuccessState state) {
+    return PaywallsListWidget(paywalls: state.paywalls.paywalls);
   }
 
-  Widget _buildPlacements(BuildContext context, Success value) {
-    return PlacementsListWidget(placements: value.placements);
+  Widget _buildPlacements(BuildContext context,PurchaseSuccessState state) {
+    return PlacementsListWidget(placements: state.placements);
   }
 
   List<PopupMenuEntry> _buildMenuItems(BuildContext context) {

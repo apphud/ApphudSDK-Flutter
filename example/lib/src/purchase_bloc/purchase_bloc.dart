@@ -1,108 +1,172 @@
 import 'dart:async';
+
 import 'package:apphud/apphud.dart';
-import 'package:apphud/models/apphud_models/apphud_attribution_provider.dart';
-import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
-import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
-import 'package:apphud/models/apphud_models/composite/apphud_purchase_result.dart';
-import 'package:apphud_example/src/feature/common/debug_print_mixin.dart';
+import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
+import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
+import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
+import 'package:apphud/models/apphud_models/apphud_placement.dart';
+import 'package:apphud/models/apphud_models/apphud_subscription.dart';
+import 'package:apphud/models/apphud_models/apphud_user.dart';
+import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
+import 'package:apphud_example/src/common/app_secrets_base.dart';
+import 'package:apphud_example/src/common/debug_print_mixin.dart';
+import 'package:apphud_example/src/purchase_bloc/purchase_user_message.dart';
 import 'package:bloc/bloc.dart';
+
 import 'purchase_event.dart';
+export 'purchase_event.dart';
+
 import 'purchase_state.dart';
+export 'purchase_state.dart';
 
 class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
-    with DebugPrintMixin {
-  static const String _nameParameterValue = 'SomeUserName1';
-  static const String _emailParameterValue = 'mail1@site.com';
-  static const String _phoneParameterValue = '1213141516';
-  static const int _ageParameterValue = 40;
-  static const int _ageIncreaseParameterValue = 1;
-  static const String _genderParameterValue = 'male';
-  static const String _customParameterName = 'new_some_custom_property';
-  static const String _customParameterValue = 'new custom value';
-  static const String _idfa = 'custom_idfa_new';
-  static const Map<String, dynamic> _attributionData = {
-    'testAttribution': 'testValue',
-  };
-  static const ApphudAttributionProvider _attributionProvider =
-      ApphudAttributionProvider.appleAdsAttribution;
+    with DebugPrintMixin
+    implements ApphudListener {
+  final AppSecretsBase _appSecrets;
 
-  PurchaseBloc() : super(PurchaseState.init());
+  PurchaseBloc({
+    required AppSecretsBase appSecrets,
+  })  : _appSecrets = appSecrets,
+        super(PurchaseState.initialization()) {
+    on<PurchaseEvent>(_handlePurchaseEvent);
+    Apphud.setListener(listener: this);
+  }
+
+  Future<void> _handlePurchaseEvent(
+    PurchaseEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
+    await event.map(
+      started: (e) => _handleStartedEvent(e, emit),
+      paywallsFetched: (e) => _handlePaywallsFetchedEvent(e, emit),
+      placementsFetched: (e) => _handlePlacementsFetchedEvent(e, emit),
+      callAll: (e) => _handleCallAllEvent(e, emit),
+      grantPromotional: (e) => _handleGrantPromotionalEvent(e, emit),
+      paywallClosed: (e) => _handlePaywallClosedEvent(e, emit),
+      paywallShown: (e) => _handlePaywallShownEvent(e, emit),
+      purchaseProduct: (e) => _handlePurchaseProductEvent(e, emit),
+      restorePurchases: (e) => _handleRestorePurchasesEvent(e, emit),
+      syncPurchase: (e) => _handleSyncPurchaseEvent(e, emit),
+    );
+  }
 
   @override
-  Stream<PurchaseState> mapEventToState(
-    PurchaseEvent event,
-  ) =>
-      event.map(
-        restorePurchases: _mapRestorePurchases,
-        purchaseProduct: _mapPurchaseProduct,
-        paywallShown: _mapPaywallShown,
-        paywallClosed: _mapPaywallClosed,
-        grantPromotional: _mapGrantPromotional,
-        syncPurchase: _mapSyncPurchase,
-        callAll: _mapCallAll,
+  Future<void> apphudDidChangeUserID(String userId) async {
+    printAsJson('ApphudListener.apphudDidChangeUserID', userId);
+  }
+
+  @override
+  Future<void> apphudDidFecthProducts(
+    List<ApphudProductComposite> products,
+  ) async {
+    printAsJson('ApphudListener.apphudDidFetchProducts', products);
+  }
+
+  @override
+  Future<void> apphudNonRenewingPurchasesUpdated(
+    List<ApphudNonRenewingPurchase> purchases,
+  ) async {
+    printAsJson('ApphudListener.apphudNonRenewingPurchasesUpdated', purchases);
+  }
+
+  @override
+  Future<void> apphudSubscriptionsUpdated(
+    List<ApphudSubscriptionWrapper> subscriptions,
+  ) async {
+    printAsJson('ApphudListener.apphudSubscriptionsUpdated', subscriptions);
+  }
+
+  @override
+  Future<void> paywallsDidFullyLoad(ApphudPaywalls paywalls) async {
+    printAsJson('ApphudListener.paywallsDidFullyLoad', paywalls);
+    add(PurchaseEvent.paywallsFetched(paywalls));
+  }
+
+  @override
+  Future<void> placementsDidFullyLoad(List<ApphudPlacement> placements) async {
+    printAsJson('ApphudListener.placementsDidFullyLoad', placements);
+    add(PurchaseEvent.placementsFetched(placements));
+  }
+
+  @override
+  Future<void> userDidLoad(ApphudUser user) async {
+    printAsJson('ApphudListener.userDidLoad', user);
+  }
+
+  Future<void> _handleStartedEvent(
+    PurchaseStartedEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
+    try {
+      await Apphud.enableDebugLogs(level: ApphudDebugLevel.high);
+
+      final user = await Apphud.start(
+        apiKey: _appSecrets.apiKey,
+        userID: _appSecrets.userID,
+        observerMode: _appSecrets.observeMode,
       );
+      printAsJson('user', user);
+      emit(PurchaseState.initialization(isStartSuccess: true));
+    } catch (error) {
+      emit(PurchaseState.startFailed(error.toString()));
+    }
+  }
 
-  Stream<PurchaseState> _mapPurchaseProduct(PurchaseProduct event) async* {
-    yield PurchaseState.inProgress();
-    final subscriptionOfferDetails =
-        event.product.productDetails?.subscriptionOfferDetails ?? [];
-    final offerIdToken = subscriptionOfferDetails.isEmpty
-        ? null
-        : subscriptionOfferDetails.first.offerToken;
-    final ApphudPurchaseResult result = await Apphud.purchase(
-      //productId: event.product.productId,
-      // or we can use
-      product: event.product,
-      offerIdToken: offerIdToken,
+  Future<void> _handlePaywallsFetchedEvent(
+    PurchasePaywallsFetchedEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
+    state.mapOrNull(
+      initialization: (s) {
+        if (s.isStartSuccess && s.isPlacementsFetched) {
+          emit(PurchaseState.success(
+            placements: s.placements,
+            paywalls: event.paywalls,
+          ));
+        } else {
+          emit(s.copyWith(
+            isPaywallsFetched: true,
+            paywalls: event.paywalls,
+          ));
+        }
+      },
+      success: (s) {
+        emit(s.copyWith(
+          paywalls: event.paywalls,
+        ));
+      },
     );
-    printAsJson('purchaseProduct(${event.product.productId})', result);
-    if (result.error == null) {
-      yield PurchaseState.purchaseSuccess();
-    } else {
-      yield PurchaseState.purchaseFailure(result.error!);
-    }
   }
 
-  Stream<PurchaseState> _mapRestorePurchases(RestorePurchases value) async* {
-    yield PurchaseState.inProgress();
-    printAsJson('try to restore purchases', '');
-    final ApphudComposite result = await Apphud.restorePurchases();
-    printAsJson('restorePurchases()', result);
-    if (result.error == null) {
-      yield PurchaseState.restorePurchasesSuccess();
-    } else {
-      yield PurchaseState.restorePurchaseFailure(result.error!);
-    }
+  Future<void> _handlePlacementsFetchedEvent(
+    PurchasePlacementsFetchedEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
+    state.mapOrNull(
+      initialization: (s) {
+        if (s.isStartSuccess && s.isPaywallsFetched) {
+          emit(PurchaseState.success(
+            placements: event.placements,
+            paywalls: s.paywalls,
+          ));
+        } else {
+          emit(s.copyWith(
+            isPlacementsFetched: true,
+            placements: event.placements,
+          ));
+        }
+      },
+      success: (s) {
+        emit(s.copyWith(placements: event.placements));
+      },
+    );
   }
 
-  Stream<PurchaseState> _mapPaywallShown(PaywallShown event) async* {
-    unawaited(Apphud.paywallShown(event.paywall).then(
-      (value) => printAsJson(
-        'paywallShown(${event.paywall.identifier})',
-        'success',
-      ),
-      onError: (e) => printError(
-        'paywallShown(${event.paywall.identifier})',
-        e,
-      ),
-    ));
-  }
-
-  Stream<PurchaseState> _mapPaywallClosed(PaywallClosed event) async* {
-    unawaited(Apphud.paywallClosed(event.paywall).then(
-      (value) => printAsJson(
-        'paywallClosed(${event.paywall.identifier})',
-        'success',
-      ),
-      onError: (e) => printError(
-        'paywallClosed(${event.paywall.identifier})',
-        e,
-      ),
-    ));
-  }
-
-  Stream<PurchaseState> _mapGrantPromotional(GrantPromotional event) async* {
-    unawaited(Apphud.grantPromotional(
+  Future<void> _handleGrantPromotionalEvent(
+    PurchaseGrantPromotionalEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
+    Apphud.grantPromotional(
       daysCount: 1,
       productId: event.product.productId,
     ).then(
@@ -114,23 +178,110 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         'grantPromotional(${event.product.productId})',
         e,
       ),
-    ));
+    );
   }
 
-  Stream<PurchaseState> _mapSyncPurchase(SyncPurchase event) async* {
-    unawaited(Apphud.syncPurchasesInObserverMode().then(
+  Future<void> _handlePaywallClosedEvent(
+    PurchasePaywallClosedEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
+    Apphud.paywallClosed(event.paywall).then(
       (value) => printAsJson(
-        'syncPurchases()',
+        'paywallClosed(${event.paywall.identifier})',
         'success',
       ),
       onError: (e) => printError(
-        'syncPurchases()',
+        'paywallClosed(${event.paywall.identifier})',
         e,
       ),
-    ));
+    );
   }
 
-  Stream<PurchaseState> _mapCallAll(CallAll event) async* {
+  Future<void> _handlePaywallShownEvent(
+    PurchasePaywallShownEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
+    Apphud.paywallShown(event.paywall).then(
+      (value) => printAsJson(
+        'paywallShown(${event.paywall.identifier})',
+        'success',
+      ),
+      onError: (e) => printError(
+        'paywallShown(${event.paywall.identifier})',
+        e,
+      ),
+    );
+  }
+
+  Future<void> _handlePurchaseProductEvent(
+    PurchasePurchaseProductEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
+    await state.mapOrNull(success: (s) async {
+      emit(s.copyWith(inProgress: true));
+      final subscriptionOfferDetails =
+          event.product.productDetails?.subscriptionOfferDetails ?? [];
+      final offerIdToken = subscriptionOfferDetails.isEmpty
+          ? null
+          : subscriptionOfferDetails.first.offerToken;
+      final result = await Apphud.purchase(
+        //productId: event.product.productId,
+        // or we can use
+        product: event.product,
+        offerIdToken: offerIdToken,
+      );
+      printAsJson('purchaseProduct(${event.product.productId})', result);
+      if (result.error == null) {
+        emit(s.copyWith(userMessage: PurchaseUserMessage.purchaseSuccess()));
+        emit(s.copyWith(userMessage: PurchaseUserMessage.none()));
+      } else {
+        emit(s.copyWith(
+          userMessage: PurchaseUserMessage.purchaseFailure(result.error!),
+        ));
+        emit(s.copyWith(userMessage: PurchaseUserMessage.none()));
+      }
+    });
+  }
+
+  Future<void> _handleRestorePurchasesEvent(
+    PurchaseRestorePurchasesEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
+    await state.mapOrNull(
+      success: (s) async {
+        emit(s.copyWith(inProgress: true));
+        printAsJson('try to restore purchases', '');
+        final result = await Apphud.restorePurchases();
+        printAsJson('restorePurchases()', result);
+        if (result.error == null) {
+          emit(s.copyWith(
+              userMessage: PurchaseUserMessage.restorePurchasesSuccess()));
+          emit(s.copyWith(userMessage: PurchaseUserMessage.none()));
+        } else {
+          emit(s.copyWith(
+            userMessage:
+                PurchaseUserMessage.restorePurchasesFailure(result.error!),
+          ));
+          emit(s.copyWith(userMessage: PurchaseUserMessage.none()));
+        }
+      },
+    );
+  }
+
+  Future<void> _handleSyncPurchaseEvent(
+    PurchaseSyncPurchaseEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
+    Apphud.syncPurchasesInObserverMode().then(
+      (value) => printAsJson('syncPurchases()', 'success'),
+      onError: (e) => printError('syncPurchases()', e),
+    );
+  }
+
+  Future<void> _handleCallAllEvent(
+    PurchaseCallAllEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
     // Apphud.hasActiveSubscription().then(
     //   (value) => printAsJson('hasActiveSubscription()', value),
     //   onError: (e) => printError('hasActiveSubscription()', e),
