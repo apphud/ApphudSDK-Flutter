@@ -1,5 +1,4 @@
 import 'package:apphud/models/sk_product/sk_product_wrapper.dart';
-import 'package:apphud_example/src/feature/common/widgets/ink_well_stack.dart';
 import 'package:flutter/material.dart';
 
 class SkProductWidget extends StatelessWidget {

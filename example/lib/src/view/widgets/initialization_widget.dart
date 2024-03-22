@@ -1,23 +1,9 @@
-import 'package:apphud_example/src/feature/initialization/initialization_bloc.dart';
+import 'package:apphud_example/src/purchase_bloc/purchase_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'initialization_state.dart';
-
-class InitializationScreenPage extends Page {
-  @override
-  Route createRoute(BuildContext context) {
-    return MaterialPageRoute(
-      settings: this,
-      builder: (BuildContext context) {
-        return InitializationStartScreen();
-      },
-    );
-  }
-}
-
-class InitializationStartScreen extends StatelessWidget {
-  static const String pathName = 'start';
+class InitializationWidget extends StatelessWidget {
+  const InitializationWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +14,12 @@ class InitializationStartScreen extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return Center(
-      child: BlocBuilder<InitializationBloc, InitializationState>(
-        builder: (BuildContext context, InitializationState state) {
+      child: BlocBuilder<PurchaseBloc, PurchaseState>(
+        builder: (context, state) {
           return state.map(
-            trying: _buildTrying,
+            initialization: _buildInitialization,
             success: _buildSuccess,
-            startFail: (f) => _buildFail(
+            startFailed: (f) => _buildFailed(
               title: 'SDK initialization failed with error:',
               error: f.error,
             ),
@@ -43,11 +29,11 @@ class InitializationStartScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTrying(Trying value) {
+  Widget _buildInitialization(PurchaseInitializationState state) {
     return _buildStatus(
-      isStartSuccess: value.isStartSuccess,
-      isPaywallsFetched: value.isPaywallsFetched,
-      isPlacementsFetched: value.isPlacementsFetched,
+      isStartSuccess: state.isStartSuccess,
+      isPaywallsFetched: state.isPaywallsFetched,
+      isPlacementsFetched: state.isPlacementsFetched,
     );
   }
 
@@ -92,7 +78,7 @@ class InitializationStartScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSuccess(Success value) {
+  Widget _buildSuccess(PurchaseSuccessState state) {
     return _buildStatus(
       isStartSuccess: true,
       isPaywallsFetched: true,
@@ -100,7 +86,7 @@ class InitializationStartScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFail({required String title, required String error}) {
+  Widget _buildFailed({required String title, required String error}) {
     return SafeArea(
       child: Center(
         child: SingleChildScrollView(

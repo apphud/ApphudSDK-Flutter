@@ -1,8 +1,6 @@
-import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
-import 'package:apphud_example/src/feature/home/product_list_widget.dart';
-import 'package:apphud_example/src/feature/purchase/purchase_bloc.dart';
-import 'package:apphud_example/src/feature/purchase/purchase_event.dart';
+import 'package:apphud_example/src/purchase_bloc/purchase_bloc.dart';
+import 'package:apphud_example/src/view/widgets/product_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -87,7 +85,7 @@ class _PlacementsListWidgetState extends State<PlacementsListWidget> {
       key: ValueKey(placement.identifier),
       title: Text(
         '${placement.identifier}',
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.headlineSmall,
       ),
       subtitle: Text(
         'paywall: ${placement.paywall!.identifier}\n'
