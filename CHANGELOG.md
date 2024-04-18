@@ -1,3 +1,8 @@
+## 2.4.5
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 2.4.5
+
 ## 2.4.4
 
 - [Android] **BREAKING** `Future<List<ApphudPlacement>> placementsDidLoadCallback()` renamed to `Future<ApphudPlacements> fetchPlacements()`
