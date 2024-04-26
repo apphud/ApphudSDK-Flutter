@@ -1,3 +1,11 @@
+## 2.5.0
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 2.6.0
+  - [iOS] 3.3.6
+- **BREAKING** `ApphudGroup`'s `products` variable was changed to `List<String> productIds`.
+- 
+
 ## 2.4.5
 
 - Dependencies of Native SDK's were updated to:

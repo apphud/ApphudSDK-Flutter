@@ -6,13 +6,13 @@ part 'apphud_group.g.dart';
 @JsonSerializable(anyMap: true)
 class ApphudGroup {
   final String name;
-  final List<ApphudProduct>? products;
+  final List<String> productIds;
   final bool hasAccess;
 
   ApphudGroup({
     required this.name,
     required this.hasAccess,
-    this.products,
+    required this.productIds,
   });
 
   factory ApphudGroup.fromJson(Map<dynamic, dynamic> map) =>
@@ -22,6 +22,6 @@ class ApphudGroup {
 
   @override
   String toString() {
-    return 'ApphudGroup{name: $name, products: $products, hasAccess: $hasAccess}';
+    return 'ApphudGroup{name: $name, products: $productIds, hasAccess: $hasAccess}';
   }
 }

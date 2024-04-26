@@ -20,12 +20,12 @@ class InitializationHandler(
         result: MethodChannel.Result
     ) {
         when (method) {
-            InitializationRoutes.start.name -> StartParser(result).parse(args) { apiKey, userId ->
-                start(apiKey, userId, result)
+            InitializationRoutes.start.name -> StartParser(result).parse(args) { apiKey, userId, observer ->
+                start(apiKey, userId, observerMode = observer, result)
             }
 
-            InitializationRoutes.startManually.name -> StartManuallyParser(result).parse(args) { apiKey, userId, deviceId ->
-                startManually(apiKey, userId, deviceId, result)
+            InitializationRoutes.startManually.name -> StartManuallyParser(result).parse(args) { apiKey, userId, deviceId, observer ->
+                startManually(apiKey, userId, deviceId, observerMode = observer, result)
             }
 
             InitializationRoutes.updateUserID.name -> UpdateUserIDParser(result).parse(args) { userId ->
@@ -82,14 +82,14 @@ class InitializationHandler(
 
     class StartParser(val result: MethodChannel.Result) {
 
-        fun parse(args: Map<String, Any>?, callback: (apiKey: String, userId: String?) -> Unit) {
+        fun parse(args: Map<String, Any>?, callback: (apiKey: String, userId: String?, observerMode: Boolean) -> Unit) {
             try {
                 args ?: throw IllegalArgumentException("apiKey is required argument")
                 val apiKey = args["apiKey"] as? String
                     ?: throw IllegalArgumentException("apiKey is required argument")
                 val userId = args["userID"] as? String
-
-                callback(apiKey, userId)
+                val observerMode = args["observerMode"] as? Boolean
+                callback(apiKey, userId, observerMode ?: false)
             } catch (e: IllegalArgumentException) {
                 result.error("400", e.message, "")
             }
@@ -99,7 +99,7 @@ class InitializationHandler(
     class StartManuallyParser(val result: MethodChannel.Result) {
         fun parse(
             args: Map<String, Any>?,
-            callback: (apiKey: String, userId: String?, deviceId: String?) -> Unit
+            callback: (apiKey: String, userId: String?, deviceId: String?, observerMode: Boolean) -> Unit
         ) {
             try {
                 args ?: throw IllegalArgumentException("apiKey is required argument")
@@ -107,8 +107,8 @@ class InitializationHandler(
                     ?: throw IllegalArgumentException("apiKey is required argument")
                 val userId = args["userID"] as? String
                 val deviceId = args["deviceID"] as? String
-
-                callback(apiKey, userId, deviceId)
+                val observerMode = args["observerMode"] as? Boolean
+                callback(apiKey, userId, deviceId, observerMode ?: false)
             } catch (e: IllegalArgumentException) {
                 result.error("400", e.message, "")
             }
