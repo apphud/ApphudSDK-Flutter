@@ -426,13 +426,13 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //      printAsJson('placement', placement);
     //   }
     //
-    Apphud.fetchPlacements().then(
-      (value) => printAsJson(
-        'fetchPlacements',
-        value,
-      ),
-      onError: (e) => printError('fetchPlacements', e),
-    );
+    // Apphud.fetchPlacements().then(
+    //   (value) => printAsJson(
+    //     'fetchPlacements',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('fetchPlacements', e),
+    // );
     //
     //   Apphud.rawPlacements().then(
     //     (value) => printAsJson(
@@ -449,13 +449,13 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //     ),
     //     onError: (e) => printError('rawPaywalls', e),
     //   );
-    Apphud.paywallsDidLoadCallback().then(
-      (value) => printAsJson(
-        'paywallsDidLoadCallback',
-        value,
-      ),
-      onError: (e) => printError('paywallsDidLoadCallback', e),
-    );
+    // Apphud.paywallsDidLoadCallback().then(
+    //   (value) => printAsJson(
+    //     'paywallsDidLoadCallback',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('paywallsDidLoadCallback', e),
+    // );
     // Apphud.refreshUserData().then(
     //   (value) => printAsJson(
     //     'refreshUserData',
@@ -463,5 +463,9 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //   ),
     //   onError: (e) => printError('refreshUserData', e),
     // );
+
+    Apphud.permissionGroups().then(
+        (value) => printAsJson('permissionGroups', value)
+    );
   }
 }

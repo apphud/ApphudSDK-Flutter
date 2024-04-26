@@ -22,6 +22,6 @@ class ApphudGroup {
 
   @override
   String toString() {
-    return 'ApphudGroup{name: $name, products: $productIds, hasAccess: $hasAccess}';
+    return 'ApphudGroup{name: $name, productIds: $productIds, hasAccess: $hasAccess}';
   }
 }
