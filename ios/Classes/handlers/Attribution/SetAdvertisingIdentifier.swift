@@ -11,7 +11,7 @@ final class SetAdvertisingIdentifierRequest: Request {
     typealias ArgumentProvider = SetAdvertisingIdentifierArgumentParser
 
     func startRequest(arguments: (String), result: @escaping FlutterResult) {
-        Apphud.setAdvertisingIdentifier(arguments)
+        Apphud.setDeviceIdentifiers(idfa: arguments, idfv: nil)
         result(nil)
     }
 }

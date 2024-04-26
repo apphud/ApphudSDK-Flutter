@@ -13,11 +13,11 @@ final class FetchPlacementsRequest: Request {
     typealias ArgumentProvider = FetchPlacementsArgumentParser
 
     @MainActor func startRequest(arguments: (), result: @escaping FlutterResult) {
-        Apphud.placementsDidLoadCallback({ (placements) in
+        Apphud.fetchPlacements { placements, error in
             result([
                 "placements": placements.map({p in p.toMap()})
             ])
-        })
+        }
     }
 }
 

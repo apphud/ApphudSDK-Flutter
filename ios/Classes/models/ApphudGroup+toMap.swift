@@ -12,7 +12,7 @@ extension ApphudGroup {
         return [
                 "name": name,
                 "hasAccess": hasAccess,
-                "products" : products.map({ (product:ApphudProduct) in product.toMap() })
+                "productIds" : productIds
                ]
     }
 }

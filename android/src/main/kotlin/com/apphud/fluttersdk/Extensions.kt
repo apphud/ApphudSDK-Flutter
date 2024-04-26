@@ -118,7 +118,7 @@ fun ApphudSubscription.toMap(): HashMap<String, Any?> {
 fun ApphudGroup.toMap(): HashMap<String, Any?> {
     return hashMapOf(
         "name" to name,
-        "products" to products?.map { it.toMap() },
+        "productIds" to ((products?.map { it.productId }) ?: listOf()),
         "hasAccess" to hasAccess()
     )
 }
