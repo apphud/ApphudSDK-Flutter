@@ -6,6 +6,9 @@
 //
 
 import ApphudSDK
+#if canImport(UIKit)
+import UIKit
+#endif
 
 final class StartRequest: Request {
     typealias ArgumentProvider = StartArgumentParser
@@ -13,6 +16,9 @@ final class StartRequest: Request {
         Apphud.start(apiKey: arguments.apiKey,
                                userID: arguments.userID,
                                observerMode: arguments.observerMode) { (user) in result(user.toMap()) }
+#if os(iOS)
+        Apphud.setDeviceIdentifiers(idfa: nil, idfv: UIDevice.current.identifierForVendor?.uuidString)
+#endif
     }
 }
 

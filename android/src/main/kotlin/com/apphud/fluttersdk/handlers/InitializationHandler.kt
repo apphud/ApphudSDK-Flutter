@@ -38,8 +38,8 @@ class InitializationHandler(
         }
     }
 
-    private fun start(apiKey: String, userId: String?, result: MethodChannel.Result) {
-        Apphud.start(context = context, apiKey = apiKey, userId = userId) { user ->
+    private fun start(apiKey: String, userId: String?, observerMode: Boolean, result: MethodChannel.Result) {
+        Apphud.start(context = context, apiKey = apiKey, userId = userId, observerMode = observerMode) { user ->
             handleOnMainThread { result.success(user.toMap()) }
         }
     }
@@ -48,13 +48,15 @@ class InitializationHandler(
         apiKey: String,
         userId: String?,
         deviceId: String?,
+        observerMode: Boolean,
         result: MethodChannel.Result
     ) {
         Apphud.start(
             context = context,
             apiKey = apiKey,
             userId = userId,
-            deviceId = deviceId
+            deviceId = deviceId,
+            observerMode = observerMode
         ) { user ->
             handleOnMainThread { result.success(user.toMap()) }
         }

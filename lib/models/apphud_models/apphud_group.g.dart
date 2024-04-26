@@ -9,14 +9,12 @@ part of 'apphud_group.dart';
 ApphudGroup _$ApphudGroupFromJson(Map json) => ApphudGroup(
       name: json['name'] as String,
       hasAccess: json['hasAccess'] as bool,
-      products: (json['products'] as List<dynamic>?)
-          ?.map((e) => ApphudProduct.fromJson(e as Map))
-          .toList(),
-    );
+      productIds: json['name'] as List<String>
+);
 
 Map<String, dynamic> _$ApphudGroupToJson(ApphudGroup instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'products': instance.products,
+      'products': instance.productIds,
       'hasAccess': instance.hasAccess,
     };
