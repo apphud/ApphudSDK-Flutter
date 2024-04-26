@@ -1,4 +1,3 @@
-import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'apphud_group.g.dart';
