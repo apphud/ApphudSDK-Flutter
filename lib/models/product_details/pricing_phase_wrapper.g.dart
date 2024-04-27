@@ -8,12 +8,12 @@ part of 'pricing_phase_wrapper.dart';
 
 PricingPhaseWrapper _$PricingPhaseWrapperFromJson(Map json) =>
     PricingPhaseWrapper(
-      billingCycleCount: json['billingCycleCount'] as int,
+      billingCycleCount: (json['billingCycleCount'] as num).toInt(),
       billingPeriod: json['billingPeriod'] as String,
       formattedPrice: json['formattedPrice'] as String,
-      priceAmountMicros: json['priceAmountMicros'] as int,
+      priceAmountMicros: (json['priceAmountMicros'] as num).toInt(),
       priceCurrencyCode: json['priceCurrencyCode'] as String,
-      recurrenceMode: json['recurrenceMode'] as int,
+      recurrenceMode: (json['recurrenceMode'] as num).toInt(),
     );
 
 Map<String, dynamic> _$PricingPhaseWrapperToJson(
