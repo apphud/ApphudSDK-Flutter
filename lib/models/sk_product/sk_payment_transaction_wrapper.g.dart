@@ -11,7 +11,7 @@ SKPaymentTransactionWrapper _$SKPaymentTransactionWrapperFromJson(Map json) =>
       transactionIdentifier: json['transactionIdentifier'] as String?,
       transactionDate: (json['transactionDate'] as num?)?.toDouble(),
       productIdentifier: json['productIdentifier'] as String,
-      state: json['state'] as int,
+      state: (json['state'] as num).toInt(),
     );
 
 Map<String, dynamic> _$SKPaymentTransactionWrapperToJson(
