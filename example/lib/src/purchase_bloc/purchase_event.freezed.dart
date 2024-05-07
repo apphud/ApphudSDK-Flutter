@@ -12,7 +12,7 @@ part of 'purchase_event.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$PurchaseEvent {
@@ -155,7 +155,7 @@ class _$PurchaseStartedEventImpl extends PurchaseStartedEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchaseStartedEventImpl);
@@ -334,7 +334,7 @@ class _$PurchasePaywallsFetchedEventImpl extends PurchasePaywallsFetchedEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchasePaywallsFetchedEventImpl &&
@@ -539,7 +539,7 @@ class _$PurchasePlacementsFetchedEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchasePlacementsFetchedEventImpl &&
@@ -720,7 +720,7 @@ class _$PurchaseRestorePurchasesEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchaseRestorePurchasesEventImpl);
@@ -900,7 +900,7 @@ class _$PurchasePurchaseProductEventImpl extends PurchasePurchaseProductEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchasePurchaseProductEventImpl &&
@@ -1096,7 +1096,7 @@ class _$PurchaseGrantPromotionalEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchaseGrantPromotionalEventImpl &&
@@ -1290,7 +1290,7 @@ class _$PurchasePaywallShownEventImpl extends PurchasePaywallShownEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchasePaywallShownEventImpl &&
@@ -1482,7 +1482,7 @@ class _$PurchasePaywallClosedEventImpl extends PurchasePaywallClosedEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchasePaywallClosedEventImpl &&
@@ -1656,7 +1656,7 @@ class _$PurchaseSyncPurchaseEventImpl extends PurchaseSyncPurchaseEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchaseSyncPurchaseEventImpl);
@@ -1814,7 +1814,7 @@ class _$PurchaseCallAllEventImpl extends PurchaseCallAllEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchaseCallAllEventImpl);

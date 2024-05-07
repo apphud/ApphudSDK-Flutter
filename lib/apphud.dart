@@ -279,6 +279,17 @@ class Apphud {
         },
       );
 
+  /// Android only. Explicitly loads fallback paywalls from the json file, if it was added to the project assets.
+  ///
+  /// By default, SDK automatically tries to load paywalls from the JSON file, if possible.
+  /// However, developer can also call this method directly for more control.
+  /// For more details, visit https://docs.apphud.com/docs/paywalls#set-up-fallback-mode
+  static Future<ApphudPaywalls?> loadFallbackPaywalls() async {
+    final Map<dynamic, dynamic>? json = await _channel
+        .invokeMethod<Map<dynamic, dynamic>>('loadFallbackPaywalls');
+    return json != null ? ApphudPaywalls.fromJson(json) : null;
+  }
+
   // Make Purchase
 
   ///  Purchase product and automatically submits App Store Receipt (iOS) or Google Play purchase token (Android) to Apphud.

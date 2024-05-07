@@ -44,3 +44,4 @@ app.*.map.json
 /example/ios/Runner/GoogleService-Info.plist
 
 .fvm/
+.idea

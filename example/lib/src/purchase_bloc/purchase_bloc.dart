@@ -614,9 +614,13 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //   ),
     //   onError: (e) => printError('refreshUserData', e),
     // );
+    // Apphud.permissionGroups().then(
+    //     (value) => printAsJson('permissionGroups', value)
+    // );
 
-    Apphud.permissionGroups().then(
-        (value) => printAsJson('permissionGroups', value)
+    Apphud.loadFallbackPaywalls().then(
+      (value) => printAsJson('loadFallbackPaywalls', value),
+      onError: (e) => printError('loadFallbackPaywalls', e),
     );
   }
 }
