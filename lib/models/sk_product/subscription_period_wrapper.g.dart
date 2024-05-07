@@ -9,7 +9,7 @@ part of 'subscription_period_wrapper.dart';
 SKProductSubscriptionPeriodWrapper _$SKProductSubscriptionPeriodWrapperFromJson(
         Map json) =>
     SKProductSubscriptionPeriodWrapper(
-      numberOfUnits: json['numberOfUnits'] as int,
+      numberOfUnits: (json['numberOfUnits'] as num).toInt(),
       unit: $enumDecode(_$SKSubscriptionPeriodTimeEnumMap, json['unit']),
     );
 

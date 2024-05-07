@@ -9,8 +9,8 @@ part of 'apphud_error.dart';
 ApphudError _$ApphudErrorFromJson(Map json) => ApphudError(
       networkIssue: json['networkIssue'] as bool? ?? false,
       message: json['message'] as String?,
-      errorCode: json['errorCode'] as int?,
-      billingResponseCode: json['billingResponseCode'] as int?,
+      errorCode: (json['errorCode'] as num?)?.toInt(),
+      billingResponseCode: (json['billingResponseCode'] as num?)?.toInt(),
       billingErrorTitle: json['billingErrorTitle'] as String?,
     );
 

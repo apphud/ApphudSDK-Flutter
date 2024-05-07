@@ -11,8 +11,8 @@ import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:apphud_example/app_secrets_android.dart';
 import 'package:apphud_example/app_secrets_ios.dart';
-import 'package:apphud_example/src/feature/home/sk_product_widget.dart';
-import 'package:apphud_example/src/feature/home/sku_details_widget.dart';
+import 'package:apphud_example/src/view/widgets/sk_product_widget.dart';
+import 'package:apphud_example/src/view/widgets/sku_details_widget.dart';
 import 'package:flutter/material.dart';
 
 class MySimpleApp extends StatelessWidget {

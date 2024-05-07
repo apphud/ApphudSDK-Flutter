@@ -1,3 +1,11 @@
+## 2.5.1
+ 
+- [iOS], [Android] Example App was refactored 
+- [Android] `loadFallbackPaywalls` method was introduced
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 2.6.5
+   
 ## 2.5.0
 
 - Dependencies of Native SDK's were updated to:

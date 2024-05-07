@@ -1,4 +1,4 @@
-import 'package:apphud_example/src/feature/common/app_secrets_base.dart';
+import 'package:apphud_example/src/common/app_secrets_base.dart';
 
 class AppSecretsIos implements AppSecretsBase {
   @override
