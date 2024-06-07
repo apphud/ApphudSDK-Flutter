@@ -24,6 +24,14 @@ packages:
       relative: true
     source: path
     version: "2.5.1"
+  appsflyer_sdk:
+    dependency: "direct main"
+    description:
+      name: appsflyer_sdk
+      sha256: "81bd40cc6fe985c5b6a1d6b8d38c282673c1c77aea4d6696e9bf46fff7098b07"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.14.3"
   args:
     dependency: transitive
     description:

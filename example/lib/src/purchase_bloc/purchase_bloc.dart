@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:apphud/apphud.dart';
+import 'package:apphud/models/apphud_models/apphud_attribution_provider.dart';
 import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
@@ -11,6 +12,7 @@ import 'package:apphud/models/apphud_models/composite/apphud_product_composite.d
 import 'package:apphud_example/src/common/app_secrets_base.dart';
 import 'package:apphud_example/src/common/debug_print_mixin.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_user_message.dart';
+import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:bloc/bloc.dart';
 
 import 'purchase_event.dart';
@@ -107,6 +109,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       );
       printAsJson('user', user);
       emit(PurchaseState.initialization(isStartSuccess: true));
+      _initAppsFlayer();
     } catch (error) {
       emit(PurchaseState.startFailed(error.toString()));
     }
@@ -622,5 +625,45 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       (value) => printAsJson('loadFallbackPaywalls', value),
       onError: (e) => printError('loadFallbackPaywalls', e),
     );
+  }
+
+  Future<void> _initAppsFlayer() async {
+    final options = AppsFlyerOptions(
+      afDevKey: _appSecrets.appsFlyerKey,
+      appId: _appSecrets.appsFlyerAppId,
+      showDebug: true,
+      timeToWaitForATTUserAuthorization: 15,
+      manualStart: true,
+    );
+
+    final appsflyerSdk = AppsflyerSdk(options);
+
+    await appsflyerSdk.initSdk(registerConversionDataCallback: true);
+
+    appsflyerSdk.onInstallConversionData((result) async {
+      final uid = await appsflyerSdk.getAppsFlyerUID();
+      final status = result['status'];
+      final payload = Map<String, dynamic>.from(result['payload'] as Map);
+      if (status == 'success') {
+        final data = Map<String, dynamic>.from(result);
+        printAsJson('AppsFlyer onInstallConversionData', data);
+
+        Apphud.addAttribution(
+          provider: ApphudAttributionProvider.appsFlyer,
+          data: payload,
+          identifier: uid,
+        );
+      } else {
+        Apphud.addAttribution(
+          provider: ApphudAttributionProvider.appsFlyer,
+          identifier: uid,
+          data: {
+            'error': payload['data'],
+          },
+        );
+      }
+    });
+
+    appsflyerSdk.startSDK();
   }
 }

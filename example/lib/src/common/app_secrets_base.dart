@@ -6,4 +6,8 @@ abstract class AppSecretsBase {
   String? get deviceID;
 
   bool get observeMode;
+
+  String get appsFlyerKey;
+
+  String get appsFlyerAppId;
 }
