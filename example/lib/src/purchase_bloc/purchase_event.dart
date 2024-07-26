@@ -28,6 +28,9 @@ class PurchaseEvent with _$PurchaseEvent {
   const factory PurchaseEvent.grantPromotional(ApphudProduct product) =
       PurchaseGrantPromotionalEvent;
 
+  const factory PurchaseEvent.trackPurchase(ApphudProduct product) =
+      PurchaseTrackPurchaseEvent;
+
   const factory PurchaseEvent.paywallShown(ApphudPaywall paywall) =
       PurchasePaywallShownEvent;
 

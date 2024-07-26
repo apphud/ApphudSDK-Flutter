@@ -25,6 +25,7 @@ mixin _$PurchaseEvent {
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
@@ -39,6 +40,7 @@ mixin _$PurchaseEvent {
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
     TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
@@ -53,6 +55,7 @@ mixin _$PurchaseEvent {
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
@@ -73,6 +76,7 @@ mixin _$PurchaseEvent {
         purchaseProduct,
     required TResult Function(PurchaseGrantPromotionalEvent value)
         grantPromotional,
+    required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
     required TResult Function(PurchasePaywallShownEvent value) paywallShown,
     required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
     required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
@@ -87,6 +91,7 @@ mixin _$PurchaseEvent {
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -101,6 +106,7 @@ mixin _$PurchaseEvent {
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -174,6 +180,7 @@ class _$PurchaseStartedEventImpl extends PurchaseStartedEvent {
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
@@ -191,6 +198,7 @@ class _$PurchaseStartedEventImpl extends PurchaseStartedEvent {
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
     TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
@@ -208,6 +216,7 @@ class _$PurchaseStartedEventImpl extends PurchaseStartedEvent {
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
@@ -234,6 +243,7 @@ class _$PurchaseStartedEventImpl extends PurchaseStartedEvent {
         purchaseProduct,
     required TResult Function(PurchaseGrantPromotionalEvent value)
         grantPromotional,
+    required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
     required TResult Function(PurchasePaywallShownEvent value) paywallShown,
     required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
     required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
@@ -251,6 +261,7 @@ class _$PurchaseStartedEventImpl extends PurchaseStartedEvent {
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -268,6 +279,7 @@ class _$PurchaseStartedEventImpl extends PurchaseStartedEvent {
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -363,6 +375,7 @@ class _$PurchasePaywallsFetchedEventImpl extends PurchasePaywallsFetchedEvent {
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
@@ -380,6 +393,7 @@ class _$PurchasePaywallsFetchedEventImpl extends PurchasePaywallsFetchedEvent {
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
     TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
@@ -397,6 +411,7 @@ class _$PurchasePaywallsFetchedEventImpl extends PurchasePaywallsFetchedEvent {
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
@@ -423,6 +438,7 @@ class _$PurchasePaywallsFetchedEventImpl extends PurchasePaywallsFetchedEvent {
         purchaseProduct,
     required TResult Function(PurchaseGrantPromotionalEvent value)
         grantPromotional,
+    required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
     required TResult Function(PurchasePaywallShownEvent value) paywallShown,
     required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
     required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
@@ -440,6 +456,7 @@ class _$PurchasePaywallsFetchedEventImpl extends PurchasePaywallsFetchedEvent {
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -457,6 +474,7 @@ class _$PurchasePaywallsFetchedEventImpl extends PurchasePaywallsFetchedEvent {
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -569,6 +587,7 @@ class _$PurchasePlacementsFetchedEventImpl
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
@@ -586,6 +605,7 @@ class _$PurchasePlacementsFetchedEventImpl
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
     TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
@@ -603,6 +623,7 @@ class _$PurchasePlacementsFetchedEventImpl
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
@@ -629,6 +650,7 @@ class _$PurchasePlacementsFetchedEventImpl
         purchaseProduct,
     required TResult Function(PurchaseGrantPromotionalEvent value)
         grantPromotional,
+    required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
     required TResult Function(PurchasePaywallShownEvent value) paywallShown,
     required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
     required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
@@ -646,6 +668,7 @@ class _$PurchasePlacementsFetchedEventImpl
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -663,6 +686,7 @@ class _$PurchasePlacementsFetchedEventImpl
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -739,6 +763,7 @@ class _$PurchaseRestorePurchasesEventImpl
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
@@ -756,6 +781,7 @@ class _$PurchaseRestorePurchasesEventImpl
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
     TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
@@ -773,6 +799,7 @@ class _$PurchaseRestorePurchasesEventImpl
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
@@ -799,6 +826,7 @@ class _$PurchaseRestorePurchasesEventImpl
         purchaseProduct,
     required TResult Function(PurchaseGrantPromotionalEvent value)
         grantPromotional,
+    required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
     required TResult Function(PurchasePaywallShownEvent value) paywallShown,
     required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
     required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
@@ -816,6 +844,7 @@ class _$PurchaseRestorePurchasesEventImpl
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -833,6 +862,7 @@ class _$PurchaseRestorePurchasesEventImpl
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -928,6 +958,7 @@ class _$PurchasePurchaseProductEventImpl extends PurchasePurchaseProductEvent {
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
@@ -945,6 +976,7 @@ class _$PurchasePurchaseProductEventImpl extends PurchasePurchaseProductEvent {
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
     TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
@@ -962,6 +994,7 @@ class _$PurchasePurchaseProductEventImpl extends PurchasePurchaseProductEvent {
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
@@ -988,6 +1021,7 @@ class _$PurchasePurchaseProductEventImpl extends PurchasePurchaseProductEvent {
         purchaseProduct,
     required TResult Function(PurchaseGrantPromotionalEvent value)
         grantPromotional,
+    required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
     required TResult Function(PurchasePaywallShownEvent value) paywallShown,
     required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
     required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
@@ -1005,6 +1039,7 @@ class _$PurchasePurchaseProductEventImpl extends PurchasePurchaseProductEvent {
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -1022,6 +1057,7 @@ class _$PurchasePurchaseProductEventImpl extends PurchasePurchaseProductEvent {
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -1124,6 +1160,7 @@ class _$PurchaseGrantPromotionalEventImpl
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
@@ -1141,6 +1178,7 @@ class _$PurchaseGrantPromotionalEventImpl
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
     TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
@@ -1158,6 +1196,7 @@ class _$PurchaseGrantPromotionalEventImpl
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
@@ -1184,6 +1223,7 @@ class _$PurchaseGrantPromotionalEventImpl
         purchaseProduct,
     required TResult Function(PurchaseGrantPromotionalEvent value)
         grantPromotional,
+    required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
     required TResult Function(PurchasePaywallShownEvent value) paywallShown,
     required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
     required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
@@ -1201,6 +1241,7 @@ class _$PurchaseGrantPromotionalEventImpl
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -1218,6 +1259,7 @@ class _$PurchaseGrantPromotionalEventImpl
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -1240,6 +1282,204 @@ abstract class PurchaseGrantPromotionalEvent extends PurchaseEvent {
   @JsonKey(ignore: true)
   _$$PurchaseGrantPromotionalEventImplCopyWith<
           _$PurchaseGrantPromotionalEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PurchaseTrackPurchaseEventImplCopyWith<$Res> {
+  factory _$$PurchaseTrackPurchaseEventImplCopyWith(
+          _$PurchaseTrackPurchaseEventImpl value,
+          $Res Function(_$PurchaseTrackPurchaseEventImpl) then) =
+      __$$PurchaseTrackPurchaseEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({ApphudProduct product});
+}
+
+/// @nodoc
+class __$$PurchaseTrackPurchaseEventImplCopyWithImpl<$Res>
+    extends _$PurchaseEventCopyWithImpl<$Res, _$PurchaseTrackPurchaseEventImpl>
+    implements _$$PurchaseTrackPurchaseEventImplCopyWith<$Res> {
+  __$$PurchaseTrackPurchaseEventImplCopyWithImpl(
+      _$PurchaseTrackPurchaseEventImpl _value,
+      $Res Function(_$PurchaseTrackPurchaseEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? product = null,
+  }) {
+    return _then(_$PurchaseTrackPurchaseEventImpl(
+      null == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ApphudProduct,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$PurchaseTrackPurchaseEventImpl extends PurchaseTrackPurchaseEvent {
+  const _$PurchaseTrackPurchaseEventImpl(this.product) : super._();
+
+  @override
+  final ApphudProduct product;
+
+  @override
+  String toString() {
+    return 'PurchaseEvent.trackPurchase(product: $product)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PurchaseTrackPurchaseEventImpl &&
+            (identical(other.product, product) || other.product == product));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, product);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PurchaseTrackPurchaseEventImplCopyWith<_$PurchaseTrackPurchaseEventImpl>
+      get copyWith => __$$PurchaseTrackPurchaseEventImplCopyWithImpl<
+          _$PurchaseTrackPurchaseEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(ApphudPaywalls paywalls) paywallsFetched,
+    required TResult Function(List<ApphudPlacement> placements)
+        placementsFetched,
+    required TResult Function() restorePurchases,
+    required TResult Function(ApphudProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudProduct product) trackPurchase,
+    required TResult Function(ApphudPaywall paywall) paywallShown,
+    required TResult Function(ApphudPaywall paywall) paywallClosed,
+    required TResult Function() syncPurchase,
+    required TResult Function() callAll,
+  }) {
+    return trackPurchase(product);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(ApphudPaywalls paywalls)? paywallsFetched,
+    TResult? Function(List<ApphudPlacement> placements)? placementsFetched,
+    TResult? Function()? restorePurchases,
+    TResult? Function(ApphudProduct product)? purchaseProduct,
+    TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudProduct product)? trackPurchase,
+    TResult? Function(ApphudPaywall paywall)? paywallShown,
+    TResult? Function(ApphudPaywall paywall)? paywallClosed,
+    TResult? Function()? syncPurchase,
+    TResult? Function()? callAll,
+  }) {
+    return trackPurchase?.call(product);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(ApphudPaywalls paywalls)? paywallsFetched,
+    TResult Function(List<ApphudPlacement> placements)? placementsFetched,
+    TResult Function()? restorePurchases,
+    TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudProduct product)? trackPurchase,
+    TResult Function(ApphudPaywall paywall)? paywallShown,
+    TResult Function(ApphudPaywall paywall)? paywallClosed,
+    TResult Function()? syncPurchase,
+    TResult Function()? callAll,
+    required TResult orElse(),
+  }) {
+    if (trackPurchase != null) {
+      return trackPurchase(product);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PurchaseStartedEvent value) started,
+    required TResult Function(PurchasePaywallsFetchedEvent value)
+        paywallsFetched,
+    required TResult Function(PurchasePlacementsFetchedEvent value)
+        placementsFetched,
+    required TResult Function(PurchaseRestorePurchasesEvent value)
+        restorePurchases,
+    required TResult Function(PurchasePurchaseProductEvent value)
+        purchaseProduct,
+    required TResult Function(PurchaseGrantPromotionalEvent value)
+        grantPromotional,
+    required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
+    required TResult Function(PurchasePaywallShownEvent value) paywallShown,
+    required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
+    required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
+    required TResult Function(PurchaseCallAllEvent value) callAll,
+  }) {
+    return trackPurchase(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PurchaseStartedEvent value)? started,
+    TResult? Function(PurchasePaywallsFetchedEvent value)? paywallsFetched,
+    TResult? Function(PurchasePlacementsFetchedEvent value)? placementsFetched,
+    TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
+    TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
+    TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
+    TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
+    TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
+    TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
+    TResult? Function(PurchaseCallAllEvent value)? callAll,
+  }) {
+    return trackPurchase?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PurchaseStartedEvent value)? started,
+    TResult Function(PurchasePaywallsFetchedEvent value)? paywallsFetched,
+    TResult Function(PurchasePlacementsFetchedEvent value)? placementsFetched,
+    TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
+    TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
+    TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
+    TResult Function(PurchasePaywallShownEvent value)? paywallShown,
+    TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
+    TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
+    TResult Function(PurchaseCallAllEvent value)? callAll,
+    required TResult orElse(),
+  }) {
+    if (trackPurchase != null) {
+      return trackPurchase(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PurchaseTrackPurchaseEvent extends PurchaseEvent {
+  const factory PurchaseTrackPurchaseEvent(final ApphudProduct product) =
+      _$PurchaseTrackPurchaseEventImpl;
+  const PurchaseTrackPurchaseEvent._() : super._();
+
+  ApphudProduct get product;
+  @JsonKey(ignore: true)
+  _$$PurchaseTrackPurchaseEventImplCopyWith<_$PurchaseTrackPurchaseEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -1317,6 +1557,7 @@ class _$PurchasePaywallShownEventImpl extends PurchasePaywallShownEvent {
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
@@ -1334,6 +1575,7 @@ class _$PurchasePaywallShownEventImpl extends PurchasePaywallShownEvent {
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
     TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
@@ -1351,6 +1593,7 @@ class _$PurchasePaywallShownEventImpl extends PurchasePaywallShownEvent {
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
@@ -1377,6 +1620,7 @@ class _$PurchasePaywallShownEventImpl extends PurchasePaywallShownEvent {
         purchaseProduct,
     required TResult Function(PurchaseGrantPromotionalEvent value)
         grantPromotional,
+    required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
     required TResult Function(PurchasePaywallShownEvent value) paywallShown,
     required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
     required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
@@ -1394,6 +1638,7 @@ class _$PurchasePaywallShownEventImpl extends PurchasePaywallShownEvent {
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -1411,6 +1656,7 @@ class _$PurchasePaywallShownEventImpl extends PurchasePaywallShownEvent {
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -1509,6 +1755,7 @@ class _$PurchasePaywallClosedEventImpl extends PurchasePaywallClosedEvent {
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
@@ -1526,6 +1773,7 @@ class _$PurchasePaywallClosedEventImpl extends PurchasePaywallClosedEvent {
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
     TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
@@ -1543,6 +1791,7 @@ class _$PurchasePaywallClosedEventImpl extends PurchasePaywallClosedEvent {
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
@@ -1569,6 +1818,7 @@ class _$PurchasePaywallClosedEventImpl extends PurchasePaywallClosedEvent {
         purchaseProduct,
     required TResult Function(PurchaseGrantPromotionalEvent value)
         grantPromotional,
+    required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
     required TResult Function(PurchasePaywallShownEvent value) paywallShown,
     required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
     required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
@@ -1586,6 +1836,7 @@ class _$PurchasePaywallClosedEventImpl extends PurchasePaywallClosedEvent {
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -1603,6 +1854,7 @@ class _$PurchasePaywallClosedEventImpl extends PurchasePaywallClosedEvent {
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -1675,6 +1927,7 @@ class _$PurchaseSyncPurchaseEventImpl extends PurchaseSyncPurchaseEvent {
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
@@ -1692,6 +1945,7 @@ class _$PurchaseSyncPurchaseEventImpl extends PurchaseSyncPurchaseEvent {
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
     TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
@@ -1709,6 +1963,7 @@ class _$PurchaseSyncPurchaseEventImpl extends PurchaseSyncPurchaseEvent {
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
@@ -1735,6 +1990,7 @@ class _$PurchaseSyncPurchaseEventImpl extends PurchaseSyncPurchaseEvent {
         purchaseProduct,
     required TResult Function(PurchaseGrantPromotionalEvent value)
         grantPromotional,
+    required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
     required TResult Function(PurchasePaywallShownEvent value) paywallShown,
     required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
     required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
@@ -1752,6 +2008,7 @@ class _$PurchaseSyncPurchaseEventImpl extends PurchaseSyncPurchaseEvent {
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -1769,6 +2026,7 @@ class _$PurchaseSyncPurchaseEventImpl extends PurchaseSyncPurchaseEvent {
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -1833,6 +2091,7 @@ class _$PurchaseCallAllEventImpl extends PurchaseCallAllEvent {
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
     required TResult Function(ApphudProduct product) grantPromotional,
+    required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
     required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
@@ -1850,6 +2109,7 @@ class _$PurchaseCallAllEventImpl extends PurchaseCallAllEvent {
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
     TResult? Function(ApphudProduct product)? grantPromotional,
+    TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
     TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
@@ -1867,6 +2127,7 @@ class _$PurchaseCallAllEventImpl extends PurchaseCallAllEvent {
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
     TResult Function(ApphudProduct product)? grantPromotional,
+    TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
     TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
@@ -1893,6 +2154,7 @@ class _$PurchaseCallAllEventImpl extends PurchaseCallAllEvent {
         purchaseProduct,
     required TResult Function(PurchaseGrantPromotionalEvent value)
         grantPromotional,
+    required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
     required TResult Function(PurchasePaywallShownEvent value) paywallShown,
     required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
     required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
@@ -1910,6 +2172,7 @@ class _$PurchaseCallAllEventImpl extends PurchaseCallAllEvent {
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
@@ -1927,6 +2190,7 @@ class _$PurchaseCallAllEventImpl extends PurchaseCallAllEvent {
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
+    TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
     TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,

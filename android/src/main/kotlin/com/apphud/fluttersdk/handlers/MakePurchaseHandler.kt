@@ -73,6 +73,17 @@ class MakePurchaseHandler(
             MakePurchaseRoutes.refreshUserData.name -> refreshUserData(result)
 
             MakePurchaseRoutes.loadFallbackPaywalls.name -> loadFallbackPaywalls(result)
+
+            MakePurchaseRoutes.trackPurchase.name -> TrackPurchaseParser(result).parse(args)
+            { productId, offerIdToken, paywallIdentifier, placementIdentifier ->
+                trackPurchase(
+                    productId,
+                    offerIdToken,
+                    paywallIdentifier,
+                    placementIdentifier,
+                    result
+                )
+            }
         }
     }
 
@@ -227,6 +238,17 @@ class MakePurchaseHandler(
         handleOnMainThread { result.success(null) }
     }
 
+    private fun trackPurchase(
+        productId: String,
+        offerIdToken: String?,
+        paywallIdentifier: String? = null,
+        placementIdentifier: String? = null,
+        result: MethodChannel.Result
+    ) {
+        Apphud.trackPurchase(productId, offerIdToken, paywallIdentifier, placementIdentifier)
+        handleOnMainThread { result.success(null) }
+    }
+
     class ProductParser(private val result: MethodChannel.Result) {
         fun parse(args: Map<String, Any>?, callback: (productIdentifier: String) -> Unit) {
             try {
@@ -289,6 +311,31 @@ class MakePurchaseHandler(
             }
         }
     }
+
+    class TrackPurchaseParser(private val result: MethodChannel.Result) {
+        fun parse(
+            args: Map<String, Any>?, callback: (
+                productId: String,
+                offerIdToken: String?,
+                paywallIdentifier: String?,
+                placementIdentifier: String?
+            ) -> Unit
+        ) {
+            try {
+                args ?: throw IllegalArgumentException("productId is required argument")
+                val productId = args["productId"] as? String
+                    ?: throw IllegalArgumentException("productId is required argument")
+
+                val offerIdToken = args["offerIdToken"] as? String
+                val paywallIdentifier = args["paywallIdentifier"] as? String
+                val placementIdentifier = args["placementIdentifier"] as? String
+
+                callback(productId, offerIdToken, paywallIdentifier, placementIdentifier)
+            } catch (e: IllegalArgumentException) {
+                result.error("400", e.message, "")
+            }
+        }
+    }
 }
 
 enum class MakePurchaseRoutes {
@@ -305,7 +352,8 @@ enum class MakePurchaseRoutes {
     paywallsDidLoadCallback,
     rawPaywalls,
     refreshUserData,
-    loadFallbackPaywalls;
+    loadFallbackPaywalls,
+    trackPurchase;
 
     companion object Mapper {
         fun stringValues(): List<String> {

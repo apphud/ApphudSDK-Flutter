@@ -7,6 +7,7 @@ class ProductDetailsWidget extends StatelessWidget {
   final ProductDetailsWrapper? productDetails;
   final VoidCallback? onTap;
   final VoidCallback? onPromote;
+  final VoidCallback? onTrackPurchase;
   final bool wrapInCard;
 
   const ProductDetailsWidget({
@@ -14,6 +15,7 @@ class ProductDetailsWidget extends StatelessWidget {
     this.productDetails,
     this.onTap,
     this.onPromote,
+    this.onTrackPurchase,
     bool? wrapInCard,
   })  : wrapInCard = wrapInCard ?? true,
         super(key: key);
@@ -34,9 +36,19 @@ class ProductDetailsWidget extends StatelessWidget {
           subtitle: _buildProductDetailsJson(productDetailsLocal),
           trailing: HeroMode(
             enabled: false,
-            child: FloatingActionButton(
-              onPressed: onPromote,
-              child: Text('P'),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FloatingActionButton(
+                  onPressed: onPromote,
+                  child: Text('P'),
+                ),
+                const SizedBox(width: 10),
+                FloatingActionButton(
+                  onPressed: onTrackPurchase,
+                  child: Text('T'),
+                ),
+              ],
             ),
           ),
         ),

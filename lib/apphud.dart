@@ -347,6 +347,36 @@ class Apphud {
     }
   }
 
+  /// Android only. Tracks a purchase made through Google Play. This method should be used only in Observer Mode,
+  /// specifically when utilizing Apphud Paywalls and Placements, and when you need to associate the
+  /// purchase with specific paywall and placement identifiers.
+  ///
+  /// In all other cases, purchases will be automatically intercepted and sent to Apphud.
+  ///
+  /// Note: The `offerIdToken` is mandatory for subscriptions. The `paywallIdentifier` and `placementIdentifier`
+  /// are optional but recommended for A/B test analysis in Observer Mode.
+  ///
+  /// - parameter [productId] The Google Play product ID of the item to purchase.
+  /// - parameter [offerIdToken] The identifier of the subscription's offer token. This parameter is required for subscriptions.
+  /// - parameter [paywallIdentifier] (Optional) The identifier of the paywall.
+  /// - parameter [placementIdentifier] (Optional) The identifier of the placement.
+  static Future<void> trackPurchase({
+    required String productId,
+    String? offerIdToken,
+    String? paywallIdentifier,
+    String? placementIdentifier,
+  }) async {
+    return _channel.invokeMethod(
+      'trackPurchase',
+      {
+        'productId': productId,
+        'offerIdToken': offerIdToken,
+        'paywallIdentifier': paywallIdentifier,
+        'placementIdentifier': placementIdentifier,
+      },
+    );
+  }
+
   /// This method automatically sends in-app purchase receipt to Apphud, so you don't need to call `submitReceipt` method.
   /// - parameter [productId] is required. This is an [productId] that user wants to purchase.
   /// - parameter [discountID] is required. This is a Identifier String object that you would like to apply.
