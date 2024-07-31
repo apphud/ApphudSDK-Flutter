@@ -541,11 +541,15 @@ class Apphud {
     return ApphudComposite.fromJson(json);
   }
 
-  /// Android only. This method will send purchases to the Apphud server.
+  /// **Deprecated**.
   ///
-  /// If you use your own purchase logic, you must call this method after every successful purchase or restore.
+  /// Android only. This method is deprecated since version 2.5.2. All purchases on Android are now automatically intercepted and sent to Apphud.
+  /// You no longer need to call this method.
+  ///
+  /// If you want to use paywalls and placements in observer mode, use the new `trackPurchase` method instead.
+  @deprecated
   static Future<void> syncPurchasesInObserverMode() async {
-    await _channel.invokeMethod('syncPurchasesInObserverMode');
+    // This method is now voided and does nothing
   }
 
 // User Properties

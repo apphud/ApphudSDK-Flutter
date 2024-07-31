@@ -1,6 +1,7 @@
 ## 2.5.2
 
-- [Android] `trackPurchase` method was introduced
+- [Android] `trackPurchase` method was introduced.
+- [Android] `syncPurchasesInObserverMode` method was deprecated. All purchases on Android are now automatically intercepted and sent to Apphud.  
 
 - Dependencies of Native SDK's were updated to:
     - [Android] 2.7.0
