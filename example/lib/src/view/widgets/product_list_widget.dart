@@ -58,6 +58,9 @@ class ProductListWidget extends StatelessWidget {
         onPromote: () => BlocProvider.of<PurchaseBloc>(context).add(
           PurchaseEvent.grantPromotional(product),
         ),
+        onTrackPurchase: () => BlocProvider.of<PurchaseBloc>(context).add(
+          PurchaseEvent.trackPurchase(product),
+        ),
       );
     } else {
       content = Text('No product for this platform');

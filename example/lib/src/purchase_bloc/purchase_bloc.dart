@@ -47,6 +47,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       purchaseProduct: (e) => _handlePurchaseProductEvent(e, emit),
       restorePurchases: (e) => _handleRestorePurchasesEvent(e, emit),
       syncPurchase: (e) => _handleSyncPurchaseEvent(e, emit),
+      trackPurchase: (e) => _handleTrackPurchaseEvent(e, emit),
     );
   }
 
@@ -275,6 +276,16 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     Apphud.syncPurchasesInObserverMode().then(
       (value) => printAsJson('syncPurchases()', 'success'),
       onError: (e) => printError('syncPurchases()', e),
+    );
+  }
+
+  Future<void> _handleTrackPurchaseEvent(
+    PurchaseTrackPurchaseEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
+    Apphud.trackPurchase(productId: event.product.productId).then(
+      (value) => printAsJson('trackPurchase()', 'success'),
+      onError: (e) => printError('trackPurchase()', e),
     );
   }
 
