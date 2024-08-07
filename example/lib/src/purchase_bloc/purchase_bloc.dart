@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:adjust_sdk/adjust.dart';
+import 'package:adjust_sdk/adjust_config.dart';
 import 'package:apphud/apphud.dart';
+import 'package:apphud/models/apphud_models/apphud_attribution_provider.dart';
 import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
@@ -108,6 +111,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       );
       printAsJson('user', user);
       emit(PurchaseState.initialization(isStartSuccess: true));
+      _initAdjust();
     } catch (error) {
       emit(PurchaseState.startFailed(error.toString()));
     }
@@ -633,5 +637,42 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       (value) => printAsJson('loadFallbackPaywalls', value),
       onError: (e) => printError('loadFallbackPaywalls', e),
     );
+  }
+
+  void _initAdjust() {
+    final config = AdjustConfig('{YourAppToken}', AdjustEnvironment.sandbox);
+    config.attributionCallback = (adjustData) async {
+      final apphudData = <String, dynamic>{};
+      if (adjustData.trackerToken != null) {
+        apphudData['trackerToken'] = adjustData.trackerToken!;
+      }
+      if (adjustData.trackerName != null) {
+        apphudData['trackerName'] = adjustData.trackerName!;
+      }
+      if (adjustData.network != null) {
+        apphudData['network'] = adjustData.network!;
+      }
+      if (adjustData.adgroup != null) {
+        apphudData['adgroup'] = adjustData.adgroup!;
+      }
+      if (adjustData.creative != null) {
+        apphudData['creative'] = adjustData.creative!;
+      }
+      if (adjustData.clickLabel != null) {
+        apphudData['clickLabel'] = adjustData.clickLabel!;
+      }
+      if (adjustData.adid != null) {
+        apphudData['adid'] = adjustData.adid!;
+      }
+      if (adjustData.fbInstallReferrer != null) {
+        apphudData['fbInstallReferrer'] = adjustData.fbInstallReferrer!;
+      }
+
+      await Apphud.addAttribution(
+        data: apphudData,
+        provider: ApphudAttributionProvider.adjust,
+      );
+    };
+    Adjust.start(config);
   }
 }
