@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "67.0.0"
+  adjust_sdk:
+    dependency: "direct main"
+    description:
+      name: adjust_sdk
+      sha256: "3a6122afa94b786bfddf8d09d7e7300c6a4b4b9bdaaca908b7f04dba9c11d6f1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.38.2"
   analyzer:
     dependency: transitive
     description:
