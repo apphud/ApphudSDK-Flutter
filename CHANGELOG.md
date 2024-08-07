@@ -1,3 +1,7 @@
+## 2.5.3
+
+- [iOS],[Android] `ApphudAttributionProvider.custom` was added.
+
 ## 2.5.2
 
 - [Android] `trackPurchase` method was introduced.
