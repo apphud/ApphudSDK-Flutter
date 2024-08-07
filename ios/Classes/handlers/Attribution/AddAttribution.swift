@@ -47,6 +47,8 @@ extension ApphudAttributionProvider {
             return ApphudAttributionProvider.appleAdsAttribution
         case "firebase":
             return ApphudAttributionProvider.firebase
+        case "custom":
+            return ApphudAttributionProvider.custom
         default:
             return nil
         }
