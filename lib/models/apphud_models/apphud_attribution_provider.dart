@@ -3,6 +3,7 @@ enum ApphudAttributionProvider {
   adjust,
   firebase,
   appleAdsAttribution,
+  custom,
 }
 
 extension ApphudAttributionProviderConverter on ApphudAttributionProvider {
@@ -16,6 +17,8 @@ extension ApphudAttributionProviderConverter on ApphudAttributionProvider {
         return 'firebase';
       case ApphudAttributionProvider.appleAdsAttribution:
         return 'appleAdsAttribution';
+      case ApphudAttributionProvider.custom:
+        return 'custom';
     }
   }
 }
