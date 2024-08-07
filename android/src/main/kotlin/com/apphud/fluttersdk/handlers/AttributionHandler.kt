@@ -60,6 +60,7 @@ class AttributionHandler(
                 "appsFlyer" -> ApphudAttributionProvider.appsFlyer
                 "adjust" -> ApphudAttributionProvider.adjust
                 "firebase" -> ApphudAttributionProvider.firebase
+                "custom" -> ApphudAttributionProvider.custom
                 "appleAdsAttribution" -> throw IllegalArgumentException("appleAdsAttribution can not be provider for android platform")
                 else -> {
                     return null
