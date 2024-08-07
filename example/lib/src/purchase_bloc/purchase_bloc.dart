@@ -15,6 +15,7 @@ import 'package:apphud_example/src/common/app_secrets_base.dart';
 import 'package:apphud_example/src/common/debug_print_mixin.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_user_message.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 
 import 'purchase_event.dart';
 export 'purchase_event.dart';
@@ -29,16 +30,15 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
 
   PurchaseBloc({
     required AppSecretsBase appSecrets,
-  })  : _appSecrets = appSecrets,
+  })
+      : _appSecrets = appSecrets,
         super(PurchaseState.initialization()) {
     on<PurchaseEvent>(_handlePurchaseEvent);
     Apphud.setListener(listener: this);
   }
 
-  Future<void> _handlePurchaseEvent(
-    PurchaseEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
+  Future<void> _handlePurchaseEvent(PurchaseEvent event,
+      Emitter<PurchaseState> emit,) async {
     await event.map(
       started: (e) => _handleStartedEvent(e, emit),
       paywallsFetched: (e) => _handlePaywallsFetchedEvent(e, emit),
@@ -61,22 +61,19 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
 
   @override
   Future<void> apphudDidFecthProducts(
-    List<ApphudProductComposite> products,
-  ) async {
+      List<ApphudProductComposite> products,) async {
     printAsJson('ApphudListener.apphudDidFetchProducts', products);
   }
 
   @override
   Future<void> apphudNonRenewingPurchasesUpdated(
-    List<ApphudNonRenewingPurchase> purchases,
-  ) async {
+      List<ApphudNonRenewingPurchase> purchases,) async {
     printAsJson('ApphudListener.apphudNonRenewingPurchasesUpdated', purchases);
   }
 
   @override
   Future<void> apphudSubscriptionsUpdated(
-    List<ApphudSubscriptionWrapper> subscriptions,
-  ) async {
+      List<ApphudSubscriptionWrapper> subscriptions,) async {
     printAsJson('ApphudListener.apphudSubscriptionsUpdated', subscriptions);
   }
 
@@ -97,10 +94,8 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     printAsJson('ApphudListener.userDidLoad', user);
   }
 
-  Future<void> _handleStartedEvent(
-    PurchaseStartedEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
+  Future<void> _handleStartedEvent(PurchaseStartedEvent event,
+      Emitter<PurchaseState> emit,) async {
     try {
       await Apphud.enableDebugLogs(level: ApphudDebugLevel.high);
 
@@ -111,16 +106,15 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       );
       printAsJson('user', user);
       emit(PurchaseState.initialization(isStartSuccess: true));
-      _initAdjust();
+      //_initAdjust();
+      _initBranch();
     } catch (error) {
       emit(PurchaseState.startFailed(error.toString()));
     }
   }
 
-  Future<void> _handlePaywallsFetchedEvent(
-    PurchasePaywallsFetchedEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
+  Future<void> _handlePaywallsFetchedEvent(PurchasePaywallsFetchedEvent event,
+      Emitter<PurchaseState> emit,) async {
     state.mapOrNull(
       initialization: (s) {
         if (s.isStartSuccess && s.isPlacementsFetched) {
@@ -144,9 +138,8 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   }
 
   Future<void> _handlePlacementsFetchedEvent(
-    PurchasePlacementsFetchedEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
+      PurchasePlacementsFetchedEvent event,
+      Emitter<PurchaseState> emit,) async {
     state.mapOrNull(
       initialization: (s) {
         if (s.isStartSuccess && s.isPaywallsFetched) {
@@ -167,61 +160,59 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     );
   }
 
-  Future<void> _handleGrantPromotionalEvent(
-    PurchaseGrantPromotionalEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
+  Future<void> _handleGrantPromotionalEvent(PurchaseGrantPromotionalEvent event,
+      Emitter<PurchaseState> emit,) async {
     Apphud.grantPromotional(
       daysCount: 1,
       productId: event.product.productId,
     ).then(
-      (value) => printAsJson(
-        'grantPromotional(${event.product.productId})',
-        '$value',
-      ),
-      onError: (e) => printError(
-        'grantPromotional(${event.product.productId})',
-        e,
-      ),
+          (value) =>
+          printAsJson(
+            'grantPromotional(${event.product.productId})',
+            '$value',
+          ),
+      onError: (e) =>
+          printError(
+            'grantPromotional(${event.product.productId})',
+            e,
+          ),
     );
   }
 
-  Future<void> _handlePaywallClosedEvent(
-    PurchasePaywallClosedEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
+  Future<void> _handlePaywallClosedEvent(PurchasePaywallClosedEvent event,
+      Emitter<PurchaseState> emit,) async {
     Apphud.paywallClosed(event.paywall).then(
-      (value) => printAsJson(
-        'paywallClosed(${event.paywall.identifier})',
-        'success',
-      ),
-      onError: (e) => printError(
-        'paywallClosed(${event.paywall.identifier})',
-        e,
-      ),
+          (value) =>
+          printAsJson(
+            'paywallClosed(${event.paywall.identifier})',
+            'success',
+          ),
+      onError: (e) =>
+          printError(
+            'paywallClosed(${event.paywall.identifier})',
+            e,
+          ),
     );
   }
 
-  Future<void> _handlePaywallShownEvent(
-    PurchasePaywallShownEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
+  Future<void> _handlePaywallShownEvent(PurchasePaywallShownEvent event,
+      Emitter<PurchaseState> emit,) async {
     Apphud.paywallShown(event.paywall).then(
-      (value) => printAsJson(
-        'paywallShown(${event.paywall.identifier})',
-        'success',
-      ),
-      onError: (e) => printError(
-        'paywallShown(${event.paywall.identifier})',
-        e,
-      ),
+          (value) =>
+          printAsJson(
+            'paywallShown(${event.paywall.identifier})',
+            'success',
+          ),
+      onError: (e) =>
+          printError(
+            'paywallShown(${event.paywall.identifier})',
+            e,
+          ),
     );
   }
 
-  Future<void> _handlePurchaseProductEvent(
-    PurchasePurchaseProductEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
+  Future<void> _handlePurchaseProductEvent(PurchasePurchaseProductEvent event,
+      Emitter<PurchaseState> emit,) async {
     await state.mapOrNull(success: (s) async {
       emit(s.copyWith(inProgress: true));
       final subscriptionOfferDetails =
@@ -248,10 +239,8 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     });
   }
 
-  Future<void> _handleRestorePurchasesEvent(
-    PurchaseRestorePurchasesEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
+  Future<void> _handleRestorePurchasesEvent(PurchaseRestorePurchasesEvent event,
+      Emitter<PurchaseState> emit,) async {
     await state.mapOrNull(
       success: (s) async {
         emit(s.copyWith(inProgress: true));
@@ -265,7 +254,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         } else {
           emit(s.copyWith(
             userMessage:
-                PurchaseUserMessage.restorePurchasesFailure(result.error!),
+            PurchaseUserMessage.restorePurchasesFailure(result.error!),
           ));
           emit(s.copyWith(userMessage: PurchaseUserMessage.none()));
         }
@@ -273,30 +262,24 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     );
   }
 
-  Future<void> _handleSyncPurchaseEvent(
-    PurchaseSyncPurchaseEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
+  Future<void> _handleSyncPurchaseEvent(PurchaseSyncPurchaseEvent event,
+      Emitter<PurchaseState> emit,) async {
     Apphud.syncPurchasesInObserverMode().then(
-      (value) => printAsJson('syncPurchases()', 'success'),
+          (value) => printAsJson('syncPurchases()', 'success'),
       onError: (e) => printError('syncPurchases()', e),
     );
   }
 
-  Future<void> _handleTrackPurchaseEvent(
-    PurchaseTrackPurchaseEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
+  Future<void> _handleTrackPurchaseEvent(PurchaseTrackPurchaseEvent event,
+      Emitter<PurchaseState> emit,) async {
     Apphud.trackPurchase(productId: event.product.productId).then(
-      (value) => printAsJson('trackPurchase()', 'success'),
+          (value) => printAsJson('trackPurchase()', 'success'),
       onError: (e) => printError('trackPurchase()', e),
     );
   }
 
-  Future<void> _handleCallAllEvent(
-    PurchaseCallAllEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
+  Future<void> _handleCallAllEvent(PurchaseCallAllEvent event,
+      Emitter<PurchaseState> emit,) async {
     // Apphud.hasActiveSubscription().then(
     //   (value) => printAsJson('hasActiveSubscription()', value),
     //   onError: (e) => printError('hasActiveSubscription()', e),
@@ -634,7 +617,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     // );
 
     Apphud.loadFallbackPaywalls().then(
-      (value) => printAsJson('loadFallbackPaywalls', value),
+          (value) => printAsJson('loadFallbackPaywalls', value),
       onError: (e) => printError('loadFallbackPaywalls', e),
     );
   }
@@ -674,5 +657,15 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       );
     };
     Adjust.start(config);
+  }
+
+  Future<void> _initBranch() async {
+    final deviceId = await Apphud.deviceID();
+    FlutterBranchSdk.setIdentity(deviceId);
+    FlutterBranchSdk.listSession().listen((data) {
+      final apphudData = Map<String, dynamic>.from(data);
+      Apphud.addAttribution(
+          data: apphudData, provider: ApphudAttributionProvider.);
+    });
   }
 }
