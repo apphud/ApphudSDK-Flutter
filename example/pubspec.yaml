@@ -32,6 +32,8 @@ dependencies:
 
   adjust_sdk: ^4.38.2
 
+  flutter_branch_sdk: ^8.1.0
+
 
 dev_dependencies:
   flutter_test:
@@ -39,7 +41,7 @@ dev_dependencies:
 
   freezed: ^2.4.5
 
-  build_runner: 2.4.6
+  build_runner: 2.4.9
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
