@@ -665,7 +665,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     FlutterBranchSdk.listSession().listen((data) {
       final apphudData = Map<String, dynamic>.from(data);
       Apphud.addAttribution(
-          data: apphudData, provider: ApphudAttributionProvider.);
+          data: apphudData, provider: ApphudAttributionProvider.custom);
     });
   }
 }
