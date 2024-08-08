@@ -38,6 +38,11 @@ dependencies:
 
   singular_flutter_sdk: ^1.4.1
 
+  amplitude_flutter: ^3.16.1
+
+dependency_overrides:
+    js: ^0.7.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
