@@ -17,6 +17,8 @@ import 'package:apphud_example/src/purchase_bloc/purchase_user_message.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
+import 'package:singular_flutter_sdk/singular.dart';
+import 'package:singular_flutter_sdk/singular_config.dart';
 
 import 'purchase_event.dart';
 export 'purchase_event.dart';
@@ -115,7 +117,8 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       emit(PurchaseState.initialization(isStartSuccess: true));
       //_initAdjust();
       //_initBranch();
-      _initFirebase();
+      //_initFirebase();
+      _initSingular();
     } catch (error) {
       emit(PurchaseState.startFailed(error.toString()));
     }
@@ -690,7 +693,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     });
   }
 
-  void _initFirebase() async {
+  Future<void> _initFirebase() async {
     final userId = await Apphud.userID();
     await FirebaseAnalytics.instance.setUserId(id: userId);
 
@@ -699,5 +702,11 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       provider: ApphudAttributionProvider.firebase,
       identifier: identifier,
     );
+  }
+
+  Future<void> _initSingular() async {
+    final config = SingularConfig('API_KEY', 'API_SECRET');
+    config.customUserId = await Apphud.userID();
+    Singular.start(config);
   }
 }
