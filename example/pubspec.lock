@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.38.2"
+  amplitude_flutter:
+    dependency: "direct main"
+    description:
+      name: amplitude_flutter
+      sha256: "8c74e518de6edb11198b59d3d13e2e7ec534bfad8300b6d5e4b8d2e20767a378"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.16.2"
   analyzer:
     dependency: transitive
     description:
@@ -384,7 +392,7 @@ packages:
     source: hosted
     version: "1.0.4"
   js:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: js
       sha256: c1b2e9b5ea78c45e1a0788d29606ba27dc5f71f019f32ca5140f61ef071838cf

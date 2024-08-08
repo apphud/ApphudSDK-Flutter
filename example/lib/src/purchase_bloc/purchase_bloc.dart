@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:adjust_sdk/adjust.dart';
 import 'package:adjust_sdk/adjust_config.dart';
+import 'package:amplitude_flutter/amplitude.dart';
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/apphud_attribution_provider.dart';
 import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
@@ -118,7 +119,8 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       //_initAdjust();
       //_initBranch();
       //_initFirebase();
-      _initSingular();
+      //_initSingular();
+      //_initAmplitude();
     } catch (error) {
       emit(PurchaseState.startFailed(error.toString()));
     }
@@ -708,5 +710,11 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     final config = SingularConfig('API_KEY', 'API_SECRET');
     config.customUserId = await Apphud.userID();
     Singular.start(config);
+  }
+
+  Future<void> _initAmplitude() async {
+    final analytics = Amplitude.getInstance(instanceName: "project");
+    final userId = await Apphud.userID();
+    analytics.init('API_key', userId: userId);
   }
 }
