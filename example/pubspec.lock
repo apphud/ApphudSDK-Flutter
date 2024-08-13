@@ -40,6 +40,14 @@ packages:
       relative: true
     source: path
     version: "2.5.3"
+  appmetrica_plugin:
+    dependency: "direct main"
+    description:
+      name: appmetrica_plugin
+      sha256: "0357330d701a7b61c7b0aabccbe9abe799539d927ad82ad4b6708beb27f7c500"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
   args:
     dependency: transitive
     description:
@@ -216,6 +224,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.6"
+  decimal:
+    dependency: transitive
+    description:
+      name: decimal
+      sha256: "24a261d5d5c87e86c7651c417a5dbdf8bcd7080dd592533910e8d0505a279f21"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.3"
   fake_async:
     dependency: transitive
     description:
@@ -402,6 +418,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  mixpanel_flutter:
+    dependency: "direct main"
+    description:
+      name: mixpanel_flutter
+      sha256: b4eae273be08b1b4280b2167faca1ddad5e68560849b91e8385b9121c2bf7a75
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.1"
   nested:
     dependency: transitive
     description:
@@ -458,6 +482,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  rational:
+    dependency: transitive
+    description:
+      name: rational
+      sha256: cb808fb6f1a839e6fc5f7d8cb3b0a10e1db48b3be102de73938c627f0b636336
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.3"
   shelf:
     dependency: transitive
     description:

@@ -15,9 +15,11 @@ import 'package:apphud/models/apphud_models/composite/apphud_product_composite.d
 import 'package:apphud_example/src/common/app_secrets_base.dart';
 import 'package:apphud_example/src/common/debug_print_mixin.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_user_message.dart';
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:singular_flutter_sdk/singular.dart';
 import 'package:singular_flutter_sdk/singular_config.dart';
 
@@ -31,6 +33,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     with DebugPrintMixin
     implements ApphudListener {
   final AppSecretsBase _appSecrets;
+  Mixpanel? _mixpanel;
 
   PurchaseBloc({
     required AppSecretsBase appSecrets,
@@ -57,11 +60,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       syncPurchase: (e) => _handleSyncPurchaseEvent(e, emit),
       trackPurchase: (e) => _handleTrackPurchaseEvent(e, emit),
     );
-  }
-
-  @override
-  Future<void> apphudDidChangeUserID(String userId) async {
-    printAsJson('ApphudListener.apphudDidChangeUserID', userId);
   }
 
   @override
@@ -121,6 +119,8 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       //_initFirebase();
       //_initSingular();
       //_initAmplitude();
+      //_initAppMetrica();
+      //_initMixpanel();
     } catch (error) {
       emit(PurchaseState.startFailed(error.toString()));
     }
@@ -713,8 +713,32 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   }
 
   Future<void> _initAmplitude() async {
-    final analytics = Amplitude.getInstance(instanceName: "project");
+    final analytics = Amplitude.getInstance(instanceName: 'project');
     final userId = await Apphud.userID();
     analytics.init('API_key', userId: userId);
+  }
+
+  Future<void> _initAppMetrica() async {
+    final userId = await Apphud.userID();
+    final config = AppMetricaConfig(
+      'insert_your_api_key_here',
+      userProfileID: userId,
+    );
+    await AppMetrica.activate(config);
+  }
+
+  Future<void> _initMixpanel() async {
+    final userId = await Apphud.userID();
+    _mixpanel = await Mixpanel.init(
+      'insert_your_token_key_here',
+      trackAutomaticEvents: false,
+    );
+    _mixpanel?.identify(userId);
+  }
+
+  @override
+  Future<void> apphudDidChangeUserID(String userId) async {
+    printAsJson('ApphudListener.apphudDidChangeUserID', userId);
+    _mixpanel?.identify(userId);
   }
 }
