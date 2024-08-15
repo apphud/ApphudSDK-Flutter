@@ -1,3 +1,7 @@
+## 2.5.4
+
+- [iOS],[Android] `ApphudAttributionProvider.facebook` was added.
+
 ## 2.5.3
 
 - [iOS],[Android] `ApphudAttributionProvider.custom` was added.

@@ -61,6 +61,7 @@ class AttributionHandler(
                 "adjust" -> ApphudAttributionProvider.adjust
                 "firebase" -> ApphudAttributionProvider.firebase
                 "custom" -> ApphudAttributionProvider.custom
+                "facebook" -> ApphudAttributionProvider.facebook
                 "appleAdsAttribution" -> throw IllegalArgumentException("appleAdsAttribution can not be provider for android platform")
                 else -> {
                     return null

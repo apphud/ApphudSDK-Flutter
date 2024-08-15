@@ -49,6 +49,8 @@ extension ApphudAttributionProvider {
             return ApphudAttributionProvider.firebase
         case "custom":
             return ApphudAttributionProvider.custom
+        case "facebook":
+            return ApphudAttributionProvider.facebook
         default:
             return nil
         }
