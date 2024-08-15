@@ -40,6 +40,14 @@ packages:
       relative: true
     source: path
     version: "2.5.3"
+  apphud_facebook_sdk:
+    dependency: "direct main"
+    description:
+      name: apphud_facebook_sdk
+      sha256: ce994a8e0e58b10a763e2ff50e7bdc4b478417c581a8121a4b494e837e96f07f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   appmetrica_plugin:
     dependency: "direct main"
     description:

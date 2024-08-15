@@ -15,6 +15,7 @@ import 'package:apphud/models/apphud_models/composite/apphud_product_composite.d
 import 'package:apphud_example/src/common/app_secrets_base.dart';
 import 'package:apphud_example/src/common/debug_print_mixin.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_user_message.dart';
+import 'package:apphud_facebook_sdk/apphud_facebook_sdk.dart';
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -715,7 +716,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   Future<void> _initAmplitude() async {
     final analytics = Amplitude.getInstance(instanceName: 'project');
     final userId = await Apphud.userID();
-    analytics.init('API_key', userId: userId);
+    await analytics.init('API_key', userId: userId);
   }
 
   Future<void> _initAppMetrica() async {
@@ -733,12 +734,26 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       'insert_your_token_key_here',
       trackAutomaticEvents: false,
     );
-    _mixpanel?.identify(userId);
+    await _mixpanel?.identify(userId);
   }
 
   @override
   Future<void> apphudDidChangeUserID(String userId) async {
     printAsJson('ApphudListener.apphudDidChangeUserID', userId);
-    _mixpanel?.identify(userId);
+    await _mixpanel?.identify(userId);
+  }
+
+  Future<void> _initFacebook() async {
+    final apphudFacebookSdk = ApphudFacebookSdk();
+    final facebookData = await apphudFacebookSdk.getFacebookData();
+    if (facebookData != null) {
+      await Apphud.addAttribution(
+        provider: ApphudAttributionProvider.facebook,
+        identifier: facebookData.anonId,
+        data: {
+          'extinfo': facebookData.extInfo ?? '',
+        },
+      );
+    }
   }
 }
