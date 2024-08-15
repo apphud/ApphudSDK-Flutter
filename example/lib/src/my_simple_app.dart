@@ -107,7 +107,7 @@ class _SimpleHomeScreenState extends State<SimpleHomeScreen>
       key: ValueKey(paywall.identifier),
       title: Text(
         paywall.identifier,
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.headlineMedium,
       ),
       subtitle: Text(
         'products: ${paywall.products?.length ?? 0}\n'
@@ -149,7 +149,7 @@ class _SimpleHomeScreenState extends State<SimpleHomeScreen>
           children: [
             Text(
               product.name ?? 'No name',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
             content,
           ],
