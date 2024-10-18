@@ -691,5 +691,12 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       },
       onError: (e) => printError('attributeFromWeb', e),
     );
+    await Apphud.permissionGroups().then(
+      (value) => printAsJson(
+        'permissionGroups',
+        value,
+      ),
+      onError: (e) => printError('permissionGroups', e),
+    );
   }
 }
