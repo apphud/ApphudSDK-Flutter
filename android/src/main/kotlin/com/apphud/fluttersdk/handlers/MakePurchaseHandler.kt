@@ -6,9 +6,7 @@ import com.apphud.fluttersdk.FlutterSdkCommon
 import com.apphud.fluttersdk.toApphudProduct
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
-import com.apphud.sdk.ApphudError
 import com.apphud.sdk.ApphudPurchaseResult
-import com.apphud.sdk.domain.ApphudPaywall
 import com.apphud.sdk.domain.ApphudProduct
 import com.apphud.sdk.flutter.ApphudFlutter
 import io.flutter.plugin.common.MethodChannel
@@ -64,7 +62,7 @@ class MakePurchaseHandler(
                 )
             }
 
-            MakePurchaseRoutes.fetchPermissionGroups.name -> fetchPermissionGroups(result)
+            MakePurchaseRoutes.permissionGroups.name -> permissionGroups(result)
 
             MakePurchaseRoutes.rawPaywalls.name -> rawPaywalls(result)
 
@@ -92,7 +90,7 @@ class MakePurchaseHandler(
         handleOnMainThread { result.success(null) }
     }
 
-    private fun fetchPermissionGroups(result: MethodChannel.Result) {
+    private fun permissionGroups(result: MethodChannel.Result) {
         GlobalScope.launch {
             val groups = Apphud.fetchPermissionGroups()
             handleOnMainThread { result.success(groups.map { it.toMap() }) }
@@ -345,7 +343,7 @@ enum class MakePurchaseRoutes {
     presentOfferCodeRedemptionSheet,
     getPaywalls,
     purchaseProduct,
-    fetchPermissionGroups,
+    permissionGroups,
     paywallsDidLoadCallback,
     rawPaywalls,
     refreshUserData,

@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'apphud'
-  s.version          = '2.5.0'
+  s.version          = '2.6.0'
   s.summary          = 'Apphud SDK flutter plugin.'
   s.description      = <<-DESC
 Apphud SDK flutter plugin.

@@ -1,3 +1,18 @@
+## 2.6.0
+
+- **BREAKING** [Android] `ApphudListener.apphudDidReceivePurchase` method was introduced
+- **BREAKING** [iOS], [Android] `paywalls` method was removed
+- **BREAKING** [iOS] `rawPaywalls` method was removed
+- [Android] `ApphudNonRenewingPurchase.purchaseToken` property was introduced
+- [Android] `ApphudSubscription.purchaseToken` property was introduced
+- [Android], [iOS] `deferPlacements` method was introduced
+- [Android] `refreshUserData` method was introduced
+- [Android], [iOS] `forceFlushUserProperties` method was introduced
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 2.8.0
+  - [iOS] 3.5.5
+
 ## 2.5.4
 
 - [iOS],[Android] `ApphudAttributionProvider.facebook` was added.
