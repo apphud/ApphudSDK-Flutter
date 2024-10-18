@@ -8,6 +8,7 @@
 - [Android], [iOS] `deferPlacements` method was introduced
 - [Android] `refreshUserData` method was introduced
 - [Android], [iOS] `forceFlushUserProperties` method was introduced
+- [Android]  `refreshUserData` now returns `ApphudUser?`
 
 - Dependencies of Native SDK's were updated to:
   - [Android] 2.8.0
