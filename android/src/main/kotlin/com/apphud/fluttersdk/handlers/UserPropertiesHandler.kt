@@ -25,7 +25,13 @@ class UserPropertiesHandler(
             ) { key, by ->
                 incrementUserProperty(key, by, result)
             }
+
+            UserPropertiesRoutes.forceFlushUserProperties.name -> forceFlushUserProperties(result)
         }
+    }
+
+    private fun forceFlushUserProperties(result: MethodChannel.Result) {
+        Apphud.forceFlushUserProperties { v -> handleOnMainThread { result.success(v) } }
     }
 
     private fun setUserProperty(
@@ -112,7 +118,8 @@ class UserPropertiesHandler(
 
 enum class UserPropertiesRoutes {
     setUserProperty,
-    incrementUserProperty;
+    incrementUserProperty,
+    forceFlushUserProperties;
 
     companion object Mapper {
         fun stringValues(): List<String> {

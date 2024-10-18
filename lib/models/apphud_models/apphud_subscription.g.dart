@@ -17,6 +17,7 @@ ApphudSubscriptionWrapper _$ApphudSubscriptionWrapperFromJson(Map json) =>
       status: $enumDecode(_$ApphudSubscriptionStatusEnumMap, json['status']),
       startedAt: (json['startedAt'] as num).toDouble(),
       canceledAt: (json['canceledAt'] as num?)?.toDouble(),
+      purchaseToken: json['purchaseToken'] as String?,
     );
 
 Map<String, dynamic> _$ApphudSubscriptionWrapperToJson(
@@ -31,6 +32,7 @@ Map<String, dynamic> _$ApphudSubscriptionWrapperToJson(
       'status': _$ApphudSubscriptionStatusEnumMap[instance.status]!,
       'canceledAt': instance.canceledAt,
       'startedAt': instance.startedAt,
+      'purchaseToken': instance.purchaseToken,
     };
 
 const _$ApphudSubscriptionStatusEnumMap = {

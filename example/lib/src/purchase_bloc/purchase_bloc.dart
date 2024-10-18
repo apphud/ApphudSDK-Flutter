@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:apphud/apphud.dart';
+import 'package:apphud/models/apphud_models/android/android_purchase_wrapper.dart';
 import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
+import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:apphud_example/src/common/app_secrets_base.dart';
 import 'package:apphud_example/src/common/debug_print_mixin.dart';
@@ -94,6 +96,11 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     printAsJson('ApphudListener.userDidLoad', user);
   }
 
+  @override
+  Future<void> apphudDidReceivePurchase(AndroidPurchaseWrapper purchase) async {
+    printAsJson('ApphudListener.apphudDidReceivePurchase', purchase);
+  }
+
   Future<void> _handleStartedEvent(
     PurchaseStartedEvent event,
     Emitter<PurchaseState> emit,
@@ -106,6 +113,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         userID: _appSecrets.userID,
         observerMode: _appSecrets.observeMode,
       );
+      await Apphud.deferPlacements();
       printAsJson('user', user);
       emit(PurchaseState.initialization(isStartSuccess: true));
     } catch (error) {
@@ -628,10 +636,42 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     // Apphud.permissionGroups().then(
     //     (value) => printAsJson('permissionGroups', value)
     // );
+    // Apphud.loadFallbackPaywalls().then(
+    //   (value) => printAsJson('loadFallbackPaywalls', value),
+    //   onError: (e) => printError('loadFallbackPaywalls', e),
+    // );
 
-    Apphud.loadFallbackPaywalls().then(
-      (value) => printAsJson('loadFallbackPaywalls', value),
-      onError: (e) => printError('loadFallbackPaywalls', e),
+    await Apphud.refreshUserData().then(
+      (value) => printAsJson(
+        'refreshUserData',
+        value,
+      ),
+      onError: (e) => printError('refreshUserData', e),
+    );
+
+    await Apphud.setUserProperty(
+      key: ApphudUserPropertyKey.customProperty('some_key'),
+      value: 'some_value',
+    ).then(
+      (value) => printAsJson(
+        'setUserProperty',
+        'Ok',
+      ),
+      onError: (e) => printError('setUserProperty', e),
+    );
+    await Apphud.forceFlushUserProperties().then(
+      (value) => printAsJson(
+        'forceFlushUserProperties',
+        value,
+      ),
+      onError: (e) => printError('forceFlushUserProperties', e),
+    );
+    await Apphud.fetchPlacements().then(
+      (value) => printAsJson(
+        'fetchPlacements',
+        value,
+      ),
+      onError: (e) => printError('fetchPlacements', e),
     );
   }
 }

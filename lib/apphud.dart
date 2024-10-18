@@ -212,21 +212,6 @@ class Apphud {
     return const [];
   }
 
-  /// Asynchronously retrieves paywalls from Product Hub > Paywalls,
-  /// potentially altered based on the user's involvement in A/B testing, if any.
-  /// Each paywall contains an array of `ApphudProduct` objects that
-  /// can be used for purchases.
-  /// `ApphudProduct` is Apphud's wrapper around native Stores products.
-  ///
-  /// Awaits until the inner Stores products are loaded from the App Store or Google Play.
-  /// If you want to obtain paywalls without awaiting for native products,
-  /// you can use `rawPaywalls()` method.
-  static Future<ApphudPaywalls?> paywalls() async {
-    final Map<dynamic, dynamic>? json =
-        await _channel.invokeMethod<Map<dynamic, dynamic>>('paywalls');
-    return json != null ? ApphudPaywalls.fromJson(json) : null;
-  }
-
   /// A list of paywalls, potentially altered based on the user's involvement in A/B testing, if any.
   ///
   /// Important: This function doesn't await until inner native products are loaded from the stores.
@@ -239,6 +224,25 @@ class Apphud {
     final Map<dynamic, dynamic>? json =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('rawPaywalls');
     return json != null ? ApphudPaywalls.fromJson(json) : null;
+  }
+
+  ///Disables automatic paywall and placement requests during the SDK's initial setup.
+  ///
+  /// Developers must explicitly call `fetchPlacements` or `placements()` methods
+  /// at a later point in the app's lifecycle to fetch placements with inner paywalls.
+  /// Example:
+  /// ```
+  /// await Apphud.start(api_key);
+  /// await Apphud.deferPlacements();
+  /// ...
+  /// final placements= await Apphud.fetchPlacements();
+  ///  ... // handle fetched placements
+  /// ```
+  ///
+  /// Note: You can use this method alongside `forceFlushUserProperties` to achieve
+  /// real-time user segmentation based on custom user properties.
+  static Future<void> deferPlacements() async {
+    await _channel.invokeMethod('deferPlacements');
   }
 
   /// Retrieves the paywalls configured in Product Hub > Paywalls,
@@ -432,19 +436,20 @@ class Apphud {
   /// `apphudNonRenewingPurchasesUpdated` methods.
   /// Do not call this method on app launch, as Apphud SDK does it automatically.
   /// You can call this method, when the app reactivates from the background, if needed.
-  static Future<void> refreshUserData() =>
-      _channel.invokeMethod('refreshUserData');
+  static Future<ApphudUser?> refreshUserData() async {
+    final json = await _channel.invokeMethod('refreshUserData');
+    return json == null ? null : ApphudUser.fromJson(json);
+  }
 
 // Handle Purchases
 
-  /// Returns permission groups configured in Apphud dashboard > Product Hub > Products. Groups are cached on device.
+  /// Asynchronously fetches permission groups configured in the Apphud > Product Hub.
   ///
-  /// Note that this method returns empty array if `ProductDetails` or 'SkProduct' are not yet fetched from Google Play / App Store.
-  /// To get notified when `permissionGroups` are ready to use, use ApphudListener's `paywallsDidFullyLoad` method
-  /// Best practice is not to use this method at all, but use `paywalls()` instead.
-  static Future<List<ApphudGroup>> permissionGroups() async {
+  /// Groups are cached on the device.
+  /// Returns a list of `ApphudGroup` objects representing permission groups.
+  static Future<List<ApphudGroup>> fetchPermissionGroups() async {
     List<Map<dynamic, dynamic>> groups =
-        (await _channel.invokeMethod<List<dynamic>>('permissionGroups'))!
+        (await _channel.invokeMethod<List<dynamic>>('fetchPermissionGroups'))!
             .toMapList;
     return groups.map((json) => ApphudGroup.fromJson(json)).toList();
   }
@@ -588,6 +593,24 @@ class Apphud {
           'setOnce': setOnce,
         },
       );
+
+  /// This method sends all user properties immediately to Apphud.
+  ///
+  /// Should be used for audience segmentation in placements based on user properties.
+  ///
+  /// Example:
+  ///    ````
+  ///     await Apphud.start(api_key);
+  ///     await Apphud.deferPlacements();
+  ///     await Apphud.setUserProperty(key: ApphudUserPropertyKey.customProperty('some_key'), value: 'some_value');
+  ///     await Apphud.forceFlushUserProperties();
+  ///     final placements = await Apphud.fetchPlacements();
+  ///     ...   // handle placements
+  ///    ```
+  static Future<bool> forceFlushUserProperties() async {
+    final isSuccess = await _channel.invokeMethod('forceFlushUserProperties');
+    return isSuccess as bool;
+  }
 
   /// Increment custom user property. Value must be one of: `int`, `float`
   ///
