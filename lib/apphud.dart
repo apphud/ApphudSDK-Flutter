@@ -212,7 +212,7 @@ class Apphud {
     return const [];
   }
 
-  /// A list of paywalls, potentially altered based on the user's involvement in A/B testing, if any.
+  /// Android only. A list of paywalls, potentially altered based on the user's involvement in A/B testing, if any.
   ///
   /// Important: This function doesn't await until inner native products are loaded from the stores.
   /// That means paywalls may or may not have inner `SKProduct` / `ProductDetails` at the time you call this function.
@@ -443,13 +443,13 @@ class Apphud {
 
 // Handle Purchases
 
-  /// Asynchronously fetches permission groups configured in the Apphud > Product Hub.
+  /// Fetches permission groups configured in the Apphud > Product Hub.
   ///
   /// Groups are cached on the device.
   /// Returns a list of `ApphudGroup` objects representing permission groups.
-  static Future<List<ApphudGroup>> fetchPermissionGroups() async {
+  static Future<List<ApphudGroup>> permissionGroups() async {
     List<Map<dynamic, dynamic>> groups =
-        (await _channel.invokeMethod<List<dynamic>>('fetchPermissionGroups'))!
+        (await _channel.invokeMethod<List<dynamic>>('permissionGroups'))!
             .toMapList;
     return groups.map((json) => ApphudGroup.fromJson(json)).toList();
   }

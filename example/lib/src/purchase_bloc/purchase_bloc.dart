@@ -641,13 +641,13 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //   onError: (e) => printError('loadFallbackPaywalls', e),
     // );
 
-    await Apphud.refreshUserData().then(
-      (value) => printAsJson(
-        'refreshUserData',
-        value,
-      ),
-      onError: (e) => printError('refreshUserData', e),
-    );
+    // await Apphud.refreshUserData().then(
+    //   (value) => printAsJson(
+    //     'refreshUserData',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('refreshUserData', e),
+    // );
 
     await Apphud.setUserProperty(
       key: ApphudUserPropertyKey.customProperty('some_key'),
@@ -672,6 +672,13 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         value,
       ),
       onError: (e) => printError('fetchPlacements', e),
+    );
+    await Apphud.permissionGroups().then(
+      (value) => printAsJson(
+        'permissionGroups',
+        value,
+      ),
+      onError: (e) => printError('permissionGroups', e),
     );
   }
 }

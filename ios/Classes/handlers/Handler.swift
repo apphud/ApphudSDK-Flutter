@@ -93,17 +93,15 @@ enum AppHudMethod {
         case nonRenewingPurchases
         case isNonRenewingPurchaseActive
         case restorePurchases
-        case getPaywalls
         case permissionGroups
-        case paywalls
         case paywallsDidLoadCallback
         case hasPremiumAccess
-        case rawPaywalls
     }
 
     enum UserProperties: String, CaseIterable {
         case setUserProperty
         case incrementUserProperty
+        case forceFlushUserProperties
     }
 
     enum RulesAndScreensMethods: String, CaseIterable {
@@ -144,6 +142,7 @@ enum AppHudMethod {
         case placement
         case rawPlacements
         case fetchPlacements
+        case deferPlacements
     }
 }
 

@@ -32,7 +32,7 @@ final class PurchaseProductRequest: Request {
                 }
             }
             else if(paywallIdentifier != nil) {
-                let paywalls = await Apphud.paywalls()
+                let paywalls = await ApphudPaywallsHelper.getPaywalls()
                 
                 for paywall in paywalls where product==nil {
                     product = paywall.products.first { product in

@@ -24,17 +24,11 @@ class HandlePurchasesHandler: Handler {
             Action<IsNonRenewingPurchaseActiveRequest,IsNonRenewingPurchaseActiveArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.restorePurchases.rawValue:
             Action<RestorePurchasesRequest,RestorePurchasesArgumentParser>(args: args, result: result).startFlow()
-        case AssociatedEnum.getPaywalls.rawValue:
-            Action<GetPaywallsRequest,GetPaywallsArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.permissionGroups.rawValue:
             Action<PermissionGroupsRequest,PermissionGroupsArgumentParser>(args: args, result: result).startFlow()
-        case AssociatedEnum.paywalls.rawValue:
-            Action<PaywallsRequest,PaywallsArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.paywallsDidLoadCallback.rawValue:         Action<PaywallsDidLoadCallbackRequest,PaywallsDidLoadCallbackArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.hasPremiumAccess.rawValue:
             Action<HasPremiumAccessRequest,HasPremiumAccessArgumentParser>(args: args, result: result).startFlow()
-        case AssociatedEnum.rawPaywalls.rawValue:
-            Action<RawPaywallsRequest,RawPaywallsArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

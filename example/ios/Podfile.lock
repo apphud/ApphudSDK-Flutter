@@ -1,8 +1,8 @@
 PODS:
   - apphud (2.5.0):
-    - ApphudSDK (= 3.3.6)
+    - ApphudSDK (= 3.5.3)
     - Flutter
-  - ApphudSDK (3.3.6)
+  - ApphudSDK (3.5.3)
   - Flutter (1.0.0)
 
 DEPENDENCIES:
@@ -20,10 +20,10 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  apphud: f73e5c64e8a4cc5caab6094d895f0d09cc306611
-  ApphudSDK: 4ca6980914b877cbb1b32d8c4360123e0a68b7f0
+  apphud: 5c0c64aabc6627e9c41d495650c04e3ac3f87e36
+  ApphudSDK: b8b3e448880c33e2ba4f6e61c2a199f72d188e4d
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
 
 PODFILE CHECKSUM: c4c93c5f6502fe2754f48404d3594bf779584011
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.12.1
