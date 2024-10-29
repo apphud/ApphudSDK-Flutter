@@ -63,8 +63,9 @@ class InitializationHandler(
     }
 
     private fun updateUserID(userId: String, result: MethodChannel.Result) {
-        Apphud.updateUserId(userId = userId)
-        handleOnMainThread { result.success(null) }
+        Apphud.updateUserId(userId = userId) {  user ->
+            handleOnMainThread { result.success(user?.toMap()) }
+        }
     }
 
     private fun userID(result: MethodChannel.Result) {

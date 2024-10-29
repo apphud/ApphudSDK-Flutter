@@ -25,6 +25,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     with DebugPrintMixin
     implements ApphudListener {
   final AppSecretsBase _appSecrets;
+  ApphudUser? _apphudUser;
 
   PurchaseBloc({
     required AppSecretsBase appSecrets,
@@ -94,6 +95,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   @override
   Future<void> userDidLoad(ApphudUser user) async {
     printAsJson('ApphudListener.userDidLoad', user);
+    _apphudUser = user;
   }
 
   @override
@@ -649,36 +651,45 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //   onError: (e) => printError('refreshUserData', e),
     // );
 
-    await Apphud.setUserProperty(
-      key: ApphudUserPropertyKey.customProperty('some_key'),
-      value: 'some_value',
-    ).then(
-      (value) => printAsJson(
-        'setUserProperty',
-        'Ok',
-      ),
-      onError: (e) => printError('setUserProperty', e),
-    );
-    await Apphud.forceFlushUserProperties().then(
-      (value) => printAsJson(
-        'forceFlushUserProperties',
-        value,
-      ),
-      onError: (e) => printError('forceFlushUserProperties', e),
-    );
-    await Apphud.fetchPlacements().then(
-      (value) => printAsJson(
-        'fetchPlacements',
-        value,
-      ),
-      onError: (e) => printError('fetchPlacements', e),
-    );
-    await Apphud.permissionGroups().then(
-      (value) => printAsJson(
-        'permissionGroups',
-        value,
-      ),
-      onError: (e) => printError('permissionGroups', e),
+    // await Apphud.setUserProperty(
+    //   key: ApphudUserPropertyKey.customProperty('some_key'),
+    //   value: 'some_value',
+    // ).then(
+    //   (value) => printAsJson(
+    //     'setUserProperty',
+    //     'Ok',
+    //   ),
+    //   onError: (e) => printError('setUserProperty', e),
+    // );
+    // await Apphud.forceFlushUserProperties().then(
+    //   (value) => printAsJson(
+    //     'forceFlushUserProperties',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('forceFlushUserProperties', e),
+    // );
+    // await Apphud.fetchPlacements().then(
+    //   (value) => printAsJson(
+    //     'fetchPlacements',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('fetchPlacements', e),
+    // );
+    // await Apphud.permissionGroups().then(
+    //   (value) => printAsJson(
+    //     'permissionGroups',
+    //     value,
+    //   ),
+    //   onError: (e) => printError('permissionGroups', e),
+    // );
+    await Apphud.attributeFromWeb({
+      'apphud_user_id': _apphudUser?.userId,
+    }).then(
+      (value) {
+        printAsJson('attributeFromWeb isSuccessful', value.$1);
+        printAsJson('attributeFromWeb user', value.$2);
+      },
+      onError: (e) => printError('attributeFromWeb', e),
     );
   }
 }

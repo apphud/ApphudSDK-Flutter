@@ -1,5 +1,6 @@
 package com.apphud.fluttersdk.handlers
 
+import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudAttributionProvider
 import io.flutter.plugin.common.MethodChannel
@@ -19,7 +20,24 @@ class AttributionHandler(
             AttributionRoutes.addAttribution.name -> AttributionParser(result).parse(args) { provider, data, identifier ->
                 addAttribution(provider, data, identifier, result)
             }
+
             AttributionRoutes.collectSearchAdsAttribution.name -> result.notImplemented()
+            AttributionRoutes.attributeFromWeb.name -> AttributeFromWebParser(result).parse(args) { data ->
+                attributeFromWeb(data, result)
+            }
+        }
+    }
+
+    private fun attributeFromWeb(data: Map<String, Any>?, result: MethodChannel.Result) {
+        if (data == null) {
+            result.success({ "wasSuccessful" to false })
+            return
+        }
+        Apphud.attributeFromWeb(data) { wasSuccessful, user ->
+            val resultMap = hashMapOf<String, Any?>()
+            resultMap["wasSuccessful"] = wasSuccessful
+            resultMap["user"] = user?.toMap()
+            handleOnMainThread { result.success(resultMap) }
         }
     }
 
@@ -69,12 +87,33 @@ class AttributionHandler(
             }
         }
     }
+
+    class AttributeFromWebParser(val result: MethodChannel.Result) {
+        fun parse(
+            args: Map<String, Any>?, callback: (
+                data: Map<String, Any>?,
+            ) -> Unit
+        ) {
+            try {
+                if (args == null) {
+                    callback(null)
+                } else {
+                    val data = args as? Map<String, Any>?
+                    callback(data)
+                }
+            } catch (e: IllegalArgumentException) {
+                result.error("400", e.message, "")
+            }
+        }
+    }
 }
+
 
 enum class AttributionRoutes {
 
     addAttribution,
-    collectSearchAdsAttribution;
+    collectSearchAdsAttribution,
+    attributeFromWeb;
 
     companion object Mapper {
         fun stringValues(): List<String> {

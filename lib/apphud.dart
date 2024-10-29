@@ -83,8 +83,16 @@ class Apphud {
   /// Updates the user ID. This method should only be called after the user is registered.
   ///
   /// - parameter [userID] is required. New user ID value.
-  static Future<void> updateUserID(String userID) =>
-      _channel.invokeMethod('updateUserID', {'userID': userID});
+  /// returns [ApphudUser]?
+  static Future<ApphudUser?> updateUserID(String userID) async {
+    final json = await _channel.invokeMethod(
+      'updateUserID',
+      {
+        'userID': userID,
+      },
+    );
+    return json == null ? null : ApphudUser.fromJson(json);
+  }
 
   /// Returns current user ID.
   ///
@@ -674,6 +682,35 @@ class Apphud {
     final Map<dynamic, dynamic>? result =
         (await _channel.invokeMethod('collectSearchAdsAttribution'));
     return result != null ? ApphudError.fromJson(result) : null;
+  }
+
+  /// Web-to-Web flow only. Attempts to attribute the user using the provided attribution data.
+  ///
+  /// If the `data` map contains either `aph_user_id` or `apphud_user_id`,
+  /// this information will be submitted to the Apphud server.
+  /// The server will return a premium web user if found, otherwise, the callback will return `false`.
+  ///
+  /// In addition, the ApphudListener's methods `apphudSubscriptionsUpdated` and `apphudDidChangeUserID` will be triggered.
+  ///
+  /// The method returns `true` if the user is successfully attributed via the web
+  /// and includes the updated `ApphudUser` object.
+  /// After receiving the result, you can use the `Apphud.hasPremiumAccess()` method to check
+  /// if the user has premium access, which will return `true` if the user has premium access.
+  ///
+  /// - parameter [data] A map containing the attribution data.
+  /// returns a boolean indicating whether the web attribution was successful,
+  /// along with the updated `ApphudUser` object (if applicable).
+  static Future<(bool wasSuccessful, ApphudUser? user)> attributeFromWeb(
+    Map<String, dynamic> data,
+  ) async {
+    final result = await _channel.invokeMethod('attributeFromWeb', data);
+    if (result == null) {
+      return (false, null);
+    }
+    final wasSuccessful = (result['wasSuccessful'] as bool?) ?? false;
+    final userJson = result['user'];
+    final user = userJson != null ? ApphudUser.fromJson(userJson) : null;
+    return (wasSuccessful, user);
   }
 
   // Other

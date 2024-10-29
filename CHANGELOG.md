@@ -9,9 +9,11 @@
 - [Android] `refreshUserData` method was introduced
 - [Android], [iOS] `forceFlushUserProperties` method was introduced
 - [Android]  `refreshUserData` now returns `ApphudUser?`
+- [Android]  `updateUserID` now returns `ApphudUser?`
+- [Android], [iOS] `attributeFromWeb` method was introduced
 
 - Dependencies of Native SDK's were updated to:
-  - [Android] 2.8.0
+  - [Android] 2.8.2
   - [iOS] 3.5.5
 
 ## 2.5.4
