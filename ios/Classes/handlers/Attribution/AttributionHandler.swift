@@ -18,6 +18,8 @@ class AttributionHandler: Handler {
             Action<AddAttributionRequest,AddAttributionArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.collectSearchAdsAttribution.rawValue:
             Action<CollectSearchAdsAttributionRequest,CollectSearchAdsAttributionParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.attributeFromWeb.rawValue:
+            Action<AttributeFromWebRequest,AttributeFromWebArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

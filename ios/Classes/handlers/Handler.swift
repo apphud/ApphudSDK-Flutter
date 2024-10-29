@@ -115,6 +115,7 @@ enum AppHudMethod {
         case disableIDFACollection
         case addAttribution
         case collectSearchAdsAttribution
+        case attributeFromWeb
     }
 
     enum EligibilityChecks: String, CaseIterable {
