@@ -13,7 +13,7 @@
 - [Android], [iOS] `attributeFromWeb` method was introduced
 
 - Dependencies of Native SDK's were updated to:
-  - [Android] 2.8.2
+  - [Android] 2.8.3
   - [iOS] 3.5.5
 
 ## 2.5.4
