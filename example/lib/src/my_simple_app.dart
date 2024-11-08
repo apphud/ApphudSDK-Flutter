@@ -9,12 +9,15 @@ import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
+import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:apphud_example/app_secrets_android.dart';
 import 'package:apphud_example/app_secrets_ios.dart';
+import 'package:apphud_example/src/common/debug_print_mixin.dart';
 import 'package:apphud_example/src/view/widgets/sk_product_widget.dart';
 import 'package:apphud_example/src/view/widgets/sku_details_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 class MySimpleApp extends StatelessWidget {
   const MySimpleApp({Key? key}) : super(key: key);
@@ -35,6 +38,7 @@ class SimpleHomeScreen extends StatefulWidget {
 }
 
 class _SimpleHomeScreenState extends State<SimpleHomeScreen>
+    with DebugPrintMixin
     implements ApphudListener {
   final _appSecrets =
       Platform.isAndroid ? AppSecretsAndroid() : AppSecretsIos();
@@ -44,13 +48,58 @@ class _SimpleHomeScreenState extends State<SimpleHomeScreen>
   @override
   void initState() {
     super.initState();
-    Apphud.setListener(listener: this);
-    Apphud.startManually(
+    _runTest();
+  }
+
+  Future<void> _runTest() async {
+    await Apphud.deferPlacements();
+    printAsJson(
+      'deferPlacements was called',
+      null,
+      printOnlyMethodName: true,
+    );
+
+    await Apphud.startManually(
       apiKey: _appSecrets.apiKey,
       userID: _appSecrets.userID,
       deviceID: _appSecrets.deviceID,
       observerMode: _appSecrets.observeMode,
     );
+    printAsJson(
+      'startManually was called',
+      null,
+      printOnlyMethodName: true,
+    );
+
+    await Apphud.setUserProperty(
+      key: ApphudUserPropertyKey.customProperty('custom_prop_5'),
+      value: 'ren6',
+    );
+
+    printAsJson(
+      'setUserProperty was called',
+      null,
+      printOnlyMethodName: true,
+    );
+
+    final forceFlushUserPropertiesResult =
+        await Apphud.forceFlushUserProperties();
+
+    printAsJson('forceFlushUserProperties', forceFlushUserPropertiesResult);
+
+    final placements = await Apphud.fetchPlacements();
+
+    printAsJson('placements', placements);
+
+    final placementIndex =
+        placements.placements.indexWhere((p) => p.identifier == 'visionos');
+
+    printAsJson('placementIndex', placementIndex);
+
+    if (placementIndex != -1) {
+      final paywall = placements.placements[placementIndex].paywall;
+      printAsJson('paywall', paywall);
+    }
   }
 
   @override
