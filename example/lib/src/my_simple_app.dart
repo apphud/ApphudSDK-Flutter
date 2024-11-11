@@ -12,6 +12,7 @@ import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:apphud_example/app_secrets_android.dart';
 import 'package:apphud_example/app_secrets_ios.dart';
+import 'package:apphud_example/src/common/debug_print_mixin.dart';
 import 'package:apphud_example/src/view/widgets/sk_product_widget.dart';
 import 'package:apphud_example/src/view/widgets/sku_details_widget.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class SimpleHomeScreen extends StatefulWidget {
 }
 
 class _SimpleHomeScreenState extends State<SimpleHomeScreen>
+    with DebugPrintMixin
     implements ApphudListener {
   final _appSecrets =
       Platform.isAndroid ? AppSecretsAndroid() : AppSecretsIos();
@@ -62,10 +64,16 @@ class _SimpleHomeScreenState extends State<SimpleHomeScreen>
   }
 
   Widget _buildBody() {
-    if (_paywalls == null) {
-      return Center(child: CircularProgressIndicator());
-    }
-    return _buildList(_paywalls!);
+    return Center(
+      child: ElevatedButton(
+        onPressed: _handlePress,
+        child: Text('GO!'),
+      ),
+    );
+    // if (_paywalls == null) {
+    //   return Center(child: CircularProgressIndicator());
+    // }
+    // return _buildList(_paywalls!);
   }
 
   Widget _buildList(ApphudPaywalls paywalls) {
@@ -160,7 +168,12 @@ class _SimpleHomeScreenState extends State<SimpleHomeScreen>
   }
 
   @override
-  Future<void> apphudDidChangeUserID(String userId) async {}
+  Future<void> apphudDidChangeUserID(String userId) async {
+    printAsJson(
+      'apphudDidChangeUserID',
+      userId,
+    );
+  }
 
   @override
   Future<void> apphudDidFecthProducts(
@@ -175,7 +188,12 @@ class _SimpleHomeScreenState extends State<SimpleHomeScreen>
   @override
   Future<void> apphudSubscriptionsUpdated(
     List<ApphudSubscriptionWrapper> subscriptions,
-  ) async {}
+  ) async {
+    printAsJson(
+      'apphudSubscriptionsUpdated',
+      subscriptions,
+    );
+  }
 
   @override
   Future<void> paywallsDidFullyLoad(ApphudPaywalls paywalls) async {
@@ -195,4 +213,14 @@ class _SimpleHomeScreenState extends State<SimpleHomeScreen>
   Future<void> apphudDidReceivePurchase(
     AndroidPurchaseWrapper purchase,
   ) async {}
+
+  void _handlePress() async {
+    final result = await Apphud.attributeFromWeb(
+      {
+        'apphud_user_id': 'ctm_01j8pd3e4gggvt1xcxj0j9ass4',
+      },
+    );
+    printAsJson('attributeFromWeb isSuccess', result.$1);
+    printAsJson('attributeFromWeb user', result.$2);
+  }
 }
