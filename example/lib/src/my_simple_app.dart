@@ -217,7 +217,7 @@ class _SimpleHomeScreenState extends State<SimpleHomeScreen>
   void _handlePress() async {
     final result = await Apphud.attributeFromWeb(
       {
-        'apphud_user_id': 'ctm_01j8pd3e4gggvt1xcxj0j9ass4',
+        'apphud_user_id': 'ctm_01j7wyfvn2tzayrh91qz8qzz71',
       },
     );
     printAsJson('attributeFromWeb isSuccess', result.$1);
