@@ -14,7 +14,7 @@
 
 - Dependencies of Native SDK's were updated to:
   - [Android] 2.8.3
-  - [iOS] 3.5.5
+  - [iOS] 3.5.6
 
 ## 2.5.4
 
