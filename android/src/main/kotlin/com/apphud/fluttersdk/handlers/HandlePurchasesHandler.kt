@@ -27,6 +27,13 @@ class HandlePurchasesHandler(
 
             HandlePurchasesRoutes.restorePurchases.name -> restorePurchases(result)
             HandlePurchasesRoutes.hasPremiumAccess.name -> hasPremiumAccess(result)
+            HandlePurchasesRoutes.refreshUserData.name -> refreshUserData(result)
+        }
+    }
+
+    private fun refreshUserData(result: MethodChannel.Result) {
+        Apphud.refreshUserData { user ->
+            handleOnMainThread { result.success(user?.toMap()) }
         }
     }
 
@@ -118,7 +125,8 @@ enum class HandlePurchasesRoutes {
     nonRenewingPurchases,
     isNonRenewingPurchaseActive,
     restorePurchases,
-    hasPremiumAccess;
+    hasPremiumAccess,
+    refreshUserData;
 
     companion object Mapper {
         fun stringValues(): List<String> {

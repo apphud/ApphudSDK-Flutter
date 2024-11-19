@@ -1,6 +1,7 @@
 package com.apphud.fluttersdk.handlers
 
 import com.android.billingclient.api.ProductDetails
+import com.android.billingclient.api.Purchase
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudListener
@@ -25,6 +26,7 @@ class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) :
     private var subscriptionsCached: List<ApphudSubscription>? = null
     private var purchasesCached: List<ApphudNonRenewingPurchase>? = null
     private var placementsCached: List<ApphudPlacement>? = null
+    private var purchaseCached: Purchase? = null
     private var handleOnMainThread = handleOnMainThreadP
 
     init {
@@ -65,6 +67,7 @@ class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) :
         subscriptionsCached?.let { v -> apphudSubscriptionsUpdated(v) }
         purchasesCached?.let { v -> apphudNonRenewingPurchasesUpdated(v) }
         placementsCached?.let { v -> placementsDidFullyLoad(v) }
+        purchaseCached?.let { v -> apphudDidReceivePurchase(v) }
     }
 
     private fun stop() {
@@ -76,6 +79,15 @@ class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) :
         if (isListeningStarted) {
             handleOnMainThread {
                 channel?.invokeMethod("didChangeUserID", userId)
+            }
+        }
+    }
+
+    override fun apphudDidReceivePurchase(purchase: Purchase) {
+        purchaseCached = purchase
+        if(isListeningStarted) {
+            handleOnMainThread {
+                channel?.invokeMethod("apphudDidReceivePurchase", purchase.toMap())
             }
         }
     }

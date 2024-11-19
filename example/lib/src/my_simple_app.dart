@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:apphud/apphud.dart';
+import 'package:apphud/models/apphud_models/android/android_purchase_wrapper.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
@@ -189,4 +190,9 @@ class _SimpleHomeScreenState extends State<SimpleHomeScreen>
 
   @override
   Future<void> userDidLoad(ApphudUser user) async {}
+
+  @override
+  Future<void> apphudDidReceivePurchase(
+    AndroidPurchaseWrapper purchase,
+  ) async {}
 }

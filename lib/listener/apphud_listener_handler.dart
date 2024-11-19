@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:apphud/listener/apphud_listener.dart';
+import 'package:apphud/models/apphud_models/android/android_purchase_wrapper.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
@@ -48,8 +49,13 @@ class ApphudListenerHandler {
       case 'apphudNonRenewingPurchasesUpdated':
         unawaited(_handleApphudNonRenewingPurchasesUpdated(call.arguments));
         break;
+
       case 'placementsDidFullyLoad':
         unawaited(_handlePlacementsDidFullyLoad(call.arguments));
+        break;
+
+      case 'apphudDidReceivePurchase':
+        unawaited(_handleApphudDidReceivePurchase(call.arguments));
         break;
     }
   }
@@ -109,6 +115,15 @@ class ApphudListenerHandler {
         placementsMap.map((json) => ApphudPlacement.fromJson(json)).toList();
 
     unawaited(_listener.placementsDidFullyLoad(placements));
+  }
+
+  Future<void> _handleApphudDidReceivePurchase(dynamic arguments) async {
+    final Map<dynamic, dynamic> map = arguments;
+    unawaited(
+      _listener.apphudDidReceivePurchase(
+        AndroidPurchaseWrapper.fromJson(map),
+      ),
+    );
   }
 
   void dispose() {

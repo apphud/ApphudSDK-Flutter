@@ -18,6 +18,8 @@ class PlacementsHandler: Handler {
             Action<RawPlacementsRequest,RawPlacementsArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.fetchPlacements.rawValue:
             Action<FetchPlacementsRequest,FetchPlacementsArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.deferPlacements.rawValue:
+            Action<DeferPlacementsRequest,DeferPlacementsArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

@@ -1,3 +1,4 @@
+import 'package:apphud/models/apphud_models/android/android_purchase_wrapper.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
@@ -39,6 +40,8 @@ abstract class ApphudListener {
   );
 
   /// Called when placements are fully loaded with their ApphudPaywalls and inner ProductDetails.
-
   Future<void> placementsDidFullyLoad(List<ApphudPlacement> placements);
+
+  /// Android only. Called when Apphud receives purchase from Google.
+  Future<void> apphudDidReceivePurchase(AndroidPurchaseWrapper purchase);
 }

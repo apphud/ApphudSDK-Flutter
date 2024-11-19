@@ -16,15 +16,9 @@ final class PaywallClosedRequest: Request {
             let paywallIdentifier = arguments.paywallIdentifier
             let placementIdentifier = arguments.placementIdentifier
             
-            var paywall:ApphudPaywall?
+            let paywall = await ApphudPaywallsHelper.getPaywall(paywallIdentifier:paywallIdentifier,
+                                                          placementIdentifier:placementIdentifier)
             
-            if(placementIdentifier != nil) {
-                let placements = await Apphud.placements()
-                paywall = placements.first(where: {pl in pl.identifier == placementIdentifier})?.paywall
-            } else {
-            let paywalls = await Apphud.paywalls()
-            paywall = paywalls.first(where: { pw in return pw.identifier == paywallIdentifier })
-            }
             if(paywall != nil) {
                 Apphud.paywallClosed(paywall!)
             }

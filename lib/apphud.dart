@@ -83,8 +83,16 @@ class Apphud {
   /// Updates the user ID. This method should only be called after the user is registered.
   ///
   /// - parameter [userID] is required. New user ID value.
-  static Future<void> updateUserID(String userID) =>
-      _channel.invokeMethod('updateUserID', {'userID': userID});
+  /// returns [ApphudUser]?
+  static Future<ApphudUser?> updateUserID(String userID) async {
+    final json = await _channel.invokeMethod(
+      'updateUserID',
+      {
+        'userID': userID,
+      },
+    );
+    return json == null ? null : ApphudUser.fromJson(json);
+  }
 
   /// Returns current user ID.
   ///
@@ -212,22 +220,7 @@ class Apphud {
     return const [];
   }
 
-  /// Asynchronously retrieves paywalls from Product Hub > Paywalls,
-  /// potentially altered based on the user's involvement in A/B testing, if any.
-  /// Each paywall contains an array of `ApphudProduct` objects that
-  /// can be used for purchases.
-  /// `ApphudProduct` is Apphud's wrapper around native Stores products.
-  ///
-  /// Awaits until the inner Stores products are loaded from the App Store or Google Play.
-  /// If you want to obtain paywalls without awaiting for native products,
-  /// you can use `rawPaywalls()` method.
-  static Future<ApphudPaywalls?> paywalls() async {
-    final Map<dynamic, dynamic>? json =
-        await _channel.invokeMethod<Map<dynamic, dynamic>>('paywalls');
-    return json != null ? ApphudPaywalls.fromJson(json) : null;
-  }
-
-  /// A list of paywalls, potentially altered based on the user's involvement in A/B testing, if any.
+  /// Android only. A list of paywalls, potentially altered based on the user's involvement in A/B testing, if any.
   ///
   /// Important: This function doesn't await until inner native products are loaded from the stores.
   /// That means paywalls may or may not have inner `SKProduct` / `ProductDetails` at the time you call this function.
@@ -239,6 +232,25 @@ class Apphud {
     final Map<dynamic, dynamic>? json =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('rawPaywalls');
     return json != null ? ApphudPaywalls.fromJson(json) : null;
+  }
+
+  ///Disables automatic paywall and placement requests during the SDK's initial setup.
+  ///
+  /// Developers must explicitly call `fetchPlacements` or `placements()` methods
+  /// at a later point in the app's lifecycle to fetch placements with inner paywalls.
+  /// Example:
+  /// ```
+  /// await Apphud.start(api_key);
+  /// await Apphud.deferPlacements();
+  /// ...
+  /// final placements= await Apphud.fetchPlacements();
+  ///  ... // handle fetched placements
+  /// ```
+  ///
+  /// Note: You can use this method alongside `forceFlushUserProperties` to achieve
+  /// real-time user segmentation based on custom user properties.
+  static Future<void> deferPlacements() async {
+    await _channel.invokeMethod('deferPlacements');
   }
 
   /// Retrieves the paywalls configured in Product Hub > Paywalls,
@@ -432,16 +444,17 @@ class Apphud {
   /// `apphudNonRenewingPurchasesUpdated` methods.
   /// Do not call this method on app launch, as Apphud SDK does it automatically.
   /// You can call this method, when the app reactivates from the background, if needed.
-  static Future<void> refreshUserData() =>
-      _channel.invokeMethod('refreshUserData');
+  static Future<ApphudUser?> refreshUserData() async {
+    final json = await _channel.invokeMethod('refreshUserData');
+    return json == null ? null : ApphudUser.fromJson(json);
+  }
 
 // Handle Purchases
 
-  /// Returns permission groups configured in Apphud dashboard > Product Hub > Products. Groups are cached on device.
+  /// Fetches permission groups configured in the Apphud > Product Hub.
   ///
-  /// Note that this method returns empty array if `ProductDetails` or 'SkProduct' are not yet fetched from Google Play / App Store.
-  /// To get notified when `permissionGroups` are ready to use, use ApphudListener's `paywallsDidFullyLoad` method
-  /// Best practice is not to use this method at all, but use `paywalls()` instead.
+  /// Groups are cached on the device.
+  /// Returns a list of `ApphudGroup` objects representing permission groups.
   static Future<List<ApphudGroup>> permissionGroups() async {
     List<Map<dynamic, dynamic>> groups =
         (await _channel.invokeMethod<List<dynamic>>('permissionGroups'))!
@@ -589,6 +602,24 @@ class Apphud {
         },
       );
 
+  /// This method sends all user properties immediately to Apphud.
+  ///
+  /// Should be used for audience segmentation in placements based on user properties.
+  ///
+  /// Example:
+  ///    ````
+  ///     await Apphud.start(api_key);
+  ///     await Apphud.deferPlacements();
+  ///     await Apphud.setUserProperty(key: ApphudUserPropertyKey.customProperty('some_key'), value: 'some_value');
+  ///     await Apphud.forceFlushUserProperties();
+  ///     final placements = await Apphud.fetchPlacements();
+  ///     ...   // handle placements
+  ///    ```
+  static Future<bool> forceFlushUserProperties() async {
+    final isSuccess = await _channel.invokeMethod('forceFlushUserProperties');
+    return isSuccess as bool;
+  }
+
   /// Increment custom user property. Value must be one of: `int`, `float`
   ///
   /// Example:
@@ -651,6 +682,37 @@ class Apphud {
     final Map<dynamic, dynamic>? result =
         (await _channel.invokeMethod('collectSearchAdsAttribution'));
     return result != null ? ApphudError.fromJson(result) : null;
+  }
+
+  /// Web-to-Web flow only. Attempts to attribute the user using the provided attribution data.
+  ///
+  /// If the `data` parameter contains either `aph_user_id`, `apphud_user_id`,
+  /// `email` or `apphud_user_email`, the SDK will submit this information to the Apphud server.
+  /// The server will return a restored web user if found; otherwise, the callback will return `false`.
+  /// Important: If the callback returns `true`, it doesn't mean the user has premium access,
+  /// you should still call `Apphud.hasPremiumAccess()`.
+  ///
+  ///  Additionally, the delegate methods `apphudSubscriptionsUpdated` and `apphudDidChangeUserID` may be called.
+  ///
+  /// The method returns `true` if the user is successfully attributed via the web
+  /// and includes the updated `ApphudUser` object.
+  /// After receiving the result, you can use the `Apphud.hasPremiumAccess()` method to check
+  /// if the user has premium access, which will return `true` if the user has premium access.
+  ///
+  /// - parameter [data] A map containing the attribution data.
+  /// returns a boolean indicating whether the web attribution was successful,
+  /// along with the updated `ApphudUser` object (if applicable).
+  static Future<(bool wasSuccessful, ApphudUser? user)> attributeFromWeb(
+    Map<String, dynamic> data,
+  ) async {
+    final result = await _channel.invokeMethod('attributeFromWeb', data);
+    if (result == null) {
+      return (false, null);
+    }
+    final wasSuccessful = (result['wasSuccessful'] as bool?) ?? false;
+    final userJson = result['user'];
+    final user = userJson != null ? ApphudUser.fromJson(userJson) : null;
+    return (wasSuccessful, user);
   }
 
   // Other

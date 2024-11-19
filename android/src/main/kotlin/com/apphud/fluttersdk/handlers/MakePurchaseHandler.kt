@@ -6,9 +6,7 @@ import com.apphud.fluttersdk.FlutterSdkCommon
 import com.apphud.fluttersdk.toApphudProduct
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
-import com.apphud.sdk.ApphudError
 import com.apphud.sdk.ApphudPurchaseResult
-import com.apphud.sdk.domain.ApphudPaywall
 import com.apphud.sdk.domain.ApphudProduct
 import com.apphud.sdk.flutter.ApphudFlutter
 import io.flutter.plugin.common.MethodChannel
@@ -51,8 +49,6 @@ class MakePurchaseHandler(
 
             MakePurchaseRoutes.getPaywalls.name -> result.notImplemented()
 
-            MakePurchaseRoutes.paywalls.name -> paywalls(result)
-
             MakePurchaseRoutes.paywallsDidLoadCallback.name -> paywallsDidLoadCallback(result)
 
             MakePurchaseRoutes.purchaseProduct.name -> PurchaseProductParser(result).parse(args)
@@ -66,7 +62,7 @@ class MakePurchaseHandler(
                 )
             }
 
-            MakePurchaseRoutes.permissionGroups.name -> getPermissionGroups(result)
+            MakePurchaseRoutes.permissionGroups.name -> permissionGroups(result)
 
             MakePurchaseRoutes.rawPaywalls.name -> rawPaywalls(result)
 
@@ -84,20 +80,20 @@ class MakePurchaseHandler(
                     result
                 )
             }
+
+            MakePurchaseRoutes.deferPlacements.name -> deferPlacements(result)
         }
     }
 
-    private fun getPermissionGroups(result: MethodChannel.Result) {
-        val groups = Apphud.permissionGroups()
-        handleOnMainThread { result.success(groups.map { it.toMap() }) }
+    private fun deferPlacements(result: MethodChannel.Result) {
+        Apphud.deferPlacements()
+        handleOnMainThread { result.success(null) }
     }
 
-    private fun paywalls(result: MethodChannel.Result) {
+    private fun permissionGroups(result: MethodChannel.Result) {
         GlobalScope.launch {
-            val paywalls: List<ApphudPaywall> = Apphud.paywalls()
-            val resultMap = hashMapOf<String, Any?>()
-            resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
-            handleOnMainThread { result.success(resultMap) }
+            val groups = Apphud.fetchPermissionGroups()
+            handleOnMainThread { result.success(groups.map { it.toMap() }) }
         }
     }
 
@@ -346,14 +342,14 @@ enum class MakePurchaseRoutes {
     syncPurchasesInObserverMode,
     presentOfferCodeRedemptionSheet,
     getPaywalls,
-    paywalls,
     purchaseProduct,
     permissionGroups,
     paywallsDidLoadCallback,
     rawPaywalls,
     refreshUserData,
     loadFallbackPaywalls,
-    trackPurchase;
+    trackPurchase,
+    deferPlacements;
 
     companion object Mapper {
         fun stringValues(): List<String> {

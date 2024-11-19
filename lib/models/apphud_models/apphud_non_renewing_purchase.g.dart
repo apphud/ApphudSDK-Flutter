@@ -12,6 +12,7 @@ ApphudNonRenewingPurchase _$ApphudNonRenewingPurchaseFromJson(Map json) =>
       purchasedAt: (json['purchasedAt'] as num).toDouble(),
       isActive: json['isActive'] as bool,
       canceledAt: (json['canceledAt'] as num?)?.toDouble(),
+      purchaseToken: json['purchaseToken'] as String?,
     );
 
 Map<String, dynamic> _$ApphudNonRenewingPurchaseToJson(
@@ -21,4 +22,5 @@ Map<String, dynamic> _$ApphudNonRenewingPurchaseToJson(
       'purchasedAt': instance.purchasedAt,
       'canceledAt': instance.canceledAt,
       'isActive': instance.isActive,
+      'purchaseToken': instance.purchaseToken,
     };
