@@ -686,11 +686,13 @@ class Apphud {
 
   /// Web-to-Web flow only. Attempts to attribute the user using the provided attribution data.
   ///
-  /// If the `data` map contains either `aph_user_id` or `apphud_user_id`,
-  /// this information will be submitted to the Apphud server.
-  /// The server will return a premium web user if found, otherwise, the callback will return `false`.
+  /// If the `data` parameter contains either `aph_user_id`, `apphud_user_id`,
+  /// `email` or `apphud_user_email`, the SDK will submit this information to the Apphud server.
+  /// The server will return a restored web user if found; otherwise, the callback will return `false`.
+  /// Important: If the callback returns `true`, it doesn't mean the user has premium access,
+  /// you should still call `Apphud.hasPremiumAccess()`.
   ///
-  /// In addition, the ApphudListener's methods `apphudSubscriptionsUpdated` and `apphudDidChangeUserID` will be triggered.
+  ///  Additionally, the delegate methods `apphudSubscriptionsUpdated` and `apphudDidChangeUserID` may be called.
   ///
   /// The method returns `true` if the user is successfully attributed via the web
   /// and includes the updated `ApphudUser` object.
