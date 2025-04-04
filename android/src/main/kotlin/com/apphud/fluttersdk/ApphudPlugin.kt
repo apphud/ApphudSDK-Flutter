@@ -128,7 +128,7 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun setHeaders() {
         HeadersInterceptor.X_SDK = "Flutter"
-        HeadersInterceptor.X_SDK_VERSION = "2.6.0"
+        HeadersInterceptor.X_SDK_VERSION = "2.6.1"
     }
 
     override fun onDetachedFromActivityForConfigChanges() {

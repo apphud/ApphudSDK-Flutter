@@ -1,3 +1,11 @@
+## 2.6.1
+
+- **BREAKING** [iOS], [Android] `addAttribution` method was renamed to `setAttribution`
+
+- Dependencies of Native SDK's were updated to:
+  - [Android] 2.9.1
+  - [iOS] 
+
 ## 2.6.0
 
 - **BREAKING** [Android] `ApphudListener.apphudDidReceivePurchase` method was introduced

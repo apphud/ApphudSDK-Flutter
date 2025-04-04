@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:apphud/listener/apphud_listener.dart';
+import 'package:apphud/models/apphud_models/apphud_attribution_data.dart';
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
 import 'package:apphud/models/apphud_models/apphud_group.dart';
@@ -653,22 +654,17 @@ class Apphud {
 
   ///  Submit attribution data to Apphud from your attribution network provider.
   ///
-  /// - parameter [data] is optional. Attribution 'map'.
+  /// - parameter [data] is required.
   /// - parameter [provider] is required. Attribution provider name. Available values: `ApphudAttributionProvider.appsFlyer`, `ApphudAttributionProvider.adjust`, `ApphudAttributionProvider.appleSearchAds`, `ApphudAttributionProvider.firebase`.
   /// - parameter [identifier] is optional. Identifier that matches Apphud and Attribution provider. Required for AppsFlyer.
   /// Returns true if successfully sent.
-  static Future<bool> addAttribution({
-    Map<String, dynamic>? data,
+  static Future<bool> setAttribution({
     required ApphudAttributionProvider provider,
+    required ApphudAttributionData data,
     String? identifier,
   }) async {
-    if (data == null && identifier == null) {
-      return Future.error(
-        'Please provide \'data\' or \'identifier\' or both parameters',
-      );
-    }
     final bool isAdded = await _channel.invokeMethod('addAttribution', {
-      'data': data,
+      'data': data.toJson(),
       'from': provider.convertToString,
       'identifier': identifier
     });
