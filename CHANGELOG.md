@@ -1,4 +1,4 @@
-## 2.6.1
+## 2.7.0
 
 - **BREAKING** [iOS], [Android] `addAttribution` method was renamed to `setAttribution`
 
