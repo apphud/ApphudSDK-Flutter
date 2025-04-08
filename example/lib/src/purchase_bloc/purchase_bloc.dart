@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/android/android_purchase_wrapper.dart';
+import 'package:apphud/models/apphud_models/apphud_attribution_data.dart';
+import 'package:apphud/models/apphud_models/apphud_attribution_provider.dart';
 import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
-import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:apphud_example/src/common/app_secrets_base.dart';
 import 'package:apphud_example/src/common/debug_print_mixin.dart';
@@ -397,23 +398,22 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //   printOnlyMethodName: true,
     // );
     //
-    // Apphud.addAttribution(
-    //   provider: _attributionProvider,
-    // ).then(
-    //       (value) =>
-    //       printAsJson(
-    //         'Parameters and the result of addAttribution()',
-    //         <String, dynamic>{
-    //           'parameters': <String, dynamic>{
-    //             'data': _attributionData,
-    //             'provider': _attributionProvider.convertToString,
-    //           },
-    //           'result': value,
-    //         },
-    //         printOnlyMethodName: true,
-    //       ),
-    //   onError: (e) => printError('_setAttribution()', e),
-    // );
+    final data = ApphudAttributionData(rawData: {});
+    final provider = ApphudAttributionProvider.custom;
+    Apphud.setAttribution(provider: provider, data: data).then(
+      (value) => printAsJson(
+        'Parameters and the result of setAttribution()',
+        <String, dynamic>{
+          'parameters': <String, dynamic>{
+            'data': data.toJson(),
+            'provider': provider,
+          },
+          'result': value,
+        },
+        printOnlyMethodName: true,
+      ),
+      onError: (e) => printError('_setAttribution()', e),
+    );
     //
     // Apphud.collectSearchAdsAttribution().then(
     //   (value) => printAsJson(
@@ -690,6 +690,13 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         printAsJson('attributeFromWeb user', value.$2);
       },
       onError: (e) => printError('attributeFromWeb', e),
+    );
+    await Apphud.permissionGroups().then(
+      (value) => printAsJson(
+        'permissionGroups',
+        value,
+      ),
+      onError: (e) => printError('permissionGroups', e),
     );
   }
 }
