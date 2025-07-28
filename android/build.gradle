@@ -37,6 +37,7 @@ android {
         minSdkVersion 26
         targetSdk 34
         compileSdk 34
+        consumerProguardFiles 'proguard-rules.pro'
     }
     lintOptions {
         disable 'InvalidPackage'
