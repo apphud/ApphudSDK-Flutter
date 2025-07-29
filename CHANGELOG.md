@@ -1,3 +1,7 @@
+## 2.7.1
+
+- [Android] `proguard-rules.pro` was added
+
 ## 2.7.0
 
 - **BREAKING** [iOS], [Android] `addAttribution` method was renamed to `setAttribution`
