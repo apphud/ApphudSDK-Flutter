@@ -2,6 +2,11 @@
 
 - [Android] `proguard-rules.pro` was added
 
+- Dependencies of Native SDK's were updated to:
+  - [Android] 2.9.2
+
+- Google Billing Client updated to 7.1.1
+
 ## 2.7.0
 
 - **BREAKING** [iOS], [Android] `addAttribution` method was renamed to `setAttribution`
