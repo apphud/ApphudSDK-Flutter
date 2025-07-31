@@ -312,6 +312,7 @@ class Apphud {
   /// - parameter [offerIdToken] - Android only. Required for Subscriptions. The identifier of the offer for initiating the purchase. Developer should retrieve it manually from `SubscriptionOfferDetails` object.
   /// - parameter [oldToken] - Android only. Optional. Specifies the Google Play Billing purchase token that the user is upgrading or downgrading from.
   /// - parameter [replacementMode] - Android only. Optional. Replacement mode (https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.SubscriptionUpdateParams.ReplacementMode?hl=en)
+  /// - parameter [consumableInappProduct] - Android only. Optional. If true, the purchase will be marked as consumable.
   ///
   /// Returns [ApphudPurchaseResult] object
   static Future<ApphudPurchaseResult> purchase({
@@ -320,6 +321,7 @@ class Apphud {
     String? offerIdToken,
     String? oldToken,
     int? replacementMode,
+    bool? consumableInappProduct,
   }) async {
     try {
       assert(
@@ -339,6 +341,7 @@ class Apphud {
             'offerIdToken': offerIdToken,
             'oldToken': oldToken,
             'replacementMode': replacementMode,
+            'consumableInappProduct': consumableInappProduct,
           },
         );
       } else if (product != null) {
@@ -351,6 +354,7 @@ class Apphud {
               'offerIdToken': offerIdToken,
               'oldToken': oldToken,
               'replacementMode': replacementMode,
+              'consumableInappProduct': consumableInappProduct,
             }),
         );
       }

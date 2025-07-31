@@ -34,8 +34,8 @@ class MakePurchaseHandler(
             { productIdentifier -> product(productIdentifier, result) }
 
             MakePurchaseRoutes.purchase.name -> PurchaseParser(result).parse(args)
-            { productId, offerIdToken, oldToken, replacementMode ->
-                purchase(productId, offerIdToken, oldToken, replacementMode, result)
+            { productId, offerIdToken, oldToken, replacementMode, consumableInappProduct ->
+                purchase(productId, offerIdToken, oldToken, replacementMode, consumableInappProduct, result)
             }
 
             MakePurchaseRoutes.purchasePromo.name -> result.notImplemented()
@@ -52,12 +52,13 @@ class MakePurchaseHandler(
             MakePurchaseRoutes.paywallsDidLoadCallback.name -> paywallsDidLoadCallback(result)
 
             MakePurchaseRoutes.purchaseProduct.name -> PurchaseProductParser(result).parse(args)
-            { product, offerIdToken, oldToken, replacementMode ->
+            { product, offerIdToken, oldToken, replacementMode, consumableInappProduct ->
                 purchaseProduct(
                     product,
                     offerIdToken,
                     oldToken,
                     replacementMode,
+                    consumableInappProduct,
                     result
                 )
             }
@@ -143,6 +144,7 @@ class MakePurchaseHandler(
         offerIdToken: String? = null,
         oldToken: String? = null,
         replacementMode: Int? = null,
+        consumableInappProduct: Boolean = false,
         result: MethodChannel.Result
     ) {
         ApphudFlutter.purchase(
@@ -150,7 +152,8 @@ class MakePurchaseHandler(
             productId,
             offerIdToken,
             oldToken,
-            replacementMode
+            replacementMode,
+            consumableInappProduct
         ) { purchaseResult ->
             processPurchaseResult(purchaseResult, result)
         }
@@ -162,6 +165,7 @@ class MakePurchaseHandler(
         offerIdToken: String? = null,
         oldToken: String? = null,
         replacementMode: Int? = null,
+        consumableInappProduct: Boolean = false,
         result: MethodChannel.Result
     ) {
         GlobalScope.launch {
@@ -180,7 +184,8 @@ class MakePurchaseHandler(
                     foundProduct,
                     offerIdToken,
                     oldToken,
-                    replacementMode
+                    replacementMode,
+                    consumableInappProduct
                 ) { purchaseResult ->
                     processPurchaseResult(purchaseResult, result)
                 }
@@ -265,7 +270,8 @@ class MakePurchaseHandler(
                 product: ApphudProduct,
                 offerIdToken: String?,
                 oldToken: String?,
-                replacementMode: Int?
+                replacementMode: Int?,
+                consumableInappProduct: Boolean
             ) -> Unit
         ) {
             try {
@@ -275,8 +281,9 @@ class MakePurchaseHandler(
                 val offerIdToken = args["offerIdToken"] as? String
                 val oldToken = args["oldToken"] as? String
                 val replacementMode = args["replacementMode"] as? Int
+                val consumableInappProduct = args["consumableInappProduct"] as? Boolean ?: false
 
-                callback(product, offerIdToken, oldToken, replacementMode)
+                callback(product, offerIdToken, oldToken, replacementMode, consumableInappProduct)
             } catch (e: IllegalArgumentException) {
                 result.error("400", e.message, "")
             }
@@ -289,7 +296,8 @@ class MakePurchaseHandler(
                 productId: String,
                 offerIdToken: String?,
                 oldToken: String?,
-                replacementMode: Int?
+                replacementMode: Int?,
+                consumableInappProduct: Boolean
             ) -> Unit
         ) {
             try {
@@ -300,8 +308,8 @@ class MakePurchaseHandler(
                 val offerIdToken = args["offerIdToken"] as? String
                 val oldToken = args["oldToken"] as? String
                 val replacementMode = args["replacementMode"] as? Int
-
-                callback(productId, offerIdToken, oldToken, replacementMode)
+                val consumableInappProduct = args["consumableInappProduct"] as? Boolean ?: false
+                callback(productId, offerIdToken, oldToken, replacementMode, consumableInappProduct)
             } catch (e: IllegalArgumentException) {
                 result.error("400", e.message, "")
             }
