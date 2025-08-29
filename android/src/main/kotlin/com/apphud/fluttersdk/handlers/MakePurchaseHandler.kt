@@ -66,8 +66,6 @@ class MakePurchaseHandler(
 
             MakePurchaseRoutes.rawPaywalls.name -> rawPaywalls(result)
 
-            MakePurchaseRoutes.refreshUserData.name -> refreshUserData(result)
-
             MakePurchaseRoutes.loadFallbackPaywalls.name -> loadFallbackPaywalls(result)
 
             MakePurchaseRoutes.trackPurchase.name -> TrackPurchaseParser(result).parse(args)
@@ -229,11 +227,6 @@ class MakePurchaseHandler(
         handleOnMainThread { result.success(null) }
     }
 
-    private fun refreshUserData(result: MethodChannel.Result) {
-        Apphud.refreshUserData()
-        handleOnMainThread { result.success(null) }
-    }
-
     private fun trackPurchase(
         productId: String,
         offerIdToken: String?,
@@ -346,7 +339,6 @@ enum class MakePurchaseRoutes {
     permissionGroups,
     paywallsDidLoadCallback,
     rawPaywalls,
-    refreshUserData,
     loadFallbackPaywalls,
     trackPurchase,
     deferPlacements;
