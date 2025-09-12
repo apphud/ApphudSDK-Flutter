@@ -36,7 +36,7 @@ dev_dependencies:
     sdk: flutter
 
   freezed: ^2.4.5
-
+  json_serializable: ^6.2.0
   build_runner: 2.4.6
 
 # For information on the generic Dart part of this file, see the

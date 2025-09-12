@@ -14,6 +14,10 @@ class ApphudSubscriptionWrapper {
   final double? canceledAt;
   final double startedAt;
   final String? purchaseToken;
+  @JsonKey(includeIfNull: false)
+  final String? platform;
+  @JsonKey(includeIfNull: false)
+  final String? basePlanId;
 
   ApphudSubscriptionWrapper({
     required this.productId,
@@ -26,6 +30,8 @@ class ApphudSubscriptionWrapper {
     required this.startedAt,
     this.canceledAt,
     this.purchaseToken,
+    this.platform,
+    this.basePlanId,
   });
 
   factory ApphudSubscriptionWrapper.fromJson(Map<dynamic, dynamic> map) =>
@@ -35,7 +41,7 @@ class ApphudSubscriptionWrapper {
 
   @override
   String toString() {
-    return 'ApphudSubscriptionWrapper{productId: $productId, expiresAt: $expiresAt, isInRetryBilling: $isInRetryBilling, isAutorenewEnabled: $isAutorenewEnabled, isIntroductoryActivated: $isIntroductoryActivated, isActive: $isActive, status: $status, canceledAt: $canceledAt, startedAt: $startedAt, purchaseToken: $purchaseToken}';
+    return 'ApphudSubscriptionWrapper{productId: $productId, expiresAt: $expiresAt, isInRetryBilling: $isInRetryBilling, isAutorenewEnabled: $isAutorenewEnabled, isIntroductoryActivated: $isIntroductoryActivated, isActive: $isActive, status: $status, canceledAt: $canceledAt, startedAt: $startedAt, purchaseToken: $purchaseToken, platform: $platform, basePlanId: $basePlanId}';
   }
 }
 

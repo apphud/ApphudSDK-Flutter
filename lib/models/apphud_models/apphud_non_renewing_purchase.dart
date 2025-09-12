@@ -9,6 +9,8 @@ class ApphudNonRenewingPurchase {
   final double? canceledAt;
   final bool isActive;
   final String? purchaseToken;
+  @JsonKey(includeIfNull: false)
+  final String? platform;
 
   ApphudNonRenewingPurchase({
     required this.productId,
@@ -16,6 +18,7 @@ class ApphudNonRenewingPurchase {
     required this.isActive,
     this.canceledAt,
     this.purchaseToken,
+    this.platform,
   });
 
   factory ApphudNonRenewingPurchase.fromJson(Map<dynamic, dynamic> map) =>
@@ -25,6 +28,6 @@ class ApphudNonRenewingPurchase {
 
   @override
   String toString() {
-    return 'ApphudNonRenewingPurchase{productId: $productId, purchasedAt: $purchasedAt, canceledAt: $canceledAt, isActive: $isActive, purchaseToken: $purchaseToken}';
+    return 'ApphudNonRenewingPurchase{productId: $productId, platform: $platform, purchasedAt: $purchasedAt, canceledAt: $canceledAt, isActive: $isActive, purchaseToken: $purchaseToken}';
   }
 }
