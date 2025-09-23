@@ -5,6 +5,7 @@ import android.util.Log
 import com.apphud.fluttersdk.FlutterSdkCommon
 import com.apphud.fluttersdk.toApphudProduct
 import com.apphud.fluttersdk.toMap
+import com.apphud.sdk.APPHUD_PAYWALL_SCREEN_LOAD_TIMEOUT
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudPurchaseResult
 import com.apphud.sdk.domain.ApphudProduct
@@ -44,7 +45,9 @@ class MakePurchaseHandler(
                 result
             )
 
-
+            MakePurchaseRoutes.showPaywall.name -> ShowPaywallParser(result).parse(args) { paywallIdentifier, maxTimeout ->
+                showPaywall(paywallIdentifier, maxTimeout, result)
+            }
             MakePurchaseRoutes.presentOfferCodeRedemptionSheet.name -> result.notImplemented()
 
             MakePurchaseRoutes.getPaywalls.name -> result.notImplemented()
@@ -135,6 +138,26 @@ class MakePurchaseHandler(
         } else {
             handleOnMainThread { result.success(null) }
         }
+    }
+
+    private fun showPaywall(paywallIdentifier: String, maxTimeout: Long? = null, result: MethodChannel.Result) {
+        GlobalScope.launch {
+            val paywall =
+                FlutterSdkCommon.getPaywall(paywallIdentifier, null)
+            if (paywall != null) {
+                handleOnMainThread {
+                    Apphud.showPaywallScreen(context = activity, paywall = paywall, maxTimeout = APPHUD_PAYWALL_SCREEN_LOAD_TIMEOUT) { showResult ->
+                        handleOnMainThread { result.success(showResult.toMap()) }
+                    }
+                }
+            } else {
+                result.error(
+                    "400",
+                    "There isn't the paywall with identifier $paywallIdentifier",
+                    ""
+                )
+            }
+        }        
     }
 
     private fun purchase(
@@ -309,6 +332,22 @@ class MakePurchaseHandler(
         }
     }
 
+    class ShowPaywallParser(private val result: MethodChannel.Result) {
+        fun parse(args: Map<String, Any>?, callback: (paywallIdentifier: String, maxTimeout: Long?) -> Unit) {
+            try {
+                args ?: throw IllegalArgumentException("paywallIdentifier is required argument")
+                val paywallIdentifier = args["paywallIdentifier"] as? String
+                val maxTimeout = args["maxTimeout"] as? Long
+                if (paywallIdentifier == null) {
+                    throw IllegalArgumentException("paywallIdentifier is required argument")
+                }
+                callback(paywallIdentifier, maxTimeout)
+            } catch (e: IllegalArgumentException) {
+                result.error("400", e.message, "")
+            }
+        }
+    }
+    
     class TrackPurchaseParser(private val result: MethodChannel.Result) {
         fun parse(
             args: Map<String, Any>?, callback: (
@@ -349,6 +388,7 @@ enum class MakePurchaseRoutes {
     rawPaywalls,
     loadFallbackPaywalls,
     trackPurchase,
+    showPaywall,
     deferPlacements;
 
     companion object Mapper {

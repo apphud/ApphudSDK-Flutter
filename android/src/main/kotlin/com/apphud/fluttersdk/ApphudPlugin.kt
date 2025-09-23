@@ -6,8 +6,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.annotation.NonNull
 import com.apphud.fluttersdk.handlers.*
-import com.apphud.sdk.managers.HeadersInterceptor
-
+import com.apphud.sdk.internal.data.network.SdkHeaders
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -127,8 +126,8 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun setHeaders() {
-        HeadersInterceptor.X_SDK = "Flutter"
-        HeadersInterceptor.X_SDK_VERSION = "2.7.2"
+        SdkHeaders.X_SDK = "Flutter"
+        SdkHeaders.X_SDK_VERSION = "3.0.0-beta2"
     }
 
     override fun onDetachedFromActivityForConfigChanges() {

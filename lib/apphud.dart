@@ -21,6 +21,7 @@ import 'models/apphud_models/apphud_attribution_provider.dart';
 import 'models/apphud_models/apphud_error.dart';
 import 'models/apphud_models/composite/apphud_product_composite.dart';
 import 'models/apphud_models/composite/apphud_purchase_result.dart';
+import 'models/apphud_models/composite/apphud_paywall_screen_show_result.dart';
 import 'models/extensions.dart';
 export 'listener/apphud_listener.dart';
 
@@ -268,6 +269,15 @@ class Apphud {
       );
     }
     return ApphudPaywalls.fromJson(json);
+  }
+
+  static Future<ApphudPaywallScreenShowResult> showPaywall(ApphudPaywall paywall, {double? maxTimeout}) async {
+    final json = await _channel.invokeMethod('showPaywall', {
+      'identifier': paywall.identifier,
+      'placementIdentifier': paywall.placementIdentifier,
+      'maxTimeout': maxTimeout,
+    });
+    return ApphudPaywallScreenShowResult.fromJson(json);
   }
 
   /// Call this method when your paywall screen is displayed to the user.

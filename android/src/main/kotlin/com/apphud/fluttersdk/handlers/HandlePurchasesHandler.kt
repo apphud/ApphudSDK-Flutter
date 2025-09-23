@@ -2,6 +2,7 @@ package com.apphud.fluttersdk.handlers
 
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
+import com.apphud.sdk.ApphudPurchasesRestoreResult
 import io.flutter.plugin.common.MethodChannel
 
 class HandlePurchasesHandler(
@@ -65,8 +66,8 @@ class HandlePurchasesHandler(
     private fun nonRenewingPurchases(result: MethodChannel.Result) {
         val nonRenewingPurchases = Apphud.nonRenewingPurchases()
 
-        val jsonList: List<HashMap<String, Any?>> = nonRenewingPurchases.map {
-            it.toMap()
+        val jsonList = nonRenewingPurchases.map { np ->
+            np.toMap()
         }
 
         handleOnMainThread { result.success(jsonList) }
@@ -78,25 +79,30 @@ class HandlePurchasesHandler(
     }
 
     private fun restorePurchases(result: MethodChannel.Result) {
-        Apphud.restorePurchases { apphudSubscriptionList, apphudNonRenewingPurchaseList, error ->
+        Apphud.restorePurchases { restoreResult ->
+
             val resultMap = hashMapOf<String, Any?>()
 
-            apphudSubscriptionList?.let {
-                val subscriptionJsonList: List<HashMap<String, Any?>> = it.map { s ->
-                    s.toMap()
+            when (restoreResult) {
+                is ApphudPurchasesRestoreResult.Success -> {
+                    restoreResult.subscriptions?.let {
+                        val subscriptionJsonList: List<HashMap<String, Any?>> = it.map { s ->
+                            s.toMap()
+                        }
+                        resultMap["subscriptions"] = subscriptionJsonList
+                    }
+                    restoreResult.purchases?.let {
+                        val nrPurchasesJsonList: List<HashMap<String, Any?>> = it.map { p ->
+                            p.toMap()
+                        }
+                        resultMap["nrPurchases"] = nrPurchasesJsonList
+                    }
                 }
-                resultMap["subscriptions"] = subscriptionJsonList
-            }
-
-            apphudNonRenewingPurchaseList?.let {
-                val nrPurchasesJsonList: List<HashMap<String, Any?>> = it.map { p ->
-                    p.toMap()
+                is ApphudPurchasesRestoreResult.Error -> {
+                    restoreResult.error.let { e ->
+                        resultMap["error"] = e.toMap()
+                    }
                 }
-                resultMap["nrPurchases"] = nrPurchasesJsonList
-            }
-
-            error?.let {
-                resultMap["error"] = it.toMap()
             }
             handleOnMainThread { result.success(resultMap) }
         }
@@ -116,7 +122,6 @@ class IsNonRenewingPurchaseActiveParser(val result: MethodChannel.Result) {
         }
     }
 }
-
 
 enum class HandlePurchasesRoutes {
     hasActiveSubscription,
