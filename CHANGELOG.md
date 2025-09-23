@@ -2,8 +2,10 @@
 
 - [Android] `proguard-rules.pro` was improved
 - Dependencies of Native SDK's were updated to:
-  - [Android] 2.9.3
-
+- [Android] 2.9.3
+- [iOS], [Android] Added platform property to Subscription model
+- [Android] Added basePlanId property to Subscription model
+- [Android] Added consumableInAppProduct property to purchase consumable product. (Merged https://github.com/apphud/ApphudSDK-Flutter/pull/75)
 
 ## 2.7.1
 
