@@ -5,11 +5,39 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# Gson specific classes
--keepattributes Signature
--keepattributes *Annotation*
--dontwarn sun.misc.**
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
 
+# Uncomment this to preserve the line number information for
+# debugging stack traces.
+#-keepattributes SourceFile,LineNumberTable
+
+# If you keep the line number information, uncomment this to
+# hide the original source file name.
+#-renamesourcefileattribute SourceFile
+
+##---------------Begin: proguard configuration for Gson  ----------
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+# Gson specific classes
+-dontwarn sun.misc.**
+#-keep class com.google.gson.stream.** { *; }
+
+# Application classes that will be serialized/deserialized over Gson
+-keep class com.apphud.sdk.** { *; }
+-keep class com.apphud.fluttersdk.** { *; }
+
+# Prevent proguard from stripping interface information from TypeAdapter, TypeAdapterFactory,
+# JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
 -keep class * extends com.google.gson.TypeAdapter
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
@@ -20,17 +48,8 @@
   @com.google.gson.annotations.SerializedName <fields>;
 }
 
-# Keep essential classes
--keep class io.flutter.** { *; } # Keep Flutter classes
--keep class com.apphud.sdk.** { *; } # Keep your package's classes
--keep class com.apphud.fluttersdk.** { *; } # Keep your package's classes
+# Retain generic signatures of TypeToken and its subclasses with R8 version 3.0 and higher.
+-keep,allowobfuscation,allowshrinking class com.google.gson.reflect.TypeToken
+-keep,allowobfuscation,allowshrinking class * extends com.google.gson.reflect.TypeToken
 
-# Keep native methods
--keepclassmembers class com.apphud.sdk.** { native <methods>; } # Keep native methods
--keepclassmembers class com.apphud.fluttersdk.** { native <methods>; } # Keep native methods
-
-# Keep Android Billing Client classes
--keep class com.android.billingclient.api.** { *; }
-
-# Keep enum classes and their methods (important for status enums)
--keepclassmembers enum * { *; }
+##---------------End: proguard configuration for Gson  ----------

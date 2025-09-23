@@ -55,5 +55,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.apphud:ApphudSDK-Android:2.9.3'
     implementation 'com.android.billingclient:billing:7.1.1'
-    implementation 'com.google.code.gson:gson:2.8.8'
+    // implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.code.gson:gson:2.13.1'
 }
