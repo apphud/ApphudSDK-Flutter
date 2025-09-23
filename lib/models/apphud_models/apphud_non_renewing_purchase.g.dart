@@ -13,14 +13,25 @@ ApphudNonRenewingPurchase _$ApphudNonRenewingPurchaseFromJson(Map json) =>
       isActive: json['isActive'] as bool,
       canceledAt: (json['canceledAt'] as num?)?.toDouble(),
       purchaseToken: json['purchaseToken'] as String?,
+      platform: json['platform'] as String?,
     );
 
 Map<String, dynamic> _$ApphudNonRenewingPurchaseToJson(
-        ApphudNonRenewingPurchase instance) =>
-    <String, dynamic>{
-      'productId': instance.productId,
-      'purchasedAt': instance.purchasedAt,
-      'canceledAt': instance.canceledAt,
-      'isActive': instance.isActive,
-      'purchaseToken': instance.purchaseToken,
-    };
+    ApphudNonRenewingPurchase instance) {
+  final val = <String, dynamic>{
+    'productId': instance.productId,
+    'purchasedAt': instance.purchasedAt,
+    'canceledAt': instance.canceledAt,
+    'isActive': instance.isActive,
+    'purchaseToken': instance.purchaseToken,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('platform', instance.platform);
+  return val;
+}

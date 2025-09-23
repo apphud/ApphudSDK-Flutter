@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,41 +9,89 @@ part of 'purchase_user_message.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$PurchaseUserMessage {
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is PurchaseUserMessage);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'PurchaseUserMessage()';
+  }
+}
+
+/// @nodoc
+class $PurchaseUserMessageCopyWith<$Res> {
+  $PurchaseUserMessageCopyWith(
+      PurchaseUserMessage _, $Res Function(PurchaseUserMessage) __);
+}
+
+/// Adds pattern-matching-related methods to [PurchaseUserMessage].
+extension PurchaseUserMessagePatterns on PurchaseUserMessage {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
   @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() none,
-    required TResult Function() purchaseSuccess,
-    required TResult Function(ApphudError error) purchaseFailure,
-    required TResult Function() restorePurchasesSuccess,
-    required TResult Function(ApphudError error) restorePurchasesFailure,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? none,
-    TResult? Function()? purchaseSuccess,
-    TResult? Function(ApphudError error)? purchaseFailure,
-    TResult? Function()? restorePurchasesSuccess,
-    TResult? Function(ApphudError error)? restorePurchasesFailure,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? none,
-    TResult Function()? purchaseSuccess,
-    TResult Function(ApphudError error)? purchaseFailure,
-    TResult Function()? restorePurchasesSuccess,
-    TResult Function(ApphudError error)? restorePurchasesFailure,
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PurchaseNoneUserMessage value)? none,
+    TResult Function(PurchasePurchaseSuccessUserMessage value)? purchaseSuccess,
+    TResult Function(PurchasePurchaseFailureUserMessage value)? purchaseFailure,
+    TResult Function(PurchaseRestorePurchasesSuccessUserMessage value)?
+        restorePurchasesSuccess,
+    TResult Function(PurchaseRestorePurchasesFailureUserMessage value)?
+        restorePurchasesFailure,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) {
+    final _that = this;
+    switch (_that) {
+      case PurchaseNoneUserMessage() when none != null:
+        return none(_that);
+      case PurchasePurchaseSuccessUserMessage() when purchaseSuccess != null:
+        return purchaseSuccess(_that);
+      case PurchasePurchaseFailureUserMessage() when purchaseFailure != null:
+        return purchaseFailure(_that);
+      case PurchaseRestorePurchasesSuccessUserMessage()
+          when restorePurchasesSuccess != null:
+        return restorePurchasesSuccess(_that);
+      case PurchaseRestorePurchasesFailureUserMessage()
+          when restorePurchasesFailure != null:
+        return restorePurchasesFailure(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(PurchaseNoneUserMessage value) none,
@@ -55,8 +103,36 @@ mixin _$PurchaseUserMessage {
         restorePurchasesSuccess,
     required TResult Function(PurchaseRestorePurchasesFailureUserMessage value)
         restorePurchasesFailure,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) {
+    final _that = this;
+    switch (_that) {
+      case PurchaseNoneUserMessage():
+        return none(_that);
+      case PurchasePurchaseSuccessUserMessage():
+        return purchaseSuccess(_that);
+      case PurchasePurchaseFailureUserMessage():
+        return purchaseFailure(_that);
+      case PurchaseRestorePurchasesSuccessUserMessage():
+        return restorePurchasesSuccess(_that);
+      case PurchaseRestorePurchasesFailureUserMessage():
+        return restorePurchasesFailure(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PurchaseNoneUserMessage value)? none,
@@ -68,650 +144,246 @@ mixin _$PurchaseUserMessage {
         restorePurchasesSuccess,
     TResult? Function(PurchaseRestorePurchasesFailureUserMessage value)?
         restorePurchasesFailure,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) {
+    final _that = this;
+    switch (_that) {
+      case PurchaseNoneUserMessage() when none != null:
+        return none(_that);
+      case PurchasePurchaseSuccessUserMessage() when purchaseSuccess != null:
+        return purchaseSuccess(_that);
+      case PurchasePurchaseFailureUserMessage() when purchaseFailure != null:
+        return purchaseFailure(_that);
+      case PurchaseRestorePurchasesSuccessUserMessage()
+          when restorePurchasesSuccess != null:
+        return restorePurchasesSuccess(_that);
+      case PurchaseRestorePurchasesFailureUserMessage()
+          when restorePurchasesFailure != null:
+        return restorePurchasesFailure(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(PurchaseNoneUserMessage value)? none,
-    TResult Function(PurchasePurchaseSuccessUserMessage value)? purchaseSuccess,
-    TResult Function(PurchasePurchaseFailureUserMessage value)? purchaseFailure,
-    TResult Function(PurchaseRestorePurchasesSuccessUserMessage value)?
-        restorePurchasesSuccess,
-    TResult Function(PurchaseRestorePurchasesFailureUserMessage value)?
-        restorePurchasesFailure,
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function()? purchaseSuccess,
+    TResult Function(ApphudError error)? purchaseFailure,
+    TResult Function()? restorePurchasesSuccess,
+    TResult Function(ApphudError error)? restorePurchasesFailure,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) {
+    final _that = this;
+    switch (_that) {
+      case PurchaseNoneUserMessage() when none != null:
+        return none();
+      case PurchasePurchaseSuccessUserMessage() when purchaseSuccess != null:
+        return purchaseSuccess();
+      case PurchasePurchaseFailureUserMessage() when purchaseFailure != null:
+        return purchaseFailure(_that.error);
+      case PurchaseRestorePurchasesSuccessUserMessage()
+          when restorePurchasesSuccess != null:
+        return restorePurchasesSuccess();
+      case PurchaseRestorePurchasesFailureUserMessage()
+          when restorePurchasesFailure != null:
+        return restorePurchasesFailure(_that.error);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() none,
+    required TResult Function() purchaseSuccess,
+    required TResult Function(ApphudError error) purchaseFailure,
+    required TResult Function() restorePurchasesSuccess,
+    required TResult Function(ApphudError error) restorePurchasesFailure,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case PurchaseNoneUserMessage():
+        return none();
+      case PurchasePurchaseSuccessUserMessage():
+        return purchaseSuccess();
+      case PurchasePurchaseFailureUserMessage():
+        return purchaseFailure(_that.error);
+      case PurchaseRestorePurchasesSuccessUserMessage():
+        return restorePurchasesSuccess();
+      case PurchaseRestorePurchasesFailureUserMessage():
+        return restorePurchasesFailure(_that.error);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? none,
+    TResult? Function()? purchaseSuccess,
+    TResult? Function(ApphudError error)? purchaseFailure,
+    TResult? Function()? restorePurchasesSuccess,
+    TResult? Function(ApphudError error)? restorePurchasesFailure,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case PurchaseNoneUserMessage() when none != null:
+        return none();
+      case PurchasePurchaseSuccessUserMessage() when purchaseSuccess != null:
+        return purchaseSuccess();
+      case PurchasePurchaseFailureUserMessage() when purchaseFailure != null:
+        return purchaseFailure(_that.error);
+      case PurchaseRestorePurchasesSuccessUserMessage()
+          when restorePurchasesSuccess != null:
+        return restorePurchasesSuccess();
+      case PurchaseRestorePurchasesFailureUserMessage()
+          when restorePurchasesFailure != null:
+        return restorePurchasesFailure(_that.error);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc
-abstract class $PurchaseUserMessageCopyWith<$Res> {
-  factory $PurchaseUserMessageCopyWith(
-          PurchaseUserMessage value, $Res Function(PurchaseUserMessage) then) =
-      _$PurchaseUserMessageCopyWithImpl<$Res, PurchaseUserMessage>;
-}
 
-/// @nodoc
-class _$PurchaseUserMessageCopyWithImpl<$Res, $Val extends PurchaseUserMessage>
-    implements $PurchaseUserMessageCopyWith<$Res> {
-  _$PurchaseUserMessageCopyWithImpl(this._value, this._then);
+class PurchaseNoneUserMessage extends PurchaseUserMessage {
+  const PurchaseNoneUserMessage() : super._();
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-}
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is PurchaseNoneUserMessage);
+  }
 
-/// @nodoc
-abstract class _$$PurchaseNoneUserMessageImplCopyWith<$Res> {
-  factory _$$PurchaseNoneUserMessageImplCopyWith(
-          _$PurchaseNoneUserMessageImpl value,
-          $Res Function(_$PurchaseNoneUserMessageImpl) then) =
-      __$$PurchaseNoneUserMessageImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$PurchaseNoneUserMessageImplCopyWithImpl<$Res>
-    extends _$PurchaseUserMessageCopyWithImpl<$Res,
-        _$PurchaseNoneUserMessageImpl>
-    implements _$$PurchaseNoneUserMessageImplCopyWith<$Res> {
-  __$$PurchaseNoneUserMessageImplCopyWithImpl(
-      _$PurchaseNoneUserMessageImpl _value,
-      $Res Function(_$PurchaseNoneUserMessageImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$PurchaseNoneUserMessageImpl extends PurchaseNoneUserMessage {
-  const _$PurchaseNoneUserMessageImpl() : super._();
+  @override
+  int get hashCode => runtimeType.hashCode;
 
   @override
   String toString() {
     return 'PurchaseUserMessage.none()';
   }
+}
+
+/// @nodoc
+
+class PurchasePurchaseSuccessUserMessage extends PurchaseUserMessage {
+  const PurchasePurchaseSuccessUserMessage() : super._();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PurchaseNoneUserMessageImpl);
+            other is PurchasePurchaseSuccessUserMessage);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() none,
-    required TResult Function() purchaseSuccess,
-    required TResult Function(ApphudError error) purchaseFailure,
-    required TResult Function() restorePurchasesSuccess,
-    required TResult Function(ApphudError error) restorePurchasesFailure,
-  }) {
-    return none();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? none,
-    TResult? Function()? purchaseSuccess,
-    TResult? Function(ApphudError error)? purchaseFailure,
-    TResult? Function()? restorePurchasesSuccess,
-    TResult? Function(ApphudError error)? restorePurchasesFailure,
-  }) {
-    return none?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? none,
-    TResult Function()? purchaseSuccess,
-    TResult Function(ApphudError error)? purchaseFailure,
-    TResult Function()? restorePurchasesSuccess,
-    TResult Function(ApphudError error)? restorePurchasesFailure,
-    required TResult orElse(),
-  }) {
-    if (none != null) {
-      return none();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(PurchaseNoneUserMessage value) none,
-    required TResult Function(PurchasePurchaseSuccessUserMessage value)
-        purchaseSuccess,
-    required TResult Function(PurchasePurchaseFailureUserMessage value)
-        purchaseFailure,
-    required TResult Function(PurchaseRestorePurchasesSuccessUserMessage value)
-        restorePurchasesSuccess,
-    required TResult Function(PurchaseRestorePurchasesFailureUserMessage value)
-        restorePurchasesFailure,
-  }) {
-    return none(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(PurchaseNoneUserMessage value)? none,
-    TResult? Function(PurchasePurchaseSuccessUserMessage value)?
-        purchaseSuccess,
-    TResult? Function(PurchasePurchaseFailureUserMessage value)?
-        purchaseFailure,
-    TResult? Function(PurchaseRestorePurchasesSuccessUserMessage value)?
-        restorePurchasesSuccess,
-    TResult? Function(PurchaseRestorePurchasesFailureUserMessage value)?
-        restorePurchasesFailure,
-  }) {
-    return none?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(PurchaseNoneUserMessage value)? none,
-    TResult Function(PurchasePurchaseSuccessUserMessage value)? purchaseSuccess,
-    TResult Function(PurchasePurchaseFailureUserMessage value)? purchaseFailure,
-    TResult Function(PurchaseRestorePurchasesSuccessUserMessage value)?
-        restorePurchasesSuccess,
-    TResult Function(PurchaseRestorePurchasesFailureUserMessage value)?
-        restorePurchasesFailure,
-    required TResult orElse(),
-  }) {
-    if (none != null) {
-      return none(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class PurchaseNoneUserMessage extends PurchaseUserMessage {
-  const factory PurchaseNoneUserMessage() = _$PurchaseNoneUserMessageImpl;
-  const PurchaseNoneUserMessage._() : super._();
-}
-
-/// @nodoc
-abstract class _$$PurchasePurchaseSuccessUserMessageImplCopyWith<$Res> {
-  factory _$$PurchasePurchaseSuccessUserMessageImplCopyWith(
-          _$PurchasePurchaseSuccessUserMessageImpl value,
-          $Res Function(_$PurchasePurchaseSuccessUserMessageImpl) then) =
-      __$$PurchasePurchaseSuccessUserMessageImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$PurchasePurchaseSuccessUserMessageImplCopyWithImpl<$Res>
-    extends _$PurchaseUserMessageCopyWithImpl<$Res,
-        _$PurchasePurchaseSuccessUserMessageImpl>
-    implements _$$PurchasePurchaseSuccessUserMessageImplCopyWith<$Res> {
-  __$$PurchasePurchaseSuccessUserMessageImplCopyWithImpl(
-      _$PurchasePurchaseSuccessUserMessageImpl _value,
-      $Res Function(_$PurchasePurchaseSuccessUserMessageImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$PurchasePurchaseSuccessUserMessageImpl
-    extends PurchasePurchaseSuccessUserMessage {
-  const _$PurchasePurchaseSuccessUserMessageImpl() : super._();
 
   @override
   String toString() {
     return 'PurchaseUserMessage.purchaseSuccess()';
   }
+}
+
+/// @nodoc
+
+class PurchasePurchaseFailureUserMessage extends PurchaseUserMessage {
+  const PurchasePurchaseFailureUserMessage(this.error) : super._();
+
+  final ApphudError error;
+
+  /// Create a copy of PurchaseUserMessage
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $PurchasePurchaseFailureUserMessageCopyWith<
+          PurchasePurchaseFailureUserMessage>
+      get copyWith => _$PurchasePurchaseFailureUserMessageCopyWithImpl<
+          PurchasePurchaseFailureUserMessage>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PurchasePurchaseSuccessUserMessageImpl);
+            other is PurchasePurchaseFailureUserMessage &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() none,
-    required TResult Function() purchaseSuccess,
-    required TResult Function(ApphudError error) purchaseFailure,
-    required TResult Function() restorePurchasesSuccess,
-    required TResult Function(ApphudError error) restorePurchasesFailure,
-  }) {
-    return purchaseSuccess();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? none,
-    TResult? Function()? purchaseSuccess,
-    TResult? Function(ApphudError error)? purchaseFailure,
-    TResult? Function()? restorePurchasesSuccess,
-    TResult? Function(ApphudError error)? restorePurchasesFailure,
-  }) {
-    return purchaseSuccess?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? none,
-    TResult Function()? purchaseSuccess,
-    TResult Function(ApphudError error)? purchaseFailure,
-    TResult Function()? restorePurchasesSuccess,
-    TResult Function(ApphudError error)? restorePurchasesFailure,
-    required TResult orElse(),
-  }) {
-    if (purchaseSuccess != null) {
-      return purchaseSuccess();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(PurchaseNoneUserMessage value) none,
-    required TResult Function(PurchasePurchaseSuccessUserMessage value)
-        purchaseSuccess,
-    required TResult Function(PurchasePurchaseFailureUserMessage value)
-        purchaseFailure,
-    required TResult Function(PurchaseRestorePurchasesSuccessUserMessage value)
-        restorePurchasesSuccess,
-    required TResult Function(PurchaseRestorePurchasesFailureUserMessage value)
-        restorePurchasesFailure,
-  }) {
-    return purchaseSuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(PurchaseNoneUserMessage value)? none,
-    TResult? Function(PurchasePurchaseSuccessUserMessage value)?
-        purchaseSuccess,
-    TResult? Function(PurchasePurchaseFailureUserMessage value)?
-        purchaseFailure,
-    TResult? Function(PurchaseRestorePurchasesSuccessUserMessage value)?
-        restorePurchasesSuccess,
-    TResult? Function(PurchaseRestorePurchasesFailureUserMessage value)?
-        restorePurchasesFailure,
-  }) {
-    return purchaseSuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(PurchaseNoneUserMessage value)? none,
-    TResult Function(PurchasePurchaseSuccessUserMessage value)? purchaseSuccess,
-    TResult Function(PurchasePurchaseFailureUserMessage value)? purchaseFailure,
-    TResult Function(PurchaseRestorePurchasesSuccessUserMessage value)?
-        restorePurchasesSuccess,
-    TResult Function(PurchaseRestorePurchasesFailureUserMessage value)?
-        restorePurchasesFailure,
-    required TResult orElse(),
-  }) {
-    if (purchaseSuccess != null) {
-      return purchaseSuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class PurchasePurchaseSuccessUserMessage extends PurchaseUserMessage {
-  const factory PurchasePurchaseSuccessUserMessage() =
-      _$PurchasePurchaseSuccessUserMessageImpl;
-  const PurchasePurchaseSuccessUserMessage._() : super._();
-}
-
-/// @nodoc
-abstract class _$$PurchasePurchaseFailureUserMessageImplCopyWith<$Res> {
-  factory _$$PurchasePurchaseFailureUserMessageImplCopyWith(
-          _$PurchasePurchaseFailureUserMessageImpl value,
-          $Res Function(_$PurchasePurchaseFailureUserMessageImpl) then) =
-      __$$PurchasePurchaseFailureUserMessageImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({ApphudError error});
-}
-
-/// @nodoc
-class __$$PurchasePurchaseFailureUserMessageImplCopyWithImpl<$Res>
-    extends _$PurchaseUserMessageCopyWithImpl<$Res,
-        _$PurchasePurchaseFailureUserMessageImpl>
-    implements _$$PurchasePurchaseFailureUserMessageImplCopyWith<$Res> {
-  __$$PurchasePurchaseFailureUserMessageImplCopyWithImpl(
-      _$PurchasePurchaseFailureUserMessageImpl _value,
-      $Res Function(_$PurchasePurchaseFailureUserMessageImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? error = null,
-  }) {
-    return _then(_$PurchasePurchaseFailureUserMessageImpl(
-      null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as ApphudError,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$PurchasePurchaseFailureUserMessageImpl
-    extends PurchasePurchaseFailureUserMessage {
-  const _$PurchasePurchaseFailureUserMessageImpl(this.error) : super._();
-
-  @override
-  final ApphudError error;
+  int get hashCode => Object.hash(runtimeType, error);
 
   @override
   String toString() {
     return 'PurchaseUserMessage.purchaseFailure(error: $error)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PurchasePurchaseFailureUserMessageImpl &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PurchasePurchaseFailureUserMessageImplCopyWith<
-          _$PurchasePurchaseFailureUserMessageImpl>
-      get copyWith => __$$PurchasePurchaseFailureUserMessageImplCopyWithImpl<
-          _$PurchasePurchaseFailureUserMessageImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() none,
-    required TResult Function() purchaseSuccess,
-    required TResult Function(ApphudError error) purchaseFailure,
-    required TResult Function() restorePurchasesSuccess,
-    required TResult Function(ApphudError error) restorePurchasesFailure,
-  }) {
-    return purchaseFailure(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? none,
-    TResult? Function()? purchaseSuccess,
-    TResult? Function(ApphudError error)? purchaseFailure,
-    TResult? Function()? restorePurchasesSuccess,
-    TResult? Function(ApphudError error)? restorePurchasesFailure,
-  }) {
-    return purchaseFailure?.call(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? none,
-    TResult Function()? purchaseSuccess,
-    TResult Function(ApphudError error)? purchaseFailure,
-    TResult Function()? restorePurchasesSuccess,
-    TResult Function(ApphudError error)? restorePurchasesFailure,
-    required TResult orElse(),
-  }) {
-    if (purchaseFailure != null) {
-      return purchaseFailure(error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(PurchaseNoneUserMessage value) none,
-    required TResult Function(PurchasePurchaseSuccessUserMessage value)
-        purchaseSuccess,
-    required TResult Function(PurchasePurchaseFailureUserMessage value)
-        purchaseFailure,
-    required TResult Function(PurchaseRestorePurchasesSuccessUserMessage value)
-        restorePurchasesSuccess,
-    required TResult Function(PurchaseRestorePurchasesFailureUserMessage value)
-        restorePurchasesFailure,
-  }) {
-    return purchaseFailure(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(PurchaseNoneUserMessage value)? none,
-    TResult? Function(PurchasePurchaseSuccessUserMessage value)?
-        purchaseSuccess,
-    TResult? Function(PurchasePurchaseFailureUserMessage value)?
-        purchaseFailure,
-    TResult? Function(PurchaseRestorePurchasesSuccessUserMessage value)?
-        restorePurchasesSuccess,
-    TResult? Function(PurchaseRestorePurchasesFailureUserMessage value)?
-        restorePurchasesFailure,
-  }) {
-    return purchaseFailure?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(PurchaseNoneUserMessage value)? none,
-    TResult Function(PurchasePurchaseSuccessUserMessage value)? purchaseSuccess,
-    TResult Function(PurchasePurchaseFailureUserMessage value)? purchaseFailure,
-    TResult Function(PurchaseRestorePurchasesSuccessUserMessage value)?
-        restorePurchasesSuccess,
-    TResult Function(PurchaseRestorePurchasesFailureUserMessage value)?
-        restorePurchasesFailure,
-    required TResult orElse(),
-  }) {
-    if (purchaseFailure != null) {
-      return purchaseFailure(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class PurchasePurchaseFailureUserMessage extends PurchaseUserMessage {
-  const factory PurchasePurchaseFailureUserMessage(final ApphudError error) =
-      _$PurchasePurchaseFailureUserMessageImpl;
-  const PurchasePurchaseFailureUserMessage._() : super._();
-
-  ApphudError get error;
-  @JsonKey(ignore: true)
-  _$$PurchasePurchaseFailureUserMessageImplCopyWith<
-          _$PurchasePurchaseFailureUserMessageImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PurchaseRestorePurchasesSuccessUserMessageImplCopyWith<$Res> {
-  factory _$$PurchaseRestorePurchasesSuccessUserMessageImplCopyWith(
-          _$PurchaseRestorePurchasesSuccessUserMessageImpl value,
-          $Res Function(_$PurchaseRestorePurchasesSuccessUserMessageImpl)
-              then) =
-      __$$PurchaseRestorePurchasesSuccessUserMessageImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$PurchaseRestorePurchasesSuccessUserMessageImplCopyWithImpl<$Res>
-    extends _$PurchaseUserMessageCopyWithImpl<$Res,
-        _$PurchaseRestorePurchasesSuccessUserMessageImpl>
-    implements _$$PurchaseRestorePurchasesSuccessUserMessageImplCopyWith<$Res> {
-  __$$PurchaseRestorePurchasesSuccessUserMessageImplCopyWithImpl(
-      _$PurchaseRestorePurchasesSuccessUserMessageImpl _value,
-      $Res Function(_$PurchaseRestorePurchasesSuccessUserMessageImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$PurchaseRestorePurchasesSuccessUserMessageImpl
-    extends PurchaseRestorePurchasesSuccessUserMessage {
-  const _$PurchaseRestorePurchasesSuccessUserMessageImpl() : super._();
-
-  @override
-  String toString() {
-    return 'PurchaseUserMessage.restorePurchasesSuccess()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PurchaseRestorePurchasesSuccessUserMessageImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() none,
-    required TResult Function() purchaseSuccess,
-    required TResult Function(ApphudError error) purchaseFailure,
-    required TResult Function() restorePurchasesSuccess,
-    required TResult Function(ApphudError error) restorePurchasesFailure,
-  }) {
-    return restorePurchasesSuccess();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? none,
-    TResult? Function()? purchaseSuccess,
-    TResult? Function(ApphudError error)? purchaseFailure,
-    TResult? Function()? restorePurchasesSuccess,
-    TResult? Function(ApphudError error)? restorePurchasesFailure,
-  }) {
-    return restorePurchasesSuccess?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? none,
-    TResult Function()? purchaseSuccess,
-    TResult Function(ApphudError error)? purchaseFailure,
-    TResult Function()? restorePurchasesSuccess,
-    TResult Function(ApphudError error)? restorePurchasesFailure,
-    required TResult orElse(),
-  }) {
-    if (restorePurchasesSuccess != null) {
-      return restorePurchasesSuccess();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(PurchaseNoneUserMessage value) none,
-    required TResult Function(PurchasePurchaseSuccessUserMessage value)
-        purchaseSuccess,
-    required TResult Function(PurchasePurchaseFailureUserMessage value)
-        purchaseFailure,
-    required TResult Function(PurchaseRestorePurchasesSuccessUserMessage value)
-        restorePurchasesSuccess,
-    required TResult Function(PurchaseRestorePurchasesFailureUserMessage value)
-        restorePurchasesFailure,
-  }) {
-    return restorePurchasesSuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(PurchaseNoneUserMessage value)? none,
-    TResult? Function(PurchasePurchaseSuccessUserMessage value)?
-        purchaseSuccess,
-    TResult? Function(PurchasePurchaseFailureUserMessage value)?
-        purchaseFailure,
-    TResult? Function(PurchaseRestorePurchasesSuccessUserMessage value)?
-        restorePurchasesSuccess,
-    TResult? Function(PurchaseRestorePurchasesFailureUserMessage value)?
-        restorePurchasesFailure,
-  }) {
-    return restorePurchasesSuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(PurchaseNoneUserMessage value)? none,
-    TResult Function(PurchasePurchaseSuccessUserMessage value)? purchaseSuccess,
-    TResult Function(PurchasePurchaseFailureUserMessage value)? purchaseFailure,
-    TResult Function(PurchaseRestorePurchasesSuccessUserMessage value)?
-        restorePurchasesSuccess,
-    TResult Function(PurchaseRestorePurchasesFailureUserMessage value)?
-        restorePurchasesFailure,
-    required TResult orElse(),
-  }) {
-    if (restorePurchasesSuccess != null) {
-      return restorePurchasesSuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class PurchaseRestorePurchasesSuccessUserMessage
-    extends PurchaseUserMessage {
-  const factory PurchaseRestorePurchasesSuccessUserMessage() =
-      _$PurchaseRestorePurchasesSuccessUserMessageImpl;
-  const PurchaseRestorePurchasesSuccessUserMessage._() : super._();
-}
-
-/// @nodoc
-abstract class _$$PurchaseRestorePurchasesFailureUserMessageImplCopyWith<$Res> {
-  factory _$$PurchaseRestorePurchasesFailureUserMessageImplCopyWith(
-          _$PurchaseRestorePurchasesFailureUserMessageImpl value,
-          $Res Function(_$PurchaseRestorePurchasesFailureUserMessageImpl)
-              then) =
-      __$$PurchaseRestorePurchasesFailureUserMessageImplCopyWithImpl<$Res>;
+abstract mixin class $PurchasePurchaseFailureUserMessageCopyWith<$Res>
+    implements $PurchaseUserMessageCopyWith<$Res> {
+  factory $PurchasePurchaseFailureUserMessageCopyWith(
+          PurchasePurchaseFailureUserMessage value,
+          $Res Function(PurchasePurchaseFailureUserMessage) _then) =
+      _$PurchasePurchaseFailureUserMessageCopyWithImpl;
   @useResult
   $Res call({ApphudError error});
 }
 
 /// @nodoc
-class __$$PurchaseRestorePurchasesFailureUserMessageImplCopyWithImpl<$Res>
-    extends _$PurchaseUserMessageCopyWithImpl<$Res,
-        _$PurchaseRestorePurchasesFailureUserMessageImpl>
-    implements _$$PurchaseRestorePurchasesFailureUserMessageImplCopyWith<$Res> {
-  __$$PurchaseRestorePurchasesFailureUserMessageImplCopyWithImpl(
-      _$PurchaseRestorePurchasesFailureUserMessageImpl _value,
-      $Res Function(_$PurchaseRestorePurchasesFailureUserMessageImpl) _then)
-      : super(_value, _then);
+class _$PurchasePurchaseFailureUserMessageCopyWithImpl<$Res>
+    implements $PurchasePurchaseFailureUserMessageCopyWith<$Res> {
+  _$PurchasePurchaseFailureUserMessageCopyWithImpl(this._self, this._then);
 
+  final PurchasePurchaseFailureUserMessage _self;
+  final $Res Function(PurchasePurchaseFailureUserMessage) _then;
+
+  /// Create a copy of PurchaseUserMessage
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
     Object? error = null,
   }) {
-    return _then(_$PurchaseRestorePurchasesFailureUserMessageImpl(
+    return _then(PurchasePurchaseFailureUserMessage(
       null == error
-          ? _value.error
+          ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as ApphudError,
     ));
@@ -720,141 +392,91 @@ class __$$PurchaseRestorePurchasesFailureUserMessageImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PurchaseRestorePurchasesFailureUserMessageImpl
-    extends PurchaseRestorePurchasesFailureUserMessage {
-  const _$PurchaseRestorePurchasesFailureUserMessageImpl(this.error)
-      : super._();
-
-  @override
-  final ApphudError error;
-
-  @override
-  String toString() {
-    return 'PurchaseUserMessage.restorePurchasesFailure(error: $error)';
-  }
+class PurchaseRestorePurchasesSuccessUserMessage extends PurchaseUserMessage {
+  const PurchaseRestorePurchasesSuccessUserMessage() : super._();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PurchaseRestorePurchasesFailureUserMessageImpl &&
+            other is PurchaseRestorePurchasesSuccessUserMessage);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'PurchaseUserMessage.restorePurchasesSuccess()';
+  }
+}
+
+/// @nodoc
+
+class PurchaseRestorePurchasesFailureUserMessage extends PurchaseUserMessage {
+  const PurchaseRestorePurchasesFailureUserMessage(this.error) : super._();
+
+  final ApphudError error;
+
+  /// Create a copy of PurchaseUserMessage
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $PurchaseRestorePurchasesFailureUserMessageCopyWith<
+          PurchaseRestorePurchasesFailureUserMessage>
+      get copyWith => _$PurchaseRestorePurchasesFailureUserMessageCopyWithImpl<
+          PurchaseRestorePurchasesFailureUserMessage>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PurchaseRestorePurchasesFailureUserMessage &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, error);
 
-  @JsonKey(ignore: true)
   @override
+  String toString() {
+    return 'PurchaseUserMessage.restorePurchasesFailure(error: $error)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $PurchaseRestorePurchasesFailureUserMessageCopyWith<$Res>
+    implements $PurchaseUserMessageCopyWith<$Res> {
+  factory $PurchaseRestorePurchasesFailureUserMessageCopyWith(
+          PurchaseRestorePurchasesFailureUserMessage value,
+          $Res Function(PurchaseRestorePurchasesFailureUserMessage) _then) =
+      _$PurchaseRestorePurchasesFailureUserMessageCopyWithImpl;
+  @useResult
+  $Res call({ApphudError error});
+}
+
+/// @nodoc
+class _$PurchaseRestorePurchasesFailureUserMessageCopyWithImpl<$Res>
+    implements $PurchaseRestorePurchasesFailureUserMessageCopyWith<$Res> {
+  _$PurchaseRestorePurchasesFailureUserMessageCopyWithImpl(
+      this._self, this._then);
+
+  final PurchaseRestorePurchasesFailureUserMessage _self;
+  final $Res Function(PurchaseRestorePurchasesFailureUserMessage) _then;
+
+  /// Create a copy of PurchaseUserMessage
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  _$$PurchaseRestorePurchasesFailureUserMessageImplCopyWith<
-          _$PurchaseRestorePurchasesFailureUserMessageImpl>
-      get copyWith =>
-          __$$PurchaseRestorePurchasesFailureUserMessageImplCopyWithImpl<
-                  _$PurchaseRestorePurchasesFailureUserMessageImpl>(
-              this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() none,
-    required TResult Function() purchaseSuccess,
-    required TResult Function(ApphudError error) purchaseFailure,
-    required TResult Function() restorePurchasesSuccess,
-    required TResult Function(ApphudError error) restorePurchasesFailure,
+  $Res call({
+    Object? error = null,
   }) {
-    return restorePurchasesFailure(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? none,
-    TResult? Function()? purchaseSuccess,
-    TResult? Function(ApphudError error)? purchaseFailure,
-    TResult? Function()? restorePurchasesSuccess,
-    TResult? Function(ApphudError error)? restorePurchasesFailure,
-  }) {
-    return restorePurchasesFailure?.call(error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? none,
-    TResult Function()? purchaseSuccess,
-    TResult Function(ApphudError error)? purchaseFailure,
-    TResult Function()? restorePurchasesSuccess,
-    TResult Function(ApphudError error)? restorePurchasesFailure,
-    required TResult orElse(),
-  }) {
-    if (restorePurchasesFailure != null) {
-      return restorePurchasesFailure(error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(PurchaseNoneUserMessage value) none,
-    required TResult Function(PurchasePurchaseSuccessUserMessage value)
-        purchaseSuccess,
-    required TResult Function(PurchasePurchaseFailureUserMessage value)
-        purchaseFailure,
-    required TResult Function(PurchaseRestorePurchasesSuccessUserMessage value)
-        restorePurchasesSuccess,
-    required TResult Function(PurchaseRestorePurchasesFailureUserMessage value)
-        restorePurchasesFailure,
-  }) {
-    return restorePurchasesFailure(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(PurchaseNoneUserMessage value)? none,
-    TResult? Function(PurchasePurchaseSuccessUserMessage value)?
-        purchaseSuccess,
-    TResult? Function(PurchasePurchaseFailureUserMessage value)?
-        purchaseFailure,
-    TResult? Function(PurchaseRestorePurchasesSuccessUserMessage value)?
-        restorePurchasesSuccess,
-    TResult? Function(PurchaseRestorePurchasesFailureUserMessage value)?
-        restorePurchasesFailure,
-  }) {
-    return restorePurchasesFailure?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(PurchaseNoneUserMessage value)? none,
-    TResult Function(PurchasePurchaseSuccessUserMessage value)? purchaseSuccess,
-    TResult Function(PurchasePurchaseFailureUserMessage value)? purchaseFailure,
-    TResult Function(PurchaseRestorePurchasesSuccessUserMessage value)?
-        restorePurchasesSuccess,
-    TResult Function(PurchaseRestorePurchasesFailureUserMessage value)?
-        restorePurchasesFailure,
-    required TResult orElse(),
-  }) {
-    if (restorePurchasesFailure != null) {
-      return restorePurchasesFailure(this);
-    }
-    return orElse();
+    return _then(PurchaseRestorePurchasesFailureUserMessage(
+      null == error
+          ? _self.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as ApphudError,
+    ));
   }
 }
 
-abstract class PurchaseRestorePurchasesFailureUserMessage
-    extends PurchaseUserMessage {
-  const factory PurchaseRestorePurchasesFailureUserMessage(
-          final ApphudError error) =
-      _$PurchaseRestorePurchasesFailureUserMessageImpl;
-  const PurchaseRestorePurchasesFailureUserMessage._() : super._();
-
-  ApphudError get error;
-  @JsonKey(ignore: true)
-  _$$PurchaseRestorePurchasesFailureUserMessageImplCopyWith<
-          _$PurchaseRestorePurchasesFailureUserMessageImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
+// dart format on

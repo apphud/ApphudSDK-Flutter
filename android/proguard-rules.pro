@@ -33,8 +33,8 @@
 #-keep class com.google.gson.stream.** { *; }
 
 # Application classes that will be serialized/deserialized over Gson
--keep class com.apphud.sdk.** { <fields>; }
--keep class com.apphud.fluttersdk.** { <fields>; }
+-keep class com.apphud.sdk.** { *; }
+-keep class com.apphud.fluttersdk.** { *; }
 
 # Prevent proguard from stripping interface information from TypeAdapter, TypeAdapterFactory,
 # JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)

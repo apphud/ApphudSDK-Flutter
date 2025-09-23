@@ -18,22 +18,35 @@ ApphudSubscriptionWrapper _$ApphudSubscriptionWrapperFromJson(Map json) =>
       startedAt: (json['startedAt'] as num).toDouble(),
       canceledAt: (json['canceledAt'] as num?)?.toDouble(),
       purchaseToken: json['purchaseToken'] as String?,
+      platform: json['platform'] as String?,
+      basePlanId: json['basePlanId'] as String?,
     );
 
 Map<String, dynamic> _$ApphudSubscriptionWrapperToJson(
-        ApphudSubscriptionWrapper instance) =>
-    <String, dynamic>{
-      'productId': instance.productId,
-      'expiresAt': instance.expiresAt,
-      'isInRetryBilling': instance.isInRetryBilling,
-      'isAutorenewEnabled': instance.isAutorenewEnabled,
-      'isIntroductoryActivated': instance.isIntroductoryActivated,
-      'isActive': instance.isActive,
-      'status': _$ApphudSubscriptionStatusEnumMap[instance.status]!,
-      'canceledAt': instance.canceledAt,
-      'startedAt': instance.startedAt,
-      'purchaseToken': instance.purchaseToken,
-    };
+    ApphudSubscriptionWrapper instance) {
+  final val = <String, dynamic>{
+    'productId': instance.productId,
+    'expiresAt': instance.expiresAt,
+    'isInRetryBilling': instance.isInRetryBilling,
+    'isAutorenewEnabled': instance.isAutorenewEnabled,
+    'isIntroductoryActivated': instance.isIntroductoryActivated,
+    'isActive': instance.isActive,
+    'status': _$ApphudSubscriptionStatusEnumMap[instance.status]!,
+    'canceledAt': instance.canceledAt,
+    'startedAt': instance.startedAt,
+    'purchaseToken': instance.purchaseToken,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('platform', instance.platform);
+  writeNotNull('basePlanId', instance.basePlanId);
+  return val;
+}
 
 const _$ApphudSubscriptionStatusEnumMap = {
   ApphudSubscriptionStatus.trial: 'trial',

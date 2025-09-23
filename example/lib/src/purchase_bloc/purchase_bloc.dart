@@ -64,44 +64,44 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   Future<void> apphudDidFecthProducts(
     List<ApphudProductComposite> products,
   ) async {
-    printAsJson('ApphudListener.apphudDidFetchProducts', products);
+    printAsJson('ApphudListener.apphudDidFetchProducts', 'success');
   }
 
   @override
   Future<void> apphudNonRenewingPurchasesUpdated(
     List<ApphudNonRenewingPurchase> purchases,
   ) async {
-    printAsJson('ApphudListener.apphudNonRenewingPurchasesUpdated', purchases);
+    printAsJson('ApphudListener.apphudNonRenewingPurchasesUpdated', 'success');
   }
 
   @override
   Future<void> apphudSubscriptionsUpdated(
     List<ApphudSubscriptionWrapper> subscriptions,
   ) async {
-    printAsJson('ApphudListener.apphudSubscriptionsUpdated', subscriptions);
+    printAsJson('ApphudListener.apphudSubscriptionsUpdated', 'success');
   }
 
   @override
   Future<void> paywallsDidFullyLoad(ApphudPaywalls paywalls) async {
-    printAsJson('ApphudListener.paywallsDidFullyLoad', paywalls);
+    printAsJson('ApphudListener.paywallsDidFullyLoad', 'success');
     add(PurchaseEvent.paywallsFetched(paywalls));
   }
 
   @override
   Future<void> placementsDidFullyLoad(List<ApphudPlacement> placements) async {
-    printAsJson('ApphudListener.placementsDidFullyLoad', placements);
+    printAsJson('ApphudListener.placementsDidFullyLoad', 'success');
     add(PurchaseEvent.placementsFetched(placements));
   }
 
   @override
   Future<void> userDidLoad(ApphudUser user) async {
-    printAsJson('ApphudListener.userDidLoad', user);
+    printAsJson('ApphudListener.userDidLoad', 'success');
     _apphudUser = user;
   }
 
   @override
   Future<void> apphudDidReceivePurchase(AndroidPurchaseWrapper purchase) async {
-    printAsJson('ApphudListener.apphudDidReceivePurchase', purchase);
+    printAsJson('ApphudListener.apphudDidReceivePurchase', 'success');
   }
 
   Future<void> _handleStartedEvent(
@@ -117,7 +117,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         observerMode: _appSecrets.observeMode,
       );
       await Apphud.deferPlacements();
-      printAsJson('user', user);
+      printAsJson('user registered', 'success');
       emit(PurchaseState.initialization(isStartSuccess: true));
     } catch (error) {
       emit(PurchaseState.startFailed(error.toString()));

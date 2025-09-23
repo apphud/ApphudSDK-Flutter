@@ -1,3 +1,10 @@
+## 2.7.2
+
+- [Android] `proguard-rules.pro` was improved
+- Dependencies of Native SDK's were updated to:
+  - [Android] 2.9.3
+
+
 ## 2.7.1
 
 - [Android] `proguard-rules.pro` was added

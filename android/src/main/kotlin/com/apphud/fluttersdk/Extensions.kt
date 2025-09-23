@@ -98,7 +98,8 @@ fun ApphudNonRenewingPurchase.toMap(): HashMap<String, Any?> {
         "purchasedAt" to purchasedAt,
         "canceledAt" to canceledAt,
         "isActive" to isActive(),
-        "purchaseToken" to purchaseToken
+        "purchaseToken" to purchaseToken,
+        "platform" to platform
     )
 }
 
@@ -113,7 +114,9 @@ fun ApphudSubscription.toMap(): HashMap<String, Any?> {
         "isIntroductoryActivated" to isIntroductoryActivated,
         "isActive" to isActive(),
         "status" to status.name.lowercase(Locale.ROOT),
-        "purchaseToken" to purchaseToken
+        "purchaseToken" to purchaseToken,
+        "platform" to platform,
+        "basePlanId" to basePlanId
     )
 }
 
