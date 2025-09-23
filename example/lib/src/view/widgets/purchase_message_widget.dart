@@ -1,4 +1,5 @@
 import 'package:apphud_example/src/purchase_bloc/purchase_bloc.dart';
+import 'package:apphud_example/src/purchase_bloc/purchase_user_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
