@@ -142,11 +142,10 @@ class MakePurchaseHandler(
 
     private fun showPaywall(paywallIdentifier: String, maxTimeout: Long? = null, result: MethodChannel.Result) {
         GlobalScope.launch {
-            val paywall =
-                FlutterSdkCommon.getPaywall(paywallIdentifier, null)
+            val paywall = FlutterSdkCommon.getPaywall(paywallIdentifier, null)
             if (paywall != null) {
                 handleOnMainThread {
-                    Apphud.showPaywallScreen(context = activity, paywall = paywall, maxTimeout = APPHUD_PAYWALL_SCREEN_LOAD_TIMEOUT) { showResult ->
+                    Apphud.showPaywallScreen(context = activity, paywall = paywall, maxTimeout = maxTimeout ?: APPHUD_PAYWALL_SCREEN_LOAD_TIMEOUT) { showResult ->
                         handleOnMainThread { result.success(showResult.toMap()) }
                     }
                 }
@@ -242,6 +241,8 @@ class MakePurchaseHandler(
         purchaseResult.error?.let {
             resultMap["error"] = it.toMap()
         }
+
+        resultMap["isRestore"] = false
 
         try {
             handleOnMainThread { result.success(resultMap) }

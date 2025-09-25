@@ -16,19 +16,14 @@ final class ApphudPaywallsHelper {
             let placements = await Apphud.placements()
             paywall = placements.first(where: {pl in pl.identifier == placementIdentifier})?.paywall
         } else {
-            paywall = await withCheckedContinuation{@MainActor continuation in
-                Apphud.paywallsDidLoadCallback{ paywalls, error in
-                    paywall = paywalls.first(where: { pw in return pw.identifier == paywallIdentifier })
-                    continuation.resume(returning: paywall)
-                }
-            }
+            let paywalls = await Apphud.placements().compactMap(\.paywall)
+            paywall = paywalls.first(where: { pw in return pw.identifier == paywallIdentifier })
         }
         return paywall
     }
     
     static func getPaywalls() async -> [ApphudPaywall] {
-        return await withCheckedContinuation{@MainActor continuation in
-            Apphud.paywallsDidLoadCallback{ pwls, error in continuation.resume(returning: pwls)}
-        }
+        let paywalls = await Apphud.placements().compactMap(\.paywall)
+        return paywalls
     }
 }

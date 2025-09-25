@@ -7,22 +7,19 @@
 
 import ApphudSDK
 
-final class RestorePurchasesRequest: Request {
+final class RestorePurchasesRequest: @preconcurrency Request {
     typealias ArgumentProvider = RestorePurchasesArgumentParser
     
     @MainActor func startRequest(arguments: RestorePurchasesArgumentParser.ArgumentType, result: @escaping FlutterResult) {
-        Apphud.restorePurchases { (subscriptions, nrPurchases, error) in
-                let subscriptionsJson = subscriptions?.map({ subscription in
-                    subscription.toMap()
-                })
+        Apphud.restorePurchases { restoreResult in
+            
+            let subscriptionJson = restoreResult.subscription?.toMap()
                 
-                let nrPurchasesJson = nrPurchases?.map({ purchases in
-                    purchases.toMap()
-                })
+            let nrPurchaseJson = restoreResult.nonRenewingPurchase?.toMap()
                 
-                result(["subscriptions": subscriptionsJson,
-                        "nrPurchases": nrPurchasesJson,
-                        "error": error == nil ? nil : ["message": error?.localizedDescription],
+                result(["subscriptions": [subscriptionJson],
+                        "nrPurchases": [nrPurchaseJson],
+                        "error": restoreResult.error == nil ? nil : ["message": restoreResult.error?.localizedDescription],
                        ])
         }
     }

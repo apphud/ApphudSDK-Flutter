@@ -273,8 +273,7 @@ class Apphud {
 
   static Future<ApphudPaywallScreenShowResult> showPaywall(ApphudPaywall paywall, {double? maxTimeout}) async {
     final json = await _channel.invokeMethod('showPaywall', {
-      'identifier': paywall.identifier,
-      'placementIdentifier': paywall.placementIdentifier,
+      'paywallIdentifier': paywall.identifier,
       'maxTimeout': maxTimeout,
     });
     return ApphudPaywallScreenShowResult.fromJson(json);

@@ -1,16 +1,21 @@
 import 'package:apphud/models/apphud_models/apphud_error.dart';
+import 'package:apphud/models/apphud_models/composite/apphud_purchase_result.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'apphud_paywall_screen_show_result.g.dart';
 
 @JsonSerializable(anyMap: true)
 class ApphudPaywallScreenShowResult {
-  final bool success;
+  final bool? success;
   final ApphudError? error;
+  final bool? userClosed;
+  final ApphudPurchaseResult? purchaseResult;
 
   ApphudPaywallScreenShowResult({
-    required this.success,
+    this.success,
     this.error,
+    this.userClosed,
+    this.purchaseResult,
   });
 
   factory ApphudPaywallScreenShowResult.fromJson(Map<dynamic, dynamic> map) =>
@@ -20,6 +25,6 @@ class ApphudPaywallScreenShowResult {
 
   @override
   String toString() {
-    return 'ApphudPaywallScreenShowResult{success: $success, error: $error}';
+    return 'ApphudPaywallScreenShowResult{success: $success, error: $error, userClosed: $userClosed, purchaseResult: $purchaseResult}';
   }
 }

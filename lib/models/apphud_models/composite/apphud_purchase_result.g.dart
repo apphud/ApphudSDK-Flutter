@@ -24,6 +24,7 @@ ApphudPurchaseResult _$ApphudPurchaseResultFromJson(Map json) =>
       error: json['error'] == null
           ? null
           : ApphudError.fromJson(json['error'] as Map),
+      isRestore: json['isRestore'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$ApphudPurchaseResultToJson(
@@ -34,4 +35,5 @@ Map<String, dynamic> _$ApphudPurchaseResultToJson(
       'transaction': instance.transaction,
       'purchase': instance.purchase,
       'error': instance.error,
+      'isRestore': instance.isRestore,
     };

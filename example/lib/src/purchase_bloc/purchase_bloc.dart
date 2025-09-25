@@ -43,7 +43,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     await event.map(
       started: (e) => _handleStartedEvent(e, emit),
       paywallsFetched: (e) => _handlePaywallsFetchedEvent(e, emit),
-      placementsFetched: (e) => _handlePlacementsFetchedEvent(e, emit),
+      placementsFetched: (e) => _handlePlacementsFetchedEventt(e, emit),
       callAll: (e) => _handleCallAllEvent(e, emit),
       grantPromotional: (e) => _handleGrantPromotionalEvent(e, emit),
       paywallClosed: (e) => _handlePaywallClosedEvent(e, emit),
@@ -116,7 +116,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         userID: _appSecrets.userID,
         observerMode: _appSecrets.observeMode,
       );
-      await Apphud.deferPlacements();
+      // await Apphud.deferPlacements();
       printAsJson('user registered', 'success');
       emit(PurchaseState.initialization(isStartSuccess: true));
     } catch (error) {
@@ -150,7 +150,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     );
   }
 
-  Future<void> _handlePlacementsFetchedEvent(
+  Future<void> _handlePlacementsFetchedEventt(
     PurchasePlacementsFetchedEvent event,
     Emitter<PurchaseState> emit,
   ) async {

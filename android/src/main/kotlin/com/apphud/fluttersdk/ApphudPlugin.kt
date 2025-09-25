@@ -2,11 +2,14 @@ package com.apphud.fluttersdk
 
 import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.NonNull
 import com.apphud.fluttersdk.handlers.*
+import com.apphud.sdk.ApphudUtils
 import com.apphud.sdk.internal.data.network.SdkHeaders
+import io.flutter.BuildConfig
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -89,6 +92,11 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+
+        if (BuildConfig.DEBUG) {
+            ApphudUtils.enableAllLogs()
+        }
+
         activity = binding.activity
 
         val sActivity = activity ?: return
@@ -127,7 +135,7 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun setHeaders() {
         SdkHeaders.X_SDK = "Flutter"
-        SdkHeaders.X_SDK_VERSION = "3.0.0-beta2"
+        SdkHeaders.X_SDK_VERSION = "3.0.0-beta1"
     }
 
     override fun onDetachedFromActivityForConfigChanges() {

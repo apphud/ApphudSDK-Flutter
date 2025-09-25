@@ -1,3 +1,5 @@
+import 'package:apphud/apphud.dart';
+import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_bloc.dart';
 import 'package:apphud_example/src/view/widgets/product_list_widget.dart';
@@ -90,8 +92,25 @@ class _PlacementsListWidgetState extends State<PlacementsListWidget> {
       subtitle: Text(
         'paywall: ${placement.paywall!.identifier}\n'
         'products: ${placement.paywall?.products?.length ?? 0}\n'
-        'experimentName: ${placement.experimentName}\n',
+        'experimentName: ${placement.experimentName}\n'
+        'has screen: ${placement.paywall?.hasScreen ?? false}\n',
       ),
+      trailing: (placement.paywall?.hasScreen ?? false)
+          ? ElevatedButton(
+              onPressed: () => _showPaywall(placement.paywall!),
+              child: Text('Show P'),
+            )
+          : null,
     );
+  }
+
+  void _showPaywall(ApphudPaywall paywall) async {
+    try {
+      final result = await Apphud.showPaywall(paywall, maxTimeout: 10);
+      // You can handle the result here if needed
+      print('Paywall show result: $result');
+    } catch (e) {
+      print('Error showing paywall: $e');
+    }
   }
 }

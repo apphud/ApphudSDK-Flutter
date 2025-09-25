@@ -9,10 +9,14 @@ part of 'apphud_paywall_screen_show_result.dart';
 ApphudPaywallScreenShowResult _$ApphudPaywallScreenShowResultFromJson(
         Map json) =>
     ApphudPaywallScreenShowResult(
-      success: json['success'] as bool,
+      success: json['success'] as bool?,
       error: json['error'] == null
           ? null
           : ApphudError.fromJson(json['error'] as Map),
+      userClosed: json['userClosed'] as bool?,
+      purchaseResult: json['purchaseResult'] == null
+          ? null
+          : ApphudPurchaseResult.fromJson(json['purchaseResult'] as Map),
     );
 
 Map<String, dynamic> _$ApphudPaywallScreenShowResultToJson(
@@ -20,4 +24,6 @@ Map<String, dynamic> _$ApphudPaywallScreenShowResultToJson(
     <String, dynamic>{
       'success': instance.success,
       'error': instance.error,
+      'userClosed': instance.userClosed,
+      'purchaseResult': instance.purchaseResult,
     };

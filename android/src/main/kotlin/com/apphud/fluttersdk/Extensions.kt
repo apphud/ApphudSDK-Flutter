@@ -16,6 +16,7 @@ fun ApphudPaywall.toMap(): HashMap<String, Any?> {
         "placementIdentifier" to placementIdentifier,
         "variationName" to variationName,
         "parentPaywallIdentifier" to parentPaywallIdentifier,
+        "hasScreen" to (screen != null),
     )
 }
 

@@ -13,7 +13,8 @@ extension ApphudPurchaseResult {
         return ["subscription" : subscription?.toMap(),
                 "nonRenewingPurchase" : nonRenewingPurchase?.toMap(),
                 "error": error == nil ? nil : ["message": error?.localizedDescription],
-                "transaction": transaction?.toMap()
+                "transaction": transaction?.toMap(),
+                "isRestore": isRestoreResult
         ]
     }
 }
