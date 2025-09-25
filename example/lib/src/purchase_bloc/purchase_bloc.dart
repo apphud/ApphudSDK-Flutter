@@ -116,7 +116,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         userID: _appSecrets.userID,
         observerMode: _appSecrets.observeMode,
       );
-      await Apphud.deferPlacements();
+   //   await Apphud.deferPlacements();
       printAsJson('user registered', 'success');
       emit(PurchaseState.initialization(isStartSuccess: true));
     } catch (error) {
@@ -313,16 +313,16 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //   onError: (e) => printError('subscription()', e),
     // );
     //
-    // Apphud.subscriptions().then(
-    //   (value) => printAsJson('subscriptions()', value),
-    //   onError: (e) => printError('subscriptions()', e),
-    // );
-    //
-    // Apphud.nonRenewingPurchases().then(
-    //   (value) => printAsJson('nonRenewingPurchases()', value),
-    //   onError: (e) => printError('nonRenewingPurchases()', e),
-    // );
-    //
+    Apphud.subscriptions().then(
+      (value) => printAsJson('subscriptions()', value),
+      onError: (e) => printError('subscriptions()', e),
+    );
+    
+    Apphud.nonRenewingPurchases().then(
+      (value) => printAsJson('nonRenewingPurchases()', value),
+      onError: (e) => printError('nonRenewingPurchases()', e),
+    );
+    
     // Apphud.hasPremiumAccess().then(
     //   (value) => printAsJson('hasPremiumAccess()', value),
     //   onError: (e) => printError('hasPremiumAccess()', e),
