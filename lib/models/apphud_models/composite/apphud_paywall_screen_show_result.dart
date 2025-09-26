@@ -6,15 +6,28 @@ part 'apphud_paywall_screen_show_result.g.dart';
 
 @JsonSerializable(anyMap: true)
 class ApphudPaywallScreenShowResult {
-  final bool? success;
+  /// Indicates whether the paywall operation was successful.
+  /// - `true`: User completed a purchase successfully
+  /// - `false`: User closed the paywall or an error occurred
+  final bool success;
+  
+  /// Error information if the paywall failed to display or fetch.
+  /// Only present when `success` is `false` and an error occurred.
   final ApphudError? error;
-  final bool? userClosed;
+  
+  /// Indicates whether the user manually closed the paywall.
+  /// - `true`: User manually dismissed the paywall
+  /// - `false`: Paywall was closed due to successful purchase or error
+  final bool userClosed;
+  
+  /// Purchase result when user completed a successful transaction.
+  /// Only present when `success` is `true`.
   final ApphudPurchaseResult? purchaseResult;
 
   ApphudPaywallScreenShowResult({
-    this.success,
+    required this.success,
+    required this.userClosed,
     this.error,
-    this.userClosed,
     this.purchaseResult,
   });
 

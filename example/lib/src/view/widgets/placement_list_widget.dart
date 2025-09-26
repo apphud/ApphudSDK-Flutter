@@ -3,6 +3,7 @@ import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_bloc.dart';
 import 'package:apphud_example/src/view/widgets/product_list_widget.dart';
+import 'package:apphud_example/src/view/widgets/overlay_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -97,20 +98,39 @@ class _PlacementsListWidgetState extends State<PlacementsListWidget> {
       ),
       trailing: (placement.paywall?.hasScreen ?? false)
           ? ElevatedButton(
-              onPressed: () => _showPaywall(placement.paywall!),
+              onPressed: () => _showPaywall(placement),
               child: Text('Show P'),
             )
           : null,
     );
   }
 
-  void _showPaywall(ApphudPaywall paywall) async {
+  void _showPaywall(ApphudPlacement placement) async {
+    OverlayProgressIndicatorEntry? loadingIndicator;
+    
     try {
-      final result = await Apphud.showPaywall(paywall, maxTimeout: 10);
-      // You can handle the result here if needed
-      print('Paywall show result: $result');
+      // Show loading indicator
+      loadingIndicator = OverlayProgressIndicatorEntry();
+      loadingIndicator.insert(context);
+      
+      final preloadResult = await Apphud.preloadPaywall(placement.identifier, maxTimeout: 10);
+      
+      // Remove loading indicator
+      loadingIndicator.remove();
+      loadingIndicator = null;
+      
+      if (preloadResult['success'] == true) {
+        final result = await Apphud.showPaywall(placement.paywall!, maxTimeout: 10, iOSAnimationStyle: IOSAnimationStyle.none);
+        print('Paywall show result: $result');
+      } else {
+        print('Error preloading paywall: ${preloadResult['error']}');
+      }
     } catch (e) {
-      print('Error showing paywall: $e');
+      // Make sure to remove loading indicator in case of error
+      if (loadingIndicator != null) {
+        loadingIndicator.remove();
+      }
+      print('Error showing or preloading paywall: $e');
     }
   }
 }

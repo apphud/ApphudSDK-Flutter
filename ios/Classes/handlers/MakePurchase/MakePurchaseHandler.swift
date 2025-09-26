@@ -26,6 +26,8 @@ class MakePurchaseHandler: Handler {
             Action<PurchaseProductRequest,PurchaseProductArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.showPaywall.rawValue:
             Action<ShowPaywallRequest,ShowPaywallArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.preloadPaywall.rawValue:
+            Action<ShowPaywallRequest,ShowPaywallArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

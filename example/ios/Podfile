@@ -31,8 +31,8 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-  # Override ApphudSDK to use specific commit from GitHub
-  pod 'ApphudSDK', :git => 'https://github.com/apphud/ApphudSDK.git', :commit => 'bde9939fc9ea111d4f6b10207baef511a0a7b38c'
+  # Override ApphudSDK to use specific tag from GitHub
+  pod 'ApphudSDK', :git => 'https://github.com/apphud/ApphudSDK.git', :tag => '4.0.0-beta5'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end

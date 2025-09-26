@@ -14,6 +14,7 @@ import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
+import 'package:apphud/models/apphud_models/enums/ios_animation_style.dart';
 import 'package:flutter/services.dart';
 
 import 'listener/apphud_listener_handler.dart';
@@ -24,6 +25,7 @@ import 'models/apphud_models/composite/apphud_purchase_result.dart';
 import 'models/apphud_models/composite/apphud_paywall_screen_show_result.dart';
 import 'models/extensions.dart';
 export 'listener/apphud_listener.dart';
+export 'models/apphud_models/enums/ios_animation_style.dart';
 
 class Apphud {
   static const MethodChannel _channel = MethodChannel('apphud');
@@ -271,10 +273,67 @@ class Apphud {
     return ApphudPaywalls.fromJson(json);
   }
 
-  static Future<ApphudPaywallScreenShowResult> showPaywall(ApphudPaywall paywall, {double? maxTimeout}) async {
+  /// Preloads a Figma paywall screen for the given placement identifier.
+  ///
+  /// This method fetches and preloads a Figma paywall screen using the Apphud SDK.
+  /// On iOS the paywall will be preloaded and cached.
+  /// On Android the paywall will be preloaded and cached.
+  ///
+  /// **Parameters:**
+  /// - [placementIdentifier]: The identifier of the placement to preload the paywall for
+  /// - [maxTimeout]: Optional timeout in seconds for fetching the paywall screen (defaults to 7.0 seconds)
+  ///
+  /// **Returns:**
+  /// A `Map<String, dynamic>` that contains the success flag and error message.
+  /// - **Success**: When the paywall is preloaded successfully and ready to be displayed
+  ///   - `success` is set to `true`
+  /// - **Error**: When the paywall cannot be preloaded or is not ready to be displayed
+  ///   - `success` is set to `false`
+  ///   - `error` contains the error message
+  static Future<Map<String, dynamic>>preloadPaywall(String placementIdentifier, {double? maxTimeout}) async {
+    final json = await _channel.invokeMethod('showPaywall', {
+      'placementIdentifier': placementIdentifier,
+      'maxTimeout': maxTimeout,
+      'isPreload': true,
+    });
+    return Map<String, dynamic>.from(json ?? {'success': false, 'error': 'Unknown error'});
+  }
+
+  /// Displays a Figma paywall screen for the given paywall.
+  ///
+  /// This method fetches and presents a Figma paywall screen using the Apphud SDK.
+  /// On iOS the paywall will be displayed modally over the current view controller.
+  /// On Android the paywall will be displayed in a new activity.
+  ///
+  /// **Parameters:**
+  /// - [paywall]: The `ApphudPaywall` object containing the paywall configuration
+  /// - [maxTimeout]: Optional timeout in seconds for fetching the paywall screen (defaults to 7.0 seconds)
+  /// - [iOSAnimationStyle]: The animation style for iOS paywall presentation. Defaults to [IOSAnimationStyle.bottomToTop].
+  ///   - [IOSAnimationStyle.none]: No animation - present instantly
+  ///   - [IOSAnimationStyle.bottomToTop]: Standard modal presentation from bottom
+  ///   - [IOSAnimationStyle.rightToLeft]: Custom push-style animation from right to left
+  ///
+  /// For Android, animation style is inherited from the activity.
+  /// **Returns:**
+  /// A `Future<ApphudPaywallScreenShowResult>` that completes with one of the following outcomes:
+  /// - **Success with purchase**: When user completes a purchase
+  ///   - `purchaseResult` contains the purchase details
+  /// - **User dismissed**: When user closes the paywall without purchasing
+  ///   - `userClosed` is set to `true`
+  /// - **Error**: When paywall cannot be displayed or fetched
+  ///   - `error` contains the error details
+  ///
+  /// **Note:** This method requires the paywall to have a screen configured in the Apphud dashboard.
+  /// The `paywall.hasScreen` property indicates whether a screen is available.
+  static Future<ApphudPaywallScreenShowResult> showPaywall(
+    ApphudPaywall paywall, {
+    double? maxTimeout,
+    IOSAnimationStyle? iOSAnimationStyle,
+  }) async {
     final json = await _channel.invokeMethod('showPaywall', {
       'paywallIdentifier': paywall.identifier,
       'maxTimeout': maxTimeout,
+      'iOSAnimationStyle': iOSAnimationStyle?.stringValue,
     });
     return ApphudPaywallScreenShowResult.fromJson(json);
   }
