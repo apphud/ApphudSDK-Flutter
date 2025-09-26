@@ -1,0 +1,3 @@
+-keep class com.apphud.** { *; }
+-keep class com.android.billingclient.** { *; }
+-keep class com.google.gson.** { *; }

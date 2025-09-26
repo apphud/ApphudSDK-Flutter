@@ -8,6 +8,22 @@
 import ApphudSDK
 import StoreKit
 
+extension String {
+    var apphudIsNumeric: Bool {
+        return !isEmpty && rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
+    }
+}
+
+fileprivate func platform(string: String) -> String {
+    if string.apphudIsNumeric {
+        return "ios"
+    } else if string.contains("GPA") {
+        return "android"
+    } else {
+        return "web"
+    }
+}
+
 extension ApphudPurchaseResult {
     func toMap() -> [String: Any?] {
         return ["subscription" : subscription?.toMap(),
@@ -29,7 +45,8 @@ extension ApphudSubscription {
                 "isAutorenewEnabled": isAutorenewEnabled,
                 "isIntroductoryActivated": isIntroductoryActivated,
                 "isActive" : isActive(),
-                "status" : status.toString()
+                "status" : status.toString(),
+                "platform" : platform(string: originalTransactionId ?? "0"),
         ]
     }
 }
@@ -63,7 +80,8 @@ extension ApphudNonRenewingPurchase {
         return ["productId": productId as Any,
                 "purchasedAt": purchasedAt.timeIntervalSince1970,
                 "canceledAt": canceledAt?.timeIntervalSince1970,
-                "isActive" : isActive()
+                "isActive" : isActive(),
+                "platform" : platform(string: transactionId ?? "0")
         ]
     }
 }
