@@ -32,7 +32,7 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var context: Context
 
-    private var nativeSdkVersion: String = HeadersInterceptor.X_SDK_VERSION
+    private var nativeSdkVersion: String = SdkHeaders.X_SDK_VERSION
     private var activity: Activity? = null
 
     private var handleOnMainThread: HandleOnMainThread = { func ->
@@ -135,8 +135,10 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun setHeaders() {
-        HeadersInterceptor.X_SDK = "Flutter"
-        HeadersInterceptor.X_SDK_VERSION = "3.0.0-beta1" + "(${nativeSdkVersion})"
+        SdkHeaders.X_SDK = "Flutter"
+        if (!SdkHeaders.X_SDK_VERSION.contains("(")) {
+            SdkHeaders.X_SDK_VERSION = "3.0.0-beta1" + "(${nativeSdkVersion})"
+        }
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
