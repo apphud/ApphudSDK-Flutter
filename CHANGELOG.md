@@ -1,3 +1,7 @@
+## 2.7.4
+- Dependencies of Native SDK's were updated to:
+- [Android] 2.9.7
+
 ## 2.7.3
 - Dependencies of Native SDK's were updated to:
 - [Android] 2.9.6
