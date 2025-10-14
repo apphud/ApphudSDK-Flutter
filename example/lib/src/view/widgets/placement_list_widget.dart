@@ -120,8 +120,21 @@ class _PlacementsListWidgetState extends State<PlacementsListWidget> {
       loadingIndicator = null;
       
       if (preloadResult['success'] == true) {
-        final result = await Apphud.showPaywall(placement.paywall!, maxTimeout: 10, iOSAnimationStyle: IOSAnimationStyle.none);
-        print('Paywall show result: $result');
+        final result = await Apphud.showPaywall(placement.paywall!, maxTimeout: 10, iOSAnimationStyle: IOSAnimationStyle.bottomToTop);
+        
+        if (result.success) {
+          print('✅ Purchase completed successfully!');
+          if (result.subscription != null) {
+            print('📱 Subscription: ${result.subscription!.productId}');
+          }
+          if (result.nonRenewingPurchase != null) {
+            print('🛒 Non-renewing purchase: ${result.nonRenewingPurchase!.productId}');
+          }
+        } else if (result.userClosed) {
+          print('❌ User closed the paywall');
+        } else if (result.error != null) {
+          print('⚠️ Error: ${result.error!.message}');
+        }
       } else {
         print('Error preloading paywall: ${preloadResult['error']}');
       }

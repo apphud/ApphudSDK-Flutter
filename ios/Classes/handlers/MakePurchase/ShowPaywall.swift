@@ -79,11 +79,19 @@ final class ShowPaywallRequest: @preconcurrency Request {
                         self.presentController(controller, with: arguments.iOSAnimationStyle)
                         controller.onTransactionCompleted = { purchaseResult in
                             if purchaseResult.success {
-                                result([
-                                    "success": true,
-                                    "userClosed": false,
-                                    "purchaseResult": purchaseResult.toMap(),
-                                ])
+                                var map = [String: Any]()
+                                map["success"] = true
+                                map["userClosed"] = false
+                                if let sub = purchaseResult.subscription {
+                                    map["subscription"] = sub.toMap()
+                                }
+                                if let purch = purchaseResult.nonRenewingPurchase {
+                                    map["nonRenewingPurchase"] = purch.toMap()
+                                }
+                                if let trx = purchaseResult.transaction {
+                                    map["transaction"] = trx.toMap()
+                                }
+                                result(map)
                             } else {
                                 // do not handle unsuccessful transaction results, since paywall remains visible
                             }

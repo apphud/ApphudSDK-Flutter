@@ -7,7 +7,9 @@ import com.apphud.fluttersdk.toApphudProduct
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.APPHUD_PAYWALL_SCREEN_LOAD_TIMEOUT
 import com.apphud.sdk.Apphud
+import com.apphud.sdk.ApphudError
 import com.apphud.sdk.ApphudPurchaseResult
+import com.apphud.sdk.domain.ApphudPaywallScreenShowResult
 import com.apphud.sdk.domain.ApphudProduct
 import com.apphud.sdk.flutter.ApphudFlutter
 import io.flutter.plugin.common.MethodChannel
@@ -45,6 +47,7 @@ class MakePurchaseHandler(
                 result
             )
 
+            MakePurchaseRoutes.preloadPaywall.name -> preloadPaywall(result)
             MakePurchaseRoutes.showPaywall.name -> ShowPaywallParser(result).parse(args) { paywallIdentifier, maxTimeout ->
                 showPaywall(paywallIdentifier, maxTimeout, result)
             }
@@ -140,14 +143,75 @@ class MakePurchaseHandler(
         }
     }
 
+    private fun preloadPaywall(result: MethodChannel.Result) {
+        val error = ApphudError("Preload is not supported on Android")
+        result.success(hashMapOf<String, Any?>("success" to true, "error" to error.toMap()))
+    }
+
     private fun showPaywall(paywallIdentifier: String, maxTimeout: Long? = null, result: MethodChannel.Result) {
         GlobalScope.launch {
             val paywall = FlutterSdkCommon.getPaywall(paywallIdentifier, null)
             if (paywall != null) {
+                val callbacks = Apphud.ApphudPaywallScreenCallbacks(
+                    onTransactionCompleted = { purchaseResult ->
+                        if (!Apphud.hasPremiumAccess()) {
+                            val map = HashMap<String, Any>()
+                            map["success"] = false
+                            map["userClosed"] = false
+                            map["error"] = hashMapOf(
+                                "message" to "Purchase completed but premium access not granted",
+                                "networkIssue" to false
+                            )
+                            result.success(map)
+                            return@ApphudPaywallScreenCallbacks
+                        }
+                        val map = HashMap<String, Any>()
+                        when (purchaseResult) {
+                            is ApphudPaywallScreenShowResult.SubscriptionResult -> {
+                                map["success"] = true
+                                map["userClosed"] = false
+                                val purchaseMap = purchaseResult.purchase?.toMap()
+                                purchaseMap?.let {
+                                    map["purchase"] = it
+                                }
+                                val subMap = purchaseResult.subscription?.toMap()
+                                subMap?.let {
+                                    map["subscription"] = it
+                                }
+                                result.success(map)
+                            }
+                            is ApphudPaywallScreenShowResult.NonRenewingResult -> {
+                                map["success"] = true
+                                map["userClosed"] = false
+                                val purchaseMap = purchaseResult.purchase?.toMap()
+                                purchaseMap?.let {
+                                    map["purchase"] = it
+                                }
+                                val subMap = purchaseResult.nonRenewingPurchase?.toMap()
+                                subMap?.let {
+                                    map["nonRenewingPurchase"] = it
+                                }
+                                result.success(map)
+                            }
+                            is ApphudPaywallScreenShowResult.TransactionError -> {
+                                // do nothing, do not call result.success beause paywall remains visible
+                            }
+                        }
+                    }, onCloseButtonTapped = {
+                        val map = HashMap<String, Any>()
+                        map["success"] = false
+                        map["userClosed"] = true
+                        result.success(map)
+                    }, onScreenError = { e ->
+                        val map = HashMap<String, Any>()
+                        map["success"] = false
+                        map["userClosed"] = false
+                        map["error"] = e.toMap()
+                        result.success(map)
+                    })
+
                 handleOnMainThread {
-                    Apphud.showPaywallScreen(context = activity, paywall = paywall, maxTimeout = maxTimeout ?: APPHUD_PAYWALL_SCREEN_LOAD_TIMEOUT) { showResult ->
-                        handleOnMainThread { result.success(showResult.toMap()) }
-                    }
+                    Apphud.showPaywallScreen(context = activity, paywall = paywall, callbacks = callbacks, maxTimeout = maxTimeout ?: APPHUD_PAYWALL_SCREEN_LOAD_TIMEOUT)
                 }
             } else {
                 result.error(
@@ -336,7 +400,7 @@ class MakePurchaseHandler(
     class ShowPaywallParser(private val result: MethodChannel.Result) {
         fun parse(args: Map<String, Any>?, callback: (paywallIdentifier: String, maxTimeout: Long?) -> Unit) {
             try {
-                args ?: throw IllegalArgumentException("paywallIdentifier is required argument")
+                args ?: throw IllegalArgumentException("paywallIdentifier is required argument ${args}")
                 val paywallIdentifier = args["paywallIdentifier"] as? String
                 val maxTimeout = args["maxTimeout"] as? Long
                 if (paywallIdentifier == null) {
@@ -390,6 +454,7 @@ enum class MakePurchaseRoutes {
     loadFallbackPaywalls,
     trackPurchase,
     showPaywall,
+    preloadPaywall,
     deferPlacements;
 
     companion object Mapper {

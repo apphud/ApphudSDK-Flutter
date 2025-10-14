@@ -172,20 +172,3 @@ fun ApphudUser.toMap(): HashMap<String, Any?> {
         "hasPurchases" to hasPurchases()
     )
 }
-
-fun ApphudPaywallScreenShowResult.toMap(): HashMap<String, Any?> {
-    return when (this) {
-        is ApphudPaywallScreenShowResult.Success -> {
-            hashMapOf(
-                "success" to true,
-                "error" to null
-            )
-        }
-        is ApphudPaywallScreenShowResult.Error -> {
-            hashMapOf(
-                "success" to false,
-                "error" to error.toMap()
-            )
-        }
-    }
-}

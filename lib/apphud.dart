@@ -273,11 +273,10 @@ class Apphud {
     return ApphudPaywalls.fromJson(json);
   }
 
-  /// Preloads a Figma paywall screen for the given placement identifier.
+  /// iOS only.Preloads a Figma paywall screen for the given placement identifier.
   ///
   /// This method fetches and preloads a Figma paywall screen using the Apphud SDK.
-  /// On iOS the paywall will be preloaded and cached.
-  /// On Android the paywall will be preloaded and cached.
+  /// On iOS the paywall will be preloaded and cached. On Android this method return success as true immediately.
   ///
   /// **Parameters:**
   /// - [placementIdentifier]: The identifier of the placement to preload the paywall for
@@ -291,7 +290,7 @@ class Apphud {
   ///   - `success` is set to `false`
   ///   - `error` contains the error message
   static Future<Map<String, dynamic>>preloadPaywall(String placementIdentifier, {double? maxTimeout}) async {
-    final json = await _channel.invokeMethod('showPaywall', {
+    final json = await _channel.invokeMethod('preloadPaywall', {
       'placementIdentifier': placementIdentifier,
       'maxTimeout': maxTimeout,
       'isPreload': true,
@@ -315,13 +314,14 @@ class Apphud {
   ///
   /// For Android, animation style is inherited from the activity.
   /// **Returns:**
-  /// A `Future<ApphudPaywallScreenShowResult>` that completes with one of the following outcomes:
-  /// - **Success with purchase**: When user completes a purchase
-  ///   - `purchaseResult` contains the purchase details
-  /// - **User dismissed**: When user closes the paywall without purchasing
-  ///   - `userClosed` is set to `true`
-  /// - **Error**: When paywall cannot be displayed or fetched
-  ///   - `error` contains the error details
+  /// An `ApphudPaywallScreenShowResult` object that contains:
+  /// - `success`: `true` if user completed a purchase, `false` otherwise
+  /// - `userClosed`: `true` if user manually dismissed the paywall, `false` otherwise
+  /// - `error`: Error information when the operation failed (only when `success` is `false`)
+  /// - `subscription`: Subscription details when a subscription purchase was completed (only when `success` is `true`)
+  /// - `nonRenewingPurchase`: Non-renewing purchase details when a one-time purchase was completed (only when `success` is `true`)
+  /// - `purchase`: Android purchase object when transaction completed successfully on Android (only when `success` is `true`)
+  /// - `transaction`: iOS transaction object when transaction completed successfully on iOS (only when `success` is `true`)
   ///
   /// **Note:** This method requires the paywall to have a screen configured in the Apphud dashboard.
   /// The `paywall.hasScreen` property indicates whether a screen is available.
@@ -330,12 +330,21 @@ class Apphud {
     double? maxTimeout,
     IOSAnimationStyle? iOSAnimationStyle,
   }) async {
-    final json = await _channel.invokeMethod('showPaywall', {
-      'paywallIdentifier': paywall.identifier,
-      'maxTimeout': maxTimeout,
-      'iOSAnimationStyle': iOSAnimationStyle?.stringValue,
-    });
-    return ApphudPaywallScreenShowResult.fromJson(json);
+    try {
+      final json = await _channel.invokeMethod('showPaywall', {
+        'paywallIdentifier': paywall.identifier,
+        'maxTimeout': maxTimeout,
+        'iOSAnimationStyle': iOSAnimationStyle?.stringValue,
+      });
+      return ApphudPaywallScreenShowResult.fromJson(Map<String, dynamic>.from(json ?? {}));
+    } catch (e) {
+      // Handle platform exceptions (when native side calls result.error())
+      return ApphudPaywallScreenShowResult(
+        success: false,
+        userClosed: false,
+        error: ApphudError(message: e.toString()),
+      );
+    }
   }
 
   /// Call this method when your paywall screen is displayed to the user.

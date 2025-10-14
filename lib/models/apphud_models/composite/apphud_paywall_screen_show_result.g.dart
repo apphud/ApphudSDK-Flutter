@@ -9,21 +9,34 @@ part of 'apphud_paywall_screen_show_result.dart';
 ApphudPaywallScreenShowResult _$ApphudPaywallScreenShowResultFromJson(
         Map json) =>
     ApphudPaywallScreenShowResult(
-      success: json['success'] as bool,
-      userClosed: json['userClosed'] as bool,
+      success: json['success'] as bool? ?? false,
+      userClosed: json['userClosed'] as bool? ?? false,
       error: json['error'] == null
           ? null
           : ApphudError.fromJson(json['error'] as Map),
-      purchaseResult: json['purchaseResult'] == null
+      subscription: json['subscription'] == null
           ? null
-          : ApphudPurchaseResult.fromJson(json['purchaseResult'] as Map),
+          : ApphudSubscriptionWrapper.fromJson(json['subscription'] as Map),
+      nonRenewingPurchase: json['nonRenewingPurchase'] == null
+          ? null
+          : ApphudNonRenewingPurchase.fromJson(
+              json['nonRenewingPurchase'] as Map),
+      purchase: json['purchase'] == null
+          ? null
+          : AndroidPurchaseWrapper.fromJson(json['purchase'] as Map),
+      transaction: json['transaction'] == null
+          ? null
+          : SKPaymentTransactionWrapper.fromJson(json['transaction'] as Map),
     );
 
 Map<String, dynamic> _$ApphudPaywallScreenShowResultToJson(
         ApphudPaywallScreenShowResult instance) =>
     <String, dynamic>{
       'success': instance.success,
-      'error': instance.error,
       'userClosed': instance.userClosed,
-      'purchaseResult': instance.purchaseResult,
+      'error': instance.error,
+      'subscription': instance.subscription,
+      'nonRenewingPurchase': instance.nonRenewingPurchase,
+      'purchase': instance.purchase,
+      'transaction': instance.transaction,
     };
