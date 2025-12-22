@@ -93,11 +93,6 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-
-        if (BuildConfig.DEBUG) {
-            ApphudUtils.enableAllLogs()
-        }
-
         activity = binding.activity
 
         val sActivity = activity ?: return

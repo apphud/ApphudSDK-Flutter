@@ -111,16 +111,15 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     try {
       await Apphud.enableDebugLogs(level: ApphudDebugLevel.high);
 
-      Apphud.start(
+      await Apphud.start(
         apiKey: _appSecrets.apiKey,
         userID: _appSecrets.userID,
-        observerMode: _appSecrets.observeMode,
-        baseUrl: 'https://apphudapi.ru',
+        observerMode: _appSecrets.observeMode
       );
+      emit(PurchaseState.initialization(isStartSuccess: true));
+      printAsJson('user registered', 'success');
 
       // await Apphud.deferPlacements();
-      printAsJson('user registered', 'success');
-      emit(PurchaseState.initialization(isStartSuccess: true));
     } catch (error) {
       emit(PurchaseState.startFailed(error.toString()));
     }

@@ -154,17 +154,6 @@ class MakePurchaseHandler(
             if (paywall != null) {
                 val callbacks = Apphud.ApphudPaywallScreenCallbacks(
                     onTransactionCompleted = { purchaseResult ->
-                        if (!Apphud.hasPremiumAccess()) {
-                            val map = HashMap<String, Any>()
-                            map["success"] = false
-                            map["userClosed"] = false
-                            map["error"] = hashMapOf(
-                                "message" to "Purchase completed but premium access not granted",
-                                "networkIssue" to false
-                            )
-                            result.success(map)
-                            return@ApphudPaywallScreenCallbacks
-                        }
                         val map = HashMap<String, Any>()
                         when (purchaseResult) {
                             is ApphudPaywallScreenShowResult.SubscriptionResult -> {
@@ -194,7 +183,7 @@ class MakePurchaseHandler(
                                 result.success(map)
                             }
                             is ApphudPaywallScreenShowResult.TransactionError -> {
-                                // do nothing, do not call result.success beause paywall remains visible
+                                // do nothing because paywall remains visible
                             }
                         }
                     }, onCloseButtonTapped = {
