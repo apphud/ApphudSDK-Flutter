@@ -28,7 +28,7 @@ final class PurchasePromoRequest: Request {
 }
 
 final class  PurchasePromoArgumentParser: Parser {
-    typealias ArgumentType = (productId: String,discountID: String)
+    typealias ArgumentType = (productId: String,discountID: String) 
 
 
     func parse(args: [String : Any]?) throws -> (productId: String, discountID: String) {

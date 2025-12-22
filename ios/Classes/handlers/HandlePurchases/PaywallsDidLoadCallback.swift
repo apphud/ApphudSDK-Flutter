@@ -10,16 +10,16 @@
 import ApphudSDK
 import StoreKit
 
-final class PaywallsDidLoadCallbackRequest: Request {
+final class PaywallsDidLoadCallbackRequest: @preconcurrency Request {
 
     typealias ArgumentProvider = PaywallsDidLoadCallbackArgumentParser
 
     @MainActor func startRequest(arguments: (), result: @escaping FlutterResult) {
-        Apphud.paywallsDidLoadCallback{ paywalls, error in
+        Apphud.fetchPlacements({ placements, error in
             result([
-                "paywalls" : paywalls.map({ (paywall: ApphudPaywall) in paywall.toMap() }),
+                "paywalls" : placements.compactMap(\.paywall).map({ (paywall: ApphudPaywall) in paywall.toMap() }),
             ])
-        }
+        })
     }
 }
 

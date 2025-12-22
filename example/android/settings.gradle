@@ -23,3 +23,10 @@ plugins {
 }
 
 include ':app'
+
+// Include the local ApphudSDK-Android project as a composite build
+includeBuild('../../../ApphudSDK-Android') {
+    dependencySubstitution {
+        substitute module('com.github.apphud:ApphudSDK-Android') using project(':sdk')
+    }
+}

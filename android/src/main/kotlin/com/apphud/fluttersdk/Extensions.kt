@@ -12,10 +12,11 @@ fun ApphudPaywall.toMap(): HashMap<String, Any?> {
         "identifier" to identifier,
         "experimentName" to experimentName,
         "json" to json,
-        "products" to products?.map { it.toMap() },
+        "products" to products?.map { product -> product.toMap() },
         "placementIdentifier" to placementIdentifier,
         "variationName" to variationName,
         "parentPaywallIdentifier" to parentPaywallIdentifier,
+        "hasScreen" to (screen != null),
     )
 }
 
@@ -148,7 +149,8 @@ fun Map<String, Any>.toApphudProduct(): ApphudProduct {
         paywallIdentifier = paywallIdentifier,
         placementIdentifier = placementIdentifier,
         placementId = null,
-        basePlanId = null
+        basePlanId = null,
+        itemId = ""
     )
 }
 

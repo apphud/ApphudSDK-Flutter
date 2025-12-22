@@ -2,12 +2,14 @@ package com.apphud.fluttersdk
 
 import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.NonNull
 import com.apphud.fluttersdk.handlers.*
-import com.apphud.sdk.managers.HeadersInterceptor
-
+import com.apphud.sdk.ApphudUtils
+import com.apphud.sdk.internal.data.network.SdkHeaders
+import io.flutter.BuildConfig
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -30,6 +32,7 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var context: Context
 
+    private var nativeSdkVersion: String = SdkHeaders.X_SDK_VERSION
     private var activity: Activity? = null
 
     private var handleOnMainThread: HandleOnMainThread = { func ->
@@ -127,10 +130,9 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun setHeaders() {
-        HeadersInterceptor.X_SDK = "Flutter"
-        val current = HeadersInterceptor.X_SDK_VERSION
-        if (!current.contains("(")) {
-            HeadersInterceptor.X_SDK_VERSION = "2.7.4" + "(${current})"
+        SdkHeaders.X_SDK = "Flutter"
+        if (!SdkHeaders.X_SDK_VERSION.contains("(")) {
+            SdkHeaders.X_SDK_VERSION = "3.0.0" + "(${nativeSdkVersion})"
         }
     }
 

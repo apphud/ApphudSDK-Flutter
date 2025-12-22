@@ -43,7 +43,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     await event.map(
       started: (e) => _handleStartedEvent(e, emit),
       paywallsFetched: (e) => _handlePaywallsFetchedEvent(e, emit),
-      placementsFetched: (e) => _handlePlacementsFetchedEvent(e, emit),
+      placementsFetched: (e) => _handlePlacementsFetchedEventt(e, emit),
       callAll: (e) => _handleCallAllEvent(e, emit),
       grantPromotional: (e) => _handleGrantPromotionalEvent(e, emit),
       paywallClosed: (e) => _handlePaywallClosedEvent(e, emit),
@@ -111,14 +111,15 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     try {
       await Apphud.enableDebugLogs(level: ApphudDebugLevel.high);
 
-      final user = await Apphud.start(
+      await Apphud.start(
         apiKey: _appSecrets.apiKey,
         userID: _appSecrets.userID,
-        observerMode: _appSecrets.observeMode,
+        observerMode: _appSecrets.observeMode
       );
-   //   await Apphud.deferPlacements();
-      printAsJson('user registered', 'success');
       emit(PurchaseState.initialization(isStartSuccess: true));
+      printAsJson('user registered', 'success');
+
+      // await Apphud.deferPlacements();
     } catch (error) {
       emit(PurchaseState.startFailed(error.toString()));
     }
@@ -150,7 +151,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     );
   }
 
-  Future<void> _handlePlacementsFetchedEvent(
+  Future<void> _handlePlacementsFetchedEventt(
     PurchasePlacementsFetchedEvent event,
     Emitter<PurchaseState> emit,
   ) async {

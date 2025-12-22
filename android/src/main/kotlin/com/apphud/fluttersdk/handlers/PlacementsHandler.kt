@@ -26,7 +26,10 @@ class PlacementsHandler(
                 placement(identifier, result)
             }
 
-            PlacementsRoutes.fetchPlacements.name -> fetchPlacements(result)
+            PlacementsRoutes.fetchPlacements.name -> {
+                val forceRefresh = args?.get("forceRefresh") as? Boolean ?: false
+                fetchPlacements(forceRefresh, result)
+            }
 
             PlacementsRoutes.rawPlacements.name -> rawPlacements(result)
         }
@@ -46,8 +49,8 @@ class PlacementsHandler(
         }
     }
 
-    private fun fetchPlacements(result: MethodChannel.Result) {
-        Apphud.fetchPlacements { placements, error ->
+    private fun fetchPlacements(forceRefresh: Boolean, result: MethodChannel.Result) {
+        Apphud.fetchPlacements(forceRefresh = forceRefresh) { placements, error ->
             val resultMap = hashMapOf<String, Any?>()
             resultMap["placements"] = placements.map { placement -> placement.toMap() }
             resultMap["error"] = error?.toMap()

@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'apphud'
-  s.version          = '2.7.4'
+  s.version          = '3.0.0'
   s.summary          = 'Apphud SDK flutter plugin.'
   s.description      = <<-DESC
 Apphud SDK flutter plugin.
@@ -16,8 +16,8 @@ Apphud SDK flutter plugin.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'ApphudSDK','3.6.2'
-  s.platform = :ios, '13.0'
+  s.dependency 'ApphudSDK', '4.0.2'
+  s.platform = :ios, '15.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

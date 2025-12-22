@@ -1,13 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'apphud_purchase_result.dart';
+part of 'apphud_paywall_screen_show_result.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApphudPurchaseResult _$ApphudPurchaseResultFromJson(Map json) =>
-    ApphudPurchaseResult(
+ApphudPaywallScreenShowResult _$ApphudPaywallScreenShowResultFromJson(
+        Map json) =>
+    ApphudPaywallScreenShowResult(
+      success: json['success'] as bool? ?? false,
+      userClosed: json['userClosed'] as bool? ?? false,
+      error: json['error'] == null
+          ? null
+          : ApphudError.fromJson(json['error'] as Map),
       subscription: json['subscription'] == null
           ? null
           : ApphudSubscriptionWrapper.fromJson(json['subscription'] as Map),
@@ -15,25 +21,22 @@ ApphudPurchaseResult _$ApphudPurchaseResultFromJson(Map json) =>
           ? null
           : ApphudNonRenewingPurchase.fromJson(
               json['nonRenewingPurchase'] as Map),
-      transaction: json['transaction'] == null
-          ? null
-          : SKPaymentTransactionWrapper.fromJson(json['transaction'] as Map),
       purchase: json['purchase'] == null
           ? null
           : AndroidPurchaseWrapper.fromJson(json['purchase'] as Map),
-      error: json['error'] == null
+      transaction: json['transaction'] == null
           ? null
-          : ApphudError.fromJson(json['error'] as Map),
-      isRestore: json['isRestore'] as bool? ?? false,
+          : SKPaymentTransactionWrapper.fromJson(json['transaction'] as Map),
     );
 
-Map<String, dynamic> _$ApphudPurchaseResultToJson(
-        ApphudPurchaseResult instance) =>
+Map<String, dynamic> _$ApphudPaywallScreenShowResultToJson(
+        ApphudPaywallScreenShowResult instance) =>
     <String, dynamic>{
+      'success': instance.success,
+      'userClosed': instance.userClosed,
+      'error': instance.error,
       'subscription': instance.subscription,
       'nonRenewingPurchase': instance.nonRenewingPurchase,
-      'transaction': instance.transaction,
       'purchase': instance.purchase,
-      'error': instance.error,
-      'isRestore': instance.isRestore,
+      'transaction': instance.transaction,
     };

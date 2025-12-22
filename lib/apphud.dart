@@ -14,6 +14,7 @@ import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
+import 'package:apphud/models/apphud_models/enums/ios_animation_style.dart';
 import 'package:flutter/services.dart';
 
 import 'listener/apphud_listener_handler.dart';
@@ -21,8 +22,10 @@ import 'models/apphud_models/apphud_attribution_provider.dart';
 import 'models/apphud_models/apphud_error.dart';
 import 'models/apphud_models/composite/apphud_product_composite.dart';
 import 'models/apphud_models/composite/apphud_purchase_result.dart';
+import 'models/apphud_models/composite/apphud_paywall_screen_show_result.dart';
 import 'models/extensions.dart';
 export 'listener/apphud_listener.dart';
+export 'models/apphud_models/enums/ios_animation_style.dart';
 
 class Apphud {
   static const MethodChannel _channel = MethodChannel('apphud');
@@ -45,11 +48,13 @@ class Apphud {
     required String apiKey,
     String? userID,
     bool? observerMode,
+    String? baseUrl,
   }) async {
     final json = await _channel.invokeMethod('start', {
       'apiKey': apiKey,
       'userID': userID,
       'observerMode': observerMode ?? false,
+      'baseUrl': baseUrl,
     });
     return ApphudUser.fromJson(json);
   }
@@ -60,6 +65,7 @@ class Apphud {
   /// - parameter [userID] is optional. You can provide your own unique user identifier. If null passed then UUID will be generated instead.
   /// - parameter [deviceID] is optional. You can provide your own unique device identifier. If null passed then UUID will be generated instead.
   /// - parameter [observerMode] is optional, iOS only. Sets SDK to Observer (Analytics) mode. If you purchase products by your own code, then pass `true`.
+  /// - parameter [baseUrl] is optional. The custom base URL to use, if needed. Ask Apphud support for your custom base URL.
   /// If you purchase products using `Apphud.purchase(product)` method, then pass `false`. Default value is `false`.
   ///
   /// - Returns `ApphudUser` object after the SDK initialization is complete.
@@ -69,12 +75,14 @@ class Apphud {
     String? userID,
     String? deviceID,
     bool? observerMode,
+    String? baseUrl,
   }) async {
     final json = await _channel.invokeMethod('startManually', {
       'apiKey': apiKey,
       'deviceID': deviceID,
       'userID': userID,
       'observerMode': observerMode ?? false,
+      'baseUrl': baseUrl,
     });
     return ApphudUser.fromJson(json);
   }
@@ -185,9 +193,15 @@ class Apphud {
   ///
   /// See documentation for details: https://docs.apphud.com/docs/placements
   /// For immediate access without awaiting `SKProduct`s or `ProductDetails`, use `rawPlacements()` method.
-  static Future<ApphudPlacements> fetchPlacements() async {
+  ///
+  /// - parameter [forceRefresh] is optional. Use this when you need to apply updated audience segmentation or A/B test assignments.
+  static Future<ApphudPlacements> fetchPlacements({
+    bool forceRefresh = false,
+  }) async {
     final Map<dynamic, dynamic>? json =
-        await _channel.invokeMethod<Map<dynamic, dynamic>>('fetchPlacements');
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('fetchPlacements', {
+      'forceRefresh': forceRefresh,
+    });
     if (json == null) {
       return ApphudPlacements(
         placements: const [],
@@ -268,6 +282,80 @@ class Apphud {
       );
     }
     return ApphudPaywalls.fromJson(json);
+  }
+
+  /// iOS only.Preloads a Figma paywall screen for the given placement identifier.
+  ///
+  /// This method fetches and preloads a Figma paywall screen using the Apphud SDK.
+  /// On iOS the paywall will be preloaded and cached. On Android this method return success as true immediately.
+  ///
+  /// **Parameters:**
+  /// - [placementIdentifier]: The identifier of the placement to preload the paywall for
+  /// - [maxTimeout]: Optional timeout in seconds for fetching the paywall screen (defaults to 7.0 seconds)
+  ///
+  /// **Returns:**
+  /// A `Map<String, dynamic>` that contains the success flag and error message.
+  /// - **Success**: When the paywall is preloaded successfully and ready to be displayed
+  ///   - `success` is set to `true`
+  /// - **Error**: When the paywall cannot be preloaded or is not ready to be displayed
+  ///   - `success` is set to `false`
+  ///   - `error` contains the error message
+  static Future<Map<String, dynamic>>preloadPaywall(String placementIdentifier, {double? maxTimeout}) async {
+    final json = await _channel.invokeMethod('preloadPaywall', {
+      'placementIdentifier': placementIdentifier,
+      'maxTimeout': maxTimeout,
+      'isPreload': true,
+    });
+    return Map<String, dynamic>.from(json ?? {'success': false, 'error': 'Unknown error'});
+  }
+
+  /// Displays a Figma paywall screen for the given paywall.
+  ///
+  /// This method fetches and presents a Figma paywall screen using the Apphud SDK.
+  /// On iOS the paywall will be displayed modally over the current view controller.
+  /// On Android the paywall will be displayed in a new activity.
+  ///
+  /// **Parameters:**
+  /// - [paywall]: The `ApphudPaywall` object containing the paywall configuration
+  /// - [maxTimeout]: Optional timeout in seconds for fetching the paywall screen (defaults to 7.0 seconds)
+  /// - [iOSAnimationStyle]: The animation style for iOS paywall presentation. Defaults to [IOSAnimationStyle.bottomToTop].
+  ///   - [IOSAnimationStyle.none]: No animation - present instantly
+  ///   - [IOSAnimationStyle.bottomToTop]: Standard modal presentation from bottom
+  ///   - [IOSAnimationStyle.rightToLeft]: Custom push-style animation from right to left
+  ///
+  /// For Android, animation style is inherited from the activity.
+  /// **Returns:**
+  /// An `ApphudPaywallScreenShowResult` object that contains:
+  /// - `success`: `true` if user completed a purchase, `false` otherwise
+  /// - `userClosed`: `true` if user manually dismissed the paywall, `false` otherwise
+  /// - `error`: Error information when the operation failed (only when `success` is `false`)
+  /// - `subscription`: Subscription details when a subscription purchase was completed (only when `success` is `true`)
+  /// - `nonRenewingPurchase`: Non-renewing purchase details when a one-time purchase was completed (only when `success` is `true`)
+  /// - `purchase`: Android purchase object when transaction completed successfully on Android (only when `success` is `true`)
+  /// - `transaction`: iOS transaction object when transaction completed successfully on iOS (only when `success` is `true`)
+  ///
+  /// **Note:** This method requires the paywall to have a screen configured in the Apphud dashboard.
+  /// The `paywall.hasScreen` property indicates whether a screen is available.
+  static Future<ApphudPaywallScreenShowResult> showPaywall(
+    ApphudPaywall paywall, {
+    double? maxTimeout,
+    IOSAnimationStyle? iOSAnimationStyle,
+  }) async {
+    try {
+      final json = await _channel.invokeMethod('showPaywall', {
+        'paywallIdentifier': paywall.identifier,
+        'maxTimeout': maxTimeout,
+        'iOSAnimationStyle': iOSAnimationStyle?.stringValue,
+      });
+      return ApphudPaywallScreenShowResult.fromJson(Map<String, dynamic>.from(json ?? {}));
+    } catch (e) {
+      // Handle platform exceptions (when native side calls result.error())
+      return ApphudPaywallScreenShowResult(
+        success: false,
+        userClosed: false,
+        error: ApphudError(message: e.toString()),
+      );
+    }
   }
 
   /// Call this method when your paywall screen is displayed to the user.

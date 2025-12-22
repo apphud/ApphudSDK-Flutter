@@ -13,15 +13,7 @@ final class PaywallClosedRequest: Request {
 
     func startRequest(arguments: PaywallArgumentParser.ArgumentType, result: @escaping FlutterResult) {
         Task{@MainActor in
-            let paywallIdentifier = arguments.paywallIdentifier
-            let placementIdentifier = arguments.placementIdentifier
-            
-            let paywall = await ApphudPaywallsHelper.getPaywall(paywallIdentifier:paywallIdentifier,
-                                                          placementIdentifier:placementIdentifier)
-            
-            if(paywall != nil) {
-                Apphud.paywallClosed(paywall!)
-            }
+            // not supported anymore
             result(nil)
         }
     }

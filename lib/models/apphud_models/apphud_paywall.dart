@@ -12,6 +12,7 @@ class ApphudPaywall {
   final String? placementIdentifier;
   final String? variationName;
   final String? parentPaywallIdentifier;
+  final bool hasScreen;
 
   ApphudPaywall({
     required this.identifier,
@@ -21,6 +22,7 @@ class ApphudPaywall {
     this.placementIdentifier,
     this.variationName,
     this.parentPaywallIdentifier,
+    this.hasScreen = false,
   });
 
   factory ApphudPaywall.fromJson(Map<dynamic, dynamic> map) =>
@@ -30,6 +32,6 @@ class ApphudPaywall {
 
   @override
   String toString() {
-    return 'ApphudPaywall{identifier: $identifier, experimentName: $experimentName, json: $json, products: $products, placementIdentifier: $placementIdentifier, variationName: $variationName, parentPaywallIdentifier: $parentPaywallIdentifier}';
+    return 'ApphudPaywall{identifier: $identifier, experimentName: $experimentName, json: $json, products: $products, placementIdentifier: $placementIdentifier, variationName: $variationName, parentPaywallIdentifier: $parentPaywallIdentifier, hasScreen: $hasScreen}';
   }
 }

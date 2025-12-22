@@ -15,6 +15,7 @@ class ApphudPurchaseResult {
   final SKPaymentTransactionWrapper? transaction;
   final AndroidPurchaseWrapper? purchase;
   final ApphudError? error;
+  final bool isRestore;
 
   ApphudPurchaseResult({
     this.subscription,
@@ -22,6 +23,7 @@ class ApphudPurchaseResult {
     this.transaction,
     this.purchase,
     this.error,
+    this.isRestore = false,
   });
 
   factory ApphudPurchaseResult.fromJson(Map<dynamic, dynamic> map) =>
@@ -31,6 +33,6 @@ class ApphudPurchaseResult {
 
   @override
   String toString() {
-    return 'ApphudPurchaseResult{subscription: $subscription, nonRenewingPurchase: $nonRenewingPurchase, transaction: $transaction, purchase: $purchase, error: $error}';
+    return 'ApphudPurchaseResult{subscription: $subscription, nonRenewingPurchase: $nonRenewingPurchase, transaction: $transaction, purchase: $purchase, error: $error, isRestore: $isRestore}';
   }
 }

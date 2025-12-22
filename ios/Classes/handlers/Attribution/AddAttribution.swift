@@ -11,7 +11,7 @@ final class AddAttributionRequest: Request {
     typealias ArgumentProvider = AddAttributionArgumentParser
 
     func startRequest(arguments: (data: ApphudAttributionData, from: ApphudAttributionProvider, identifer: String?), result: @escaping FlutterResult) {
-        Apphud.setAttribution(data: arguments.data, from: arguments.from, identifer: arguments.identifer) { (isAdded) in
+        Apphud.setAttribution(data: arguments.data, from: arguments.from, identifer: arguments.identifer) { (isAdded, _) in
             result(isAdded)
         }
     }

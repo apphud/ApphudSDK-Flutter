@@ -21,6 +21,7 @@ class OtherHandler(
             OtherRoutes.isSandbox.name -> result.notImplemented()
             OtherRoutes.optOutOfTracking.name -> optOutOfTracking(result)
             OtherRoutes.collectDeviceIdentifiers.name -> collectDeviceIdentifiers(result)
+            OtherRoutes.updateBaseUrl.name -> updateBaseUrl(args, result)
         }
     }
 
@@ -38,13 +39,22 @@ class OtherHandler(
         Apphud.collectDeviceIdentifiers()
         handleOnMainThread { result.success(null) }
     }
+
+    private fun updateBaseUrl(args: Map<String, Any>?, result: MethodChannel.Result) {
+        val url = args?.get("url") as? String
+        if (url != null) {
+            ApphudUtils.overrideBaseUrl(url)
+        }
+        handleOnMainThread { result.success(null) }
+    }
 }
 
 enum class OtherRoutes {
     enableDebugLogs,
     isSandbox,
     optOutOfTracking,
-    collectDeviceIdentifiers;
+    collectDeviceIdentifiers,
+    updateBaseUrl;
 
     companion object Mapper {
         fun stringValues(): List<String> {
