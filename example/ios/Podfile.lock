@@ -1,11 +1,11 @@
 PODS:
-  - apphud (3.0.0-beta2):
-    - ApphudSDK (= 4.0.0)
+  - apphud (3.0.0):
+    - ApphudSDK (= 4.0.2)
     - Flutter
   - apphud_facebook_sdk (0.0.1):
     - FBSDKCoreKit (~> 17.0)
     - Flutter
-  - ApphudSDK (4.0.0)
+  - ApphudSDK (4.0.2)
   - FBAEMKit (17.4.0):
     - FBSDKCoreKit_Basics (= 17.4.0)
   - FBSDKCoreKit (17.4.0):
@@ -17,12 +17,11 @@ PODS:
 DEPENDENCIES:
   - apphud (from `.symlinks/plugins/apphud/ios`)
   - apphud_facebook_sdk (from `.symlinks/plugins/apphud_facebook_sdk/ios`)
-  - ApphudSDK (= 4.0.0)
+  - ApphudSDK (from `https://github.com/apphud/ApphudSDK.git`, tag `4.0.2`)
   - Flutter (from `Flutter`)
 
 SPEC REPOS:
-  trunk:
-    - ApphudSDK
+  https://github.com/CocoaPods/Specs.git:
     - FBAEMKit
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
@@ -32,18 +31,26 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/apphud/ios"
   apphud_facebook_sdk:
     :path: ".symlinks/plugins/apphud_facebook_sdk/ios"
+  ApphudSDK:
+    :git: https://github.com/apphud/ApphudSDK.git
+    :tag: 4.0.2
   Flutter:
     :path: Flutter
 
+CHECKOUT OPTIONS:
+  ApphudSDK:
+    :git: https://github.com/apphud/ApphudSDK.git
+    :tag: 4.0.2
+
 SPEC CHECKSUMS:
-  apphud: 3ffd75c1a16edfc4777944de59778801eac94245
+  apphud: 8d2112d79d3600aa10caf5dadce788f128365797
   apphud_facebook_sdk: ddef33a4791901c802e6871ecb29a8cdba24e404
-  ApphudSDK: 9ba6457be791eef994f413792e15f786c552a178
+  ApphudSDK: 33cbf3dfd746dca6dbf33afa183cdccadc5cd0c8
   FBAEMKit: 58cb5f302cdd715a56d4c1d0dfdd2e423ac1421a
   FBSDKCoreKit: 94d7461d0cecf441b1ba7c41acfff41daa8ccd41
   FBSDKCoreKit_Basics: 151b43db8b834d3f0e02f95d36a44ffd36265e45
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
 
-PODFILE CHECKSUM: badfd01ec1d453c1e7d76c0b3e25544a17b2a183
+PODFILE CHECKSUM: 25a94b51386782e0819c9c18822a3d7ca94cb35c
 
 COCOAPODS: 1.16.2

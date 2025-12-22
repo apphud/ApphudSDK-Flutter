@@ -12,8 +12,8 @@ final class FetchPlacementsRequest: Request {
 
     typealias ArgumentProvider = FetchPlacementsArgumentParser
 
-    @MainActor func startRequest(arguments: (), result: @escaping FlutterResult) {
-        Apphud.fetchPlacements { placements, error in
+    @MainActor func startRequest(arguments: Bool, result: @escaping FlutterResult) {
+        Apphud.fetchPlacements(forceRefresh: arguments) { placements, error in
             result([
                 "placements": placements.map({p in p.toMap()})
             ])
@@ -22,6 +22,11 @@ final class FetchPlacementsRequest: Request {
 }
 
 final class FetchPlacementsArgumentParser: Parser {
-    typealias ArgumentType = ()
+    typealias ArgumentType = Bool
+
+    func parse(args: [String : Any]?) throws -> ArgumentType {
+        let forceRefresh = args?["forceRefresh"] as? Bool ?? false
+        return forceRefresh
+    }
 }
 

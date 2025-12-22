@@ -14,6 +14,8 @@ class OthersHandler: Handler {
         switch method {
         case AssociatedEnum.enableDebugLogs.rawValue:
             Action<EnableDebugLogsRequest,EnableDebugLogsArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.updateBaseUrl.rawValue:
+            Action<UpdateBaseUrlRequest,UpdateBaseUrlArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

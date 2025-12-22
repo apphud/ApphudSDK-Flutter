@@ -48,11 +48,13 @@ class Apphud {
     required String apiKey,
     String? userID,
     bool? observerMode,
+    String? baseUrl,
   }) async {
     final json = await _channel.invokeMethod('start', {
       'apiKey': apiKey,
       'userID': userID,
       'observerMode': observerMode ?? false,
+      'baseUrl': baseUrl,
     });
     return ApphudUser.fromJson(json);
   }
@@ -63,6 +65,7 @@ class Apphud {
   /// - parameter [userID] is optional. You can provide your own unique user identifier. If null passed then UUID will be generated instead.
   /// - parameter [deviceID] is optional. You can provide your own unique device identifier. If null passed then UUID will be generated instead.
   /// - parameter [observerMode] is optional, iOS only. Sets SDK to Observer (Analytics) mode. If you purchase products by your own code, then pass `true`.
+  /// - parameter [baseUrl] is optional. The custom base URL to use, if needed. Ask Apphud support for your custom base URL.
   /// If you purchase products using `Apphud.purchase(product)` method, then pass `false`. Default value is `false`.
   ///
   /// - Returns `ApphudUser` object after the SDK initialization is complete.
@@ -72,12 +75,14 @@ class Apphud {
     String? userID,
     String? deviceID,
     bool? observerMode,
+    String? baseUrl,
   }) async {
     final json = await _channel.invokeMethod('startManually', {
       'apiKey': apiKey,
       'deviceID': deviceID,
       'userID': userID,
       'observerMode': observerMode ?? false,
+      'baseUrl': baseUrl,
     });
     return ApphudUser.fromJson(json);
   }
@@ -188,9 +193,15 @@ class Apphud {
   ///
   /// See documentation for details: https://docs.apphud.com/docs/placements
   /// For immediate access without awaiting `SKProduct`s or `ProductDetails`, use `rawPlacements()` method.
-  static Future<ApphudPlacements> fetchPlacements() async {
+  ///
+  /// - parameter [forceRefresh] is optional. Use this when you need to apply updated audience segmentation or A/B test assignments.
+  static Future<ApphudPlacements> fetchPlacements({
+    bool forceRefresh = false,
+  }) async {
     final Map<dynamic, dynamic>? json =
-        await _channel.invokeMethod<Map<dynamic, dynamic>>('fetchPlacements');
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('fetchPlacements', {
+      'forceRefresh': forceRefresh,
+    });
     if (json == null) {
       return ApphudPlacements(
         placements: const [],

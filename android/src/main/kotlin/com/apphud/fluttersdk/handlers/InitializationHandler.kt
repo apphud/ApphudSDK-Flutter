@@ -3,6 +3,7 @@ package com.apphud.fluttersdk.handlers
 import android.content.Context
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
+import com.apphud.sdk.ApphudUtils
 //import com.apphud.sdk.client.HttpUrlConnectionExecutor
 import io.flutter.plugin.common.MethodChannel
 
@@ -20,12 +21,12 @@ class InitializationHandler(
         result: MethodChannel.Result
     ) {
         when (method) {
-            InitializationRoutes.start.name -> StartParser(result).parse(args) { apiKey, userId, observer ->
-                start(apiKey, userId, observerMode = observer, result)
+            InitializationRoutes.start.name -> StartParser(result).parse(args) { apiKey, userId, observer, baseUrl ->
+                start(apiKey, userId, observerMode = observer, baseUrl = baseUrl, result)
             }
 
-            InitializationRoutes.startManually.name -> StartManuallyParser(result).parse(args) { apiKey, userId, deviceId, observer ->
-                startManually(apiKey, userId, deviceId, observerMode = observer, result)
+            InitializationRoutes.startManually.name -> StartManuallyParser(result).parse(args) { apiKey, userId, deviceId, observer, baseUrl ->
+                startManually(apiKey, userId, deviceId, observerMode = observer, baseUrl = baseUrl, result)
             }
 
             InitializationRoutes.updateUserID.name -> UpdateUserIDParser(result).parse(args) { userId ->
@@ -38,9 +39,12 @@ class InitializationHandler(
         }
     }
 
-    private fun start(apiKey: String, userId: String?, observerMode: Boolean, result: MethodChannel.Result) {
+    private fun start(apiKey: String, userId: String?, observerMode: Boolean, baseUrl: String?, result: MethodChannel.Result) {
         Apphud.start(context = context, apiKey = apiKey, userId = userId, observerMode = observerMode) { user ->
             handleOnMainThread { result.success(user.toMap()) }
+        }
+        if (baseUrl != null) {
+            ApphudUtils.overrideBaseUrl(baseUrl!!)
         }
     }
 
@@ -49,6 +53,7 @@ class InitializationHandler(
         userId: String?,
         deviceId: String?,
         observerMode: Boolean,
+        baseUrl: String?,
         result: MethodChannel.Result
     ) {
         Apphud.start(
@@ -59,6 +64,9 @@ class InitializationHandler(
             observerMode = observerMode
         ) { user ->
             handleOnMainThread { result.success(user.toMap()) }
+        }
+        if (baseUrl != null) {
+            ApphudUtils.overrideBaseUrl(baseUrl!!)
         }
     }
 
@@ -85,14 +93,15 @@ class InitializationHandler(
 
     class StartParser(val result: MethodChannel.Result) {
 
-        fun parse(args: Map<String, Any>?, callback: (apiKey: String, userId: String?, observerMode: Boolean) -> Unit) {
+        fun parse(args: Map<String, Any>?, callback: (apiKey: String, userId: String?, observerMode: Boolean, baseUrl: String?) -> Unit) {
             try {
                 args ?: throw IllegalArgumentException("apiKey is required argument")
                 val apiKey = args["apiKey"] as? String
                     ?: throw IllegalArgumentException("apiKey is required argument")
                 val userId = args["userID"] as? String
                 val observerMode = args["observerMode"] as? Boolean
-                callback(apiKey, userId, observerMode ?: false)
+                val baseUrl = args["baseUrl"] as? String
+                callback(apiKey, userId, observerMode ?: false, baseUrl)
             } catch (e: IllegalArgumentException) {
                 result.error("400", e.message, "")
             }
@@ -102,7 +111,7 @@ class InitializationHandler(
     class StartManuallyParser(val result: MethodChannel.Result) {
         fun parse(
             args: Map<String, Any>?,
-            callback: (apiKey: String, userId: String?, deviceId: String?, observerMode: Boolean) -> Unit
+            callback: (apiKey: String, userId: String?, deviceId: String?, observerMode: Boolean, baseUrl: String?) -> Unit
         ) {
             try {
                 args ?: throw IllegalArgumentException("apiKey is required argument")
@@ -111,7 +120,8 @@ class InitializationHandler(
                 val userId = args["userID"] as? String
                 val deviceId = args["deviceID"] as? String
                 val observerMode = args["observerMode"] as? Boolean
-                callback(apiKey, userId, deviceId, observerMode ?: false)
+                val baseUrl = args["baseUrl"] as? String
+                callback(apiKey, userId, deviceId, observerMode ?: false, baseUrl)
             } catch (e: IllegalArgumentException) {
                 result.error("400", e.message, "")
             }

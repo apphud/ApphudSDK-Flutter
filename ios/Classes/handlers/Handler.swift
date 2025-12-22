@@ -129,6 +129,7 @@ enum AppHudMethod {
 
     enum Others: String, CaseIterable {
        case enableDebugLogs
+       case updateBaseUrl
     }
     
     enum PaywallLogs: String, CaseIterable {
