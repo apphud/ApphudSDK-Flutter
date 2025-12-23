@@ -100,7 +100,8 @@ fun ApphudNonRenewingPurchase.toMap(): HashMap<String, Any?> {
         "canceledAt" to canceledAt,
         "isActive" to isActive(),
         "purchaseToken" to purchaseToken,
-        "platform" to platform
+        "platform" to platform,
+        "isConsumable" to isConsumable
     )
 }
 

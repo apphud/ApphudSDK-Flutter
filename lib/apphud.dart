@@ -359,7 +359,8 @@ class Apphud {
   }
 
   /// Call this method when your paywall screen is displayed to the user.
-  /// This is required for A/B testing analysis.
+  /// This is required for A/B testing analysis. 
+  /// Note: you don't need to call this method for Figma paywalls.
   static Future<void> paywallShown(ApphudPaywall paywall) =>
       _channel.invokeMethod(
         'paywallShown',
@@ -368,19 +369,8 @@ class Apphud {
           'placementIdentifier': paywall.placementIdentifier,
         },
       );
-
-  /// Call this method when your paywall screen is dismissed without a purchase.
-  /// This is required for A/B testing analysis.
-  static Future<void> paywallClosed(ApphudPaywall paywall) =>
-      _channel.invokeMethod(
-        'paywallClosed',
-        {
-          'identifier': paywall.identifier,
-          'placementIdentifier': paywall.placementIdentifier,
-        },
-      );
-
-  /// Android only. Explicitly loads fallback paywalls from the json file, if it was added to the project assets.
+      
+  /// Explicitly loads fallback paywalls from the json file, if it was added to the project assets.
   ///
   /// By default, SDK automatically tries to load paywalls from the JSON file, if possible.
   /// However, developer can also call this method directly for more control.
@@ -555,14 +545,10 @@ class Apphud {
     return groups.map((json) => ApphudGroup.fromJson(json)).toList();
   }
 
-  /// Returns `true` if user has active subscription or non renewing purchase (lifetime).
+  /// Returns: `true` if the user has an active auto-renewable subscription, non-renewing subscription or a valid non-consumable purchase.
   ///
   /// Determines if the user has active premium access, which includes any active subscription
   /// or non-renewing purchase (lifetime).
-  ///
-  /// Note: This method is not suitable for consumable in-app purchases, like coin packs.
-  /// Use this method to check if the user has active premium access.
-  /// If you have consumable purchases, consider using alternative methods, as this won't distinguish consumables from non-consumables.
   static Future<bool> hasPremiumAccess() async {
     return (await _channel.invokeMethod('hasPremiumAccess')) ?? false;
   }
@@ -631,6 +617,21 @@ class Apphud {
           {'productIdentifier': productIdentifier},
         )) ??
         false;
+  }
+
+  /// iOS only. Returns `true` if the non-renewing purchase with given [productId] is a consumable product.
+  ///
+  /// This method requires iOS 15.0 or later. Returns `null` if:
+  /// - The purchase with the given productId is not found
+  /// - Running on iOS version below 15.0
+  /// - Running on Android
+  static Future<bool?> isNonRenewingPurchaseConsumable(
+    String productId,
+  ) async {
+    return await _channel.invokeMethod<bool>(
+      'isNonRenewingPurchaseConsumable',
+      {'productId': productId},
+    );
   }
 
   /// Implements `Restore Purchases` mechanism. Basically it just sends current
@@ -765,11 +766,11 @@ class Apphud {
 
   /// iOS only. Send search ads attribution data to Apphud.
   ///
-  /// Returns [ApphudError] if an error occurred or null otherwise.
-  static Future<ApphudError?> collectSearchAdsAttribution() async {
+  /// Returns attribution data map or null if not available.
+  static Future<Map<String, dynamic>?> collectSearchAdsAttribution() async {
     final Map<dynamic, dynamic>? result =
         (await _channel.invokeMethod('collectSearchAdsAttribution'));
-    return result != null ? ApphudError.fromJson(result) : null;
+    return result?.cast<String, dynamic>();
   }
 
   /// Web-to-Web flow only. Attempts to attribute the user using the provided attribution data.

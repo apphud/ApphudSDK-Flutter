@@ -46,7 +46,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       placementsFetched: (e) => _handlePlacementsFetchedEventt(e, emit),
       callAll: (e) => _handleCallAllEvent(e, emit),
       grantPromotional: (e) => _handleGrantPromotionalEvent(e, emit),
-      paywallClosed: (e) => _handlePaywallClosedEvent(e, emit),
       paywallShown: (e) => _handlePaywallShownEvent(e, emit),
       purchaseProduct: (e) => _handlePurchaseProductEvent(e, emit),
       restorePurchases: (e) => _handleRestorePurchasesEvent(e, emit),
@@ -189,22 +188,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       ),
       onError: (e) => printError(
         'grantPromotional(${event.product.productId})',
-        e,
-      ),
-    );
-  }
-
-  Future<void> _handlePaywallClosedEvent(
-    PurchasePaywallClosedEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
-    Apphud.paywallClosed(event.paywall).then(
-      (value) => printAsJson(
-        'paywallClosed(${event.paywall.identifier})',
-        'success',
-      ),
-      onError: (e) => printError(
-        'paywallClosed(${event.paywall.identifier})',
         e,
       ),
     );
@@ -550,14 +533,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //     'Ok',
     //   ),
     //   onError: (e) => printError('paywallShown', e),
-    // );
-    //
-    // Apphud.paywallClosed(paywall).then(
-    //   (value) => printAsJson(
-    //     'paywallClosed',
-    //     'Ok',
-    //   ),
-    //   onError: (e) => printError('paywallClosed', e),
     // );
     //
     // Apphud.optOutOfTracking().then(

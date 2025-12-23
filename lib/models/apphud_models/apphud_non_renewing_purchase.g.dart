@@ -14,6 +14,9 @@ ApphudNonRenewingPurchase _$ApphudNonRenewingPurchaseFromJson(Map json) =>
       canceledAt: (json['canceledAt'] as num?)?.toDouble(),
       purchaseToken: json['purchaseToken'] as String?,
       platform: json['platform'] as String?,
+      isSandbox: json['isSandbox'] as bool?,
+      isLocal: json['isLocal'] as bool?,
+      isConsumable: json['isConsumable'] as bool?,
     );
 
 Map<String, dynamic> _$ApphudNonRenewingPurchaseToJson(
@@ -33,5 +36,8 @@ Map<String, dynamic> _$ApphudNonRenewingPurchaseToJson(
   }
 
   writeNotNull('platform', instance.platform);
+  val['isSandbox'] = instance.isSandbox;
+  val['isLocal'] = instance.isLocal;
+  val['isConsumable'] = instance.isConsumable;
   return val;
 }

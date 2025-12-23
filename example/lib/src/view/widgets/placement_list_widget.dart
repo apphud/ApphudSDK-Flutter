@@ -56,10 +56,8 @@ class _PlacementsListWidgetState extends State<PlacementsListWidget> {
           });
 
           final paywall = widget.placements[index].paywall;
-          if (paywall != null) {
-            final event = isExpanded
-                ? PurchaseEvent.paywallShown(paywall)
-                : PurchaseEvent.paywallClosed(paywall);
+          if (paywall != null && isExpanded) {
+            final event = PurchaseEvent.paywallShown(paywall);
             BlocProvider.of<PurchaseBloc>(context).add(event);
           }
         },

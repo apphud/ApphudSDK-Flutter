@@ -81,7 +81,9 @@ extension ApphudNonRenewingPurchase {
                 "purchasedAt": purchasedAt.timeIntervalSince1970,
                 "canceledAt": canceledAt?.timeIntervalSince1970,
                 "isActive" : isActive(),
-                "platform" : platform(string: transactionId ?? "0")
+                "platform" : platform(string: transactionId ?? "0"),
+                "isSandbox": isSandbox,
+                "isLocal": isLocal
         ]
     }
 }
