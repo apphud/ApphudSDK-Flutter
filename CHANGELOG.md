@@ -1,4 +1,4 @@
-## 3.0.0
+## 3.0.0, 3.0.1
 - [iOS], [Android] `showPaywall` method has been introduced. Show Figma paywalls in one line: `final result = await Apphud.showPaywall(placement.paywall!, maxTimeout: 10, iOSAnimationStyle: IOSAnimationStyle.bottomToTop);`
 - [iOS] `preloadPaywall` method has been introduced.
 - **BREAKING** [iOS], [Android] `fetchPlacements` has new optional parameter: `forceRefresh`. Use this when you need to apply updated audience segmentation or A/B test assignments.

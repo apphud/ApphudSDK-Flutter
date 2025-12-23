@@ -63,7 +63,7 @@ class PaywallParser(private val result: MethodChannel.Result) {
 }
 
 enum class PaywallLogsRoutes {
-    paywallShown,
+    paywallShown;
 
     companion object Mapper {
         fun stringValues(): List<String> {
