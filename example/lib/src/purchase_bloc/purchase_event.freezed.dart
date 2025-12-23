@@ -58,7 +58,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
     TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
-    TResult Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
     TResult Function(PurchaseCallAllEvent value)? callAll,
     required TResult orElse(),
@@ -81,8 +80,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
         return trackPurchase(_that);
       case PurchasePaywallShownEvent() when paywallShown != null:
         return paywallShown(_that);
-      case PurchasePaywallClosedEvent() when paywallClosed != null:
-        return paywallClosed(_that);
       case PurchaseSyncPurchaseEvent() when syncPurchase != null:
         return syncPurchase(_that);
       case PurchaseCallAllEvent() when callAll != null:
@@ -120,7 +117,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
         grantPromotional,
     required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
     required TResult Function(PurchasePaywallShownEvent value) paywallShown,
-    required TResult Function(PurchasePaywallClosedEvent value) paywallClosed,
     required TResult Function(PurchaseSyncPurchaseEvent value) syncPurchase,
     required TResult Function(PurchaseCallAllEvent value) callAll,
   }) {
@@ -142,8 +138,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
         return trackPurchase(_that);
       case PurchasePaywallShownEvent():
         return paywallShown(_that);
-      case PurchasePaywallClosedEvent():
-        return paywallClosed(_that);
       case PurchaseSyncPurchaseEvent():
         return syncPurchase(_that);
       case PurchaseCallAllEvent():
@@ -175,7 +169,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
     TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
-    TResult? Function(PurchasePaywallClosedEvent value)? paywallClosed,
     TResult? Function(PurchaseSyncPurchaseEvent value)? syncPurchase,
     TResult? Function(PurchaseCallAllEvent value)? callAll,
   }) {
@@ -197,8 +190,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
         return trackPurchase(_that);
       case PurchasePaywallShownEvent() when paywallShown != null:
         return paywallShown(_that);
-      case PurchasePaywallClosedEvent() when paywallClosed != null:
-        return paywallClosed(_that);
       case PurchaseSyncPurchaseEvent() when syncPurchase != null:
         return syncPurchase(_that);
       case PurchaseCallAllEvent() when callAll != null:
@@ -230,7 +221,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
-    TResult Function(ApphudPaywall paywall)? paywallClosed,
     TResult Function()? syncPurchase,
     TResult Function()? callAll,
     required TResult orElse(),
@@ -253,8 +243,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
         return trackPurchase(_that.product);
       case PurchasePaywallShownEvent() when paywallShown != null:
         return paywallShown(_that.paywall);
-      case PurchasePaywallClosedEvent() when paywallClosed != null:
-        return paywallClosed(_that.paywall);
       case PurchaseSyncPurchaseEvent() when syncPurchase != null:
         return syncPurchase();
       case PurchaseCallAllEvent() when callAll != null:
@@ -288,7 +276,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
-    required TResult Function(ApphudPaywall paywall) paywallClosed,
     required TResult Function() syncPurchase,
     required TResult Function() callAll,
   }) {
@@ -310,8 +297,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
         return trackPurchase(_that.product);
       case PurchasePaywallShownEvent():
         return paywallShown(_that.paywall);
-      case PurchasePaywallClosedEvent():
-        return paywallClosed(_that.paywall);
       case PurchaseSyncPurchaseEvent():
         return syncPurchase();
       case PurchaseCallAllEvent():
@@ -343,7 +328,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
     TResult? Function(ApphudProduct product)? grantPromotional,
     TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
-    TResult? Function(ApphudPaywall paywall)? paywallClosed,
     TResult? Function()? syncPurchase,
     TResult? Function()? callAll,
   }) {
@@ -365,8 +349,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
         return trackPurchase(_that.product);
       case PurchasePaywallShownEvent() when paywallShown != null:
         return paywallShown(_that.paywall);
-      case PurchasePaywallClosedEvent() when paywallClosed != null:
-        return paywallClosed(_that.paywall);
       case PurchaseSyncPurchaseEvent() when syncPurchase != null:
         return syncPurchase();
       case PurchaseCallAllEvent() when callAll != null:
@@ -815,72 +797,6 @@ class _$PurchasePaywallShownEventCopyWithImpl<$Res>
     Object? paywall = null,
   }) {
     return _then(PurchasePaywallShownEvent(
-      null == paywall
-          ? _self.paywall
-          : paywall // ignore: cast_nullable_to_non_nullable
-              as ApphudPaywall,
-    ));
-  }
-}
-
-/// @nodoc
-
-class PurchasePaywallClosedEvent extends PurchaseEvent {
-  const PurchasePaywallClosedEvent(this.paywall) : super._();
-
-  final ApphudPaywall paywall;
-
-  /// Create a copy of PurchaseEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $PurchasePaywallClosedEventCopyWith<PurchasePaywallClosedEvent>
-      get copyWith =>
-          _$PurchasePaywallClosedEventCopyWithImpl<PurchasePaywallClosedEvent>(
-              this, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is PurchasePaywallClosedEvent &&
-            (identical(other.paywall, paywall) || other.paywall == paywall));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, paywall);
-
-  @override
-  String toString() {
-    return 'PurchaseEvent.paywallClosed(paywall: $paywall)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $PurchasePaywallClosedEventCopyWith<$Res>
-    implements $PurchaseEventCopyWith<$Res> {
-  factory $PurchasePaywallClosedEventCopyWith(PurchasePaywallClosedEvent value,
-          $Res Function(PurchasePaywallClosedEvent) _then) =
-      _$PurchasePaywallClosedEventCopyWithImpl;
-  @useResult
-  $Res call({ApphudPaywall paywall});
-}
-
-/// @nodoc
-class _$PurchasePaywallClosedEventCopyWithImpl<$Res>
-    implements $PurchasePaywallClosedEventCopyWith<$Res> {
-  _$PurchasePaywallClosedEventCopyWithImpl(this._self, this._then);
-
-  final PurchasePaywallClosedEvent _self;
-  final $Res Function(PurchasePaywallClosedEvent) _then;
-
-  /// Create a copy of PurchaseEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? paywall = null,
-  }) {
-    return _then(PurchasePaywallClosedEvent(
       null == paywall
           ? _self.paywall
           : paywall // ignore: cast_nullable_to_non_nullable

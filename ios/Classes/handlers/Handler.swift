@@ -86,6 +86,7 @@ enum AppHudMethod {
         case purchaseProduct
         case showPaywall
         case preloadPaywall
+        case loadFallbackPaywalls
     }
 
     enum HandlePurchases: String, CaseIterable {
@@ -94,6 +95,7 @@ enum AppHudMethod {
         case subscriptions
         case nonRenewingPurchases
         case isNonRenewingPurchaseActive
+        case isNonRenewingPurchaseConsumable
         case restorePurchases
         case permissionGroups
         case paywallsDidLoadCallback
@@ -134,7 +136,6 @@ enum AppHudMethod {
     
     enum PaywallLogs: String, CaseIterable {
         case paywallShown
-        case paywallClosed
     }
     
     enum Promotionals: String, CaseIterable {

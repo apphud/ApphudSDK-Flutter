@@ -12,6 +12,17 @@ class ApphudNonRenewingPurchase {
   @JsonKey(includeIfNull: false)
   final String? platform;
 
+  /// Returns `true` if purchase is made in test environment. Only available on iOS.
+  final bool? isSandbox;
+
+  /// Returns `true` if purchase was made using Local StoreKit Configuration File. Only available on iOS.
+  final bool? isLocal;
+
+  /// Returns `true` if purchase is consumable.
+  /// On Android: Available directly from this property.
+  /// On iOS: Use `Apphud.isNonRenewingPurchaseConsumable(productId)` async method instead.
+  final bool? isConsumable;
+
   ApphudNonRenewingPurchase({
     required this.productId,
     required this.purchasedAt,
@@ -19,6 +30,9 @@ class ApphudNonRenewingPurchase {
     this.canceledAt,
     this.purchaseToken,
     this.platform,
+    this.isSandbox,
+    this.isLocal,
+    this.isConsumable,
   });
 
   factory ApphudNonRenewingPurchase.fromJson(Map<dynamic, dynamic> map) =>
@@ -28,6 +42,6 @@ class ApphudNonRenewingPurchase {
 
   @override
   String toString() {
-    return 'ApphudNonRenewingPurchase{productId: $productId, platform: $platform, purchasedAt: $purchasedAt, canceledAt: $canceledAt, isActive: $isActive, purchaseToken: $purchaseToken}';
+    return 'ApphudNonRenewingPurchase{productId: $productId, platform: $platform, purchasedAt: $purchasedAt, canceledAt: $canceledAt, isActive: $isActive, purchaseToken: $purchaseToken, isSandbox: $isSandbox, isLocal: $isLocal, isConsumable: $isConsumable}';
   }
 }

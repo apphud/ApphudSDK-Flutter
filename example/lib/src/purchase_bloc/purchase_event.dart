@@ -34,9 +34,6 @@ class PurchaseEvent with _$PurchaseEvent {
   const factory PurchaseEvent.paywallShown(ApphudPaywall paywall) =
       PurchasePaywallShownEvent;
 
-  const factory PurchaseEvent.paywallClosed(ApphudPaywall paywall) =
-      PurchasePaywallClosedEvent;
-
   const factory PurchaseEvent.syncPurchase() = PurchaseSyncPurchaseEvent;
 
   const factory PurchaseEvent.callAll() = PurchaseCallAllEvent;

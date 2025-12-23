@@ -26,6 +26,11 @@ class HandlePurchasesHandler(
                     isNonRenewingPurchaseActive(productId, result)
                 }
 
+            HandlePurchasesRoutes.isNonRenewingPurchaseConsumable.name ->
+                IsNonRenewingPurchaseConsumableParser(result).parse(args) { productId ->
+                    isNonRenewingPurchaseConsumable(productId, result)
+                }
+
             HandlePurchasesRoutes.restorePurchases.name -> restorePurchases(result)
             HandlePurchasesRoutes.hasPremiumAccess.name -> hasPremiumAccess(result)
             HandlePurchasesRoutes.refreshUserData.name -> refreshUserData(result)
@@ -78,6 +83,11 @@ class HandlePurchasesHandler(
         handleOnMainThread { result.success(isNonRenewingPurchaseActive) }
     }
 
+    private fun isNonRenewingPurchaseConsumable(productId: String, result: MethodChannel.Result) {
+        val purchase = Apphud.nonRenewingPurchases().firstOrNull { it.productId == productId }
+        handleOnMainThread { result.success(purchase?.isConsumable) }
+    }
+
     private fun restorePurchases(result: MethodChannel.Result) {
         Apphud.restorePurchases { restoreResult ->
 
@@ -123,12 +133,27 @@ class IsNonRenewingPurchaseActiveParser(val result: MethodChannel.Result) {
     }
 }
 
+class IsNonRenewingPurchaseConsumableParser(val result: MethodChannel.Result) {
+    fun parse(args: Map<String, Any>?, callback: (productId: String) -> Unit) {
+        try {
+            args ?: throw IllegalArgumentException("productId is required argument")
+            val productId = args["productId"] as? String
+                ?: throw IllegalArgumentException("productId is required argument")
+
+            callback(productId)
+        } catch (e: IllegalArgumentException) {
+            result.error("400", e.message, "")
+        }
+    }
+}
+
 enum class HandlePurchasesRoutes {
     hasActiveSubscription,
     subscription,
     subscriptions,
     nonRenewingPurchases,
     isNonRenewingPurchaseActive,
+    isNonRenewingPurchaseConsumable,
     restorePurchases,
     hasPremiumAccess,
     refreshUserData;

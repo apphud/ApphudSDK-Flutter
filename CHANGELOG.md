@@ -1,3 +1,17 @@
+## 3.0.0
+- [iOS], [Android] `showPaywall` method has been introduced. Show Figma paywalls in one line: `final result = await Apphud.showPaywall(placement.paywall!, maxTimeout: 10, iOSAnimationStyle: IOSAnimationStyle.bottomToTop);`
+- [iOS] `preloadPaywall` method has been introduced.
+- **BREAKING** [iOS], [Android] `fetchPlacements` has new optional parameter: `forceRefresh`. Use this when you need to apply updated audience segmentation or A/B test assignments.
+- [iOS], [Android] `isNonRenewingPurchaseConsumable` method was introducted.
+- [iOS] `loadFallbackPaywalls` method was introduced.
+- **BREAKING** [iOS] `collectSearchAdsAttribution` method updated. Changed the return type from ApphudError? to Map<String, dynamic>?, now it returns attribution data, if any.
+- **BREAKING** [iOS], [Android] method `paywallClosed` removed entirely.
+- **BREAKING** [Android] method `syncPurchasesInObserverMode` removed entirely as it syncs automatically in Observer mode.
+- [iOS] `updateUserID` method now returns `ApphudUser` model asynchronously.
+- Dependencies of Native SDK's were updated to:
+- [Android] 3.0.4
+- [iOS] 4.0.2
+
 ## 2.7.4
 - Dependencies of Native SDK's were updated to:
 - [Android] 2.9.7

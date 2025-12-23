@@ -22,6 +22,8 @@ class HandlePurchasesHandler: Handler {
             Action<NonRenewingPurchasesRequest,NonRenewingPurchasesArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.isNonRenewingPurchaseActive.rawValue:
             Action<IsNonRenewingPurchaseActiveRequest,IsNonRenewingPurchaseActiveArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.isNonRenewingPurchaseConsumable.rawValue:
+            Action<IsNonRenewingPurchaseConsumableRequest,IsNonRenewingPurchaseConsumableArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.restorePurchases.rawValue:
             Action<RestorePurchasesRequest,RestorePurchasesArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.permissionGroups.rawValue:

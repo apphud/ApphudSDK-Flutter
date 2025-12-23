@@ -14,8 +14,6 @@ class PaywallLogsHandler: Handler {
         switch method {
         case AssociatedEnum.paywallShown.rawValue:
             Action<PaywallShownRequest,PaywallArgumentParser>(args: args, result: result).startFlow()
-        case AssociatedEnum.paywallClosed.rawValue:
-            Action<PaywallClosedRequest,PaywallArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

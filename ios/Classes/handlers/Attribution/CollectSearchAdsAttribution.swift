@@ -12,8 +12,9 @@ final class CollectSearchAdsAttributionRequest: Request {
                         Apphud.setAttribution(data: ApphudAttributionData(rawData: ["identifer" : token]),
                                               from: .appleAdsAttribution,
                                               identifer: token,
-                                              callback: nil)
-                        result(nil)
+                                              callback: { success, map in
+                            result(map)
+                        })
                     })
                 }
             })

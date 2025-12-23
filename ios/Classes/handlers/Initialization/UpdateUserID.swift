@@ -11,8 +11,9 @@ final class UpdateUserIDRequest: Request {
     typealias ArgumentProvider = UpdateUserIDArgumentParser
 
     @MainActor func startRequest(arguments: (String), result: @escaping FlutterResult) {
-        Apphud.updateUserID(arguments)
-        result(nil)
+        Apphud.updateUserID(arguments) { user in
+            result(user?.toMap())
+        }
     }
 }
 

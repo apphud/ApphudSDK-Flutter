@@ -28,6 +28,8 @@ class MakePurchaseHandler: Handler {
             Action<ShowPaywallRequest,ShowPaywallArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.preloadPaywall.rawValue:
             Action<ShowPaywallRequest,ShowPaywallArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.loadFallbackPaywalls.rawValue:
+            Action<LoadFallbackPaywallsRequest,LoadFallbackPaywallsArgumentParser>(args: args, result: result).startFlow()
         default:
             break
         }

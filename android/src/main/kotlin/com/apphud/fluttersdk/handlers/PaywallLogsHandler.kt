@@ -36,33 +36,11 @@ class PaywallLogsHandler(
                     }
                 }
             }
-
-            PaywallLogsRoutes.paywallClosed.name -> PaywallParser(result).parse(args) { paywallIdentifier, placementIdentifier ->
-                GlobalScope.launch {
-                    val paywall =
-                        FlutterSdkCommon.getPaywall(paywallIdentifier, placementIdentifier)
-                    if (paywall != null) {
-                        paywallClosed(paywall, result)
-                    } else {
-                        result.error(
-                            "400",
-                            "There isn't the paywall with identifier $paywallIdentifier | placementIdentifier $placementIdentifier",
-                            ""
-                        )
-                    }
-                }
-            }
-
         }
     }
 
     private fun paywallShown(paywall: ApphudPaywall, result: MethodChannel.Result) {
         Apphud.paywallShown(paywall)
-        handleOnMainThread { result.success(null) }
-    }
-
-    private fun paywallClosed(paywall: ApphudPaywall, result: MethodChannel.Result) {
-        Apphud.paywallClosed(paywall)
         handleOnMainThread { result.success(null) }
     }
 }
@@ -86,7 +64,6 @@ class PaywallParser(private val result: MethodChannel.Result) {
 
 enum class PaywallLogsRoutes {
     paywallShown,
-    paywallClosed;
 
     companion object Mapper {
         fun stringValues(): List<String> {
