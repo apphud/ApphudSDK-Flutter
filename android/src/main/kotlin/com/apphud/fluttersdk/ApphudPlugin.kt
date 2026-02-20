@@ -132,7 +132,7 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun setHeaders() {
         SdkHeaders.X_SDK = "Flutter"
         if (!SdkHeaders.X_SDK_VERSION.contains("(")) {
-            SdkHeaders.X_SDK_VERSION = "3.0.1" + "(${nativeSdkVersion})"
+            SdkHeaders.X_SDK_VERSION = "3.0.2" + "(${nativeSdkVersion})"
         }
     }
 

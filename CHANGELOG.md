@@ -1,3 +1,9 @@
+## 3.0.2
+- Fixed a bug with mapping from iOS native module of the "restorePurchases" function.
+- Dependencies of Native SDK's were updated to:
+- [Android] 3.0.6
+- [iOS] 4.0.3
+
 ## 3.0.0, 3.0.1
 - [iOS], [Android] `showPaywall` method has been introduced. Show Figma paywalls in one line: `final result = await Apphud.showPaywall(placement.paywall!, maxTimeout: 10, iOSAnimationStyle: IOSAnimationStyle.bottomToTop);`
 - [iOS] `preloadPaywall` method has been introduced.

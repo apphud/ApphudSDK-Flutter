@@ -7,7 +7,7 @@
 
 import ApphudSDK
 
-final class AttributeFromWebRequest: Request {
+final class AttributeFromWebRequest: @MainActor Request {
     typealias ArgumentProvider = AttributeFromWebArgumentParser
     
     @MainActor func startRequest(arguments: [AnyHashable : Any]?, result: @escaping FlutterResult) {
@@ -16,10 +16,12 @@ final class AttributeFromWebRequest: Request {
             return
         }
         Apphud.attributeFromWeb(data: arguments!) { wasSuccessful, user in
-            result([
-                "wasSuccessful":wasSuccessful,
-                "user": user?.toMap()
-            ])
+            var dict: [String: Any] = ["wasSuccessful": wasSuccessful]
+            if let user {
+                dict["user"] = user.toMap()
+            }
+            
+            result(dict)
         }
     }
 }

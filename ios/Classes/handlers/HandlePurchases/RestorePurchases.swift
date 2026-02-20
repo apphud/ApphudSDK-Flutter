@@ -17,10 +17,15 @@ final class RestorePurchasesRequest: @preconcurrency Request {
                 
             let nrPurchaseJson = restoreResult.nonRenewingPurchase?.toMap()
                 
-                result(["subscriptions": [subscriptionJson],
-                        "nrPurchases": [nrPurchaseJson],
-                        "error": restoreResult.error == nil ? nil : ["message": restoreResult.error?.localizedDescription],
-                       ])
+            var dict: [String: Any] = [
+                "subscriptions": subscriptionJson != nil ? [subscriptionJson] : [],
+                "nrPurchases": nrPurchaseJson != nil ? [nrPurchaseJson] : [],
+            ]
+            if restoreResult.error != nil {
+                dict["error"] = ["message": restoreResult.error?.localizedDescription ?? ""]
+            }
+            
+            result(dict)
         }
     }
 }

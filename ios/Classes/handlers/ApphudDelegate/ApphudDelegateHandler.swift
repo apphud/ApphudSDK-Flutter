@@ -9,7 +9,7 @@ import Foundation
 import ApphudSDK
 import StoreKit
 
-public class ApphudDelegateHandler: NSObject, FlutterPlugin, ApphudDelegate {
+public class ApphudDelegateHandler: NSObject, FlutterPlugin, @MainActor ApphudDelegate {
     internal init(channel: FlutterMethodChannel) {
         self.channel = channel
     }
