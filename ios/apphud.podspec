@@ -1,11 +1,16 @@
+require 'yaml'
+
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
 # Run `pod lib lint appHud.podspec' to validate before publishing.
 #
 
+pubspec = YAML.load_file(File.join(__dir__, '..', 'pubspec.yaml'))
+plugin_version = pubspec['version'].to_s.split('+').first
+
 Pod::Spec.new do |s|
   s.name             = 'apphud'
-  s.version          = '3.0.2'
+  s.version          = plugin_version
   s.summary          = 'Apphud SDK flutter plugin.'
   s.description      = <<-DESC
 Apphud SDK flutter plugin.
@@ -16,7 +21,7 @@ Apphud SDK flutter plugin.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'ApphudSDK', '4.0.3'
+  s.dependency 'ApphudSDK', '4.0.4'
   s.platform = :ios, '15.0'
 
   # Flutter.framework does not contain a i386 slice.

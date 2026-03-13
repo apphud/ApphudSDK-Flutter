@@ -9,7 +9,6 @@ import androidx.annotation.NonNull
 import com.apphud.fluttersdk.handlers.*
 import com.apphud.sdk.ApphudUtils
 import com.apphud.sdk.internal.data.network.SdkHeaders
-import io.flutter.BuildConfig
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -132,7 +131,7 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun setHeaders() {
         SdkHeaders.X_SDK = "Flutter"
         if (!SdkHeaders.X_SDK_VERSION.contains("(")) {
-            SdkHeaders.X_SDK_VERSION = "3.0.2" + "(${nativeSdkVersion})"
+            SdkHeaders.X_SDK_VERSION = BuildConfig.FLUTTER_PLUGIN_VERSION + "(${nativeSdkVersion})"
         }
     }
 

@@ -1,3 +1,9 @@
+## 3.1.0
+- [Android] Upgrade to Google Billing 8
+- Dependencies of Native SDK's were updated to:
+- [Android] 3.1.0
+- [iOS] 4.0.4
+
 ## 3.0.2
 - Fixed a bug with mapping from iOS native module of the "restorePurchases" function.
 - Dependencies of Native SDK's were updated to:

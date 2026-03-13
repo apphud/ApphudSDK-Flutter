@@ -1,6 +1,15 @@
 group 'com.apphud.demo'
 version '1.0-SNAPSHOT'
 
+def pubspecFile = file('../pubspec.yaml')
+def flutterPluginVersion = '0.0.0'
+if (pubspecFile.exists()) {
+    def versionMatch = (pubspecFile.text =~ /(?m)^version:\s*([^\s#]+)/)
+    if (versionMatch.find()) {
+        flutterPluginVersion = versionMatch.group(1)
+    }
+}
+
 buildscript {
     ext.kotlin_version = '2.1.0'
     repositories {
@@ -37,6 +46,7 @@ android {
         targetSdk 34
         compileSdk 34
         consumerProguardFiles 'consumer-rules.pro'
+        buildConfigField "String", "FLUTTER_PLUGIN_VERSION", "\"${flutterPluginVersion}\""
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -46,6 +56,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        buildConfig true
+    }
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -53,7 +66,7 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'com.android.billingclient:billing:7.1.1'
-    implementation 'com.github.apphud:ApphudSDK-Android:3.0.6'
+    implementation 'com.android.billingclient:billing:8.3.0'
+    implementation 'com.github.apphud:ApphudSDK-Android:3.1.0'
     implementation 'com.google.code.gson:gson:2.13.1'
 }

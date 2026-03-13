@@ -41,7 +41,12 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         ApphudHttpClient.shared.sdkType = "Flutter"
         let current = ApphudHttpClient.shared.sdkVersion
         if !current.contains("(") {
-            ApphudHttpClient.shared.sdkVersion = "3.0.2" + "(\(current))"
+            let pluginBundle = Bundle(for: SwiftApphudPlugin.self)
+            let pluginVersion =
+                (pluginBundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ??
+                (pluginBundle.object(forInfoDictionaryKey: "CFBundleVersion") as? String) ??
+                "unknown"
+            ApphudHttpClient.shared.sdkVersion = "\(pluginVersion)(\(current))"
         }
         
     }
