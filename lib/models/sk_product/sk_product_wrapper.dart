@@ -17,6 +17,11 @@ class SKProductWrapper {
   final SKProductDiscountWrapper? introductoryPrice;
   final String? subscriptionGroupIdentifier;
 
+  /// All discounts attached to the product, including the introductory offer
+  /// and promotional (subscription) offers. Use the entry's `identifier` as
+  /// `discountID` for `Apphud.purchasePromo`.
+  final List<SKProductDiscountWrapper> discounts;
+
   SKProductWrapper({
     required this.productIdentifier,
     required this.localizedTitle,
@@ -26,6 +31,7 @@ class SKProductWrapper {
     this.subscriptionPeriod,
     this.introductoryPrice,
     this.subscriptionGroupIdentifier,
+    this.discounts = const <SKProductDiscountWrapper>[],
   });
 
   factory SKProductWrapper.fromJson(Map<dynamic, dynamic> map) =>
@@ -35,7 +41,7 @@ class SKProductWrapper {
 
   @override
   String toString() {
-    return 'SKProductWrapper{productIdentifier: $productIdentifier, localizedTitle: $localizedTitle, localizedDescription: $localizedDescription, price: $price, priceLocale: $priceLocale, subscriptionPeriod: $subscriptionPeriod, introductoryPrice: $introductoryPrice, subscriptionGroupIdentifier: $subscriptionGroupIdentifier}';
+    return 'SKProductWrapper{productIdentifier: $productIdentifier, localizedTitle: $localizedTitle, localizedDescription: $localizedDescription, price: $price, priceLocale: $priceLocale, subscriptionPeriod: $subscriptionPeriod, introductoryPrice: $introductoryPrice, subscriptionGroupIdentifier: $subscriptionGroupIdentifier, discounts: $discounts}';
   }
 }
 

@@ -15,11 +15,15 @@ SKProductDiscountWrapper _$SKProductDiscountWrapperFromJson(Map json) =>
       priceLocale: SKPriceLocaleWrapper.fromJson(json['priceLocale'] as Map),
       subscriptionPeriod: SKProductSubscriptionPeriodWrapper.fromJson(
           json['subscriptionPeriod'] as Map),
+      identifier: json['identifier'] as String?,
+      type: $enumDecodeNullable(_$SKProductDiscountTypeEnumMap, json['type']),
     );
 
 Map<String, dynamic> _$SKProductDiscountWrapperToJson(
         SKProductDiscountWrapper instance) =>
     <String, dynamic>{
+      'identifier': instance.identifier,
+      'type': _$SKProductDiscountTypeEnumMap[instance.type],
       'price': instance.price,
       'numberOfPeriods': instance.numberOfPeriods,
       'paymentMode':
@@ -32,4 +36,9 @@ const _$SKProductDiscountPaymentModeEnumMap = {
   SKProductDiscountPaymentMode.payAsYouGo: 0,
   SKProductDiscountPaymentMode.payUpFront: 1,
   SKProductDiscountPaymentMode.freeTrail: 2,
+};
+
+const _$SKProductDiscountTypeEnumMap = {
+  SKProductDiscountType.introductory: 0,
+  SKProductDiscountType.subscription: 1,
 };

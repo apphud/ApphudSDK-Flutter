@@ -25,6 +25,11 @@ class PurchaseEvent with _$PurchaseEvent {
   const factory PurchaseEvent.purchaseProduct(ApphudProduct product) =
       PurchasePurchaseProductEvent;
 
+  const factory PurchaseEvent.purchasePromo({
+    required ApphudProduct product,
+    required String discountID,
+  }) = PurchasePurchasePromoEvent;
+
   const factory PurchaseEvent.grantPromotional(ApphudProduct product) =
       PurchaseGrantPromotionalEvent;
 

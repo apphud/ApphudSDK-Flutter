@@ -1,3 +1,11 @@
+## 3.1.2
+- [iOS] Fixed `SKProductDiscount` mapping: `identifier` and `type` are now forwarded to Flutter, and `priceLocale` is serialized correctly (it was hardcoded as an empty map before, which also affected `introductoryPrice.priceLocale`).
+- [iOS], [Dart] `SKProductDiscountWrapper` now exposes `identifier` (`String?`) and `type` (`SKProductDiscountType` enum: `introductory` / `subscription`).
+- [iOS], [Dart] `SKProductWrapper` now exposes the full `discounts` list in addition to `introductoryPrice`. This unblocks dynamic resolution of `discountID` for `Apphud.purchasePromo` without hardcoding it on the client side.
+- [iOS] `checkEligibilityForIntroductoryOffer`, `checkEligibilityForPromotionalOffer`, `checkEligibilitiesForIntroductoryOffers` and `checkEligibilitiesForPromotionalOffers` methods were implemented (previously stubbed and not wired up).
+- Example app: tapping a product on iOS now opens a dialog with available promotional offers (when any), driving the call to `Apphud.purchasePromo(productId:, discountID:)`. Eligibility flags (`introductory` / `promotional`) control the labels and disable offers that are not eligible.
+- Example app: fixed a crash on the Placements screen for placements that have no paywall attached.
+
 ## 3.1.0
 - [Android] Upgrade to Google Billing 8
 - Dependencies of Native SDK's were updated to:

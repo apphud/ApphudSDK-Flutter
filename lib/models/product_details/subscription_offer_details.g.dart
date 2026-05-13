@@ -12,7 +12,7 @@ SubscriptionOfferDetailsWrapper _$SubscriptionOfferDetailsWrapperFromJson(
       basePlanId: json['basePlanId'] as String,
       offerTags:
           (json['offerTags'] as List<dynamic>).map((e) => e as String).toList(),
-      offerToken: json['offerToken'] as String,
+      offerToken: json['offerToken'] as String?,
       pricingPhases: (json['pricingPhases'] as List<dynamic>)
           .map((e) => PricingPhaseWrapper.fromJson(e as Map))
           .toList(),

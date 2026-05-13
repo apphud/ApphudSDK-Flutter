@@ -89,7 +89,7 @@ class _PlacementsListWidgetState extends State<PlacementsListWidget> {
         style: Theme.of(context).textTheme.headlineSmall,
       ),
       subtitle: Text(
-        'paywall: ${placement.paywall!.identifier}\n'
+        'paywall: ${placement.paywall?.identifier ?? '—'}\n'
         'products: ${placement.paywall?.products?.length ?? 0}\n'
         'experimentName: ${placement.experimentName}\n'
         'has screen: ${placement.paywall?.hasScreen ?? false}\n',

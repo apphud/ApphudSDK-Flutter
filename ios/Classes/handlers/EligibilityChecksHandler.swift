@@ -13,13 +13,13 @@ class EligibilityChecksHandler: Handler {
     func tryToHandle(method: String, args: [String : Any]?, result: @escaping FlutterResult) {
         switch method {
         case AssociatedEnum.checkEligibilityForPromotionalOffer.rawValue:
-            break
+            Action<CheckEligibilityForPromotionalOfferRequest, SingleProductIdParser>(args: args, result: result).startFlow()
         case AssociatedEnum.checkEligibilityForIntroductoryOffer.rawValue:
-            break
+            Action<CheckEligibilityForIntroductoryOfferRequest, SingleProductIdParser>(args: args, result: result).startFlow()
         case AssociatedEnum.checkEligibilitiesForPromotionalOffers.rawValue:
-            break
+            Action<CheckEligibilitiesForPromotionalOffersRequest, ProductIdsParser>(args: args, result: result).startFlow()
         case AssociatedEnum.checkEligibilitiesForIntroductoryOffers.rawValue:
-            break
+            Action<CheckEligibilitiesForIntroductoryOffersRequest, ProductIdsParser>(args: args, result: result).startFlow()
         default:
             break
         }

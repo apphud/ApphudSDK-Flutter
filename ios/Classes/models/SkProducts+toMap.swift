@@ -53,11 +53,12 @@ extension SKProductSubscriptionPeriod {
 
 
 extension SKProductDiscount {
-  func toMap() -> [String: Any] {
-
+  func toMap() -> [String: Any?] {
     return [
+        "identifier": identifier,
+        "type": type.rawValue,
         "price": price,
-        "priceLocale": ["":""],
+        "priceLocale": priceLocale.toMap(),
         "numberOfPeriods": numberOfPeriods,
         "subscriptionPeriod": subscriptionPeriod.toMap(),
         "paymentMode": paymentMode.rawValue,

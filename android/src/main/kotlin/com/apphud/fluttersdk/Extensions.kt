@@ -40,7 +40,15 @@ fun ProductDetails.toMap(): HashMap<String, Any?> {
         "productType" to productType,
         "title" to title,
         "oneTimePurchaseOfferDetails" to oneTimePurchaseOfferDetails?.toMap(),
-        "subscriptionOfferDetails" to subscriptionOfferDetails?.map { it.toMap() },
+        // Drop offers whose offerToken is null/blank: the Dart layer treats it
+        // as required, and Google Play can return offers without a usable token
+        // in edge cases (ineligible offers, pre-paid plans, certain SKU configs).
+        // Including such offers used to break paywall parsing on the Dart side
+        // ("null offerIdToken of SubscriptionOfferDetailsWrapper"), producing
+        // empty paywalls for affected users.
+        "subscriptionOfferDetails" to subscriptionOfferDetails
+            ?.filter { !it.offerToken.isNullOrBlank() }
+            ?.map { it.toMap() },
     )
 }
 

@@ -7,14 +7,18 @@ part 'subscription_offer_details.g.dart';
 class SubscriptionOfferDetailsWrapper {
   final String basePlanId;
   final List<String> offerTags;
-  final String offerToken;
+
+  /// May be null in rare edge cases on Android (e.g. ineligible offers, certain
+  /// pre-paid plan configurations). Consumers must skip offers without a token,
+  /// because Google Play Billing rejects purchase attempts with an empty token.
+  final String? offerToken;
   final List<PricingPhaseWrapper> pricingPhases;
   final String? offerId;
 
   SubscriptionOfferDetailsWrapper({
     required this.basePlanId,
     required this.offerTags,
-    required this.offerToken,
+    this.offerToken,
     required this.pricingPhases,
     this.offerId,
   });

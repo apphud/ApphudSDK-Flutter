@@ -55,6 +55,7 @@ extension PurchaseEventPatterns on PurchaseEvent {
     TResult Function(PurchasePlacementsFetchedEvent value)? placementsFetched,
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
+    TResult Function(PurchasePurchasePromoEvent value)? purchasePromo,
     TResult Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
     TResult Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult Function(PurchasePaywallShownEvent value)? paywallShown,
@@ -74,6 +75,8 @@ extension PurchaseEventPatterns on PurchaseEvent {
         return restorePurchases(_that);
       case PurchasePurchaseProductEvent() when purchaseProduct != null:
         return purchaseProduct(_that);
+      case PurchasePurchasePromoEvent() when purchasePromo != null:
+        return purchasePromo(_that);
       case PurchaseGrantPromotionalEvent() when grantPromotional != null:
         return grantPromotional(_that);
       case PurchaseTrackPurchaseEvent() when trackPurchase != null:
@@ -113,6 +116,7 @@ extension PurchaseEventPatterns on PurchaseEvent {
         restorePurchases,
     required TResult Function(PurchasePurchaseProductEvent value)
         purchaseProduct,
+    required TResult Function(PurchasePurchasePromoEvent value) purchasePromo,
     required TResult Function(PurchaseGrantPromotionalEvent value)
         grantPromotional,
     required TResult Function(PurchaseTrackPurchaseEvent value) trackPurchase,
@@ -132,6 +136,8 @@ extension PurchaseEventPatterns on PurchaseEvent {
         return restorePurchases(_that);
       case PurchasePurchaseProductEvent():
         return purchaseProduct(_that);
+      case PurchasePurchasePromoEvent():
+        return purchasePromo(_that);
       case PurchaseGrantPromotionalEvent():
         return grantPromotional(_that);
       case PurchaseTrackPurchaseEvent():
@@ -166,6 +172,7 @@ extension PurchaseEventPatterns on PurchaseEvent {
     TResult? Function(PurchasePlacementsFetchedEvent value)? placementsFetched,
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
+    TResult? Function(PurchasePurchasePromoEvent value)? purchasePromo,
     TResult? Function(PurchaseGrantPromotionalEvent value)? grantPromotional,
     TResult? Function(PurchaseTrackPurchaseEvent value)? trackPurchase,
     TResult? Function(PurchasePaywallShownEvent value)? paywallShown,
@@ -184,6 +191,8 @@ extension PurchaseEventPatterns on PurchaseEvent {
         return restorePurchases(_that);
       case PurchasePurchaseProductEvent() when purchaseProduct != null:
         return purchaseProduct(_that);
+      case PurchasePurchasePromoEvent() when purchasePromo != null:
+        return purchasePromo(_that);
       case PurchaseGrantPromotionalEvent() when grantPromotional != null:
         return grantPromotional(_that);
       case PurchaseTrackPurchaseEvent() when trackPurchase != null:
@@ -218,6 +227,7 @@ extension PurchaseEventPatterns on PurchaseEvent {
     TResult Function(List<ApphudPlacement> placements)? placementsFetched,
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
+    TResult Function(ApphudProduct product, String discountID)? purchasePromo,
     TResult Function(ApphudProduct product)? grantPromotional,
     TResult Function(ApphudProduct product)? trackPurchase,
     TResult Function(ApphudPaywall paywall)? paywallShown,
@@ -237,6 +247,8 @@ extension PurchaseEventPatterns on PurchaseEvent {
         return restorePurchases();
       case PurchasePurchaseProductEvent() when purchaseProduct != null:
         return purchaseProduct(_that.product);
+      case PurchasePurchasePromoEvent() when purchasePromo != null:
+        return purchasePromo(_that.product, _that.discountID);
       case PurchaseGrantPromotionalEvent() when grantPromotional != null:
         return grantPromotional(_that.product);
       case PurchaseTrackPurchaseEvent() when trackPurchase != null:
@@ -273,6 +285,8 @@ extension PurchaseEventPatterns on PurchaseEvent {
         placementsFetched,
     required TResult Function() restorePurchases,
     required TResult Function(ApphudProduct product) purchaseProduct,
+    required TResult Function(ApphudProduct product, String discountID)
+        purchasePromo,
     required TResult Function(ApphudProduct product) grantPromotional,
     required TResult Function(ApphudProduct product) trackPurchase,
     required TResult Function(ApphudPaywall paywall) paywallShown,
@@ -291,6 +305,8 @@ extension PurchaseEventPatterns on PurchaseEvent {
         return restorePurchases();
       case PurchasePurchaseProductEvent():
         return purchaseProduct(_that.product);
+      case PurchasePurchasePromoEvent():
+        return purchasePromo(_that.product, _that.discountID);
       case PurchaseGrantPromotionalEvent():
         return grantPromotional(_that.product);
       case PurchaseTrackPurchaseEvent():
@@ -325,6 +341,7 @@ extension PurchaseEventPatterns on PurchaseEvent {
     TResult? Function(List<ApphudPlacement> placements)? placementsFetched,
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
+    TResult? Function(ApphudProduct product, String discountID)? purchasePromo,
     TResult? Function(ApphudProduct product)? grantPromotional,
     TResult? Function(ApphudProduct product)? trackPurchase,
     TResult? Function(ApphudPaywall paywall)? paywallShown,
@@ -343,6 +360,8 @@ extension PurchaseEventPatterns on PurchaseEvent {
         return restorePurchases();
       case PurchasePurchaseProductEvent() when purchaseProduct != null:
         return purchaseProduct(_that.product);
+      case PurchasePurchasePromoEvent() when purchasePromo != null:
+        return purchasePromo(_that.product, _that.discountID);
       case PurchaseGrantPromotionalEvent() when grantPromotional != null:
         return grantPromotional(_that.product);
       case PurchaseTrackPurchaseEvent() when trackPurchase != null:
@@ -604,6 +623,82 @@ class _$PurchasePurchaseProductEventCopyWithImpl<$Res>
           ? _self.product
           : product // ignore: cast_nullable_to_non_nullable
               as ApphudProduct,
+    ));
+  }
+}
+
+/// @nodoc
+
+class PurchasePurchasePromoEvent extends PurchaseEvent {
+  const PurchasePurchasePromoEvent(
+      {required this.product, required this.discountID})
+      : super._();
+
+  final ApphudProduct product;
+  final String discountID;
+
+  /// Create a copy of PurchaseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $PurchasePurchasePromoEventCopyWith<PurchasePurchasePromoEvent>
+      get copyWith =>
+          _$PurchasePurchasePromoEventCopyWithImpl<PurchasePurchasePromoEvent>(
+              this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PurchasePurchasePromoEvent &&
+            (identical(other.product, product) || other.product == product) &&
+            (identical(other.discountID, discountID) ||
+                other.discountID == discountID));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, product, discountID);
+
+  @override
+  String toString() {
+    return 'PurchaseEvent.purchasePromo(product: $product, discountID: $discountID)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $PurchasePurchasePromoEventCopyWith<$Res>
+    implements $PurchaseEventCopyWith<$Res> {
+  factory $PurchasePurchasePromoEventCopyWith(PurchasePurchasePromoEvent value,
+          $Res Function(PurchasePurchasePromoEvent) _then) =
+      _$PurchasePurchasePromoEventCopyWithImpl;
+  @useResult
+  $Res call({ApphudProduct product, String discountID});
+}
+
+/// @nodoc
+class _$PurchasePurchasePromoEventCopyWithImpl<$Res>
+    implements $PurchasePurchasePromoEventCopyWith<$Res> {
+  _$PurchasePurchasePromoEventCopyWithImpl(this._self, this._then);
+
+  final PurchasePurchasePromoEvent _self;
+  final $Res Function(PurchasePurchasePromoEvent) _then;
+
+  /// Create a copy of PurchaseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? product = null,
+    Object? discountID = null,
+  }) {
+    return _then(PurchasePurchasePromoEvent(
+      product: null == product
+          ? _self.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ApphudProduct,
+      discountID: null == discountID
+          ? _self.discountID
+          : discountID // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }

@@ -21,6 +21,10 @@ SKProductWrapper _$SKProductWrapperFromJson(Map json) => SKProductWrapper(
           : SKProductDiscountWrapper.fromJson(json['introductoryPrice'] as Map),
       subscriptionGroupIdentifier:
           json['subscriptionGroupIdentifier'] as String?,
+      discounts: (json['discounts'] as List<dynamic>?)
+              ?.map((e) => SKProductDiscountWrapper.fromJson(e as Map))
+              .toList() ??
+          [],
     );
 
 Map<String, dynamic> _$SKProductWrapperToJson(SKProductWrapper instance) =>
@@ -33,6 +37,7 @@ Map<String, dynamic> _$SKProductWrapperToJson(SKProductWrapper instance) =>
       'subscriptionPeriod': instance.subscriptionPeriod,
       'introductoryPrice': instance.introductoryPrice,
       'subscriptionGroupIdentifier': instance.subscriptionGroupIdentifier,
+      'discounts': instance.discounts,
     };
 
 SKPriceLocaleWrapper _$SKPriceLocaleWrapperFromJson(Map json) =>

@@ -2,12 +2,9 @@ package com.apphud.fluttersdk
 
 import android.app.Activity
 import android.content.Context
-import android.os.Build
-import android.os.Looper
 import android.util.Log
 import androidx.annotation.NonNull
 import com.apphud.fluttersdk.handlers.*
-import com.apphud.sdk.ApphudUtils
 import com.apphud.sdk.internal.data.network.SdkHeaders
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
@@ -22,21 +19,32 @@ import kotlinx.coroutines.launch
 
 /** AppHudPlugin */
 class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
-    private lateinit var handlers: List<Handler>
 
-    /// The MethodChannel that will the communication between Flutter and native Android
-    ///
-    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-    /// when the Flutter Engine is detached from the Activity
+    // Per-binding instance state. We intentionally do NOT store any of these
+    // in a `companion object` / static field: each FlutterPluginBinding gets
+    // its own MethodChannel + handlers list. Sharing state across bindings via
+    // statics caused the new plugin instance to never re-register itself as
+    // the channel handler after engine detach/re-attach, producing
+    // `MissingPluginException(No implementation found for method X on channel apphud)`.
+
+    private var channel: MethodChannel? = null
+    private var listenerChannel: MethodChannel? = null
+    private var listenerHandler: ApphudListenerHandler? = null
 
     private lateinit var context: Context
-
-    private var nativeSdkVersion: String = SdkHeaders.X_SDK_VERSION
     private var activity: Activity? = null
 
-    private var handleOnMainThread: HandleOnMainThread = { func ->
+    // Handlers are initialized in onAttachedToEngine (NOT onAttachedToActivity)
+    // so that method calls arriving before / between activity attaches don't
+    // hit an uninitialized list.
+    private var handlers: List<Handler> = emptyList()
+    private var makePurchaseHandler: MakePurchaseHandler? = null
+
+    private var nativeSdkVersion: String = SdkHeaders.X_SDK_VERSION
+
+    private val handleOnMainThread: HandleOnMainThread = { func ->
         CoroutineScope(Dispatchers.Main).launch {
-        try {
+            try {
                 func()
             } catch (e: IllegalStateException) {
                 Log.e("Apphud", e.toString(), e)
@@ -44,43 +52,38 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
-
-    companion object {
-        @JvmStatic
-        private var listenerHandler: ApphudListenerHandler? = null
-
-        @JvmStatic
-        private var channel: MethodChannel? = null
-
-        @JvmStatic
-        private var listenerChannel: MethodChannel? = null
-    }
-
-
-    override
-    fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel ?: run {
-            channel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud")
-            channel!!.setMethodCallHandler(this)
-        }
-        listenerChannel ?: run {
-            listenerChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud/listener")
-        }
-        listenerHandler ?: run {
-            listenerHandler = ApphudListenerHandler(handleOnMainThread)
-            listenerHandler!!.setMethodCallHandler(listenerChannel)
-        }
+    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         this.context = flutterPluginBinding.applicationContext
+
+        // Always (re)create the channel for this binding's binaryMessenger and
+        // (re)register `this` as the handler. Doing this unconditionally fixes
+        // the case where a previous instance left a stale channel/handler
+        // pointing at a detached engine.
+        channel?.setMethodCallHandler(null)
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud").also {
+            it.setMethodCallHandler(this)
+        }
+
+        listenerChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud/listener")
+        listenerHandler?.setMethodCallHandler(null)
+        listenerHandler = ApphudListenerHandler(handleOnMainThread).also {
+            it.setMethodCallHandler(listenerChannel)
+        }
+
+        setHeaders()
+        buildHandlers()
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        handlers.forEach { handler ->
-            if (handler.isAbleToHandle(call.method)) handler.tryToHandle(
-                method = call.method,
-                args = call.arguments as? Map<String, Any>,
-                result = result
-            )
+        @Suppress("UNCHECKED_CAST")
+        val args = call.arguments as? Map<String, Any>
+        for (handler in handlers) {
+            if (handler.isAbleToHandle(call.method)) {
+                handler.tryToHandle(method = call.method, args = args, result = result)
+                return
+            }
         }
+        result.notImplemented()
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
@@ -89,14 +92,36 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         listenerHandler?.setMethodCallHandler(null)
         listenerHandler = null
         listenerChannel = null
+        handlers = emptyList()
+        makePurchaseHandler = null
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity
+        makePurchaseHandler?.activity = binding.activity
+    }
 
-        val sActivity = activity ?: return
+    override fun onDetachedFromActivityForConfigChanges() {
+        activity = null
+        makePurchaseHandler?.activity = null
+    }
 
-        setHeaders()
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+        activity = binding.activity
+        makePurchaseHandler?.activity = binding.activity
+    }
+
+    override fun onDetachedFromActivity() {
+        activity = null
+        makePurchaseHandler?.activity = null
+    }
+
+    private fun buildHandlers() {
+        val purchaseHandler = MakePurchaseHandler(
+            MakePurchaseRoutes.stringValues(),
+            handleOnMainThread
+        ).also { it.activity = activity }
+        makePurchaseHandler = purchaseHandler
 
         handlers = listOf(
             InitializationHandler(
@@ -104,17 +129,13 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 context = this.context,
                 handleOnMainThread
             ),
-            MakePurchaseHandler(
-                MakePurchaseRoutes.stringValues(),
-                activity = sActivity,
-                handleOnMainThread
-            ),
+            purchaseHandler,
             HandlePurchasesHandler(
                 HandlePurchasesRoutes.stringValues(),
                 handleOnMainThread
             ),
             AttributionHandler(AttributionRoutes.stringValues(), handleOnMainThread),
-            OtherHandler(OtherRoutes.stringValues(),handleOnMainThread),
+            OtherHandler(OtherRoutes.stringValues(), handleOnMainThread),
             UserPropertiesHandler(
                 UserPropertiesRoutes.stringValues(),
                 handleOnMainThread
@@ -133,17 +154,5 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         if (!SdkHeaders.X_SDK_VERSION.contains("(")) {
             SdkHeaders.X_SDK_VERSION = BuildConfig.FLUTTER_PLUGIN_VERSION + "(${nativeSdkVersion})"
         }
-    }
-
-    override fun onDetachedFromActivityForConfigChanges() {
-        activity = null
-    }
-
-    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        activity = binding.activity
-    }
-
-    override fun onDetachedFromActivity() {
-        activity = null
     }
 }

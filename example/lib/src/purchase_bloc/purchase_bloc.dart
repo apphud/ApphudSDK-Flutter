@@ -48,6 +48,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       grantPromotional: (e) => _handleGrantPromotionalEvent(e, emit),
       paywallShown: (e) => _handlePaywallShownEvent(e, emit),
       purchaseProduct: (e) => _handlePurchaseProductEvent(e, emit),
+      purchasePromo: (e) => _handlePurchasePromoEvent(e, emit),
       restorePurchases: (e) => _handleRestorePurchasesEvent(e, emit),
       syncPurchase: (e) => _handleSyncPurchaseEvent(e, emit),
       trackPurchase: (e) => _handleTrackPurchaseEvent(e, emit),
@@ -217,9 +218,12 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       emit(s.copyWith(inProgress: true));
       final subscriptionOfferDetails =
           event.product.productDetails?.subscriptionOfferDetails ?? [];
-      final offerIdToken = subscriptionOfferDetails.isEmpty
-          ? null
-          : subscriptionOfferDetails.first.offerToken;
+      final offerIdToken = subscriptionOfferDetails
+          .map((o) => o.offerToken)
+          .firstWhere(
+            (token) => token != null && token.isNotEmpty,
+            orElse: () => null,
+          );
       final result = await Apphud.purchase(
         //productId: event.product.productId,
         // or we can use
@@ -235,6 +239,37 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
           userMessage: PurchaseUserMessage.purchaseFailure(result.error!),
         ));
         emit(s.copyWith(userMessage: PurchaseUserMessage.none()));
+      }
+    });
+  }
+
+  Future<void> _handlePurchasePromoEvent(
+    PurchasePurchasePromoEvent event,
+    Emitter<PurchaseState> emit,
+  ) async {
+    await state.mapOrNull(success: (s) async {
+      emit(s.copyWith(inProgress: true));
+      try {
+        final result = await Apphud.purchasePromo(
+          productId: event.product.productId,
+          discountID: event.discountID,
+        );
+        printAsJson(
+          'purchasePromo(${event.product.productId}, ${event.discountID})',
+          result,
+        );
+        if (result.error == null) {
+          emit(s.copyWith(userMessage: PurchaseUserMessage.purchaseSuccess()));
+          emit(s.copyWith(userMessage: PurchaseUserMessage.none()));
+        } else {
+          emit(s.copyWith(
+            userMessage: PurchaseUserMessage.purchaseFailure(result.error!),
+          ));
+          emit(s.copyWith(userMessage: PurchaseUserMessage.none()));
+        }
+      } catch (e) {
+        printError('purchasePromo(${event.product.productId})', e);
+        emit(s.copyWith(inProgress: false));
       }
     });
   }

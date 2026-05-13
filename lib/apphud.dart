@@ -834,6 +834,84 @@ class Apphud {
   static Future<void> collectDeviceIdentifiers() =>
       _channel.invokeMethod('collectDeviceIdentifiers');
 
+  // Eligibility checks (iOS only)
+
+  /// iOS only. Checks whether a product is eligible for its introductory offer
+  /// (free trial or pay-as-you-go intro price).
+  ///
+  /// A user is considered eligible when:
+  /// 1. The product has a non-null `introductoryPrice`.
+  /// 2. The user has never used an introductory offer in the same
+  ///    subscription group on the current Apple ID.
+  ///
+  /// - parameter [productId] is required. Identifier of the product previously
+  ///   loaded by the SDK (e.g. attached to a paywall or placement).
+  ///
+  /// Returns `false` on Android, when the product is not loaded yet, or when
+  /// the user has already used an introductory offer.
+  static Future<bool> checkEligibilityForIntroductoryOffer({
+    required String productId,
+  }) async {
+    final bool? value = await _channel.invokeMethod<bool>(
+      'checkEligibilityForIntroductoryOffer',
+      {'productId': productId},
+    );
+    return value ?? false;
+  }
+
+  /// iOS only. Checks whether a product is eligible for any of its
+  /// promotional offers.
+  ///
+  /// A user is considered eligible when at least one of the following is true:
+  /// 1. The user has an active or expired subscription in the same product's
+  ///    subscription group.
+  /// 2. The user has previously made a non-renewing purchase that qualifies
+  ///    them for the offer.
+  ///
+  /// - parameter [productId] is required. Identifier of the product previously
+  ///   loaded by the SDK (e.g. attached to a paywall or placement).
+  ///
+  /// Returns `false` on Android or when the product is not loaded yet.
+  static Future<bool> checkEligibilityForPromotionalOffer({
+    required String productId,
+  }) async {
+    final bool? value = await _channel.invokeMethod<bool>(
+      'checkEligibilityForPromotionalOffer',
+      {'productId': productId},
+    );
+    return value ?? false;
+  }
+
+  /// iOS only. Batch version of [checkEligibilityForIntroductoryOffer].
+  ///
+  /// Returns a map keyed by the requested productIds. Products that could
+  /// not be resolved to a loaded `SKProduct` are reported as `false`.
+  static Future<Map<String, bool>> checkEligibilitiesForIntroductoryOffers({
+    required List<String> productIds,
+  }) async {
+    final Map<String, bool>? value =
+        await _channel.invokeMapMethod<String, bool>(
+      'checkEligibilitiesForIntroductoryOffers',
+      {'productIds': productIds},
+    );
+    return value ?? const <String, bool>{};
+  }
+
+  /// iOS only. Batch version of [checkEligibilityForPromotionalOffer].
+  ///
+  /// Returns a map keyed by the requested productIds. Products that could
+  /// not be resolved to a loaded `SKProduct` are reported as `false`.
+  static Future<Map<String, bool>> checkEligibilitiesForPromotionalOffers({
+    required List<String> productIds,
+  }) async {
+    final Map<String, bool>? value =
+        await _channel.invokeMapMethod<String, bool>(
+      'checkEligibilitiesForPromotionalOffers',
+      {'productIds': productIds},
+    );
+    return value ?? const <String, bool>{};
+  }
+
   // Promotionals
 
   /// You can grant free promotional subscription to user. Returns `true` in a callback if promotional was granted.

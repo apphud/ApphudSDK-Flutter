@@ -21,10 +21,14 @@ import java.lang.IllegalStateException
 @OptIn(DelicateCoroutinesApi::class)
 class MakePurchaseHandler(
     override val routes: List<String>,
-    val activity: Activity,
     handleOnMainThreadP: HandleOnMainThread
 ) : Handler {
     private var handleOnMainThread = handleOnMainThreadP
+
+    // Activity is bound lazily from ApphudPlugin.onAttachedToActivity and
+    // cleared in onDetachedFromActivity*. Methods that require an Activity
+    // must guard against null and return a graceful error instead of crashing.
+    var activity: Activity? = null
     override fun tryToHandle(
         method: String,
         args: Map<String, Any>?,
@@ -149,6 +153,17 @@ class MakePurchaseHandler(
     }
 
     private fun showPaywall(paywallIdentifier: String, maxTimeout: Long? = null, result: MethodChannel.Result) {
+        val sActivity = activity
+        if (sActivity == null) {
+            handleOnMainThread {
+                result.error(
+                    "activity_unavailable",
+                    "Cannot show paywall: host Activity is not attached.",
+                    null
+                )
+            }
+            return
+        }
         GlobalScope.launch {
             val paywall = FlutterSdkCommon.getPaywall(paywallIdentifier, null)
             if (paywall != null) {
@@ -200,7 +215,7 @@ class MakePurchaseHandler(
                     })
 
                 handleOnMainThread {
-                    Apphud.showPaywallScreen(context = activity, paywall = paywall, callbacks = callbacks, maxTimeout = maxTimeout ?: APPHUD_PAYWALL_SCREEN_LOAD_TIMEOUT)
+                    Apphud.showPaywallScreen(context = sActivity, paywall = paywall, callbacks = callbacks, maxTimeout = maxTimeout ?: APPHUD_PAYWALL_SCREEN_LOAD_TIMEOUT)
                 }
             } else {
                 result.error(
@@ -220,8 +235,19 @@ class MakePurchaseHandler(
         consumableInappProduct: Boolean = false,
         result: MethodChannel.Result
     ) {
+        val sActivity = activity
+        if (sActivity == null) {
+            handleOnMainThread {
+                result.error(
+                    "activity_unavailable",
+                    "Cannot start purchase: host Activity is not attached.",
+                    null
+                )
+            }
+            return
+        }
         ApphudFlutter.purchase(
-            activity,
+            sActivity,
             productId,
             offerIdToken,
             oldToken,
@@ -241,6 +267,17 @@ class MakePurchaseHandler(
         consumableInappProduct: Boolean = false,
         result: MethodChannel.Result
     ) {
+        val sActivity = activity
+        if (sActivity == null) {
+            handleOnMainThread {
+                result.error(
+                    "activity_unavailable",
+                    "Cannot start purchase: host Activity is not attached.",
+                    null
+                )
+            }
+            return
+        }
         GlobalScope.launch {
             val paywallIdentifier = product.paywallIdentifier
             val placementIdentifier = product.placementIdentifier
@@ -253,7 +290,7 @@ class MakePurchaseHandler(
 
             if (foundProduct != null) {
                 Apphud.purchase(
-                    activity,
+                    sActivity,
                     foundProduct,
                     offerIdToken,
                     oldToken,
