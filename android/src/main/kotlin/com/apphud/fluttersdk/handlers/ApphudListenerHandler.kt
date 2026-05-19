@@ -62,7 +62,6 @@ class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) :
         isListeningStarted = true
         userIdCached?.let { v -> apphudDidChangeUserID(v) }
         detailsCached?.let { v -> apphudFetchProductDetails(v) }
-        paywallsCached?.let { v -> paywallsDidFullyLoad(v) }
         userCached?.let { v -> userDidLoad(v) }
         subscriptionsCached?.let { v -> apphudSubscriptionsUpdated(v) }
         purchasesCached?.let { v -> apphudNonRenewingPurchasesUpdated(v) }
@@ -101,17 +100,6 @@ class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) :
             }
             handleOnMainThread {
                 channel?.invokeMethod("fetchNativeProducts", resultMap)
-            }
-        }
-    }
-
-    override fun paywallsDidFullyLoad(paywalls: List<ApphudPaywall>) {
-        paywallsCached = paywalls
-        if (isListeningStarted) {
-            val resultMap = hashMapOf<String, Any?>()
-            resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
-            handleOnMainThread {
-                channel?.invokeMethod("paywallsDidFullyLoad", resultMap)
             }
         }
     }

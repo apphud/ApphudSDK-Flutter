@@ -235,20 +235,6 @@ class Apphud {
     return const [];
   }
 
-  /// Android only. A list of paywalls, potentially altered based on the user's involvement in A/B testing, if any.
-  ///
-  /// Important: This function doesn't await until inner native products are loaded from the stores.
-  /// That means paywalls may or may not have inner `SKProduct` / `ProductDetails` at the time you call this function.
-  ///
-  /// Important: This function will return empty array if user is not yet loaded, or paywalls are not set up in the Product Hub.
-  ///
-  /// To get paywalls with awaiting for native products, use await Apphud.paywalls() or Apphud.paywallsDidLoadCallback(...) functions.
-  static Future<ApphudPaywalls?> rawPaywalls() async {
-    final Map<dynamic, dynamic>? json =
-        await _channel.invokeMethod<Map<dynamic, dynamic>>('rawPaywalls');
-    return json != null ? ApphudPaywalls.fromJson(json) : null;
-  }
-
   ///Disables automatic paywall and placement requests during the SDK's initial setup.
   ///
   /// Developers must explicitly call `fetchPlacements` or `placements()` methods
@@ -266,22 +252,6 @@ class Apphud {
   /// real-time user segmentation based on custom user properties.
   static Future<void> deferPlacements() async {
     await _channel.invokeMethod('deferPlacements');
-  }
-
-  /// Retrieves the paywalls configured in Product Hub > Paywalls,
-  /// potentially altered based on the user's involvement in A/B testing, if any.
-  /// Awaits until the inner Stores products are loaded from the App Store or Google Play.
-  ///
-  /// For immediate access without awaiting `SKProduct`s or `ProductDetails`, use `rawPaywalls()` method.
-  static Future<ApphudPaywalls> paywallsDidLoadCallback() async {
-    final Map<dynamic, dynamic>? json = await _channel
-        .invokeMethod<Map<dynamic, dynamic>>('paywallsDidLoadCallback');
-    if (json == null) {
-      return ApphudPaywalls(
-        error: ApphudError(message: 'paywallsDidLoadCallback error'),
-      );
-    }
-    return ApphudPaywalls.fromJson(json);
   }
 
   /// iOS only.Preloads a Figma paywall screen for the given placement identifier.

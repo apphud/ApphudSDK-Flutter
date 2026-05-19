@@ -177,7 +177,6 @@ fun ApphudUser.toMap(): HashMap<String, Any?> {
         "subscriptions" to subscriptions.map { s -> s.toMap() },
         "purchases" to purchases.map { p -> p.toMap() },
         "rawPlacements" to rawPlacements().map { p -> p.toMap() },
-        "rawPaywalls" to rawPaywalls().map { p -> p.toMap() },
         "hasPurchases" to hasPurchases()
     )
 }

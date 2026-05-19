@@ -26,6 +26,7 @@ buildscript {
 
 rootProject.allprojects {
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
@@ -67,6 +68,7 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.android.billingclient:billing:8.3.0'
-    implementation 'com.github.apphud:ApphudSDK-Android:3.1.0'
+    // implementation 'com.github.apphud:ApphudSDK-Android:3.1.0'
+    implementation 'com.apphud:ApphudSDK-Android:0.0.0-local'
     implementation 'com.google.code.gson:gson:2.13.1'
 }
