@@ -5,10 +5,10 @@
 
 import ApphudSDK
 
-final class AttributeFromDeeplinkRequest: Request {
+final class AttributeFromDeeplinkRequest: @MainActor Request {
     typealias ArgumentProvider = AttributeFromDeeplinkArgumentParser
 
-    func startRequest(arguments: (), result: @escaping FlutterResult) {
+    @MainActor func startRequest(arguments: (), result: @escaping FlutterResult) {
         Apphud.attributeFromDeeplink { data in
             result(data)
         }

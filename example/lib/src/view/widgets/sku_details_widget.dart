@@ -7,6 +7,7 @@ class ProductDetailsWidget extends StatelessWidget {
   final ProductDetailsWrapper? productDetails;
   final VoidCallback? onTap;
   final VoidCallback? onPromote;
+  final VoidCallback? onShowProperties;
   final bool wrapInCard;
 
   const ProductDetailsWidget({
@@ -14,6 +15,7 @@ class ProductDetailsWidget extends StatelessWidget {
     this.productDetails,
     this.onTap,
     this.onPromote,
+    this.onShowProperties,
     bool? wrapInCard,
   })  : wrapInCard = wrapInCard ?? true,
         super(key: key);
@@ -62,12 +64,21 @@ class ProductDetailsWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Tooltip(
-                    message: 'Grant promotional access for 1 day',
-                    child: TextButton(
-                      onPressed: onPromote,
-                      child: const Text('Grant 1d free'),
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: onShowProperties,
+                        child: const Text('Props'),
+                      ),
+                      Tooltip(
+                        message: 'Grant promotional access for 1 day',
+                        child: TextButton(
+                          onPressed: onPromote,
+                          child: const Text('Grant 1d free'),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

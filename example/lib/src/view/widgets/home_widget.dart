@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:apphud/apphud.dart';
@@ -6,6 +5,7 @@ import 'package:apphud_example/src/purchase_bloc/purchase_bloc.dart';
 import 'package:apphud_example/src/view/widgets/overlay_progress_indicator.dart';
 import 'package:apphud_example/src/view/widgets/paywalls_list_widget.dart';
 import 'package:apphud_example/src/view/widgets/placement_list_widget.dart';
+import 'package:apphud_example/src/view/widgets/pretty_json_dialog.dart';
 import 'package:apphud_example/src/view/widgets/purchase_message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -137,10 +137,10 @@ class _HomeWidgetState extends State<HomeWidget> {
       try {
         final result = await Apphud.attributeFromDeeplink();
         if (!context.mounted) return;
-        _showPrettyJsonDialog(context, 'Attribute Deeplink', result);
+        showPrettyJsonDialog(context, 'Attribute Deeplink', result);
       } catch (e) {
         if (!context.mounted) return;
-        _showPrettyJsonDialog(context, 'Attribute Deeplink', {
+        showPrettyJsonDialog(context, 'Attribute Deeplink', {
           'error': e.toString(),
         });
       }
@@ -151,41 +151,12 @@ class _HomeWidgetState extends State<HomeWidget> {
     Future.microtask(() {
       if (!context.mounted) return;
       final user = BlocProvider.of<PurchaseBloc>(context).currentUser;
-      _showPrettyJsonDialog(
+      showPrettyJsonDialog(
         context,
         'App Remote Config',
         user?.remoteConfig() ?? {},
       );
     });
-  }
-
-  void _showPrettyJsonDialog(
-    BuildContext context,
-    String title,
-    Object? data,
-  ) {
-    final pretty = const JsonEncoder.withIndent('  ').convert(data);
-    showDialog<void>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(title),
-        content: SingleChildScrollView(
-          child: SelectableText(
-            pretty,
-            style: const TextStyle(
-              fontFamily: 'monospace',
-              fontSize: 12,
-            ),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
   }
 
   void _handleBottomBarTap(int value) {

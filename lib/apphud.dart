@@ -934,4 +934,13 @@ class Apphud {
     );
     return value!;
   }
+
+  /// Sets a custom API host URL.
+  ///
+  /// Must be called before [start] or [startManually].
+  ///
+  /// - iOS: sets `ApphudHttpClient.shared.domainUrlString`
+  /// - Android: calls `ApphudUtils.overrideBaseUrl`
+  static Future<void> setHost(String host) =>
+      _channel.invokeMethod('updateBaseUrl', {'url': host});
 }

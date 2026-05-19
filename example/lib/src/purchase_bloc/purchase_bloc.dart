@@ -14,6 +14,7 @@ import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:apphud_example/src/common/app_secrets_base.dart';
 import 'package:apphud_example/src/common/debug_print_mixin.dart';
+import 'package:apphud_example/src/common/env_config.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_user_message.dart';
 import 'package:bloc/bloc.dart';
 
@@ -114,10 +115,15 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     try {
       await Apphud.enableDebugLogs(level: ApphudDebugLevel.high);
 
+      final apphudHost = EnvConfig.apphudHost;
+      if (apphudHost != null) {
+        await Apphud.setHost(apphudHost);
+      }
       _apphudUser = await Apphud.start(
         apiKey: _appSecrets.apiKey,
         userID: _appSecrets.userID,
         observerMode: _appSecrets.observeMode,
+        baseUrl: apphudHost,
       );
       emit(PurchaseState.initialization(isStartSuccess: true));
       printAsJson('user registered', 'success');
@@ -215,12 +221,11 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       emit(s.copyWith(inProgress: true));
       final subscriptionOfferDetails =
           event.product.productDetails?.subscriptionOfferDetails ?? [];
-      final offerIdToken = subscriptionOfferDetails
-          .map((o) => o.offerToken)
-          .firstWhere(
-            (token) => token != null && token.isNotEmpty,
-            orElse: () => null,
-          );
+      final offerIdToken =
+          subscriptionOfferDetails.map((o) => o.offerToken).firstWhere(
+                (token) => token != null && token.isNotEmpty,
+                orElse: () => null,
+              );
       final result = await Apphud.purchase(
         //productId: event.product.productId,
         // or we can use
@@ -333,12 +338,12 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       (value) => printAsJson('subscriptions()', value),
       onError: (e) => printError('subscriptions()', e),
     );
-    
+
     Apphud.nonRenewingPurchases().then(
       (value) => printAsJson('nonRenewingPurchases()', value),
       onError: (e) => printError('nonRenewingPurchases()', e),
     );
-    
+
     // Apphud.hasPremiumAccess().then(
     //   (value) => printAsJson('hasPremiumAccess()', value),
     //   onError: (e) => printError('hasPremiumAccess()', e),

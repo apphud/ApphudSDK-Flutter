@@ -33,8 +33,11 @@ extension ApphudProduct {
             "variationIdentifier": variationIdentifier,
             "experimentId": experimentId,
         ]
-        if let properties {
-            map["properties"] = properties.mapValues { $0.toJSONValue() }
+        if let properties,
+           let encoded = try? JSONEncoder().encode(properties),
+           let json = try? JSONSerialization.jsonObject(with: encoded),
+           let flutterProperties = json as? [String: Any] {
+            map["properties"] = flutterProperties
         }
         return map
     }

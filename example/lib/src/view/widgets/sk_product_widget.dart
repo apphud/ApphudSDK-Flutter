@@ -5,6 +5,7 @@ class SkProductWidget extends StatelessWidget {
   final SKProductWrapper? skProduct;
   final VoidCallback? onTap;
   final VoidCallback? onPromote;
+  final VoidCallback? onShowProperties;
   final bool wrapInCard;
 
   const SkProductWidget({
@@ -12,6 +13,7 @@ class SkProductWidget extends StatelessWidget {
     this.skProduct,
     this.onTap,
     this.onPromote,
+    this.onShowProperties,
     bool? wrapInCard,
   })  : wrapInCard = wrapInCard ?? true,
         super(key: key);
@@ -62,12 +64,21 @@ class SkProductWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Tooltip(
-                message: 'Grant promotional access for 1 day',
-                child: TextButton(
-                  onPressed: onPromote,
-                  child: const Text('Grant 1d free'),
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: onShowProperties,
+                    child: const Text('Props'),
+                  ),
+                  Tooltip(
+                    message: 'Grant promotional access for 1 day',
+                    child: TextButton(
+                      onPressed: onPromote,
+                      child: const Text('Grant 1d free'),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
