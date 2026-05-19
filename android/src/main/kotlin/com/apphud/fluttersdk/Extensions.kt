@@ -167,16 +167,24 @@ fun ApphudPlacement.toMap(): HashMap<String, Any?> {
     return hashMapOf(
         "identifier" to identifier,
         "paywall" to paywall?.toMap(),
-        "experimentName" to experimentName
+        "experimentName" to experimentName,
+        "variationName" to variationName,
     )
 }
 
 fun ApphudUser.toMap(): HashMap<String, Any?> {
+    val placements = rawPlacements()
     return hashMapOf(
         "userId" to userId,
         "subscriptions" to subscriptions.map { s -> s.toMap() },
         "purchases" to purchases.map { p -> p.toMap() },
-        "rawPlacements" to rawPlacements().map { p -> p.toMap() },
-        "hasPurchases" to hasPurchases()
+        "rawPlacements" to placements.map { p -> p.toMap() },
+        "hasPurchases" to hasPurchases(),
+        "totalDevicesCount" to totalDevicesCount,
+        "internalId" to internalId,
+        "experimentName" to experimentName,
+        "variationName" to variationName,
+        "targetingName" to targetingName,
+        "remoteConfigString" to remoteConfigString,
     )
 }

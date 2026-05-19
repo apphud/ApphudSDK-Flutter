@@ -84,6 +84,7 @@ enum AppHudMethod {
         case purchasePromo
         case presentOfferCodeRedemptionSheet
         case purchaseProduct
+        case isCommitmentPlanSupported
         case showPaywall
         case preloadPaywall
         case loadFallbackPaywalls
@@ -120,6 +121,7 @@ enum AppHudMethod {
         case addAttribution
         case collectSearchAdsAttribution
         case attributeFromWeb
+        case attributeFromDeeplink
     }
 
     enum EligibilityChecks: String, CaseIterable {

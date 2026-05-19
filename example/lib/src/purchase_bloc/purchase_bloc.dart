@@ -624,14 +624,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //     ),
     //     onError: (e) => printError('rawPlacements', e),
     //   );
-    //
-    //   Apphud.rawPaywalls().then(
-    //     (value) => printAsJson(
-    //       'rawPaywalls',
-    //       value,
-    //     ),
-    //     onError: (e) => printError('rawPaywalls', e),
-    //   );
     // Apphud.paywallsDidLoadCallback().then(
     //   (value) => printAsJson(
     //     'paywallsDidLoadCallback',

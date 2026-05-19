@@ -12,6 +12,7 @@ ApphudPlacement _$ApphudPlacementFromJson(Map json) => ApphudPlacement(
           ? null
           : ApphudPaywall.fromJson(json['paywall'] as Map),
       experimentName: json['experimentName'] as String?,
+      variationName: json['variationName'] as String?,
     );
 
 Map<String, dynamic> _$ApphudPlacementToJson(ApphudPlacement instance) =>
@@ -19,4 +20,5 @@ Map<String, dynamic> _$ApphudPlacementToJson(ApphudPlacement instance) =>
       'identifier': instance.identifier,
       'paywall': instance.paywall,
       'experimentName': instance.experimentName,
+      'variationName': instance.variationName,
     };

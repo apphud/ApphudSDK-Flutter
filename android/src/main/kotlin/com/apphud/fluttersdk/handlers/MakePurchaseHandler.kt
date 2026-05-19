@@ -87,6 +87,9 @@ class MakePurchaseHandler(
             }
 
             MakePurchaseRoutes.deferPlacements.name -> deferPlacements(result)
+
+            MakePurchaseRoutes.isCommitmentPlanSupported.name ->
+                handleOnMainThread { result.success(false) }
         }
     }
 
@@ -454,9 +457,9 @@ enum class MakePurchaseRoutes {
     presentOfferCodeRedemptionSheet,
     getPaywalls,
     purchaseProduct,
+    isCommitmentPlanSupported,
     permissionGroups,
     paywallsDidLoadCallback,
-    rawPaywalls,
     loadFallbackPaywalls,
     trackPurchase,
     showPaywall,
