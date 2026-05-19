@@ -24,8 +24,11 @@ class ProductListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if ((products?.length ?? 0) == 0) {
       return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text('No products to purchase'),
+        padding: const EdgeInsets.all(16),
+        child: Text(
+          'No products to purchase',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
       );
     }
     return _buildProductList(products!, context);
@@ -33,9 +36,14 @@ class ProductListWidget extends StatelessWidget {
 
   Widget _buildProductList(List<ApphudProduct> products, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
       child: Column(
-        children: products.map((p) => _buildProduct(p, context)).toList(),
+        children: products
+            .map((p) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: _buildProduct(p, context),
+                ))
+            .toList(),
       ),
     );
   }
@@ -61,24 +69,26 @@ class ProductListWidget extends StatelessWidget {
         onPromote: () => BlocProvider.of<PurchaseBloc>(context).add(
           PurchaseEvent.grantPromotional(product),
         ),
-        onTrackPurchase: () => BlocProvider.of<PurchaseBloc>(context).add(
-          PurchaseEvent.trackPurchase(product),
-        ),
       );
     } else {
       content = Text('No product for this platform');
     }
     return Card(
-      elevation: 5,
+      elevation: 0,
+      color: Theme.of(context).colorScheme.surfaceContainerHighest,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(12, 10, 12, 4),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               product.name ?? 'No name',
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
+            const SizedBox(height: 4),
             content,
           ],
         ),

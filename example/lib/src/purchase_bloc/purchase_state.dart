@@ -12,9 +12,7 @@ class PurchaseState with _$PurchaseState implements InProgressState {
 
   const factory PurchaseState.initialization({
     @Default(false) bool isStartSuccess,
-    @Default(false) bool isPaywallsFetched,
     @Default(false) bool isPlacementsFetched,
-    @Default(ApphudPaywalls()) ApphudPaywalls paywalls,
     @Default([]) List<ApphudPlacement> placements,
   }) = PurchaseInitializationState;
 

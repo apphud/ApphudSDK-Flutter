@@ -145,11 +145,7 @@ extension PurchaseStatePatterns on PurchaseState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            bool isStartSuccess,
-            bool isPaywallsFetched,
-            bool isPlacementsFetched,
-            ApphudPaywalls paywalls,
+    TResult Function(bool isStartSuccess, bool isPlacementsFetched,
             List<ApphudPlacement> placements)?
         initialization,
     TResult Function(ApphudPaywalls paywalls, List<ApphudPlacement> placements,
@@ -161,8 +157,8 @@ extension PurchaseStatePatterns on PurchaseState {
     final _that = this;
     switch (_that) {
       case PurchaseInitializationState() when initialization != null:
-        return initialization(_that.isStartSuccess, _that.isPaywallsFetched,
-            _that.isPlacementsFetched, _that.paywalls, _that.placements);
+        return initialization(
+            _that.isStartSuccess, _that.isPlacementsFetched, _that.placements);
       case PurchaseSuccessState() when success != null:
         return success(_that.paywalls, _that.placements, _that.inProgress,
             _that.userMessage);
@@ -188,11 +184,7 @@ extension PurchaseStatePatterns on PurchaseState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            bool isStartSuccess,
-            bool isPaywallsFetched,
-            bool isPlacementsFetched,
-            ApphudPaywalls paywalls,
+    required TResult Function(bool isStartSuccess, bool isPlacementsFetched,
             List<ApphudPlacement> placements)
         initialization,
     required TResult Function(
@@ -206,8 +198,8 @@ extension PurchaseStatePatterns on PurchaseState {
     final _that = this;
     switch (_that) {
       case PurchaseInitializationState():
-        return initialization(_that.isStartSuccess, _that.isPaywallsFetched,
-            _that.isPlacementsFetched, _that.paywalls, _that.placements);
+        return initialization(
+            _that.isStartSuccess, _that.isPlacementsFetched, _that.placements);
       case PurchaseSuccessState():
         return success(_that.paywalls, _that.placements, _that.inProgress,
             _that.userMessage);
@@ -232,11 +224,7 @@ extension PurchaseStatePatterns on PurchaseState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            bool isStartSuccess,
-            bool isPaywallsFetched,
-            bool isPlacementsFetched,
-            ApphudPaywalls paywalls,
+    TResult? Function(bool isStartSuccess, bool isPlacementsFetched,
             List<ApphudPlacement> placements)?
         initialization,
     TResult? Function(ApphudPaywalls paywalls, List<ApphudPlacement> placements,
@@ -247,8 +235,8 @@ extension PurchaseStatePatterns on PurchaseState {
     final _that = this;
     switch (_that) {
       case PurchaseInitializationState() when initialization != null:
-        return initialization(_that.isStartSuccess, _that.isPaywallsFetched,
-            _that.isPlacementsFetched, _that.paywalls, _that.placements);
+        return initialization(
+            _that.isStartSuccess, _that.isPlacementsFetched, _that.placements);
       case PurchaseSuccessState() when success != null:
         return success(_that.paywalls, _that.placements, _that.inProgress,
             _that.userMessage);
@@ -265,9 +253,7 @@ extension PurchaseStatePatterns on PurchaseState {
 class PurchaseInitializationState extends PurchaseState {
   const PurchaseInitializationState(
       {this.isStartSuccess = false,
-      this.isPaywallsFetched = false,
       this.isPlacementsFetched = false,
-      this.paywalls = const ApphudPaywalls(),
       final List<ApphudPlacement> placements = const []})
       : _placements = placements,
         super._();
@@ -275,11 +261,7 @@ class PurchaseInitializationState extends PurchaseState {
   @JsonKey()
   final bool isStartSuccess;
   @JsonKey()
-  final bool isPaywallsFetched;
-  @JsonKey()
   final bool isPlacementsFetched;
-  @JsonKey()
-  final ApphudPaywalls paywalls;
   final List<ApphudPlacement> _placements;
   @JsonKey()
   List<ApphudPlacement> get placements {
@@ -303,28 +285,19 @@ class PurchaseInitializationState extends PurchaseState {
             other is PurchaseInitializationState &&
             (identical(other.isStartSuccess, isStartSuccess) ||
                 other.isStartSuccess == isStartSuccess) &&
-            (identical(other.isPaywallsFetched, isPaywallsFetched) ||
-                other.isPaywallsFetched == isPaywallsFetched) &&
             (identical(other.isPlacementsFetched, isPlacementsFetched) ||
                 other.isPlacementsFetched == isPlacementsFetched) &&
-            (identical(other.paywalls, paywalls) ||
-                other.paywalls == paywalls) &&
             const DeepCollectionEquality()
                 .equals(other._placements, _placements));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      isStartSuccess,
-      isPaywallsFetched,
-      isPlacementsFetched,
-      paywalls,
-      const DeepCollectionEquality().hash(_placements));
+  int get hashCode => Object.hash(runtimeType, isStartSuccess,
+      isPlacementsFetched, const DeepCollectionEquality().hash(_placements));
 
   @override
   String toString() {
-    return 'PurchaseState.initialization(isStartSuccess: $isStartSuccess, isPaywallsFetched: $isPaywallsFetched, isPlacementsFetched: $isPlacementsFetched, paywalls: $paywalls, placements: $placements)';
+    return 'PurchaseState.initialization(isStartSuccess: $isStartSuccess, isPlacementsFetched: $isPlacementsFetched, placements: $placements)';
   }
 }
 
@@ -338,9 +311,7 @@ abstract mixin class $PurchaseInitializationStateCopyWith<$Res>
   @useResult
   $Res call(
       {bool isStartSuccess,
-      bool isPaywallsFetched,
       bool isPlacementsFetched,
-      ApphudPaywalls paywalls,
       List<ApphudPlacement> placements});
 }
 
@@ -357,9 +328,7 @@ class _$PurchaseInitializationStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? isStartSuccess = null,
-    Object? isPaywallsFetched = null,
     Object? isPlacementsFetched = null,
-    Object? paywalls = null,
     Object? placements = null,
   }) {
     return _then(PurchaseInitializationState(
@@ -367,18 +336,10 @@ class _$PurchaseInitializationStateCopyWithImpl<$Res>
           ? _self.isStartSuccess
           : isStartSuccess // ignore: cast_nullable_to_non_nullable
               as bool,
-      isPaywallsFetched: null == isPaywallsFetched
-          ? _self.isPaywallsFetched
-          : isPaywallsFetched // ignore: cast_nullable_to_non_nullable
-              as bool,
       isPlacementsFetched: null == isPlacementsFetched
           ? _self.isPlacementsFetched
           : isPlacementsFetched // ignore: cast_nullable_to_non_nullable
               as bool,
-      paywalls: null == paywalls
-          ? _self.paywalls
-          : paywalls // ignore: cast_nullable_to_non_nullable
-              as ApphudPaywalls,
       placements: null == placements
           ? _self._placements
           : placements // ignore: cast_nullable_to_non_nullable

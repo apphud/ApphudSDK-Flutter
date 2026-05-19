@@ -21,23 +21,55 @@ class SkProductWidget extends StatelessWidget {
     if (skProduct == null) {
       return _wrapInCard(child: ListTile(title: Text('skProduct is null')));
     }
-    final SKProductWrapper skProductLocal = skProduct!;
+    final skProductLocal = skProduct!;
+    final theme = Theme.of(context);
+
     return InkWell(
       onTap: onTap,
       child: _wrapInCard(
-        child: ListTile(
-          title: Text(
-            '${skProductLocal.localizedTitle} '
-            '(${skProductLocal.productIdentifier})',
-          ),
-          leading: Text('${skProductLocal.localizedDescription}\n'
-              '${skProductLocal.price} ${skProductLocal.priceLocale.currencyCode}'),
-          trailing: HeroMode(
-            enabled: false,
-            child: FloatingActionButton(
-              onPressed: onPromote,
-              child: Text('P'),
-            ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      skProductLocal.localizedTitle,
+                      style: theme.textTheme.titleSmall,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      skProductLocal.productIdentifier,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      skProductLocal.localizedDescription,
+                      style: theme.textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${skProductLocal.price} ${skProductLocal.priceLocale.currencyCode}',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Tooltip(
+                message: 'Grant promotional access for 1 day',
+                child: TextButton(
+                  onPressed: onPromote,
+                  child: const Text('Grant 1d free'),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -46,7 +78,7 @@ class SkProductWidget extends StatelessWidget {
 
   Widget _wrapInCard({required Widget child}) {
     if (wrapInCard) {
-      return Card(elevation: 5, child: child);
+      return Card(elevation: 1, child: child);
     }
     return child;
   }

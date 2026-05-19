@@ -32,14 +32,12 @@ class InitializationWidget extends StatelessWidget {
   Widget _buildInitialization(PurchaseInitializationState state) {
     return _buildStatus(
       isStartSuccess: state.isStartSuccess,
-      isPaywallsFetched: state.isPaywallsFetched,
       isPlacementsFetched: state.isPlacementsFetched,
     );
   }
 
   Padding _buildStatus({
     required bool isStartSuccess,
-    required bool isPaywallsFetched,
     required bool isPlacementsFetched,
   }) {
     return Padding(
@@ -53,15 +51,6 @@ class InitializationWidget extends StatelessWidget {
                   ? Icon(Icons.check)
                   : CircularProgressIndicator(),
               title: Text('SDK initialization'),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Card(
-            child: ListTile(
-              leading: isPaywallsFetched
-                  ? Icon(Icons.check)
-                  : CircularProgressIndicator(),
-              title: Text('Paywalls fetching'),
             ),
           ),
           const SizedBox(height: 20),
@@ -81,7 +70,6 @@ class InitializationWidget extends StatelessWidget {
   Widget _buildSuccess(PurchaseSuccessState state) {
     return _buildStatus(
       isStartSuccess: true,
-      isPaywallsFetched: true,
       isPlacementsFetched: true,
     );
   }

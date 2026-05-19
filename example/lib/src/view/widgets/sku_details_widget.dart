@@ -7,7 +7,6 @@ class ProductDetailsWidget extends StatelessWidget {
   final ProductDetailsWrapper? productDetails;
   final VoidCallback? onTap;
   final VoidCallback? onPromote;
-  final VoidCallback? onTrackPurchase;
   final bool wrapInCard;
 
   const ProductDetailsWidget({
@@ -15,7 +14,6 @@ class ProductDetailsWidget extends StatelessWidget {
     this.productDetails,
     this.onTap,
     this.onPromote,
-    this.onTrackPurchase,
     bool? wrapInCard,
   })  : wrapInCard = wrapInCard ?? true,
         super(key: key);
@@ -24,52 +22,96 @@ class ProductDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (productDetails == null) {
       return _wrapInCard(
-          child: ListTile(title: Text('productDetails is null')));
+        child: ListTile(title: Text('productDetails is null')),
+      );
     }
-    final ProductDetailsWrapper productDetailsLocal = productDetails!;
+    final details = productDetails!;
+    final theme = Theme.of(context);
+
     return InkWell(
       onTap: onTap,
       child: _wrapInCard(
-        child: ListTile(
-          title: Text('${productDetailsLocal.description}\n'
-              '${productDetailsLocal.title} (${productDetailsLocal.productId})'),
-          subtitle: _buildProductDetailsJson(productDetailsLocal),
-          trailing: HeroMode(
-            enabled: false,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                FloatingActionButton(
-                  onPressed: onPromote,
-                  child: Text('P'),
-                ),
-                const SizedBox(width: 10),
-                FloatingActionButton(
-                  onPressed: onTrackPurchase,
-                  child: Text('T'),
-                ),
-              ],
-            ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          details.title,
+                          style: theme.textTheme.titleSmall,
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          details.productId,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          details.description,
+                          style: theme.textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Tooltip(
+                    message: 'Grant promotional access for 1 day',
+                    child: TextButton(
+                      onPressed: onPromote,
+                      child: const Text('Grant 1d free'),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              _buildProductDetailsJson(details, theme),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildProductDetailsJson(ProductDetailsWrapper productDetails) {
-    final JsonEncoder encoder = JsonEncoder.withIndent(' ');
+  Widget _buildProductDetailsJson(
+    ProductDetailsWrapper productDetails,
+    ThemeData theme,
+  ) {
+    final encoder = JsonEncoder.withIndent(' ');
     final oneTimePurchaseOfferDetails = encoder.convert(
       productDetails.oneTimePurchaseOfferDetails,
     );
 
     final subscriptionOfferDetails = productDetails.subscriptionOfferDetails
-            ?.map((d) => Text(encoder.convert(d)))
+            ?.map(
+              (d) => Text(
+                encoder.convert(d),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontFamily: 'monospace',
+                  fontSize: 11,
+                ),
+              ),
+            )
             .toList(growable: false) ??
         <Widget>[];
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(oneTimePurchaseOfferDetails),
+        Text(
+          oneTimePurchaseOfferDetails,
+          style: theme.textTheme.bodySmall?.copyWith(
+            fontFamily: 'monospace',
+            fontSize: 11,
+          ),
+        ),
         ...subscriptionOfferDetails,
       ],
     );
@@ -77,7 +119,7 @@ class ProductDetailsWidget extends StatelessWidget {
 
   Widget _wrapInCard({required Widget child}) {
     if (wrapInCard) {
-      return Card(elevation: 5, child: child);
+      return Card(elevation: 1, child: child);
     }
     return child;
   }

@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:apphud/apphud.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_bloc.dart';
 import 'package:apphud_example/src/view/widgets/overlay_progress_indicator.dart';
 import 'package:apphud_example/src/view/widgets/paywalls_list_widget.dart';
@@ -119,7 +121,71 @@ class _HomeWidgetState extends State<HomeWidget> {
           PurchaseEvent.restorePurchases(),
         ),
       ),
+      PopupMenuItem(
+        child: Text('Attribute Deeplink'),
+        onTap: () => _onAttributeDeeplinkTap(context),
+      ),
+      PopupMenuItem(
+        child: Text('App remote config'),
+        onTap: () => _onAppRemoteConfigTap(context),
+      ),
     ];
+  }
+
+  void _onAttributeDeeplinkTap(BuildContext context) {
+    Future.microtask(() async {
+      try {
+        final result = await Apphud.attributeFromDeeplink();
+        if (!context.mounted) return;
+        _showPrettyJsonDialog(context, 'Attribute Deeplink', result);
+      } catch (e) {
+        if (!context.mounted) return;
+        _showPrettyJsonDialog(context, 'Attribute Deeplink', {
+          'error': e.toString(),
+        });
+      }
+    });
+  }
+
+  void _onAppRemoteConfigTap(BuildContext context) {
+    Future.microtask(() {
+      if (!context.mounted) return;
+      final user = BlocProvider.of<PurchaseBloc>(context).currentUser;
+      _showPrettyJsonDialog(
+        context,
+        'App Remote Config',
+        user?.remoteConfig() ?? {},
+      );
+    });
+  }
+
+  void _showPrettyJsonDialog(
+    BuildContext context,
+    String title,
+    Object? data,
+  ) {
+    final pretty = const JsonEncoder.withIndent('  ').convert(data);
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(title),
+        content: SingleChildScrollView(
+          child: SelectableText(
+            pretty,
+            style: const TextStyle(
+              fontFamily: 'monospace',
+              fontSize: 12,
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _handleBottomBarTap(int value) {
