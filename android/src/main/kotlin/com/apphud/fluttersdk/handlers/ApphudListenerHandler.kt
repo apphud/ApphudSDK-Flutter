@@ -6,7 +6,6 @@ import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudListener
 import com.apphud.sdk.domain.ApphudNonRenewingPurchase
-import com.apphud.sdk.domain.ApphudPaywall
 import com.apphud.sdk.domain.ApphudPlacement
 import com.apphud.sdk.domain.ApphudSubscription
 import com.apphud.sdk.domain.ApphudUser
@@ -21,7 +20,6 @@ class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) :
     private var channel: MethodChannel? = null
     private var userIdCached: String? = null
     private var detailsCached: List<ProductDetails>? = null
-    private var paywallsCached: List<ApphudPaywall>? = null
     private var userCached: ApphudUser? = null
     private var subscriptionsCached: List<ApphudSubscription>? = null
     private var purchasesCached: List<ApphudNonRenewingPurchase>? = null

@@ -178,15 +178,16 @@ class _SimpleHomeScreenState extends State<SimpleHomeScreen>
   ) async {}
 
   @override
-  Future<void> paywallsDidFullyLoad(ApphudPaywalls paywalls) async {
+  Future<void> placementsDidFullyLoad(List<ApphudPlacement> placements) async {
+    final paywalls = placements
+        .map((p) => p.paywall)
+        .whereType<ApphudPaywall>()
+        .toList();
     setState(() {
-      _isExpanded = paywalls.paywalls.map((e) => false).toList(growable: false);
-      _paywalls = paywalls;
+      _isExpanded = paywalls.map((e) => false).toList(growable: false);
+      _paywalls = ApphudPaywalls(paywalls: paywalls);
     });
   }
-
-  @override
-  Future<void> placementsDidFullyLoad(List<ApphudPlacement> placements) async {}
 
   @override
   Future<void> userDidLoad(ApphudUser user) async {}

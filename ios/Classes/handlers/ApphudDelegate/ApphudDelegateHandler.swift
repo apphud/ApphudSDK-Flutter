@@ -42,15 +42,6 @@ public class ApphudDelegateHandler: NSObject, FlutterPlugin, @MainActor ApphudDe
         isListeningStarted = false
     }
     
-    public func paywallsDidFullyLoad(paywalls:[ApphudPaywall]) {
-        if(isListeningStarted){
-            channel.invokeMethod("paywallsDidFullyLoad",
-                                 arguments: [
-                                            "paywalls" : paywalls.map({ (paywall: ApphudPaywall) in paywall.toMap() }),
-                                            ])
-        }
-    }
-    
     public func apphudDidFetchStoreKitProducts(_ products: [SKProduct], _ error: Error?) {
         if(error == nil && isListeningStarted) {
             channel.invokeMethod("fetchNativeProducts",

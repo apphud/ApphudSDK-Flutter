@@ -46,7 +46,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   ) async {
     await event.map(
       started: (e) => _handleStartedEvent(e, emit),
-      paywallsFetched: (e) => _handlePaywallsFetchedEvent(e, emit),
       placementsFetched: (e) => _handlePlacementsFetchedEventt(e, emit),
       callAll: (e) => _handleCallAllEvent(e, emit),
       grantPromotional: (e) => _handleGrantPromotionalEvent(e, emit),
@@ -83,12 +82,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     List<ApphudSubscriptionWrapper> subscriptions,
   ) async {
     printAsJson('ApphudListener.apphudSubscriptionsUpdated', 'success');
-  }
-
-  @override
-  Future<void> paywallsDidFullyLoad(ApphudPaywalls paywalls) async {
-    printAsJson('ApphudListener.paywallsDidFullyLoad', 'success');
-    add(PurchaseEvent.paywallsFetched(paywalls));
   }
 
   @override
@@ -136,15 +129,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     } catch (error) {
       emit(PurchaseState.startFailed(error.toString()));
     }
-  }
-
-  Future<void> _handlePaywallsFetchedEvent(
-    PurchasePaywallsFetchedEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
-    state.mapOrNull(
-      success: (s) => emit(s.copyWith(paywalls: event.paywalls)),
-    );
   }
 
   Future<void> _handlePlacementsFetchedEventt(

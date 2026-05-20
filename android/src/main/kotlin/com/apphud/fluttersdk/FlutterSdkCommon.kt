@@ -2,9 +2,6 @@ package com.apphud.fluttersdk
 
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.domain.ApphudPaywall
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 object FlutterSdkCommon {
     public suspend fun getPaywall(

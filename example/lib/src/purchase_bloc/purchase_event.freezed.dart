@@ -51,7 +51,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(PurchaseStartedEvent value)? started,
-    TResult Function(PurchasePaywallsFetchedEvent value)? paywallsFetched,
     TResult Function(PurchasePlacementsFetchedEvent value)? placementsFetched,
     TResult Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult Function(PurchasePurchaseProductEvent value)? purchaseProduct,
@@ -67,8 +66,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
     switch (_that) {
       case PurchaseStartedEvent() when started != null:
         return started(_that);
-      case PurchasePaywallsFetchedEvent() when paywallsFetched != null:
-        return paywallsFetched(_that);
       case PurchasePlacementsFetchedEvent() when placementsFetched != null:
         return placementsFetched(_that);
       case PurchaseRestorePurchasesEvent() when restorePurchases != null:
@@ -108,8 +105,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(PurchaseStartedEvent value) started,
-    required TResult Function(PurchasePaywallsFetchedEvent value)
-        paywallsFetched,
     required TResult Function(PurchasePlacementsFetchedEvent value)
         placementsFetched,
     required TResult Function(PurchaseRestorePurchasesEvent value)
@@ -128,8 +123,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
     switch (_that) {
       case PurchaseStartedEvent():
         return started(_that);
-      case PurchasePaywallsFetchedEvent():
-        return paywallsFetched(_that);
       case PurchasePlacementsFetchedEvent():
         return placementsFetched(_that);
       case PurchaseRestorePurchasesEvent():
@@ -168,7 +161,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PurchaseStartedEvent value)? started,
-    TResult? Function(PurchasePaywallsFetchedEvent value)? paywallsFetched,
     TResult? Function(PurchasePlacementsFetchedEvent value)? placementsFetched,
     TResult? Function(PurchaseRestorePurchasesEvent value)? restorePurchases,
     TResult? Function(PurchasePurchaseProductEvent value)? purchaseProduct,
@@ -183,8 +175,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
     switch (_that) {
       case PurchaseStartedEvent() when started != null:
         return started(_that);
-      case PurchasePaywallsFetchedEvent() when paywallsFetched != null:
-        return paywallsFetched(_that);
       case PurchasePlacementsFetchedEvent() when placementsFetched != null:
         return placementsFetched(_that);
       case PurchaseRestorePurchasesEvent() when restorePurchases != null:
@@ -223,7 +213,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(ApphudPaywalls paywalls)? paywallsFetched,
     TResult Function(List<ApphudPlacement> placements)? placementsFetched,
     TResult Function()? restorePurchases,
     TResult Function(ApphudProduct product)? purchaseProduct,
@@ -239,8 +228,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
     switch (_that) {
       case PurchaseStartedEvent() when started != null:
         return started();
-      case PurchasePaywallsFetchedEvent() when paywallsFetched != null:
-        return paywallsFetched(_that.paywalls);
       case PurchasePlacementsFetchedEvent() when placementsFetched != null:
         return placementsFetched(_that.placements);
       case PurchaseRestorePurchasesEvent() when restorePurchases != null:
@@ -280,7 +267,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(ApphudPaywalls paywalls) paywallsFetched,
     required TResult Function(List<ApphudPlacement> placements)
         placementsFetched,
     required TResult Function() restorePurchases,
@@ -297,8 +283,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
     switch (_that) {
       case PurchaseStartedEvent():
         return started();
-      case PurchasePaywallsFetchedEvent():
-        return paywallsFetched(_that.paywalls);
       case PurchasePlacementsFetchedEvent():
         return placementsFetched(_that.placements);
       case PurchaseRestorePurchasesEvent():
@@ -337,7 +321,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(ApphudPaywalls paywalls)? paywallsFetched,
     TResult? Function(List<ApphudPlacement> placements)? placementsFetched,
     TResult? Function()? restorePurchases,
     TResult? Function(ApphudProduct product)? purchaseProduct,
@@ -352,8 +335,6 @@ extension PurchaseEventPatterns on PurchaseEvent {
     switch (_that) {
       case PurchaseStartedEvent() when started != null:
         return started();
-      case PurchasePaywallsFetchedEvent() when paywallsFetched != null:
-        return paywallsFetched(_that.paywalls);
       case PurchasePlacementsFetchedEvent() when placementsFetched != null:
         return placementsFetched(_that.placements);
       case PurchaseRestorePurchasesEvent() when restorePurchases != null:
@@ -395,73 +376,6 @@ class PurchaseStartedEvent extends PurchaseEvent {
   @override
   String toString() {
     return 'PurchaseEvent.started()';
-  }
-}
-
-/// @nodoc
-
-class PurchasePaywallsFetchedEvent extends PurchaseEvent {
-  const PurchasePaywallsFetchedEvent(this.paywalls) : super._();
-
-  final ApphudPaywalls paywalls;
-
-  /// Create a copy of PurchaseEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $PurchasePaywallsFetchedEventCopyWith<PurchasePaywallsFetchedEvent>
-      get copyWith => _$PurchasePaywallsFetchedEventCopyWithImpl<
-          PurchasePaywallsFetchedEvent>(this, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is PurchasePaywallsFetchedEvent &&
-            (identical(other.paywalls, paywalls) ||
-                other.paywalls == paywalls));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, paywalls);
-
-  @override
-  String toString() {
-    return 'PurchaseEvent.paywallsFetched(paywalls: $paywalls)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $PurchasePaywallsFetchedEventCopyWith<$Res>
-    implements $PurchaseEventCopyWith<$Res> {
-  factory $PurchasePaywallsFetchedEventCopyWith(
-          PurchasePaywallsFetchedEvent value,
-          $Res Function(PurchasePaywallsFetchedEvent) _then) =
-      _$PurchasePaywallsFetchedEventCopyWithImpl;
-  @useResult
-  $Res call({ApphudPaywalls paywalls});
-}
-
-/// @nodoc
-class _$PurchasePaywallsFetchedEventCopyWithImpl<$Res>
-    implements $PurchasePaywallsFetchedEventCopyWith<$Res> {
-  _$PurchasePaywallsFetchedEventCopyWithImpl(this._self, this._then);
-
-  final PurchasePaywallsFetchedEvent _self;
-  final $Res Function(PurchasePaywallsFetchedEvent) _then;
-
-  /// Create a copy of PurchaseEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? paywalls = null,
-  }) {
-    return _then(PurchasePaywallsFetchedEvent(
-      null == paywalls
-          ? _self.paywalls
-          : paywalls // ignore: cast_nullable_to_non_nullable
-              as ApphudPaywalls,
-    ));
   }
 }
 
