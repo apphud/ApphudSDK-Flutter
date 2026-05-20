@@ -14,7 +14,7 @@ final class IsCommitmentPlanSupportedRequest: Request {
             let paywallIdentifier = arguments.paywallIdentifier
             let placementIdentifier = arguments.placementIdentifier
 
-            guard let product = await Self.resolveProduct(
+            guard let product = await ApphudPaywallsHelper.resolveProduct(
                 productId: productId,
                 paywallIdentifier: paywallIdentifier,
                 placementIdentifier: placementIdentifier
@@ -30,34 +30,6 @@ final class IsCommitmentPlanSupportedRequest: Request {
                 result(false)
             }
         }
-    }
-
-    @MainActor private static func resolveProduct(
-        productId: String,
-        paywallIdentifier: String?,
-        placementIdentifier: String?
-    ) async -> ApphudProduct? {
-        if placementIdentifier != nil {
-            let placements = await Apphud.placements()
-            for placement in placements {
-                guard let paywall = placement.paywall else { continue }
-                if let product = paywall.products.first(where: {
-                    $0.productId == productId && $0.placementIdentifier == placementIdentifier
-                }) {
-                    return product
-                }
-            }
-        } else if paywallIdentifier != nil {
-            let paywalls = await ApphudPaywallsHelper.getPaywalls()
-            for paywall in paywalls {
-                if let product = paywall.products.first(where: {
-                    $0.productId == productId && $0.paywallIdentifier == paywallIdentifier
-                }) {
-                    return product
-                }
-            }
-        }
-        return nil
     }
 }
 

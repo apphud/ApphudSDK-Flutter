@@ -99,7 +99,6 @@ enum AppHudMethod {
         case isNonRenewingPurchaseConsumable
         case restorePurchases
         case permissionGroups
-        case paywallsDidLoadCallback
         case hasPremiumAccess
     }
 

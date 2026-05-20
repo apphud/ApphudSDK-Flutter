@@ -149,7 +149,7 @@ extension PurchaseStatePatterns on PurchaseState {
             List<ApphudPlacement> placements)?
         initialization,
     TResult Function(ApphudPaywalls paywalls, List<ApphudPlacement> placements,
-            bool inProgress, PurchaseUserMessage userMessage)?
+            ApphudUser? user, bool inProgress, PurchaseUserMessage userMessage)?
         success,
     TResult Function(String error)? startFailed,
     required TResult orElse(),
@@ -160,8 +160,8 @@ extension PurchaseStatePatterns on PurchaseState {
         return initialization(
             _that.isStartSuccess, _that.isPlacementsFetched, _that.placements);
       case PurchaseSuccessState() when success != null:
-        return success(_that.paywalls, _that.placements, _that.inProgress,
-            _that.userMessage);
+        return success(_that.paywalls, _that.placements, _that.user,
+            _that.inProgress, _that.userMessage);
       case PurchaseStartFailedState() when startFailed != null:
         return startFailed(_that.error);
       case _:
@@ -190,6 +190,7 @@ extension PurchaseStatePatterns on PurchaseState {
     required TResult Function(
             ApphudPaywalls paywalls,
             List<ApphudPlacement> placements,
+            ApphudUser? user,
             bool inProgress,
             PurchaseUserMessage userMessage)
         success,
@@ -201,8 +202,8 @@ extension PurchaseStatePatterns on PurchaseState {
         return initialization(
             _that.isStartSuccess, _that.isPlacementsFetched, _that.placements);
       case PurchaseSuccessState():
-        return success(_that.paywalls, _that.placements, _that.inProgress,
-            _that.userMessage);
+        return success(_that.paywalls, _that.placements, _that.user,
+            _that.inProgress, _that.userMessage);
       case PurchaseStartFailedState():
         return startFailed(_that.error);
       case _:
@@ -228,7 +229,7 @@ extension PurchaseStatePatterns on PurchaseState {
             List<ApphudPlacement> placements)?
         initialization,
     TResult? Function(ApphudPaywalls paywalls, List<ApphudPlacement> placements,
-            bool inProgress, PurchaseUserMessage userMessage)?
+            ApphudUser? user, bool inProgress, PurchaseUserMessage userMessage)?
         success,
     TResult? Function(String error)? startFailed,
   }) {
@@ -238,8 +239,8 @@ extension PurchaseStatePatterns on PurchaseState {
         return initialization(
             _that.isStartSuccess, _that.isPlacementsFetched, _that.placements);
       case PurchaseSuccessState() when success != null:
-        return success(_that.paywalls, _that.placements, _that.inProgress,
-            _that.userMessage);
+        return success(_that.paywalls, _that.placements, _that.user,
+            _that.inProgress, _that.userMessage);
       case PurchaseStartFailedState() when startFailed != null:
         return startFailed(_that.error);
       case _:
@@ -354,6 +355,7 @@ class PurchaseSuccessState extends PurchaseState {
   const PurchaseSuccessState(
       {this.paywalls = const ApphudPaywalls(),
       final List<ApphudPlacement> placements = const [],
+      this.user,
       this.inProgress = false,
       this.userMessage = const PurchaseUserMessage.none()})
       : _placements = placements,
@@ -369,6 +371,7 @@ class PurchaseSuccessState extends PurchaseState {
     return EqualUnmodifiableListView(_placements);
   }
 
+  final ApphudUser? user;
   @JsonKey()
   final bool inProgress;
   @JsonKey()
@@ -391,6 +394,7 @@ class PurchaseSuccessState extends PurchaseState {
                 other.paywalls == paywalls) &&
             const DeepCollectionEquality()
                 .equals(other._placements, _placements) &&
+            (identical(other.user, user) || other.user == user) &&
             (identical(other.inProgress, inProgress) ||
                 other.inProgress == inProgress) &&
             (identical(other.userMessage, userMessage) ||
@@ -402,12 +406,13 @@ class PurchaseSuccessState extends PurchaseState {
       runtimeType,
       paywalls,
       const DeepCollectionEquality().hash(_placements),
+      user,
       inProgress,
       userMessage);
 
   @override
   String toString() {
-    return 'PurchaseState.success(paywalls: $paywalls, placements: $placements, inProgress: $inProgress, userMessage: $userMessage)';
+    return 'PurchaseState.success(paywalls: $paywalls, placements: $placements, user: $user, inProgress: $inProgress, userMessage: $userMessage)';
   }
 }
 
@@ -421,6 +426,7 @@ abstract mixin class $PurchaseSuccessStateCopyWith<$Res>
   $Res call(
       {ApphudPaywalls paywalls,
       List<ApphudPlacement> placements,
+      ApphudUser? user,
       bool inProgress,
       PurchaseUserMessage userMessage});
 
@@ -441,6 +447,7 @@ class _$PurchaseSuccessStateCopyWithImpl<$Res>
   $Res call({
     Object? paywalls = null,
     Object? placements = null,
+    Object? user = freezed,
     Object? inProgress = null,
     Object? userMessage = null,
   }) {
@@ -453,6 +460,10 @@ class _$PurchaseSuccessStateCopyWithImpl<$Res>
           ? _self._placements
           : placements // ignore: cast_nullable_to_non_nullable
               as List<ApphudPlacement>,
+      user: freezed == user
+          ? _self.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as ApphudUser?,
       inProgress: null == inProgress
           ? _self.inProgress
           : inProgress // ignore: cast_nullable_to_non_nullable

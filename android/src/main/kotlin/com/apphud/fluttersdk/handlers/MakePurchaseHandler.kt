@@ -57,8 +57,6 @@ class MakePurchaseHandler(
             }
             MakePurchaseRoutes.presentOfferCodeRedemptionSheet.name -> result.notImplemented()
 
-            MakePurchaseRoutes.getPaywalls.name -> result.notImplemented()
-
             MakePurchaseRoutes.purchaseProduct.name -> PurchaseProductParser(result).parse(args)
             { product, offerIdToken, oldToken, replacementMode, consumableInappProduct ->
                 purchaseProduct(
@@ -455,11 +453,9 @@ enum class MakePurchaseRoutes {
     purchasePromo,
     syncPurchasesInObserverMode,
     presentOfferCodeRedemptionSheet,
-    getPaywalls,
     purchaseProduct,
     isCommitmentPlanSupported,
     permissionGroups,
-    paywallsDidLoadCallback,
     loadFallbackPaywalls,
     trackPurchase,
     showPaywall,

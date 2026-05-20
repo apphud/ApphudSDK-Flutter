@@ -101,6 +101,9 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   Future<void> userDidLoad(ApphudUser user) async {
     printAsJson('ApphudListener.userDidLoad', 'success');
     _apphudUser = user;
+    state.mapOrNull(
+      success: (s) => emit(s.copyWith(user: user)),
+    );
   }
 
   @override
@@ -154,6 +157,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
           emit(PurchaseState.success(
             placements: event.placements,
             paywalls: _paywallsFromPlacements(event.placements),
+            user: _apphudUser,
           ));
         } else {
           emit(s.copyWith(
@@ -165,6 +169,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       success: (s) => emit(s.copyWith(
         placements: event.placements,
         paywalls: _paywallsFromPlacements(event.placements),
+        user: _apphudUser,
       )),
     );
   }
