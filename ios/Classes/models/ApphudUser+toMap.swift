@@ -15,8 +15,13 @@ extension ApphudUser{
           "subscriptions": subscriptions.map({ s in s.toMap() }),
           "purchases": purchases.map({ p in p.toMap() }),
           "rawPlacements": rawPlacements().map({ p in p.toMap() }),
-          "rawPaywalls": rawPlacements().compactMap(\.paywall).map({ p in p.toMap() }),
-          "hasPurchases": !(subscriptions.isEmpty && purchases.isEmpty)
+          "hasPurchases": !(subscriptions.isEmpty && purchases.isEmpty),
+          "totalDevicesCount": totalDevicesCount,
+          "internalId": internalId,
+          "experimentName": experimentName,
+          "variationName": variationName,
+          "targetingName": targetingName,
+          "remoteConfigString": remoteConfigString,
       ]
       return map
     }

@@ -145,7 +145,7 @@ class Apphud {
 
   // === Placements, Paywalls and Products ===
 
-  /// Asynchronously retrieves the paywall placements configured in Product Hub > Placements,
+  /// Asynchronously retrieves the paywall placements configured in Mission control > Placements,
   /// potentially altered based on the user's involvement in A/B testing, if any.
   /// Awaits until the inner Stores products are loaded from the App Store or Google Play.
   ///
@@ -166,7 +166,7 @@ class Apphud {
   }
 
   /// Asynchronously retrieves a specific paywall placement by its identifier
-  /// configured in Product Hub > Placements, potentially altered based on the user's involvement in A/B testing, if any.
+  /// configured in Mission control > Placements, potentially altered based on the user's involvement in A/B testing, if any.
   /// Awaits until the inner Stores products are loaded from the App Store or Google Play.
   ///
   /// A placement is a specific location within a user's journey (such as onboarding, settings, etc.)
@@ -185,7 +185,7 @@ class Apphud {
     return json == null ? null : ApphudPlacement.fromJson(json);
   }
 
-  /// Returns the placements from Product Hub > Placements, potentially altered
+  /// Returns the placements from Mission control > Placements, potentially altered
   /// based on the user's involvement in A/B testing, if any.
   ///
   /// A placement is a specific location within a user's journey
@@ -218,7 +218,7 @@ class Apphud {
   /// Important: This function doesn't await until inner Stores products are loaded.
   /// That means paywalls may or may not have inner `SKProduct` / `ProductDetails` at the time you call this function.
   ///
-  /// Important: This function will return empty array if user is not yet loaded, or placements are not set up in the Product Hub.
+  /// Important: This function will return empty array if user is not yet loaded, or placements are not set up in Mission control.
   ///
   /// To get placements with awaiting for native Stores products,
   /// use await Apphud.placements() or Apphud.placementsDidLoadCallback(...) functions.
@@ -233,20 +233,6 @@ class Apphud {
       return placements.map((json) => ApphudPlacement.fromJson(json)).toList();
     }
     return const [];
-  }
-
-  /// Android only. A list of paywalls, potentially altered based on the user's involvement in A/B testing, if any.
-  ///
-  /// Important: This function doesn't await until inner native products are loaded from the stores.
-  /// That means paywalls may or may not have inner `SKProduct` / `ProductDetails` at the time you call this function.
-  ///
-  /// Important: This function will return empty array if user is not yet loaded, or paywalls are not set up in the Product Hub.
-  ///
-  /// To get paywalls with awaiting for native products, use await Apphud.paywalls() or Apphud.paywallsDidLoadCallback(...) functions.
-  static Future<ApphudPaywalls?> rawPaywalls() async {
-    final Map<dynamic, dynamic>? json =
-        await _channel.invokeMethod<Map<dynamic, dynamic>>('rawPaywalls');
-    return json != null ? ApphudPaywalls.fromJson(json) : null;
   }
 
   ///Disables automatic paywall and placement requests during the SDK's initial setup.
@@ -266,22 +252,6 @@ class Apphud {
   /// real-time user segmentation based on custom user properties.
   static Future<void> deferPlacements() async {
     await _channel.invokeMethod('deferPlacements');
-  }
-
-  /// Retrieves the paywalls configured in Product Hub > Paywalls,
-  /// potentially altered based on the user's involvement in A/B testing, if any.
-  /// Awaits until the inner Stores products are loaded from the App Store or Google Play.
-  ///
-  /// For immediate access without awaiting `SKProduct`s or `ProductDetails`, use `rawPaywalls()` method.
-  static Future<ApphudPaywalls> paywallsDidLoadCallback() async {
-    final Map<dynamic, dynamic>? json = await _channel
-        .invokeMethod<Map<dynamic, dynamic>>('paywallsDidLoadCallback');
-    if (json == null) {
-      return ApphudPaywalls(
-        error: ApphudError(message: 'paywallsDidLoadCallback error'),
-      );
-    }
-    return ApphudPaywalls.fromJson(json);
   }
 
   /// iOS only.Preloads a Figma paywall screen for the given placement identifier.
@@ -386,7 +356,7 @@ class Apphud {
   ///  Purchase product and automatically submits App Store Receipt (iOS) or Google Play purchase token (Android) to Apphud.
   ///
   /// - parameter [productId] - Not recommended for use. Pass either `productId` or `product` object. Is an identifier of the native product that user wants to purchase. A/B analytics and other features may not work if purchasing via productId.
-  /// - parameter [product] - Recommended for use. Is an `ApphudProduct` object from your `ApphudPaywall`. You must first configure paywalls [and optionally placements] in Apphud > Product Hub.
+  /// - parameter [product] - Recommended for use. Is an `ApphudProduct` object from your `ApphudPaywall`. You must first configure paywalls [and optionally placements] in Apphud > Mission control.
   /// - parameter [offerIdToken] - Android only. Required for Subscriptions. The identifier of the offer for initiating the purchase. Developer should retrieve it manually from `SubscriptionOfferDetails` object.
   /// - parameter [oldToken] - Android only. Optional. Specifies the Google Play Billing purchase token that the user is upgrading or downgrading from.
   /// - parameter [replacementMode] - Android only. Optional. Replacement mode (https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.SubscriptionUpdateParams.ReplacementMode?hl=en)
@@ -495,12 +465,31 @@ class Apphud {
     await _channel.invokeMethod('presentOfferCodeRedemptionSheet');
   }
 
+  /// Returns true if the product has a commitment plan option configured in Mission control.
+  ///
+  /// iOS only. On Android always returns `false`.
+  static bool isCommitmentPlanPreferred(ApphudProduct product) =>
+      product.isCommitmentPlanPreferred();
+
+  /// Returns true if commitment plan purchase is supported for this product on the device.
+  ///
+  /// iOS only. Requires iOS 26.4+. On Android always returns `false`.
+  static Future<bool> isCommitmentPlanSupported(ApphudProduct product) async {
+    final result = await _channel.invokeMethod<bool>(
+      'isCommitmentPlanSupported',
+      product.toJson()
+        ..remove('productDetails')
+        ..remove('skProduct'),
+    );
+    return result ?? false;
+  }
+
   /// Returns [ApphudProductComposite] object by [productIdentifier].
   ///
-  /// Note that you have to add this product identifier in Apphud Dashboard > Product Hub > Products.
+  /// Note that you have to add this product identifier in Apphud Dashboard > Mission control > Products.
   /// Will return `null` if product is not yet fetched from the App Store.
   /// Best practise is not to use this method, but implement paywalls logic by adding your
-  /// paywall configuration in Apphud Dashboard > Product Hub > Paywalls.
+  /// paywall configuration in Apphud Dashboard > Mission control > Paywalls.
   static Future<ApphudProductComposite?> product(
       String productIdentifier) async {
     final Map<dynamic, dynamic>? json =
@@ -512,7 +501,7 @@ class Apphud {
     return json != null ? ApphudProductComposite.fromJson(json) : null;
   }
 
-  /// Returns array of [ApphudProductComposite] objects that you added in Apphud > Product Hub > Products.
+  /// Returns array of [ApphudProductComposite] objects that you added in Apphud > Mission control > Products.
   static Future<List<ApphudProductComposite>> products() async {
     List<Map<dynamic, dynamic>>? products =
         (await _channel.invokeMethod<List<dynamic>>('products'))?.toMapList;
@@ -534,7 +523,7 @@ class Apphud {
 
 // Handle Purchases
 
-  /// Fetches permission groups configured in the Apphud > Product Hub.
+  /// Fetches permission groups configured in the Apphud > Mission control.
   ///
   /// Groups are cached on the device.
   /// Returns a list of `ApphudGroup` objects representing permission groups.
@@ -804,6 +793,16 @@ class Apphud {
     return (wasSuccessful, user);
   }
 
+  /// Attempts to attribute the user using a recently opened deep link, if available.
+  ///
+  /// If a matching deep link click is found, returns the associated attribution data.
+  /// Otherwise returns `null`.
+  static Future<Map<String, dynamic>?> attributeFromDeeplink() async {
+    final Map<dynamic, dynamic>? result =
+        await _channel.invokeMethod('attributeFromDeeplink');
+    return result?.cast<String, dynamic>();
+  }
+
   // Other
 
   /// Enables debug logs. You should call this method before SDK initialization.
@@ -935,4 +934,13 @@ class Apphud {
     );
     return value!;
   }
+
+  /// Sets a custom API host URL.
+  ///
+  /// Must be called before [start] or [startManually].
+  ///
+  /// - iOS: sets `ApphudHttpClient.shared.domainUrlString`
+  /// - Android: calls `ApphudUtils.overrideBaseUrl`
+  static Future<void> setHost(String host) =>
+      _channel.invokeMethod('updateBaseUrl', {'url': host});
 }

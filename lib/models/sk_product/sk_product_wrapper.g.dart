@@ -24,7 +24,7 @@ SKProductWrapper _$SKProductWrapperFromJson(Map json) => SKProductWrapper(
       discounts: (json['discounts'] as List<dynamic>?)
               ?.map((e) => SKProductDiscountWrapper.fromJson(e as Map))
               .toList() ??
-          [],
+          const <SKProductDiscountWrapper>[],
     );
 
 Map<String, dynamic> _$SKProductWrapperToJson(SKProductWrapper instance) =>

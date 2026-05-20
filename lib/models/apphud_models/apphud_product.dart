@@ -14,6 +14,15 @@ class ApphudProduct {
   final String? paywallIdentifier;
   final String? placementIdentifier;
 
+  /// Product configuration from Apphud Mission control (iOS).
+  final Map<String, dynamic>? properties;
+
+  /// For internal usage (iOS).
+  final String? variationIdentifier;
+
+  /// For internal usage (iOS).
+  final String? experimentId;
+
   ApphudProduct({
     required this.productId,
     required this.store,
@@ -22,7 +31,21 @@ class ApphudProduct {
     this.paywallIdentifier,
     this.skProduct,
     this.placementIdentifier,
+    this.properties,
+    this.variationIdentifier,
+    this.experimentId,
   });
+
+  /// Returns true if the product has a commitment plan option configured in Mission control.
+  ///
+  /// iOS only. On Android always returns `false`.
+  bool isCommitmentPlanPreferred() {
+    final offers = properties?['introductory_offer'];
+    if (offers is Map) {
+      return offers['commitment_offer_enabled'] == true;
+    }
+    return false;
+  }
 
   factory ApphudProduct.fromJson(Map<dynamic, dynamic> map) =>
       _$ApphudProductFromJson(map);
@@ -31,6 +54,6 @@ class ApphudProduct {
 
   @override
   String toString() {
-    return 'ApphudProduct{productId: $productId, store: $store, name: $name, productDetails: $productDetails, skProduct: $skProduct, paywallIdentifier: $paywallIdentifier, placementIdentifier: $placementIdentifier}';
+    return 'ApphudProduct{productId: $productId, store: $store, name: $name, productDetails: $productDetails, skProduct: $skProduct, paywallIdentifier: $paywallIdentifier, placementIdentifier: $placementIdentifier, properties: $properties, variationIdentifier: $variationIdentifier, experimentId: $experimentId}';
   }
 }

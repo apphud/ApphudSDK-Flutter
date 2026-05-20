@@ -18,6 +18,11 @@ ApphudProduct _$ApphudProductFromJson(Map json) => ApphudProduct(
           ? null
           : SKProductWrapper.fromJson(json['skProduct'] as Map),
       placementIdentifier: json['placementIdentifier'] as String?,
+      properties: (json['properties'] as Map?)?.map(
+        (k, e) => MapEntry(k as String, e),
+      ),
+      variationIdentifier: json['variationIdentifier'] as String?,
+      experimentId: json['experimentId'] as String?,
     );
 
 Map<String, dynamic> _$ApphudProductToJson(ApphudProduct instance) =>
@@ -29,4 +34,7 @@ Map<String, dynamic> _$ApphudProductToJson(ApphudProduct instance) =>
       'skProduct': instance.skProduct,
       'paywallIdentifier': instance.paywallIdentifier,
       'placementIdentifier': instance.placementIdentifier,
+      'properties': instance.properties,
+      'variationIdentifier': instance.variationIdentifier,
+      'experimentId': instance.experimentId,
     };

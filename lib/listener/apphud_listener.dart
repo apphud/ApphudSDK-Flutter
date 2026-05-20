@@ -1,6 +1,5 @@
 import 'package:apphud/models/apphud_models/android/android_purchase_wrapper.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
-import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
@@ -14,14 +13,11 @@ abstract class ApphudListener {
   /// Note that you have to add all product identifiers in Apphud.
   Future<void> apphudDidFecthProducts(List<ApphudProductComposite> products);
 
-  /// Called when paywalls are fully loaded with their SkuDetails or SkProducts
-  Future<void> paywallsDidFullyLoad(ApphudPaywalls paywalls);
-
   /// This method is invoked when a user is registered in Apphud or retrieved from the cache. It is called once per app lifecycle.
   ///
-  /// The ApphudUser object passed as a parameter contains a record of all
-  /// purchases tracked by Apphud and associated raw placements and paywalls for that user.
-  /// These lists may or may not have their inner Google Play products fully loaded at the time of this method's call.
+  /// The [ApphudUser] object contains subscriptions, purchases, remote config, targeting metadata,
+  /// and [ApphudUser.rawPlacements] (paywalls are nested under each placement when present).
+  /// Placement lists may not have inner StoreKit / Google Play products loaded yet at call time.
   Future<void> userDidLoad(ApphudUser user);
 
   /// Returns array of subscriptions that user ever purchased. Empty array means user never purchased a subscription.

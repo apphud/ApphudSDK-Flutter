@@ -14,6 +14,7 @@ extension ApphudPlacement {
           "identifier": identifier,
           "paywall": paywall?.toMap(),
           "experimentName": experimentName,
+          "variationName": variationName,
       ]
       return map
     }

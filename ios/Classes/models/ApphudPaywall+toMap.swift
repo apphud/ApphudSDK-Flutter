@@ -23,13 +23,23 @@ extension ApphudPaywall {
 
 extension ApphudProduct {
     func toMap() -> [String: Any?] {
-        return ["productId" : productId,
-                "name" : name,
-                "store" :store,
-                "paywallIdentifier" : paywallIdentifier,
-                "placementIdentifier" : placementIdentifier,
-                "skProduct" : skProduct?.toMap()
+        var map: [String: Any?] = [
+            "productId": productId,
+            "name": name,
+            "store": store,
+            "paywallIdentifier": paywallIdentifier,
+            "placementIdentifier": placementIdentifier,
+            "skProduct": skProduct?.toMap(),
+            "variationIdentifier": variationIdentifier,
+            "experimentId": experimentId,
         ]
+        if let properties,
+           let encoded = try? JSONEncoder().encode(properties),
+           let json = try? JSONSerialization.jsonObject(with: encoded),
+           let flutterProperties = json as? [String: Any] {
+            map["properties"] = flutterProperties
+        }
+        return map
     }
 }
 

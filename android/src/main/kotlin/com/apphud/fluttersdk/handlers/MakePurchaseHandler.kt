@@ -57,10 +57,6 @@ class MakePurchaseHandler(
             }
             MakePurchaseRoutes.presentOfferCodeRedemptionSheet.name -> result.notImplemented()
 
-            MakePurchaseRoutes.getPaywalls.name -> result.notImplemented()
-
-            MakePurchaseRoutes.paywallsDidLoadCallback.name -> paywallsDidLoadCallback(result)
-
             MakePurchaseRoutes.purchaseProduct.name -> PurchaseProductParser(result).parse(args)
             { product, offerIdToken, oldToken, replacementMode, consumableInappProduct ->
                 purchaseProduct(
@@ -74,8 +70,6 @@ class MakePurchaseHandler(
             }
 
             MakePurchaseRoutes.permissionGroups.name -> permissionGroups(result)
-
-            MakePurchaseRoutes.rawPaywalls.name -> rawPaywalls(result)
 
             MakePurchaseRoutes.loadFallbackPaywalls.name -> loadFallbackPaywalls(result)
 
@@ -91,6 +85,9 @@ class MakePurchaseHandler(
             }
 
             MakePurchaseRoutes.deferPlacements.name -> deferPlacements(result)
+
+            MakePurchaseRoutes.isCommitmentPlanSupported.name ->
+                handleOnMainThread { result.success(false) }
         }
     }
 
@@ -103,22 +100,6 @@ class MakePurchaseHandler(
         GlobalScope.launch {
             val groups = Apphud.fetchPermissionGroups()
             handleOnMainThread { result.success(groups.map { it.toMap() }) }
-        }
-    }
-
-    private fun rawPaywalls(result: MethodChannel.Result) {
-        val paywalls = Apphud.rawPaywalls()
-        val resultMap = hashMapOf<String, Any?>()
-        resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
-        handleOnMainThread { result.success(resultMap) }
-    }
-
-    private fun paywallsDidLoadCallback(result: MethodChannel.Result) {
-        Apphud.paywallsDidLoadCallback { paywalls, error ->
-            val resultMap = hashMapOf<String, Any?>()
-            resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
-            resultMap["error"] = error?.toMap()
-            handleOnMainThread { result.success(resultMap) }
         }
     }
 
@@ -472,11 +453,9 @@ enum class MakePurchaseRoutes {
     purchasePromo,
     syncPurchasesInObserverMode,
     presentOfferCodeRedemptionSheet,
-    getPaywalls,
     purchaseProduct,
+    isCommitmentPlanSupported,
     permissionGroups,
-    paywallsDidLoadCallback,
-    rawPaywalls,
     loadFallbackPaywalls,
     trackPurchase,
     showPaywall,

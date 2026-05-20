@@ -11,13 +11,13 @@ final class StartManuallyRequest: Request {
     typealias ArgumentProvider = StartManuallyArgumentParser
 
     @MainActor func startRequest(arguments: (apiKey: String, userID: String?, deviceID: String?, observerMode: Bool, baseUrl: String?), result: @escaping FlutterResult) {
+        if let baseUrl = arguments.baseUrl {
+            ApphudHttpClient.shared.domainUrlString = baseUrl
+        }
         Apphud.startManually(apiKey: arguments.apiKey,
                                  userID: arguments.userID,
                                  deviceID: arguments.deviceID,
                              observerMode: arguments.observerMode) { (user) in result(user.toMap()) }
-        if let baseUrl = arguments.baseUrl {
-            ApphudHttpClient.shared.domainUrlString = baseUrl
-        }
     }
 }
 

@@ -6,6 +6,7 @@ import 'package:apphud/models/apphud_models/apphud_attribution_data.dart';
 import 'package:apphud/models/apphud_models/apphud_attribution_provider.dart';
 import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
+import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
@@ -13,6 +14,7 @@ import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
 import 'package:apphud_example/src/common/app_secrets_base.dart';
 import 'package:apphud_example/src/common/debug_print_mixin.dart';
+import 'package:apphud_example/src/common/env_config.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_user_message.dart';
 import 'package:bloc/bloc.dart';
 
@@ -28,6 +30,8 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   final AppSecretsBase _appSecrets;
   ApphudUser? _apphudUser;
 
+  ApphudUser? get currentUser => _apphudUser;
+
   PurchaseBloc({
     required AppSecretsBase appSecrets,
   })  : _appSecrets = appSecrets,
@@ -42,7 +46,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   ) async {
     await event.map(
       started: (e) => _handleStartedEvent(e, emit),
-      paywallsFetched: (e) => _handlePaywallsFetchedEvent(e, emit),
       placementsFetched: (e) => _handlePlacementsFetchedEventt(e, emit),
       callAll: (e) => _handleCallAllEvent(e, emit),
       grantPromotional: (e) => _handleGrantPromotionalEvent(e, emit),
@@ -82,12 +85,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   }
 
   @override
-  Future<void> paywallsDidFullyLoad(ApphudPaywalls paywalls) async {
-    printAsJson('ApphudListener.paywallsDidFullyLoad', 'success');
-    add(PurchaseEvent.paywallsFetched(paywalls));
-  }
-
-  @override
   Future<void> placementsDidFullyLoad(List<ApphudPlacement> placements) async {
     printAsJson('ApphudListener.placementsDidFullyLoad', 'success');
     add(PurchaseEvent.placementsFetched(placements));
@@ -97,6 +94,9 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   Future<void> userDidLoad(ApphudUser user) async {
     printAsJson('ApphudListener.userDidLoad', 'success');
     _apphudUser = user;
+    state.mapOrNull(
+      success: (s) => emit(s.copyWith(user: user)),
+    );
   }
 
   @override
@@ -111,44 +111,24 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     try {
       await Apphud.enableDebugLogs(level: ApphudDebugLevel.high);
 
-      await Apphud.start(
+      final apphudHost = EnvConfig.apphudHost;
+      if (apphudHost != null) {
+        await Apphud.setHost(apphudHost);
+      }
+      _apphudUser = await Apphud.start(
         apiKey: _appSecrets.apiKey,
         userID: _appSecrets.userID,
-        observerMode: _appSecrets.observeMode
+        observerMode: _appSecrets.observeMode,
+        baseUrl: apphudHost,
       );
       emit(PurchaseState.initialization(isStartSuccess: true));
       printAsJson('user registered', 'success');
 
-      // await Apphud.deferPlacements();
+      final placements = await Apphud.placements();
+      add(PurchaseEvent.placementsFetched(placements));
     } catch (error) {
       emit(PurchaseState.startFailed(error.toString()));
     }
-  }
-
-  Future<void> _handlePaywallsFetchedEvent(
-    PurchasePaywallsFetchedEvent event,
-    Emitter<PurchaseState> emit,
-  ) async {
-    state.mapOrNull(
-      initialization: (s) {
-        if (s.isStartSuccess && s.isPlacementsFetched) {
-          emit(PurchaseState.success(
-            placements: s.placements,
-            paywalls: event.paywalls,
-          ));
-        } else {
-          emit(s.copyWith(
-            isPaywallsFetched: true,
-            paywalls: event.paywalls,
-          ));
-        }
-      },
-      success: (s) {
-        emit(s.copyWith(
-          paywalls: event.paywalls,
-        ));
-      },
-    );
   }
 
   Future<void> _handlePlacementsFetchedEventt(
@@ -157,10 +137,11 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   ) async {
     state.mapOrNull(
       initialization: (s) {
-        if (s.isStartSuccess && s.isPaywallsFetched) {
+        if (s.isStartSuccess) {
           emit(PurchaseState.success(
             placements: event.placements,
-            paywalls: s.paywalls,
+            paywalls: _paywallsFromPlacements(event.placements),
+            user: _apphudUser,
           ));
         } else {
           emit(s.copyWith(
@@ -169,9 +150,20 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
           ));
         }
       },
-      success: (s) {
-        emit(s.copyWith(placements: event.placements));
-      },
+      success: (s) => emit(s.copyWith(
+        placements: event.placements,
+        paywalls: _paywallsFromPlacements(event.placements),
+        user: _apphudUser,
+      )),
+    );
+  }
+
+  ApphudPaywalls _paywallsFromPlacements(List<ApphudPlacement> placements) {
+    return ApphudPaywalls(
+      paywalls: placements
+          .map((placement) => placement.paywall)
+          .whereType<ApphudPaywall>()
+          .toList(),
     );
   }
 
@@ -218,12 +210,11 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       emit(s.copyWith(inProgress: true));
       final subscriptionOfferDetails =
           event.product.productDetails?.subscriptionOfferDetails ?? [];
-      final offerIdToken = subscriptionOfferDetails
-          .map((o) => o.offerToken)
-          .firstWhere(
-            (token) => token != null && token.isNotEmpty,
-            orElse: () => null,
-          );
+      final offerIdToken =
+          subscriptionOfferDetails.map((o) => o.offerToken).firstWhere(
+                (token) => token != null && token.isNotEmpty,
+                orElse: () => null,
+              );
       final result = await Apphud.purchase(
         //productId: event.product.productId,
         // or we can use
@@ -336,12 +327,12 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       (value) => printAsJson('subscriptions()', value),
       onError: (e) => printError('subscriptions()', e),
     );
-    
+
     Apphud.nonRenewingPurchases().then(
       (value) => printAsJson('nonRenewingPurchases()', value),
       onError: (e) => printError('nonRenewingPurchases()', e),
     );
-    
+
     // Apphud.hasPremiumAccess().then(
     //   (value) => printAsJson('hasPremiumAccess()', value),
     //   onError: (e) => printError('hasPremiumAccess()', e),
@@ -623,14 +614,6 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     //       value,
     //     ),
     //     onError: (e) => printError('rawPlacements', e),
-    //   );
-    //
-    //   Apphud.rawPaywalls().then(
-    //     (value) => printAsJson(
-    //       'rawPaywalls',
-    //       value,
-    //     ),
-    //     onError: (e) => printError('rawPaywalls', e),
     //   );
     // Apphud.paywallsDidLoadCallback().then(
     //   (value) => printAsJson(

@@ -40,11 +40,11 @@ class InitializationHandler(
     }
 
     private fun start(apiKey: String, userId: String?, observerMode: Boolean, baseUrl: String?, result: MethodChannel.Result) {
+        if (baseUrl != null) {
+            ApphudUtils.overrideBaseUrl(baseUrl)
+        }
         Apphud.start(context = context, apiKey = apiKey, userId = userId, observerMode = observerMode) { user ->
             handleOnMainThread { result.success(user.toMap()) }
-        }
-        if (baseUrl != null) {
-            ApphudUtils.overrideBaseUrl(baseUrl!!)
         }
     }
 
@@ -56,6 +56,9 @@ class InitializationHandler(
         baseUrl: String?,
         result: MethodChannel.Result
     ) {
+        if (baseUrl != null) {
+            ApphudUtils.overrideBaseUrl(baseUrl)
+        }
         Apphud.start(
             context = context,
             apiKey = apiKey,
@@ -64,9 +67,6 @@ class InitializationHandler(
             observerMode = observerMode
         ) { user ->
             handleOnMainThread { result.success(user.toMap()) }
-        }
-        if (baseUrl != null) {
-            ApphudUtils.overrideBaseUrl(baseUrl!!)
         }
     }
 

@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:apphud/apphud.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_bloc.dart';
 import 'package:apphud_example/src/view/widgets/overlay_progress_indicator.dart';
 import 'package:apphud_example/src/view/widgets/paywalls_list_widget.dart';
 import 'package:apphud_example/src/view/widgets/placement_list_widget.dart';
+import 'package:apphud_example/src/view/widgets/pretty_json_dialog.dart';
 import 'package:apphud_example/src/view/widgets/purchase_message_widget.dart';
+import 'package:apphud_example/src/view/widgets/user_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,7 +39,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget _buildProductsTabs(BuildContext context, PurchaseSuccessState state) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_pageIndex == 0 ? 'Placements' : 'Paywalls'),
+        title: Text(_appBarTitle),
         actions: [_buildMenu()],
       ),
       body: _buildBody(context, state),
@@ -66,6 +69,18 @@ class _HomeWidgetState extends State<HomeWidget> {
             ),
             label: '',
           ),
+          BottomNavigationBarItem(
+            icon: Text(
+              'User',
+              style: _pageIndex == 2
+                  ? TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              )
+                  : null,
+            ),
+            label: '',
+          ),
         ],
         currentIndex: _pageIndex,
         onTap: _handleBottomBarTap,
@@ -83,9 +98,11 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget _buildBody(BuildContext context, PurchaseSuccessState state) {
     return OverlayProgressIndicator<PurchaseBloc, PurchaseState>(
       child: PurchaseMessageWidget(
-        child: _pageIndex == 0
-            ? _buildPlacements(context, state)
-            : _buildPaywalls(context, state),
+        child: switch (_pageIndex) {
+          0 => _buildPlacements(context, state),
+          1 => _buildPaywalls(context, state),
+          _ => _buildUserDetails(context, state),
+        },
       ),
     );
   }
@@ -96,6 +113,21 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   Widget _buildPlacements(BuildContext context,PurchaseSuccessState state) {
     return PlacementsListWidget(placements: state.placements);
+  }
+
+  Widget _buildUserDetails(BuildContext context, PurchaseSuccessState state) {
+    return UserDetailsWidget(user: state.user);
+  }
+
+  String get _appBarTitle {
+    switch (_pageIndex) {
+      case 0:
+        return 'Placements';
+      case 1:
+        return 'Paywalls';
+      default:
+        return 'User Details';
+    }
   }
 
   List<PopupMenuEntry> _buildMenuItems(BuildContext context) {
@@ -119,7 +151,42 @@ class _HomeWidgetState extends State<HomeWidget> {
           PurchaseEvent.restorePurchases(),
         ),
       ),
+      PopupMenuItem(
+        child: Text('Attribute Deeplink'),
+        onTap: () => _onAttributeDeeplinkTap(context),
+      ),
+      PopupMenuItem(
+        child: Text('App remote config'),
+        onTap: () => _onAppRemoteConfigTap(context),
+      ),
     ];
+  }
+
+  void _onAttributeDeeplinkTap(BuildContext context) {
+    Future.microtask(() async {
+      try {
+        final result = await Apphud.attributeFromDeeplink();
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Attribute Deeplink', result);
+      } catch (e) {
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Attribute Deeplink', {
+          'error': e.toString(),
+        });
+      }
+    });
+  }
+
+  void _onAppRemoteConfigTap(BuildContext context) {
+    Future.microtask(() {
+      if (!context.mounted) return;
+      final user = BlocProvider.of<PurchaseBloc>(context).currentUser;
+      showPrettyJsonDialog(
+        context,
+        'App Remote Config',
+        user?.remoteConfig() ?? {},
+      );
+    });
   }
 
   void _handleBottomBarTap(int value) {

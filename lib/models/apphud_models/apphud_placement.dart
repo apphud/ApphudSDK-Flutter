@@ -8,16 +8,18 @@ class ApphudPlacement {
   final String identifier;
   final ApphudPaywall? paywall;
   final String? experimentName;
+  final String? variationName;
 
   ApphudPlacement({
     required this.identifier,
     this.paywall,
     this.experimentName,
+    this.variationName,
   });
 
   @override
   String toString() {
-    return 'ApphudPlacement{identifier: $identifier, paywall: $paywall, experimentName: $experimentName}';
+    return 'ApphudPlacement{identifier: $identifier, paywall: $paywall, experimentName: $experimentName, variationName: $variationName}';
   }
 
   Map<String, dynamic> toJson() => _$ApphudPlacementToJson(this);

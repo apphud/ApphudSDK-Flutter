@@ -1,3 +1,20 @@
+## 3.2.0
+- Dependencies of Native SDK's were updated to:
+  - [Android] 3.2.3
+  - [iOS] 4.2.2
+- [Dart] `ApphudUser`: added `totalDevicesCount`, `internalId`, `experimentName`, `variationName`, `targetingName`, `remoteConfigString`, and `remoteConfig()` helper.
+- [Dart] `ApphudPlacement`: added `variationName`.
+- [Dart] `ApphudProduct`: added `properties`, `variationIdentifier`, `experimentId`, and `isCommitmentPlanPreferred()`.
+- [Dart] `Apphud.attributeFromDeeplink()` for deeplink attribution.
+- [Dart] `Apphud.setHost()` to override API host before SDK start.
+- [Dart] `Apphud.isCommitmentPlanPreferred()` and `Apphud.isCommitmentPlanSupported()` (iOS only; Android returns `false`).
+- [iOS], [Android] Product Hub renamed to Mission control in public documentation.
+- [iOS], [Android] Custom API host (`baseUrl` / `setHost`) is applied before `start` / `startManually`.
+- **BREAKING** [Dart] Removed `ApphudUser.rawPaywalls`.
+- **BREAKING** [Dart] Removed `Apphud.rawPaywalls()` and `Apphud.paywallsDidLoadCallback()`.
+- **BREAKING** [Dart] Removed `ApphudListener.paywallsDidFullyLoad`. Use `placementsDidFullyLoad` and read paywalls from `ApphudPlacement.paywall`.
+- [iOS] Product lookup for `purchaseProduct` and commitment-plan checks uses `ApphudPaywallsHelper.resolveProduct` (`ios/Classes/common/ApphudPaywallsHelper.swift`, lines 22–35).
+
 ## 3.1.2
 - [iOS] Fixed `SKProductDiscount` mapping: `identifier` and `type` are now forwarded to Flutter, and `priceLocale` is serialized correctly (it was hardcoded as an empty map before, which also affected `introductoryPrice.priceLocale`).
 - [iOS], [Dart] `SKProductDiscountWrapper` now exposes `identifier` (`String?`) and `type` (`SKProductDiscountType` enum: `introductory` / `subscription`).

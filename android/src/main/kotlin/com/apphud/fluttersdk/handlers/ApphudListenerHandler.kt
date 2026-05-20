@@ -6,7 +6,6 @@ import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudListener
 import com.apphud.sdk.domain.ApphudNonRenewingPurchase
-import com.apphud.sdk.domain.ApphudPaywall
 import com.apphud.sdk.domain.ApphudPlacement
 import com.apphud.sdk.domain.ApphudSubscription
 import com.apphud.sdk.domain.ApphudUser
@@ -21,7 +20,6 @@ class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) :
     private var channel: MethodChannel? = null
     private var userIdCached: String? = null
     private var detailsCached: List<ProductDetails>? = null
-    private var paywallsCached: List<ApphudPaywall>? = null
     private var userCached: ApphudUser? = null
     private var subscriptionsCached: List<ApphudSubscription>? = null
     private var purchasesCached: List<ApphudNonRenewingPurchase>? = null
@@ -62,7 +60,6 @@ class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) :
         isListeningStarted = true
         userIdCached?.let { v -> apphudDidChangeUserID(v) }
         detailsCached?.let { v -> apphudFetchProductDetails(v) }
-        paywallsCached?.let { v -> paywallsDidFullyLoad(v) }
         userCached?.let { v -> userDidLoad(v) }
         subscriptionsCached?.let { v -> apphudSubscriptionsUpdated(v) }
         purchasesCached?.let { v -> apphudNonRenewingPurchasesUpdated(v) }
@@ -101,17 +98,6 @@ class ApphudListenerHandler(handleOnMainThreadP: HandleOnMainThread) :
             }
             handleOnMainThread {
                 channel?.invokeMethod("fetchNativeProducts", resultMap)
-            }
-        }
-    }
-
-    override fun paywallsDidFullyLoad(paywalls: List<ApphudPaywall>) {
-        paywallsCached = paywalls
-        if (isListeningStarted) {
-            val resultMap = hashMapOf<String, Any?>()
-            resultMap["paywalls"] = paywalls.map { paywall -> paywall.toMap() }
-            handleOnMainThread {
-                channel?.invokeMethod("paywallsDidFullyLoad", resultMap)
             }
         }
     }

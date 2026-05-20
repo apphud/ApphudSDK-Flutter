@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:apphud/listener/apphud_listener.dart';
 import 'package:apphud/models/apphud_models/android/android_purchase_wrapper.dart';
 import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
-import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
@@ -32,10 +31,6 @@ class ApphudListenerHandler {
 
       case 'fetchNativeProducts':
         unawaited(_handleFetchNativeProducts(call.arguments));
-        break;
-
-      case 'paywallsDidFullyLoad':
-        unawaited(_handlePaywallsDidFullyLoad(call.arguments));
         break;
 
       case 'userDidLoad':
@@ -72,11 +67,6 @@ class ApphudListenerHandler {
         .map((json) => ApphudProductComposite.fromJson(json))
         .toList();
     unawaited(_listener.apphudDidFecthProducts(products));
-  }
-
-  Future<void> _handlePaywallsDidFullyLoad(dynamic arguments) async {
-    final Map<dynamic, dynamic> map = arguments;
-    unawaited(_listener.paywallsDidFullyLoad(ApphudPaywalls.fromJson(map)));
   }
 
   Future<void> _handleUserDidLoad(dynamic arguments) async {

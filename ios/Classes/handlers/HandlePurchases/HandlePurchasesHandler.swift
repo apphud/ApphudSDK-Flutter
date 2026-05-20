@@ -28,7 +28,6 @@ class HandlePurchasesHandler: Handler {
             Action<RestorePurchasesRequest,RestorePurchasesArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.permissionGroups.rawValue:
             Action<PermissionGroupsRequest,PermissionGroupsArgumentParser>(args: args, result: result).startFlow()
-        case AssociatedEnum.paywallsDidLoadCallback.rawValue:         Action<PaywallsDidLoadCallbackRequest,PaywallsDidLoadCallbackArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.hasPremiumAccess.rawValue:
             Action<HasPremiumAccessRequest,HasPremiumAccessArgumentParser>(args: args, result: result).startFlow()
         default:

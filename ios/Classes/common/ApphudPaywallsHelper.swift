@@ -6,24 +6,31 @@
 //
 
 import ApphudSDK
-import Combine
 
 final class ApphudPaywallsHelper {
-    static func getPaywall(paywallIdentifier:String, placementIdentifier: String?) async -> ApphudPaywall? {
-        var paywall:ApphudPaywall?
-        
-        if(placementIdentifier != nil) {
-            let placements = await Apphud.placements()
-            paywall = placements.first(where: {pl in pl.identifier == placementIdentifier})?.paywall
-        } else {
-            let paywalls = await Apphud.placements().compactMap(\.paywall)
-            paywall = paywalls.first(where: { pw in return pw.identifier == paywallIdentifier })
-        }
-        return paywall
-    }
-    
     static func getPaywalls() async -> [ApphudPaywall] {
-        let paywalls = await Apphud.placements().compactMap(\.paywall)
-        return paywalls
+        await Apphud.placements().compactMap(\.paywall)
+    }
+
+    static func getPaywall(paywallIdentifier: String, placementIdentifier: String?) async -> ApphudPaywall? {
+        if let placementIdentifier {
+            return await Apphud.placement(placementIdentifier)?.paywall
+        }
+        return await getPaywalls().first(where: { $0.identifier == paywallIdentifier })
+    }
+
+    static func resolveProduct(
+        productId: String,
+        paywallIdentifier: String?,
+        placementIdentifier: String?
+    ) async -> ApphudProduct? {
+        guard placementIdentifier != nil || paywallIdentifier != nil else {
+            return nil
+        }
+        let paywall = await getPaywall(
+            paywallIdentifier: paywallIdentifier ?? "",
+            placementIdentifier: placementIdentifier
+        )
+        return paywall?.products.first(where: { $0.productId == productId })
     }
 }

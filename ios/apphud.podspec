@@ -21,7 +21,7 @@ Apphud SDK flutter plugin.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'ApphudSDK', '4.0.4'
+  s.dependency 'ApphudSDK', '4.2.2'
   s.platform = :ios, '15.0'
 
   # Flutter.framework does not contain a i386 slice.

@@ -1,5 +1,4 @@
 import 'package:apphud/models/apphud_models/apphud_paywall.dart';
-import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,9 +10,6 @@ class PurchaseEvent with _$PurchaseEvent {
   const PurchaseEvent._();
 
   const factory PurchaseEvent.started() = PurchaseStartedEvent;
-
-  const factory PurchaseEvent.paywallsFetched(ApphudPaywalls paywalls) =
-      PurchasePaywallsFetchedEvent;
 
   const factory PurchaseEvent.placementsFetched(
     List<ApphudPlacement> placements,

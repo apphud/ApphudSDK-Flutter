@@ -13,12 +13,12 @@ import UIKit
 final class StartRequest: Request {
     typealias ArgumentProvider = StartArgumentParser
     @MainActor func startRequest(arguments: (apiKey: String, userID: String?, observerMode: Bool, baseUrl: String?), result: @escaping FlutterResult) {
-        Apphud.start(apiKey: arguments.apiKey,
-                               userID: arguments.userID,
-                               observerMode: arguments.observerMode) { (user) in result(user.toMap()) }
         if let baseUrl = arguments.baseUrl {
             ApphudHttpClient.shared.domainUrlString = baseUrl
         }
+        Apphud.start(apiKey: arguments.apiKey,
+                               userID: arguments.userID,
+                               observerMode: arguments.observerMode) { (user) in result(user.toMap()) }
 #if os(iOS)
         Apphud.setDeviceIdentifiers(idfa: nil, idfv: UIDevice.current.identifierForVendor?.uuidString)
 #endif

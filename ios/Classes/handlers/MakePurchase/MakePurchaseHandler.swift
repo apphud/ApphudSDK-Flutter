@@ -24,6 +24,8 @@ class MakePurchaseHandler: Handler {
             Action<PresentOfferCodeRedemptionSheetRequest,PresentOfferCodeRedemptionSheetArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.purchaseProduct.rawValue:
             Action<PurchaseProductRequest,PurchaseProductArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.isCommitmentPlanSupported.rawValue:
+            Action<IsCommitmentPlanSupportedRequest,IsCommitmentPlanSupportedArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.showPaywall.rawValue:
             Action<ShowPaywallRequest,ShowPaywallArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.preloadPaywall.rawValue:
