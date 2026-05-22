@@ -1,3 +1,8 @@
+## 3.2.3
+- Dependencies of Native SDK's were updated to:
+  - [Android] 3.2.5
+  - [iOS] 4.2.3
+
 ## 3.2.2
 - Dependencies of Native SDK's were updated to:
   - [Android] 3.2.4
