@@ -1,4 +1,4 @@
-## Unreleased
+## 3.2.4
 - [iOS] `ApphudError` returned from `purchase`, `purchaseProduct`, `purchasePromo`, `restorePurchases`, `loadFallbackPaywalls` and `showPaywall` now exposes `networkIssue` and `errorCode` instead of only `message`. Previously these fields always came as `false` / `null` on iOS, making it impossible to detect offline/network failures from Flutter.
 
 ## 3.2.3
