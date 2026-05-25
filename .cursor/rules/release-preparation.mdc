@@ -1,0 +1,22 @@
+---
+description: Release preparation checklist and output format
+alwaysApply: true
+---
+
+# Release Preparation Workflow
+
+When the user asks to prepare a release, follow this checklist in order:
+
+1. If the user did not provide the target release version, ask for it before continuing.
+2. Identify and print the dependency SDK versions bundled in the release:
+   - iOS SDK version used by this release
+   - Android SDK version used by this release
+3. Verify release readiness:
+   - Confirm the package/plugin version is bumped correctly and consistently.
+   - Confirm changelog updates exist and are appropriate for the new version.
+4. Provide a GitHub-ready release summary:
+   - "What's new" section (concise bullets)
+   - Exact version list included in this release (release version, iOS SDK version, Android SDK version)
+   - Match the same release-notes pattern and structure used in previous GitHub releases for this repository.
+
+If any required information is missing or inconsistent, stop and ask the user for clarification before finalizing.

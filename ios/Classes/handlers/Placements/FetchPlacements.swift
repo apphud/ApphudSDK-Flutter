@@ -14,9 +14,13 @@ final class FetchPlacementsRequest: Request {
 
     @MainActor func startRequest(arguments: Bool, result: @escaping FlutterResult) {
         Apphud.fetchPlacements(forceRefresh: arguments) { placements, error in
-            result([
-                "placements": placements.map({p in p.toMap()})
-            ])
+            var resultMap: [String: Any?] = [
+                "placements": placements.map({ p in p.toMap() }),
+            ]
+            if let error = error {
+                resultMap["error"] = error.toApphudErrorMap()
+            }
+            result(resultMap)
         }
     }
 }

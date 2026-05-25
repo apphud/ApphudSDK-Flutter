@@ -36,8 +36,9 @@ extension ApphudPurchaseResult {
 }
 
 extension Error {
-    /// Maps a native error coming from `ApphudPurchaseResult.error`, `Apphud.loadFallbackPaywalls`,
-    /// `Apphud.restorePurchases`, or `Apphud.fetchPaywallScreen` into a dictionary that matches the
+    /// Maps a native error coming from `ApphudPurchaseResult.error`, `Apphud.fetchPlacements`,
+    /// `Apphud.loadFallbackPaywalls`, `Apphud.restorePurchases`, or `Apphud.fetchPaywallScreen`
+    /// into a dictionary that matches the
     /// shape of `ApphudError` on the Dart side. Without this mapping `networkIssue` and `errorCode`
     /// are always `false` / `nil` in Flutter on iOS, which makes offline detection impossible.
     func toApphudErrorMap() -> [String: Any?] {
