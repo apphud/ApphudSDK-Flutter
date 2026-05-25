@@ -21,8 +21,8 @@ final class RestorePurchasesRequest: @preconcurrency Request {
                 "subscriptions": subscriptionJson != nil ? [subscriptionJson] : [],
                 "nrPurchases": nrPurchaseJson != nil ? [nrPurchaseJson] : [],
             ]
-            if restoreResult.error != nil {
-                dict["error"] = ["message": restoreResult.error?.localizedDescription ?? ""]
+            if let restoreError = restoreResult.error {
+                dict["error"] = restoreError.toApphudErrorMap()
             }
             
             result(dict)

@@ -13,9 +13,8 @@ final class LoadFallbackPaywallsRequest: @MainActor Request {
             var resultMap: [String: Any?] = [:]
             
             resultMap["paywalls"] = (paywalls?.map { $0.toMap() }) ?? []
-            if error != nil {
-                resultMap["error"] = ["message": error!.localizedDescription]
-               
+            if let error = error {
+                resultMap["error"] = error.toApphudErrorMap()
             }
             
              result(resultMap)

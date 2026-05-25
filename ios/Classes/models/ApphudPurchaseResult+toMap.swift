@@ -28,9 +28,39 @@ extension ApphudPurchaseResult {
     func toMap() -> [String: Any?] {
         return ["subscription" : subscription?.toMap(),
                 "nonRenewingPurchase" : nonRenewingPurchase?.toMap(),
-                "error": error == nil ? nil : ["message": error?.localizedDescription],
+                "error": error?.toApphudErrorMap(),
                 "transaction": transaction?.toMap(),
                 "isRestore": isRestoreResult
+        ]
+    }
+}
+
+extension Error {
+    /// Maps a native error coming from `ApphudPurchaseResult.error`, `Apphud.loadFallbackPaywalls`,
+    /// `Apphud.restorePurchases`, or `Apphud.fetchPaywallScreen` into a dictionary that matches the
+    /// shape of `ApphudError` on the Dart side. Without this mapping `networkIssue` and `errorCode`
+    /// are always `false` / `nil` in Flutter on iOS, which makes offline detection impossible.
+    func toApphudErrorMap() -> [String: Any?] {
+        let nsError = self as NSError
+        let isNetworkIssue: Bool
+        if let apphudError = self as? ApphudError {
+            isNetworkIssue = apphudError.networkIssue()
+        } else {
+            // Same set of codes ApphudError.networkIssue() considers a network issue.
+            let noInternetCodes: Set<Int> = [
+                NSURLErrorNotConnectedToInternet,
+                NSURLErrorCannotConnectToHost,
+                NSURLErrorCannotFindHost,
+                APPHUD_ERROR_NO_INTERNET,
+            ]
+            isNetworkIssue = noInternetCodes.contains(nsError.code)
+        }
+        return [
+            "message": localizedDescription,
+            "errorCode": nsError.code,
+            "networkIssue": isNetworkIssue,
+            "billingResponseCode": nil,
+            "billingErrorTitle": nil,
         ]
     }
 }

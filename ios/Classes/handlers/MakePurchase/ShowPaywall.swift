@@ -106,7 +106,7 @@ final class ShowPaywallRequest: @preconcurrency Request {
                         result([
                             "success": false,
                             "userClosed": false,
-                            "error": ["message": error.localizedDescription],
+                            "error": error.toApphudErrorMap(),
                         ])
                     }
                 }
@@ -114,7 +114,13 @@ final class ShowPaywallRequest: @preconcurrency Request {
                 result([
                     "success": false,
                     "userClosed": false,
-                    "error": ["message": "Paywall with given identifier not found"],
+                    "error": [
+                        "message": "Paywall with given identifier not found",
+                        "errorCode": nil,
+                        "networkIssue": false,
+                        "billingResponseCode": nil,
+                        "billingErrorTitle": nil,
+                    ],
                 ])
             }
 
