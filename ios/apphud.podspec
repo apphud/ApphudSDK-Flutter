@@ -19,7 +19,7 @@ Apphud SDK flutter plugin.
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Apphud' => 'support@apphud.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'apphud/Sources/apphud/**/*.swift'
   s.dependency 'Flutter'
   s.dependency 'ApphudSDK', '4.2.3'
   s.platform = :ios, '15.0'

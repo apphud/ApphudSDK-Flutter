@@ -5,8 +5,8 @@ homepage: 'https://apphud.com'
 repository: 'https://github.com/apphud/ApphudSDK-Flutter'
 
 environment:
-  flutter: ">=2.0.0"
-  sdk: '>=3.3.0 <4.0.0'
+  flutter: ">=3.41.0"
+  sdk: '>=3.11.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -29,4 +29,4 @@ flutter:
         package: com.apphud.fluttersdk
         pluginClass: ApphudPlugin
       ios:
-        pluginClass: ApphudPlugin
+        pluginClass: SwiftApphudPlugin
