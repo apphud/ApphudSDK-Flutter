@@ -1,8 +1,8 @@
 # Third-Party Software and License Agreements (Flutter SDK)
 
-Generated at: 2026-05-13T12:00:00Z (UTC)
+Generated at: 2026-05-26T12:00:00Z (UTC)
 Source of truth: `pubspec.yaml` + `pubspec.lock` + `example/pubspec.yaml` + `example/pubspec.lock`
-SDK version: `3.1.2`
+SDK version: `3.2.4`
 
 ## Scope
 
@@ -14,20 +14,19 @@ SDK version: `3.1.2`
 - `flutter`, `flutter_test`, and `sky_engine` are treated as Flutter SDK components and inherit the Flutter SDK license.
 - This is an engineering inventory for due diligence and should be legally verified.
 
-## Changes Since Previous Report (2026-03-05)
+## Changes Since Previous Report (2026-05-13)
 
-- `characters`: `1.4.0` → `1.4.1`
-- `material_color_utilities`: `0.11.1` → `0.13.0`
-- `meta`: `1.16.0` → `1.17.0`
-- Added section: SDK dev dependencies (`analyzer`, `build_runner`, `json_serializable`, `pedantic`, `flutter_test`).
-- Added section: Example app dependencies (`cupertino_icons`, `flutter_bloc`, `bloc_concurrency`, `freezed_annotation`, plus example dev: `freezed`, `json_serializable`, `build_runner`, `flutter_test`).
+- SDK version: `3.1.2` → `3.2.4`
+- Example app: added direct main dependency `flutter_dotenv` `5.2.1` (`MIT`)
+- SDK `pubspec.lock`: `yaml` `3.1.2` → `3.1.3` (transitive dev-only; not enumerated in this report)
+- No changes to SDK runtime, SDK dev, or other example direct dependency versions covered by this inventory
 
 ## Summary
 
 Across all sections (entries can repeat across sections, e.g. `flutter_test`, `build_runner`, `json_serializable`):
 
-- Total entries: 22
-- `Permissive`: 22
+- Total entries: 23
+- `Permissive`: 23
 - `Copyleft / reciprocal`: 0
 - `Other`: 0
 - `Unknown`: 0
@@ -38,13 +37,13 @@ Per-section counts (direct entries only for dev/example tables):
 |---|---:|
 | SDK runtime dependencies | 8 |
 | SDK dev dependencies (direct) | 5 |
-| Example app dependencies (direct main) | 5 |
+| Example app dependencies (direct main) | 6 |
 | Example app dev dependencies (direct) | 4 |
 
 ## Top License Identifiers (across all sections)
 
 - `BSD-3-Clause`: 16
-- `MIT`: 5
+- `MIT`: 6
 - `Apache-2.0`: 1
 
 ## SDK Runtime Dependency Inventory
@@ -82,6 +81,7 @@ Direct entries from `dependencies` in `example/pubspec.yaml`. The local path dep
 | `cupertino_icons` | `1.0.8` | `^1.0.3` | `pub.dev` | `MIT` | `Permissive` | [link](https://github.com/flutter/cupertino_icons) | manual verification from package archive LICENSE |
 | `flutter` | `0.0.0` | `sdk: flutter` | `flutter-sdk` | `BSD-3-Clause` | `Permissive` | [link](https://github.com/flutter/flutter/blob/master/LICENSE) | part of Flutter SDK; license inherited from Flutter SDK distribution |
 | `flutter_bloc` | `9.1.1` | `^9.1.1` | `pub.dev` | `MIT` | `Permissive` | [link](https://github.com/felangel/bloc/tree/master/packages/flutter_bloc) | manual verification from package archive LICENSE |
+| `flutter_dotenv` | `5.2.1` | `^5.2.1` | `pub.dev` | `MIT` | `Permissive` | [link](https://github.com/java-james/flutter_dotenv) | manual verification from package archive LICENSE |
 | `freezed_annotation` | `3.1.0` | `^3.1.0` | `pub.dev` | `MIT` | `Permissive` | [link](https://github.com/rrousselGit/freezed/tree/master/packages/freezed_annotation) | manual verification from package archive LICENSE |
 
 ## Example App Dev Dependencies (direct)
@@ -119,6 +119,7 @@ Example app main dependency	bloc_concurrency	0.3.0	^0.3.0	0.3.0	pub.dev	MIT	Perm
 Example app main dependency	cupertino_icons	1.0.8	^1.0.3	1.0.8	pub.dev	MIT	Permissive	https://github.com/flutter/cupertino_icons	manual verification from package archive LICENSE	Example App Dependencies (direct main)	THIRD_PARTY_SOFTWARE_AND_LICENSES_FLUTTER_SDK.md	
 Example app main dependency	flutter	0.0.0	sdk: flutter	0.0.0	flutter-sdk	BSD-3-Clause	Permissive	https://github.com/flutter/flutter/blob/master/LICENSE	part of Flutter SDK; license inherited from Flutter SDK distribution	Example App Dependencies (direct main)	THIRD_PARTY_SOFTWARE_AND_LICENSES_FLUTTER_SDK.md	
 Example app main dependency	flutter_bloc	9.1.1	^9.1.1	9.1.1	pub.dev	MIT	Permissive	https://github.com/felangel/bloc/tree/master/packages/flutter_bloc	manual verification from package archive LICENSE	Example App Dependencies (direct main)	THIRD_PARTY_SOFTWARE_AND_LICENSES_FLUTTER_SDK.md	
+Example app main dependency	flutter_dotenv	5.2.1	^5.2.1	5.2.1	pub.dev	MIT	Permissive	https://github.com/java-james/flutter_dotenv	manual verification from package archive LICENSE	Example App Dependencies (direct main)	THIRD_PARTY_SOFTWARE_AND_LICENSES_FLUTTER_SDK.md	
 Example app main dependency	freezed_annotation	3.1.0	^3.1.0	3.1.0	pub.dev	MIT	Permissive	https://github.com/rrousselGit/freezed/tree/master/packages/freezed_annotation	manual verification from package archive LICENSE	Example App Dependencies (direct main)	THIRD_PARTY_SOFTWARE_AND_LICENSES_FLUTTER_SDK.md	
 Example app dev dependency	build_runner	2.8.0	^2.8.0	2.8.0	pub.dev	BSD-3-Clause	Permissive	https://github.com/dart-lang/build/tree/master/build_runner	manual verification from package archive LICENSE	Example App Dev Dependencies (direct)	THIRD_PARTY_SOFTWARE_AND_LICENSES_FLUTTER_SDK.md	
 Example app dev dependency	flutter_test	0.0.0	sdk: flutter	0.0.0	flutter-sdk	BSD-3-Clause	Permissive	https://github.com/flutter/flutter/blob/master/LICENSE	part of Flutter SDK; license inherited from Flutter SDK distribution	Example App Dev Dependencies (direct)	THIRD_PARTY_SOFTWARE_AND_LICENSES_FLUTTER_SDK.md	

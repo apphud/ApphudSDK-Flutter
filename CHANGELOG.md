@@ -1,3 +1,10 @@
+## 3.2.5
+- [Android] Fixed a bug that could lead to a crash when upgrading SDK from older versions to newer.
+- Dependencies of Native SDK's were updated to:
+  - [Android] 3.2.6
+
+
+
 ## 3.2.4
 - [iOS] `ApphudError` returned from `purchase`, `purchaseProduct`, `purchasePromo`, `restorePurchases`, `loadFallbackPaywalls`, `showPaywall` and `fetchPlacements` now exposes `networkIssue` and `errorCode` instead of only `message`. Previously these fields always came as `false` / `null` on iOS, making it impossible to detect offline/network failures from Flutter.
 - [iOS] `fetchPlacements` now forwards native errors to Flutter (matching Android behavior).
