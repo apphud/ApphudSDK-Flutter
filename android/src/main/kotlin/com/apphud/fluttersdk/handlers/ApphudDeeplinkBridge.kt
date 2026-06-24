@@ -40,8 +40,7 @@ class ApphudDeeplinkBridge(handleOnMainThreadP: HandleOnMainThread) :
             }
 
             "requestDeferredDeeplinkAttribution" -> {
-                requestDeferredDeeplinkAttribution()
-                result.success(null)
+                requestDeferredDeeplinkAttribution(result)
             }
 
             else -> result.notImplemented()
@@ -69,8 +68,20 @@ class ApphudDeeplinkBridge(handleOnMainThreadP: HandleOnMainThread) :
         }
     }
 
-    private fun requestDeferredDeeplinkAttribution() {
-        val activity = this.activity ?: return
+    private fun requestDeferredDeeplinkAttribution(result: MethodChannel.Result) {
+        val activity = this.activity
+        if (activity == null) {
+            handleOnMainThread {
+                result.error(
+                    "no_activity",
+                    "Deferred deep link attribution requires an attached Activity. " +
+                        "Call requestDeferredDeeplinkAttribution() while the app is in the foreground.",
+                    null,
+                )
+            }
+            return
+        }
         Apphud.requestDeferredDeeplinkAttribution(activity)
+        handleOnMainThread { result.success(null) }
     }
 }

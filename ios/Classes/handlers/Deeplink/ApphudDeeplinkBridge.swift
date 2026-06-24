@@ -66,6 +66,15 @@ public class ApphudDeeplinkBridge: NSObject, FlutterPlugin {
             "url": url?.absoluteString,
         ]
 
-        channel.invokeMethod("onDeeplinkAttribution", arguments: arguments)
+        // Apphud may invoke the deep link handler from a background thread
+        // (especially for deferred attribution). Flutter platform channels must
+        // be called from the main thread.
+        if Thread.isMainThread {
+            channel.invokeMethod("onDeeplinkAttribution", arguments: arguments)
+        } else {
+            DispatchQueue.main.async { [channel] in
+                channel.invokeMethod("onDeeplinkAttribution", arguments: arguments)
+            }
+        }
     }
 }

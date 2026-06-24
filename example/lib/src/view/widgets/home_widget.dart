@@ -183,14 +183,21 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   void _onRequestDeferredDeeplinkTap(BuildContext context) {
     Future.microtask(() async {
-      // Result is delivered asynchronously to the deep link handler registered
-      // in PurchaseBloc (Apphud.setDeeplinkHandler).
-      await Apphud.requestDeferredDeeplinkAttribution();
-      if (!context.mounted) return;
-      showPrettyJsonDialog(context, 'Request Deferred Deeplink', {
-        'status': 'requested',
-        'note': 'Attribution will arrive via the deep link handler.',
-      });
+      try {
+        // Result is delivered asynchronously to the deep link handler registered
+        // in PurchaseBloc (Apphud.setDeeplinkHandler).
+        await Apphud.requestDeferredDeeplinkAttribution();
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Request Deferred Deeplink', {
+          'status': 'requested',
+          'note': 'Attribution will arrive via the deep link handler.',
+        });
+      } catch (e) {
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Request Deferred Deeplink', {
+          'error': e.toString(),
+        });
+      }
     });
   }
 

@@ -45,9 +45,13 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
 
     // MARK: - Deep link capture (UIApplicationDelegate lifecycle)
     //
-    // These methods only observe the incoming URL for Apphud attribution and
-    // always return `false`, so they never consume the link. Other plugins and
-    // the host app's own deep link handling continue to receive the event.
+    // These methods only observe the incoming URL/launch options for Apphud
+    // attribution. The URL-handling callbacks (`open url`, `continue
+    // userActivity`) return `false` so they never consume the link, allowing
+    // other plugins and the host app's own deep link handling to receive the
+    // event. `didFinishLaunchingWithOptions` returns `true` per the
+    // UIApplicationDelegate contract; its return value is AND-combined across
+    // plugins and does not consume anything.
 
     public func application(_ application: UIApplication,
                             didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any] = [:]) -> Bool {
