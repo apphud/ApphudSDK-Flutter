@@ -23,8 +23,14 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         let instance = SwiftApphudPlugin()
         setHeaders()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        // Receive UIApplicationDelegate lifecycle callbacks (open url, continue
+        // user activity, launch options) so direct deep links are captured
+        // automatically without requiring native code in the host app.
+        registrar.addApplicationDelegate(instance)
         let delegateChanell = FlutterMethodChannel(name: "apphud/listener", binaryMessenger: registrar.messenger())
         registrar.addMethodCallDelegate(ApphudDelegateHandler(channel: delegateChanell), channel: delegateChanell)
+        let deeplinkChannel = FlutterMethodChannel(name: "apphud/deeplink", binaryMessenger: registrar.messenger())
+        registrar.addMethodCallDelegate(ApphudDeeplinkBridge(channel: deeplinkChannel), channel: deeplinkChannel)
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -35,6 +41,32 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
                 $0.tryToHandle(method: method, args: arguments, result: result)
                 : ()
         }
+    }
+
+    // MARK: - Deep link capture (UIApplicationDelegate lifecycle)
+    //
+    // These methods only observe the incoming URL for Apphud attribution and
+    // always return `false`, so they never consume the link. Other plugins and
+    // the host app's own deep link handling continue to receive the event.
+
+    public func application(_ application: UIApplication,
+                            didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any] = [:]) -> Bool {
+        Apphud.handleLaunchOptions(launchOptions: launchOptions)
+        return true
+    }
+
+    public func application(_ application: UIApplication,
+                            open url: URL,
+                            options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        Apphud.handleOpen(url: url)
+        return false
+    }
+
+    public func application(_ application: UIApplication,
+                            continue userActivity: NSUserActivity,
+                            restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        Apphud.continueUserActivity(userActivity)
+        return false
     }
 
     private static func setHeaders() {

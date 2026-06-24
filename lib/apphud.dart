@@ -23,15 +23,20 @@ import 'models/apphud_models/apphud_error.dart';
 import 'models/apphud_models/composite/apphud_product_composite.dart';
 import 'models/apphud_models/composite/apphud_purchase_result.dart';
 import 'models/apphud_models/composite/apphud_paywall_screen_show_result.dart';
+import 'models/apphud_deeplink_attribution.dart';
 import 'models/extensions.dart';
 export 'listener/apphud_listener.dart';
 export 'models/apphud_models/enums/ios_animation_style.dart';
+export 'models/apphud_deeplink_attribution.dart';
 
 class Apphud {
   static const MethodChannel _channel = MethodChannel('apphud');
   static const MethodChannel _listenerChannel =
       MethodChannel('apphud/listener');
+  static const MethodChannel _deeplinkChannel =
+      MethodChannel('apphud/deeplink');
   static ApphudListenerHandler? _apphudListenerHandler;
+  static ApphudDeeplinkHandler? _deeplinkHandler;
 
   // Initialization
 
@@ -801,6 +806,62 @@ class Apphud {
     final Map<dynamic, dynamic>? result =
         await _channel.invokeMethod('attributeFromDeeplink');
     return result?.cast<String, dynamic>();
+  }
+
+  /// Sets or updates the deep link attribution handler.
+  ///
+  /// The [handler] may be invoked multiple times for both direct (link open)
+  /// and deferred (install) attribution flows. Pass `null` to remove the
+  /// current handler. When no attribution match is found, the handler receives
+  /// an [ApphudDeeplinkAttribution] with an empty `attribution` map.
+  ///
+  /// Platform integration requirements:
+  ///
+  /// - **[iOS]**: direct deep links are captured automatically through Flutter's
+  ///   default app delegate plugin forwarding. This requires that your host
+  ///   `AppDelegate` subclasses `FlutterAppDelegate` and does **not** override
+  ///   `application(_:open:options:)`,
+  ///   `application(_:continue:restorationHandler:)` or
+  ///   `application(_:didFinishLaunchingWithOptions:)` without calling `super`.
+  ///   If you must override them without calling `super`, links will not be
+  ///   captured automatically — either call `super`, or forward them manually
+  ///   to the native SDK via `Apphud.handleOpen(url:)`,
+  ///   `Apphud.continueUserActivity(_:)` and
+  ///   `Apphud.handleLaunchOptions(launchOptions:)`.
+  /// - **[Android]**: forward incoming links from your `Activity`'s `onCreate`
+  ///   and `onNewIntent` to the native SDK via `Apphud.handleIntent(intent)`.
+  static void setDeeplinkHandler(ApphudDeeplinkHandler? handler) {
+    _deeplinkHandler = handler;
+    if (handler != null) {
+      _deeplinkChannel.setMethodCallHandler(_handleDeeplinkCall);
+      _deeplinkChannel.invokeMethod('setDeeplinkHandler', {'enabled': true});
+    } else {
+      _deeplinkChannel.invokeMethod('setDeeplinkHandler', {'enabled': false});
+      _deeplinkChannel.setMethodCallHandler(null);
+    }
+  }
+
+  /// Requests deferred deep link attribution for the current app installation.
+  ///
+  /// The result is delivered through the handler registered via
+  /// [setDeeplinkHandler] with kind [ApphudDeeplinkAttributionKind.deferred].
+  /// When no match is found, the handler receives an empty `attribution` map.
+  /// Call this after SDK initialization, typically once on first launch.
+  ///
+  /// Platform integration requirements are the same as described in
+  /// [setDeeplinkHandler]. On [iOS], capturing direct deep links relies on the
+  /// default Flutter app delegate plugin not being overridden in your
+  /// `AppDelegate`.
+  static Future<void> requestDeferredDeeplinkAttribution() =>
+      _deeplinkChannel.invokeMethod('requestDeferredDeeplinkAttribution');
+
+  static Future<void> _handleDeeplinkCall(MethodCall call) async {
+    if (call.method == 'onDeeplinkAttribution') {
+      final args = call.arguments;
+      if (args is Map) {
+        _deeplinkHandler?.call(ApphudDeeplinkAttribution.fromMap(args));
+      }
+    }
   }
 
   // Other

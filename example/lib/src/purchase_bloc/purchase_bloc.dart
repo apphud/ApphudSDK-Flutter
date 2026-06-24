@@ -38,6 +38,15 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         super(PurchaseState.initialization()) {
     on<PurchaseEvent>(_handlePurchaseEvent);
     Apphud.setListener(listener: this);
+    Apphud.setDeeplinkHandler(_onDeeplinkAttribution);
+  }
+
+  void _onDeeplinkAttribution(ApphudDeeplinkAttribution attribution) {
+    printAsJson('Apphud.deeplinkHandler', {
+      'kind': attribution.kind.name,
+      'url': attribution.url,
+      'attribution': attribution.attribution,
+    });
   }
 
   Future<void> _handlePurchaseEvent(

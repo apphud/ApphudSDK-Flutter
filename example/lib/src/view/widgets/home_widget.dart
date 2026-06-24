@@ -156,6 +156,10 @@ class _HomeWidgetState extends State<HomeWidget> {
         onTap: () => _onAttributeDeeplinkTap(context),
       ),
       PopupMenuItem(
+        child: Text('Request Deferred Deeplink'),
+        onTap: () => _onRequestDeferredDeeplinkTap(context),
+      ),
+      PopupMenuItem(
         child: Text('App remote config'),
         onTap: () => _onAppRemoteConfigTap(context),
       ),
@@ -174,6 +178,19 @@ class _HomeWidgetState extends State<HomeWidget> {
           'error': e.toString(),
         });
       }
+    });
+  }
+
+  void _onRequestDeferredDeeplinkTap(BuildContext context) {
+    Future.microtask(() async {
+      // Result is delivered asynchronously to the deep link handler registered
+      // in PurchaseBloc (Apphud.setDeeplinkHandler).
+      await Apphud.requestDeferredDeeplinkAttribution();
+      if (!context.mounted) return;
+      showPrettyJsonDialog(context, 'Request Deferred Deeplink', {
+        'status': 'requested',
+        'note': 'Attribution will arrive via the deep link handler.',
+      });
     });
   }
 
