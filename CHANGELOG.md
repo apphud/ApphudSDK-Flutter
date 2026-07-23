@@ -2,6 +2,7 @@
 - [Dart] Direct and deferred deep link attribution support:
   - `Apphud.setDeeplinkHandler()` to receive deep link attribution updates (`ApphudDeeplinkAttribution` with `attribution`, `kind` (`direct` / `deferred`), and `url`).
   - `Apphud.requestDeferredDeeplinkAttribution()` to trigger deferred attribution.
+- **BREAKING** [Dart] Removed `Apphud.attributeFromDeeplink()`. Use `Apphud.setDeeplinkHandler()` and `Apphud.requestDeferredDeeplinkAttribution()` instead.
 - [iOS] Direct deep links (`open url`, universal links via `continue userActivity`, and launch options) are captured automatically through the Flutter app delegate plugin. This requires the host `AppDelegate` to subclass `FlutterAppDelegate` and to not override those lifecycle methods without calling `super`.
 - [Android] Forward incoming links from your `Activity`'s `onCreate` and `onNewIntent` to the native SDK via `Apphud.handleIntent(intent)` (see the updated example app).
 - Example app updated with deep link handling examples (Android intent forwarding, deferred attribution trigger, and handler output).

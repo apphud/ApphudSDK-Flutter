@@ -120,7 +120,6 @@ enum AppHudMethod {
         case addAttribution
         case collectSearchAdsAttribution
         case attributeFromWeb
-        case attributeFromDeeplink
     }
 
     enum EligibilityChecks: String, CaseIterable {

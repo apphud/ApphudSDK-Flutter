@@ -43,6 +43,12 @@ class InitializationHandler(
         if (baseUrl != null) {
             ApphudUtils.overrideBaseUrl(baseUrl)
         }
+        // Flutter engine/Activity can recreate while the process-scoped native
+        // SDK is still initialized. A second Apphud.start() aborts without
+        // invoking the callback, so return the existing user instead.
+        if (resolveAlreadyInitializedUser(result)) {
+            return
+        }
         Apphud.start(context = context, apiKey = apiKey, userId = userId, observerMode = observerMode) { user ->
             handleOnMainThread { result.success(user.toMap()) }
         }
@@ -59,6 +65,9 @@ class InitializationHandler(
         if (baseUrl != null) {
             ApphudUtils.overrideBaseUrl(baseUrl)
         }
+        if (resolveAlreadyInitializedUser(result)) {
+            return
+        }
         Apphud.start(
             context = context,
             apiKey = apiKey,
@@ -68,6 +77,35 @@ class InitializationHandler(
         ) { user ->
             handleOnMainThread { result.success(user.toMap()) }
         }
+    }
+
+    /**
+     * Returns true if the native SDK is already initialized and [result] was
+     * completed with the current user (or an error if the user is unavailable).
+     */
+    private fun resolveAlreadyInitializedUser(result: MethodChannel.Result): Boolean {
+        Apphud.currentUser()?.let { user ->
+            handleOnMainThread { result.success(user.toMap()) }
+            return true
+        }
+        // userId() is non-null only after ServiceLocator is up (post-start).
+        if (Apphud.userId() == null) {
+            return false
+        }
+        Apphud.refreshUserData { user ->
+            handleOnMainThread {
+                if (user != null) {
+                    result.success(user.toMap())
+                } else {
+                    result.error(
+                        "already_initialized",
+                        "Apphud SDK already initialized but current user is unavailable",
+                        null
+                    )
+                }
+            }
+        }
+        return true
     }
 
     private fun updateUserID(userId: String, result: MethodChannel.Result) {

@@ -152,10 +152,6 @@ class _HomeWidgetState extends State<HomeWidget> {
         ),
       ),
       PopupMenuItem(
-        child: Text('Attribute Deeplink'),
-        onTap: () => _onAttributeDeeplinkTap(context),
-      ),
-      PopupMenuItem(
         child: Text('Request Deferred Deeplink'),
         onTap: () => _onRequestDeferredDeeplinkTap(context),
       ),
@@ -164,21 +160,6 @@ class _HomeWidgetState extends State<HomeWidget> {
         onTap: () => _onAppRemoteConfigTap(context),
       ),
     ];
-  }
-
-  void _onAttributeDeeplinkTap(BuildContext context) {
-    Future.microtask(() async {
-      try {
-        final result = await Apphud.attributeFromDeeplink();
-        if (!context.mounted) return;
-        showPrettyJsonDialog(context, 'Attribute Deeplink', result);
-      } catch (e) {
-        if (!context.mounted) return;
-        showPrettyJsonDialog(context, 'Attribute Deeplink', {
-          'error': e.toString(),
-        });
-      }
-    });
   }
 
   void _onRequestDeferredDeeplinkTap(BuildContext context) {

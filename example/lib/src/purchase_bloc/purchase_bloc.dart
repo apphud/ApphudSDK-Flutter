@@ -29,6 +29,11 @@ export 'purchase_state.dart';
 class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     with DebugPrintMixin
     implements ApphudListener {
+  /// Survives widget-tree recreation within the same Dart isolate so we do not
+  /// call [Apphud.start] twice. Across Flutter engine recreate, the native
+  /// plugin returns the existing user instead of aborting.
+  static bool _sdkStarted = false;
+
   final AppSecretsBase _appSecrets;
   ApphudUser? _apphudUser;
 
@@ -127,6 +132,14 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     Emitter<PurchaseState> emit,
   ) async {
     try {
+      if (_sdkStarted) {
+        printAsJson('Apphud.start', 'skipped (already started)');
+        emit(PurchaseState.initialization(isStartSuccess: true));
+        final placements = await Apphud.placements();
+        add(PurchaseEvent.placementsFetched(placements));
+        return;
+      }
+
       await Apphud.enableDebugLogs(level: ApphudDebugLevel.high);
 
       final apphudHost = EnvConfig.apphudHost;
@@ -139,6 +152,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         observerMode: _appSecrets.observeMode,
         baseUrl: apphudHost,
       );
+      _sdkStarted = true;
       emit(PurchaseState.initialization(isStartSuccess: true));
       printAsJson('user registered', 'success');
 

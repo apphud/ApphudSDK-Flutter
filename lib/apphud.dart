@@ -38,9 +38,17 @@ class Apphud {
   static ApphudListenerHandler? _apphudListenerHandler;
   static ApphudDeeplinkHandler? _deeplinkHandler;
 
+  /// In-flight [start] / [startManually] futures, so concurrent callers share
+  /// one native initialization instead of racing.
+  static Future<ApphudUser>? _startInFlight;
+
   // Initialization
 
   /// Initializes Apphud SDK. You should call it during app launch.
+  ///
+  /// Safe to call again after Flutter engine recreate: if the native SDK is
+  /// already initialized in this process, the existing [ApphudUser] is returned.
+  /// Concurrent callers share a single in-flight initialization.
   ///
   /// - parameter [apiKey] is required. Your api key.
   /// - parameter [userID] is optional. You can provide your own unique user identifier. If null passed then UUID will be generated instead.
@@ -54,14 +62,23 @@ class Apphud {
     String? userID,
     bool? observerMode,
     String? baseUrl,
-  }) async {
-    final json = await _channel.invokeMethod('start', {
+  }) {
+    final inFlight = _startInFlight;
+    if (inFlight != null) {
+      return inFlight;
+    }
+    final future = _channel.invokeMethod('start', {
       'apiKey': apiKey,
       'userID': userID,
       'observerMode': observerMode ?? false,
       'baseUrl': baseUrl,
+    }).then((json) => ApphudUser.fromJson(json));
+    _startInFlight = future;
+    return future.whenComplete(() {
+      if (identical(_startInFlight, future)) {
+        _startInFlight = null;
+      }
     });
-    return ApphudUser.fromJson(json);
   }
 
   /// Initializes Apphud SDK with User ID & Device ID pair. Not recommended for use unless you know what you are doing.
@@ -81,15 +98,24 @@ class Apphud {
     String? deviceID,
     bool? observerMode,
     String? baseUrl,
-  }) async {
-    final json = await _channel.invokeMethod('startManually', {
+  }) {
+    final inFlight = _startInFlight;
+    if (inFlight != null) {
+      return inFlight;
+    }
+    final future = _channel.invokeMethod('startManually', {
       'apiKey': apiKey,
       'deviceID': deviceID,
       'userID': userID,
       'observerMode': observerMode ?? false,
       'baseUrl': baseUrl,
+    }).then((json) => ApphudUser.fromJson(json));
+    _startInFlight = future;
+    return future.whenComplete(() {
+      if (identical(_startInFlight, future)) {
+        _startInFlight = null;
+      }
     });
-    return ApphudUser.fromJson(json);
   }
 
   /// Updates user ID value.
@@ -130,7 +156,10 @@ class Apphud {
   /// If previous user had active subscription, the new logged-in user
   /// can still restore purchases on this device and both users will be merged
   /// under the previous paid one, because Apple ID is tied to a device.
-  static Future<void> logout() => _channel.invokeMethod('logout');
+  static Future<void> logout() async {
+    _startInFlight = null;
+    await _channel.invokeMethod('logout');
+  }
 
   /// Set listener
   ///
@@ -796,16 +825,6 @@ class Apphud {
     final userJson = result['user'];
     final user = userJson != null ? ApphudUser.fromJson(userJson) : null;
     return (wasSuccessful, user);
-  }
-
-  /// Attempts to attribute the user using a recently opened deep link, if available.
-  ///
-  /// If a matching deep link click is found, returns the associated attribution data.
-  /// Otherwise returns `null`.
-  static Future<Map<String, dynamic>?> attributeFromDeeplink() async {
-    final Map<dynamic, dynamic>? result =
-        await _channel.invokeMethod('attributeFromDeeplink');
-    return result?.cast<String, dynamic>();
   }
 
   /// Sets or updates the deep link attribution handler.

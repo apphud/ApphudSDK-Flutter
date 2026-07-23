@@ -26,14 +26,6 @@ class AttributionHandler(
             AttributionRoutes.attributeFromWeb.name -> AttributeFromWebParser(result).parse(args) { data ->
                 attributeFromWeb(data, result)
             }
-
-            AttributionRoutes.attributeFromDeeplink.name -> attributeFromDeeplink(result)
-        }
-    }
-
-    private fun attributeFromDeeplink(result: MethodChannel.Result) {
-        Apphud.attributeFromDeeplink { data ->
-            handleOnMainThread { result.success(data) }
         }
     }
 
@@ -137,8 +129,7 @@ enum class AttributionRoutes {
 
     addAttribution,
     collectSearchAdsAttribution,
-    attributeFromWeb,
-    attributeFromDeeplink;
+    attributeFromWeb;
 
     companion object Mapper {
         fun stringValues(): List<String> {
