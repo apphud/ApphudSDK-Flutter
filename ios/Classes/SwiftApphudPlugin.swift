@@ -45,32 +45,47 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
 
     // MARK: - Deep link capture (UIApplicationDelegate lifecycle)
     //
-    // These methods only observe the incoming URL/launch options for Apphud
-    // attribution. The URL-handling callbacks (`open url`, `continue
-    // userActivity`) return `false` so they never consume the link, allowing
-    // other plugins and the host app's own deep link handling to receive the
-    // event. `didFinishLaunchingWithOptions` returns `true` per the
-    // UIApplicationDelegate contract; its return value is AND-combined across
-    // plugins and does not consume anything.
+    // Signatures must match FlutterApplicationLifeCycleDelegate (NSDictionary /
+    // NSArray bridged as [AnyHashable: Any] and [Any]). Using UIKit-only
+    // types like [UIApplication.LaunchOptionsKey: Any] or
+    // [UIUserActivityRestoring]? means respondsToSelector: fails and Flutter
+    // never invokes these methods — so direct Universal Links are silently
+    // dropped.
+    //
+    // Universal Links return true once forwarded to Apphud so Flutter's own
+    // deep-link router does not also process (and potentially bounce) them.
 
-    public func application(_ application: UIApplication,
-                            didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any] = [:]) -> Bool {
-        Apphud.handleLaunchOptions(launchOptions: launchOptions)
+    public func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [AnyHashable: Any] = [:]
+    ) -> Bool {
+        Apphud.handleLaunchOptions(
+            launchOptions: launchOptions as? [UIApplication.LaunchOptionsKey: Any]
+        )
         return true
     }
 
-    public func application(_ application: UIApplication,
-                            open url: URL,
-                            options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    public func application(
+        _ application: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey: Any] = [:]
+    ) -> Bool {
         Apphud.handleOpen(url: url)
+        // Do not consume custom-scheme opens; other plugins may also need them.
         return false
     }
 
-    public func application(_ application: UIApplication,
-                            continue userActivity: NSUserActivity,
-                            restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+    public func application(
+        _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([Any]) -> Void
+    ) -> Bool {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              userActivity.webpageURL != nil else {
+            return false
+        }
         Apphud.continueUserActivity(userActivity)
-        return false
+        return true
     }
 
     private static func setHeaders() {

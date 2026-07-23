@@ -847,6 +847,12 @@ class Apphud {
   ///   to the native SDK via `Apphud.handleOpen(url:)`,
   ///   `Apphud.continueUserActivity(_:)` and
   ///   `Apphud.handleLaunchOptions(launchOptions:)`.
+  ///
+  ///   Also set `FlutterDeepLinkingEnabled` to `false` in your iOS `Info.plist`
+  ///   unless you intentionally use Flutter's built-in route deep linking for
+  ///   the same Universal Links. When Flutter deep linking stays enabled and
+  ///   no Dart route matches the https URL, the engine opens that URL in Safari
+  ///   after ~1–2 seconds (app opens, then bounces out to the browser).
   /// - **[Android]**: forward incoming links from your `Activity`'s `onCreate`
   ///   and `onNewIntent` to the native SDK via `Apphud.handleIntent(intent)`.
   static void setDeeplinkHandler(ApphudDeeplinkHandler? handler) {

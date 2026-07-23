@@ -11,6 +11,12 @@ import ApphudSDK
 
 public class ApphudDeeplinkBridge: NSObject, FlutterPlugin {
 
+    /// Keeps the last bridge that enabled a Flutter deeplink handler so we can
+    /// re-apply it after `Apphud.start` / `startManually`, which reset the
+    /// native handler to `nil` when no `deeplinkHandler` argument is passed.
+    private static weak var activeBridge: ApphudDeeplinkBridge?
+    private static var handlerEnabled = false
+
     private var channel: FlutterMethodChannel
 
     internal init(channel: FlutterMethodChannel) {
@@ -18,6 +24,14 @@ public class ApphudDeeplinkBridge: NSObject, FlutterPlugin {
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {}
+
+    /// Re-installs the Flutter deeplink handler if Dart previously enabled it.
+    /// Call after `Apphud.start` / `startManually` (those APIs clear the handler).
+    @MainActor
+    static func reapplyHandlerIfNeeded() {
+        guard handlerEnabled, let bridge = activeBridge else { return }
+        bridge.installHandler()
+    }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         let args = call.arguments as? [String: Any]
@@ -36,17 +50,33 @@ public class ApphudDeeplinkBridge: NSObject, FlutterPlugin {
     }
 
     private func setDeeplinkHandler(enabled: Bool) {
+        Self.handlerEnabled = enabled
         if enabled {
-            Apphud.setDeeplinkHandler { [weak self] attribution, kind, url in
-                self?.notify(attribution: attribution, kind: kind, url: url)
+            Self.activeBridge = self
+            Task { @MainActor in
+                self.installHandler()
             }
         } else {
-            Apphud.setDeeplinkHandler(nil)
+            if Self.activeBridge === self {
+                Self.activeBridge = nil
+            }
+            Task { @MainActor in
+                Apphud.setDeeplinkHandler(nil)
+            }
+        }
+    }
+
+    @MainActor
+    private func installHandler() {
+        Apphud.setDeeplinkHandler { [weak self] attribution, kind, url in
+            self?.notify(attribution: attribution, kind: kind, url: url)
         }
     }
 
     private func requestDeferredDeeplinkAttribution() {
-        Apphud.requestDeferredDeeplinkAttribution()
+        Task { @MainActor in
+            Apphud.requestDeferredDeeplinkAttribution()
+        }
     }
 
     private func notify(attribution: [String: Any],

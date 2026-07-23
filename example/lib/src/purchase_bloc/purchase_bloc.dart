@@ -56,11 +56,38 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     };
     printAsJson('Apphud.deeplinkHandler', payload);
 
-    // Show a dialog whenever the deep link handler fires (direct or deferred).
+    // Only surface a successful match (skip match_type null / "none").
+    final matchType = _deeplinkMatchType(attribution.attribution);
+    if (matchType != 'deterministic' && matchType != 'probabilistic') {
+      return;
+    }
+
     final context = appNavigatorKey.currentContext;
     if (context != null) {
-      showPrettyJsonDialog(context, 'Deep Link Attribution', payload);
+      showPrettyJsonDialog(context, 'Non-organic deeplink match', payload);
     }
+  }
+
+  /// Reads `data.results.raw.match_type` from the API envelope, with fallbacks
+  /// if the native layer already unwrapped part of the payload.
+  String? _deeplinkMatchType(Map<String, dynamic> attribution) {
+    dynamic raw = attribution['raw'];
+    final data = attribution['data'];
+    if (data is Map) {
+      final results = data['results'];
+      if (results is Map) {
+        raw = results['raw'];
+      }
+    } else {
+      final results = attribution['results'];
+      if (results is Map) {
+        raw = results['raw'];
+      }
+    }
+    if (raw is Map) {
+      return raw['match_type']?.toString();
+    }
+    return attribution['match_type']?.toString();
   }
 
   Future<void> _handlePurchaseEvent(

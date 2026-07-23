@@ -22,6 +22,9 @@ final class StartManuallyRequest: Request {
                                  userID: arguments.userID,
                                  deviceID: arguments.deviceID,
                              observerMode: arguments.observerMode) { (user) in result(user.toMap()) }
+        // `Apphud.startManually` resets deeplinkHandler to nil when omitted;
+        // restore the Flutter-registered handler.
+        ApphudDeeplinkBridge.reapplyHandlerIfNeeded()
     }
 }
 
