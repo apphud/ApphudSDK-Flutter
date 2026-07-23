@@ -12,10 +12,12 @@ import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
+import 'package:apphud_example/src/common/app_navigator.dart';
 import 'package:apphud_example/src/common/app_secrets_base.dart';
 import 'package:apphud_example/src/common/debug_print_mixin.dart';
 import 'package:apphud_example/src/common/env_config.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_user_message.dart';
+import 'package:apphud_example/src/view/widgets/pretty_json_dialog.dart';
 import 'package:bloc/bloc.dart';
 
 import 'purchase_event.dart';
@@ -42,11 +44,18 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
   }
 
   void _onDeeplinkAttribution(ApphudDeeplinkAttribution attribution) {
-    printAsJson('Apphud.deeplinkHandler', {
+    final payload = {
       'kind': attribution.kind.name,
       'url': attribution.url,
       'attribution': attribution.attribution,
-    });
+    };
+    printAsJson('Apphud.deeplinkHandler', payload);
+
+    // Show a dialog whenever the deep link handler fires (direct or deferred).
+    final context = appNavigatorKey.currentContext;
+    if (context != null) {
+      showPrettyJsonDialog(context, 'Deep Link Attribution', payload);
+    }
   }
 
   Future<void> _handlePurchaseEvent(
@@ -132,6 +141,17 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       );
       emit(PurchaseState.initialization(isStartSuccess: true));
       printAsJson('user registered', 'success');
+
+      // Request deferred deep link attribution after the SDK has started.
+      // The result is delivered via the handler registered with
+      // Apphud.setDeeplinkHandler in this bloc's constructor.
+      try {
+        await Apphud.requestDeferredDeeplinkAttribution();
+      } catch (error) {
+        printAsJson('Apphud.requestDeferredDeeplinkAttribution', {
+          'error': error.toString(),
+        });
+      }
 
       final placements = await Apphud.placements();
       add(PurchaseEvent.placementsFetched(placements));

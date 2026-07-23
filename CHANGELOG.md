@@ -6,8 +6,8 @@
 - [Android] Forward incoming links from your `Activity`'s `onCreate` and `onNewIntent` to the native SDK via `Apphud.handleIntent(intent)` (see the updated example app).
 - Example app updated with deep link handling examples (Android intent forwarding, deferred attribution trigger, and handler output).
 - Dependencies of Native SDK's were updated to:
-  - [Android] 3.3.0
-  - [iOS] 4.3.0
+  - [Android] 3.4.0
+  - [iOS] 4.4.2
 
 ## 3.2.5
 - [Android] Fixed a bug that could lead to a crash when upgrading SDK from older versions to newer.

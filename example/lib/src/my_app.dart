@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:apphud_example/app_secrets_ios.dart';
+import 'package:apphud_example/src/common/app_navigator.dart';
 import 'package:apphud_example/src/view/screen/home_screen.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_bloc.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
     final appSecrets =
         Platform.isAndroid ? AppSecretsAndroid() : AppSecretsIos();
     return MaterialApp(
+      navigatorKey: appNavigatorKey,
       home: BlocProvider(
         create: (_) => PurchaseBloc(
           appSecrets: appSecrets,
