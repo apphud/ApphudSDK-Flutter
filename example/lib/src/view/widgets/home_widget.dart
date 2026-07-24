@@ -156,6 +156,18 @@ class _HomeWidgetState extends State<HomeWidget> {
         onTap: () => _onRequestDeferredDeeplinkTap(context),
       ),
       PopupMenuItem(
+        child: Text('Check rules'),
+        onTap: () => _onCheckRulesTap(context),
+      ),
+      PopupMenuItem(
+        child: Text('Show pending rule screen'),
+        onTap: () => _onShowPendingRuleScreenTap(context),
+      ),
+      PopupMenuItem(
+        child: Text('Pending rule'),
+        onTap: () => _onPendingRuleTap(context),
+      ),
+      PopupMenuItem(
         child: Text('App remote config'),
         onTap: () => _onAppRemoteConfigTap(context),
       ),
@@ -176,6 +188,60 @@ class _HomeWidgetState extends State<HomeWidget> {
       } catch (e) {
         if (!context.mounted) return;
         showPrettyJsonDialog(context, 'Request Deferred Deeplink', {
+          'error': e.toString(),
+        });
+      }
+    });
+  }
+
+  void _onCheckRulesTap(BuildContext context) {
+    Future.microtask(() async {
+      try {
+        await Apphud.checkRules();
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Check rules', {
+          'status': 'requested',
+          'note': 'Rule screens appear automatically when available.',
+        });
+      } catch (e) {
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Check rules', {
+          'error': e.toString(),
+        });
+      }
+    });
+  }
+
+  void _onShowPendingRuleScreenTap(BuildContext context) {
+    Future.microtask(() async {
+      try {
+        final shown = await Apphud.showPendingRuleScreen();
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Show pending rule screen', {
+          'shown': shown,
+        });
+      } catch (e) {
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Show pending rule screen', {
+          'error': e.toString(),
+        });
+      }
+    });
+  }
+
+  void _onPendingRuleTap(BuildContext context) {
+    Future.microtask(() async {
+      try {
+        final rule = await Apphud.pendingRule();
+        if (!context.mounted) return;
+        showPrettyJsonDialog(
+          context,
+          'Pending rule',
+          rule?.toJson() ?? {'rule': null},
+        );
+      } catch (e) {
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Pending rule', {
           'error': e.toString(),
         });
       }

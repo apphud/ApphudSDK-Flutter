@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:apphud/listener/apphud_listener.dart';
+import 'package:apphud/listener/apphud_rule_listener.dart';
 import 'package:apphud/models/apphud_models/apphud_attribution_data.dart';
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
@@ -11,6 +12,7 @@ import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_placements.dart';
 import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
+import 'package:apphud/models/apphud_models/apphud_rule.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
@@ -18,6 +20,7 @@ import 'package:apphud/models/apphud_models/enums/ios_animation_style.dart';
 import 'package:flutter/services.dart';
 
 import 'listener/apphud_listener_handler.dart';
+import 'listener/apphud_rule_listener_handler.dart';
 import 'models/apphud_models/apphud_attribution_provider.dart';
 import 'models/apphud_models/apphud_error.dart';
 import 'models/apphud_models/composite/apphud_product_composite.dart';
@@ -26,6 +29,8 @@ import 'models/apphud_models/composite/apphud_paywall_screen_show_result.dart';
 import 'models/apphud_deeplink_attribution.dart';
 import 'models/extensions.dart';
 export 'listener/apphud_listener.dart';
+export 'listener/apphud_rule_listener.dart';
+export 'models/apphud_models/apphud_rule.dart';
 export 'models/apphud_models/enums/ios_animation_style.dart';
 export 'models/apphud_deeplink_attribution.dart';
 
@@ -33,9 +38,12 @@ class Apphud {
   static const MethodChannel _channel = MethodChannel('apphud');
   static const MethodChannel _listenerChannel =
       MethodChannel('apphud/listener');
+  static const MethodChannel _ruleListenerChannel =
+      MethodChannel('apphud/rule_listener');
   static const MethodChannel _deeplinkChannel =
       MethodChannel('apphud/deeplink');
   static ApphudListenerHandler? _apphudListenerHandler;
+  static ApphudRuleListenerHandler? _apphudRuleListenerHandler;
   static ApphudDeeplinkHandler? _deeplinkHandler;
 
   /// In-flight [start] / [startManually] futures, so concurrent callers share
@@ -175,6 +183,78 @@ class Apphud {
         listener: listener,
       );
     }
+  }
+
+  /// Sets the Rules lifecycle listener.
+  ///
+  /// Rule screens (including Figma rule paywalls) are presented automatically.
+  /// Pass `null` to remove the previous listener. Only one rule listener may
+  /// be active at a time.
+  static Future<void> setRuleListener({ApphudRuleListener? listener}) async {
+    _apphudRuleListenerHandler?.dispose();
+    _apphudRuleListenerHandler = null;
+    if (listener != null) {
+      _apphudRuleListenerHandler = ApphudRuleListenerHandler(
+        channel: _ruleListenerChannel,
+        listener: listener,
+      );
+    }
+  }
+
+  // === Rules ===
+
+  /// Manually polls the backend for unread Apphud Rules and presents a screen
+  /// when one is available.
+  ///
+  /// The SDK also checks for rules automatically after user registration and
+  /// when the app becomes active. Use this to force a refresh.
+  static Future<void> checkRules() => _channel.invokeMethod('checkRules');
+
+  /// Returns the Apphud rule whose screen is currently pending or displayed, if any.
+  static Future<ApphudRule?> pendingRule() async {
+    final json = await _channel.invokeMethod('pendingRule');
+    if (json == null) {
+      return null;
+    }
+    return ApphudRule.fromJson(json as Map<dynamic, dynamic>);
+  }
+
+  /// Presents a previously delayed rule screen.
+  ///
+  /// With the default events-only bridge, screens are shown automatically, so
+  /// this is mainly useful if you integrate custom native delay logic.
+  /// Returns `true` when a pending screen was shown.
+  static Future<bool> showPendingRuleScreen() async {
+    final shown = await _channel.invokeMethod<bool>('showPendingScreen');
+    return shown ?? false;
+  }
+
+  /// Submits the device push notification token to Apphud.
+  ///
+  /// Required for push-triggered Rules. Call after [start] / [startManually].
+  ///
+  /// - [iOS]: pass the APNs device token as a hex string (or use the native
+  ///   `Apphud.submitPushNotificationsToken` from your `AppDelegate`).
+  /// - [Android]: pass the FCM registration token string.
+  static Future<bool> submitPushNotificationsToken(String token) async {
+    final result = await _channel.invokeMethod<bool>(
+      'submitPushNotificationsToken',
+      {'token': token},
+    );
+    return result ?? false;
+  }
+
+  /// Forwards a push notification payload to Apphud so Rules can be delivered.
+  ///
+  /// Returns `true` when Apphud handled the payload as a rule notification.
+  /// On Android, pass the FCM `message.data` map (must include `rule_id` for rules).
+  /// On iOS, pass the notification `userInfo` map (or handle natively in AppDelegate).
+  static Future<bool> handlePushNotification(Map<String, dynamic> data) async {
+    final result = await _channel.invokeMethod<bool>(
+      'handlePushNotification',
+      data,
+    );
+    return result ?? false;
   }
 
   // === Placements, Paywalls and Products ===

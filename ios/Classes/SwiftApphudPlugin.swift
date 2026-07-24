@@ -29,6 +29,14 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         registrar.addApplicationDelegate(instance)
         let delegateChanell = FlutterMethodChannel(name: "apphud/listener", binaryMessenger: registrar.messenger())
         registrar.addMethodCallDelegate(ApphudDelegateHandler(channel: delegateChanell), channel: delegateChanell)
+        let ruleListenerChannel = FlutterMethodChannel(
+            name: "apphud/rule_listener",
+            binaryMessenger: registrar.messenger()
+        )
+        registrar.addMethodCallDelegate(
+            ApphudUIDelegateHandler(channel: ruleListenerChannel),
+            channel: ruleListenerChannel
+        )
         let deeplinkChannel = FlutterMethodChannel(name: "apphud/deeplink", binaryMessenger: registrar.messenger())
         registrar.addMethodCallDelegate(ApphudDeeplinkBridge(channel: deeplinkChannel), channel: deeplinkChannel)
     }

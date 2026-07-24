@@ -1,3 +1,17 @@
+## Unreleased
+- [Dart] Apphud Rules support (Figma rule paywalls and legacy rule screens):
+  - `Apphud.setRuleListener()` / `ApphudRuleListener` for screen appear, purchase, dismiss, survey, and Android `apphudRulePaywallWithoutScreen`.
+  - `Apphud.checkRules()`, `Apphud.pendingRule()`, `Apphud.showPendingRuleScreen()`.
+  - `Apphud.submitPushNotificationsToken()` and `Apphud.handlePushNotification()` for push-triggered rules.
+  - `ApphudRule` exposes `screenId`, `paywallId`, and `paywallIdentifier` on both platforms.
+  - `apphudRulePaywallWithoutScreen` on both iOS and Android.
+- [iOS] Rules bridge via `ApphudUIDelegate` (auto-perform / auto-show) and `ApphudUtils.checkRules()`.
+- [Android] Rules bridge via `ApphudRuleCallback` passed into `Apphud.start()` (auto-perform / auto-show).
+- Example app: Rules debug menu actions, Android FCM forwarding (`ExampleFirebaseMessagingService`, post-start token submit), and rule listener logging.
+- Dependencies of Native SDK's were updated to:
+  - [Android] 3.4.1
+  - [iOS] 4.4.5
+
 ## 3.3.0
 - [Dart] Direct and deferred deep link attribution support:
   - `Apphud.setDeeplinkHandler()` to receive deep link attribution updates (`ApphudDeeplinkAttribution` with `attribution`, `kind` (`direct` / `deferred`), and `url`).

@@ -30,6 +30,7 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private var channel: MethodChannel? = null
     private var listenerChannel: MethodChannel? = null
     private var listenerHandler: ApphudListenerHandler? = null
+    private var ruleListenerChannel: MethodChannel? = null
     private var deeplinkChannel: MethodChannel? = null
     private var deeplinkBridge: ApphudDeeplinkBridge? = null
 
@@ -72,6 +73,12 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             it.setMethodCallHandler(listenerChannel)
         }
 
+        ruleListenerChannel = MethodChannel(
+            flutterPluginBinding.binaryMessenger,
+            "apphud/rule_listener"
+        )
+        ApphudRuleCallbackHandler.bind(ruleListenerChannel!!, handleOnMainThread)
+
         deeplinkChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "apphud/deeplink")
         deeplinkBridge?.setMethodCallHandler(null)
         deeplinkBridge = ApphudDeeplinkBridge(handleOnMainThread).also {
@@ -101,6 +108,8 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         listenerHandler?.setMethodCallHandler(null)
         listenerHandler = null
         listenerChannel = null
+        ApphudRuleCallbackHandler.unbind()
+        ruleListenerChannel = null
         deeplinkBridge?.setMethodCallHandler(null)
         deeplinkBridge = null
         deeplinkChannel = null
@@ -111,24 +120,28 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity
         makePurchaseHandler?.activity = binding.activity
+        ApphudRuleCallbackHandler.activity = binding.activity
         deeplinkBridge?.activity = binding.activity
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
         activity = null
         makePurchaseHandler?.activity = null
+        ApphudRuleCallbackHandler.activity = null
         deeplinkBridge?.activity = null
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
         activity = binding.activity
         makePurchaseHandler?.activity = binding.activity
+        ApphudRuleCallbackHandler.activity = binding.activity
         deeplinkBridge?.activity = binding.activity
     }
 
     override fun onDetachedFromActivity() {
         activity = null
         makePurchaseHandler?.activity = null
+        ApphudRuleCallbackHandler.activity = null
         deeplinkBridge?.activity = null
     }
 
@@ -161,7 +174,8 @@ class ApphudPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 handleOnMainThread
             ),
             PromotionalsHandler(PromotionalsRoutes.stringValues(), handleOnMainThread),
-            PlacementsHandler(handleOnMainThread)
+            PlacementsHandler(handleOnMainThread),
+            RulesHandler(RulesRoutes.stringValues(), handleOnMainThread),
         )
     }
 

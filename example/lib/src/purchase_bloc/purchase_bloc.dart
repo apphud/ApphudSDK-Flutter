@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/android/android_purchase_wrapper.dart';
@@ -9,9 +10,11 @@ import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
+import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
+import 'package:apphud/models/apphud_models/composite/apphud_purchase_result.dart';
 import 'package:apphud_example/src/common/app_navigator.dart';
 import 'package:apphud_example/src/common/app_secrets_base.dart';
 import 'package:apphud_example/src/common/debug_print_mixin.dart';
@@ -19,6 +22,7 @@ import 'package:apphud_example/src/common/env_config.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_user_message.dart';
 import 'package:apphud_example/src/view/widgets/pretty_json_dialog.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/services.dart';
 
 import 'purchase_event.dart';
 export 'purchase_event.dart';
@@ -28,11 +32,14 @@ export 'purchase_state.dart';
 
 class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     with DebugPrintMixin
-    implements ApphudListener {
+    implements ApphudListener, ApphudRuleListener {
   /// Survives widget-tree recreation within the same Dart isolate so we do not
   /// call [Apphud.start] twice. Across Flutter engine recreate, the native
   /// plugin returns the existing user instead of aborting.
   static bool _sdkStarted = false;
+
+  static const MethodChannel _fcmChannel =
+      MethodChannel('com.apphud.demo/fcm');
 
   final AppSecretsBase _appSecrets;
   ApphudUser? _apphudUser;
@@ -45,6 +52,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         super(PurchaseState.initialization()) {
     on<PurchaseEvent>(_handlePurchaseEvent);
     Apphud.setListener(listener: this);
+    Apphud.setRuleListener(listener: this);
     Apphud.setDeeplinkHandler(_onDeeplinkAttribution);
   }
 
@@ -154,6 +162,101 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     printAsJson('ApphudListener.apphudDidReceivePurchase', 'success');
   }
 
+  // --- ApphudRuleListener ---
+
+  @override
+  Future<void> apphudRuleScreenDidAppear(ApphudRule rule) async {
+    printAsJson('ApphudRuleListener.apphudRuleScreenDidAppear', rule.toJson());
+  }
+
+  @override
+  Future<void> apphudRuleWillPurchase(
+    ApphudRule rule,
+    ApphudProduct? product,
+  ) async {
+    printAsJson('ApphudRuleListener.apphudRuleWillPurchase', {
+      'rule': rule.toJson(),
+      'product': product?.toJson(),
+    });
+  }
+
+  @override
+  Future<void> apphudRulePurchaseCompleted(
+    ApphudRule rule,
+    ApphudPurchaseResult result,
+  ) async {
+    printAsJson('ApphudRuleListener.apphudRulePurchaseCompleted', {
+      'rule': rule.toJson(),
+      'result': result.toString(),
+    });
+  }
+
+  @override
+  Future<void> apphudRuleScreenWillDismiss(
+    ApphudRule rule,
+    String? error,
+  ) async {
+    printAsJson('ApphudRuleListener.apphudRuleScreenWillDismiss', {
+      'rule': rule.toJson(),
+      'error': error,
+    });
+  }
+
+  @override
+  Future<void> apphudRuleScreenDidDismiss(ApphudRule rule) async {
+    printAsJson(
+      'ApphudRuleListener.apphudRuleScreenDidDismiss',
+      rule.toJson(),
+    );
+  }
+
+  @override
+  Future<void> apphudRuleDidSelectSurveyAnswer(
+    ApphudRule rule,
+    String question,
+    String answer,
+  ) async {
+    printAsJson('ApphudRuleListener.apphudRuleDidSelectSurveyAnswer', {
+      'rule': rule.toJson(),
+      'question': question,
+      'answer': answer,
+    });
+  }
+
+  @override
+  Future<void> apphudRulePaywallWithoutScreen(
+    ApphudRule rule,
+    ApphudPaywall paywall,
+  ) async {
+    printAsJson('ApphudRuleListener.apphudRulePaywallWithoutScreen', {
+      'rule': rule.toJson(),
+      'paywall': paywall.identifier,
+    });
+    // Present the paywall with the existing Figma show API.
+    try {
+      final showResult = await Apphud.showPaywall(paywall);
+      printAsJson(
+        'ApphudRuleListener.showPaywall (without screen)',
+        showResult.toString(),
+      );
+    } catch (error) {
+      printAsJson('ApphudRuleListener.showPaywall (without screen)', {
+        'error': error.toString(),
+      });
+    }
+  }
+
+  Future<void> _submitAndroidPushTokenIfNeeded() async {
+    if (!Platform.isAndroid) return;
+    try {
+      final success =
+          await _fcmChannel.invokeMethod<bool>('submitCurrentToken');
+      printAsJson('FCM.submitCurrentToken', {'success': success});
+    } catch (error) {
+      printAsJson('FCM.submitCurrentToken', {'error': error.toString()});
+    }
+  }
+
   Future<void> _handleStartedEvent(
     PurchaseStartedEvent event,
     Emitter<PurchaseState> emit,
@@ -182,6 +285,9 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       _sdkStarted = true;
       emit(PurchaseState.initialization(isStartSuccess: true));
       printAsJson('user registered', 'success');
+
+      // Submit FCM token after start (Android). iOS uses AppDelegate APNs.
+      await _submitAndroidPushTokenIfNeeded();
 
       // Request deferred deep link attribution after the SDK has started.
       // The result is delivered via the handler registered with

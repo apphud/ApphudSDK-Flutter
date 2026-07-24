@@ -49,7 +49,13 @@ class InitializationHandler(
         if (resolveAlreadyInitializedUser(result)) {
             return
         }
-        Apphud.start(context = context, apiKey = apiKey, userId = userId, observerMode = observerMode) { user ->
+        Apphud.start(
+            context = context,
+            apiKey = apiKey,
+            userId = userId,
+            observerMode = observerMode,
+            ruleCallback = ApphudRuleCallbackHandler,
+        ) { user ->
             handleOnMainThread { result.success(user.toMap()) }
         }
     }
@@ -73,7 +79,8 @@ class InitializationHandler(
             apiKey = apiKey,
             userId = userId,
             deviceId = deviceId,
-            observerMode = observerMode
+            observerMode = observerMode,
+            ruleCallback = ApphudRuleCallbackHandler,
         ) { user ->
             handleOnMainThread { result.success(user.toMap()) }
         }
