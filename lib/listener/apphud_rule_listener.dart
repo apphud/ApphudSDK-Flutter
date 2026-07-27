@@ -17,6 +17,10 @@ abstract class ApphudRuleListener {
   Future<void> apphudRuleWillPurchase(ApphudRule rule, ApphudProduct? product);
 
   /// Called when a purchase from a rule screen finishes (success or failure).
+  ///
+  /// On success [result] contains the purchased `subscription` or
+  /// `nonRenewingPurchase`, plus the `transaction` on [iOS] (`null` for
+  /// StoreKit 2 purchases) and the `purchase` on [Android].
   Future<void> apphudRulePurchaseCompleted(
     ApphudRule rule,
     ApphudPurchaseResult result,

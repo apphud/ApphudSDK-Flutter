@@ -928,6 +928,10 @@ class Apphud {
   ///   `Apphud.continueUserActivity(_:)` and
   ///   `Apphud.handleLaunchOptions(launchOptions:)`.
   ///
+  ///   Universal links are reported as handled by the plugin only when they are
+  ///   hosted on Apphud's `aphd.cc` domain, so links belonging to other deep
+  ///   link SDKs (Firebase Dynamic Links, OneSignal, Branch) still reach them.
+  ///
   ///   Also set `FlutterDeepLinkingEnabled` to `false` in your iOS `Info.plist`
   ///   unless you intentionally use Flutter's built-in route deep linking for
   ///   the same Universal Links. When Flutter deep linking stays enabled and

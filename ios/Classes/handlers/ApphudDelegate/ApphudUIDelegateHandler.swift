@@ -137,10 +137,31 @@ final class ApphudUIDelegateProxy: NSObject, ApphudUIDelegate {
         ])
     }
 
-    func apphudDidPurchase(product: SKProduct, offerID: String?, screenName: String) {
+    // The SDK calls both `apphudDidPurchase` overloads for every purchase, so
+    // only the one carrying `transaction` is implemented here. Implementing both
+    // would deliver `apphudRulePurchaseCompleted` to Dart twice.
+    func apphudDidPurchase(
+        product: SKProduct,
+        offerID: String?,
+        transaction: SKPaymentTransaction?,
+        screenName: String
+    ) {
+        // The delegate does not carry a purchase result, so the purchased
+        // subscription / non-renewing purchase is looked up by product id. At
+        // this point the receipt is already validated, so it is up to date.
+        let productId = product.productIdentifier
+        let subscription = Apphud.subscriptions()?.first { $0.productId == productId }
+        let nonRenewingPurchase = subscription == nil
+            ? Apphud.nonRenewingPurchases()?.first { $0.productId == productId }
+            : nil
+
         invoke("apphudRulePurchaseCompleted", arguments: [
             "rule": currentRuleMap(screenName: screenName),
             "result": [
+                "subscription": subscription?.toMap(),
+                "nonRenewingPurchase": nonRenewingPurchase?.toMap(),
+                // `nil` for StoreKit 2 purchases.
+                "transaction": transaction?.toMap(),
                 "error": nil as Any?,
                 "isRestore": false,
             ] as [String: Any?],
@@ -157,13 +178,46 @@ final class ApphudUIDelegateProxy: NSObject, ApphudUIDelegate {
             "rule": currentRuleMap(screenName: screenName),
             "result": [
                 "error": [
-                    "message": "Purchase failed",
+                    "message": Self.message(for: errorCode),
                     "errorCode": errorCode.rawValue,
-                    "networkIssue": false,
+                    "networkIssue": errorCode == .cloudServiceNetworkConnectionFailed,
                 ] as [String: Any?],
                 "isRestore": false,
             ] as [String: Any?],
         ])
+    }
+
+    private static func message(for errorCode: SKError.Code) -> String {
+        switch errorCode {
+        case .paymentCancelled:
+            return "Payment cancelled by user"
+        case .paymentInvalid:
+            return "Payment is invalid"
+        case .paymentNotAllowed:
+            return "This device is not allowed to make payments"
+        case .storeProductNotAvailable:
+            return "Product is not available in the current storefront"
+        case .cloudServicePermissionDenied:
+            return "User has not allowed access to cloud service information"
+        case .cloudServiceNetworkConnectionFailed:
+            return "Could not connect to the network"
+        case .cloudServiceRevoked:
+            return "User has revoked permission to use this cloud service"
+        case .privacyAcknowledgementRequired:
+            return "User has not yet acknowledged the privacy policy"
+        case .unauthorizedRequestData:
+            return "App is attempting to use a property without required entitlement"
+        case .invalidOfferIdentifier:
+            return "Offer identifier is invalid"
+        case .invalidOfferPrice:
+            return "Offer price is no longer valid"
+        case .invalidSignature:
+            return "Signature in a payment discount is not valid"
+        case .missingOfferParams:
+            return "Parameters are missing in a payment discount"
+        default:
+            return NSError(domain: SKErrorDomain, code: errorCode.rawValue).localizedDescription
+        }
     }
 
     func apphudScreenWillDismiss(screenName: String, error: Error?) {
@@ -174,15 +228,12 @@ final class ApphudUIDelegateProxy: NSObject, ApphudUIDelegate {
     }
 
 #if os(iOS)
+    // The SDK calls both `apphudDidDismissScreen` overloads for every dismissal,
+    // so only the one carrying `screenName` is implemented here. Implementing
+    // both would deliver `apphudRuleScreenDidDismiss` to Dart twice.
     func apphudDidDismissScreen(controller: UIViewController, screenName: String?) {
         invoke("apphudRuleScreenDidDismiss", arguments: [
             "rule": currentRuleMap(screenName: screenName),
-        ])
-    }
-
-    func apphudDidDismissScreen(controller: UIViewController) {
-        invoke("apphudRuleScreenDidDismiss", arguments: [
-            "rule": currentRuleMap(screenName: nil),
         ])
     }
 #endif

@@ -60,8 +60,18 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
     // never invokes these methods — so direct Universal Links are silently
     // dropped.
     //
-    // Universal Links return true once forwarded to Apphud so Flutter's own
-    // deep-link router does not also process (and potentially bounce) them.
+    // Universal Links hosted on an Apphud domain return true once forwarded, so
+    // Flutter's own deep-link router does not also process (and potentially
+    // bounce) them. Links from any other host are forwarded but not consumed,
+    // so Firebase Dynamic Links, OneSignal, Branch, etc. still receive them.
+
+    /// Domain used by Apphud tracking links.
+    private static let apphudLinkDomain = "aphd.cc"
+
+    private static func isApphudLink(_ url: URL) -> Bool {
+        guard let host = url.host?.lowercased() else { return false }
+        return host == apphudLinkDomain || host.hasSuffix(".\(apphudLinkDomain)")
+    }
 
     public func application(
         _ application: UIApplication,
@@ -89,11 +99,12 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         restorationHandler: @escaping ([Any]) -> Void
     ) -> Bool {
         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-              userActivity.webpageURL != nil else {
+              let url = userActivity.webpageURL else {
             return false
         }
         Apphud.continueUserActivity(userActivity)
-        return true
+        // Consume only Apphud links; anything else belongs to another SDK.
+        return Self.isApphudLink(url)
     }
 
     private static func setHeaders() {
