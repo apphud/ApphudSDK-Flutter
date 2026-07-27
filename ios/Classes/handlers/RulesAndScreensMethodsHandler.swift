@@ -49,8 +49,10 @@ class RulesAndScreensMethodsHandler: Handler {
                 result(false)
                 return
             }
-            let handled = Apphud.handlePushNotification(apsInfo: args)
-            result(handled)
+            Task { @MainActor in
+                let handled = Apphud.handlePushNotification(apsInfo: args)
+                result(handled)
+            }
 #else
             result(false)
 #endif

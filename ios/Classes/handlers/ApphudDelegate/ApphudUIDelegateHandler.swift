@@ -12,9 +12,16 @@ import UIKit
 
 /// Forwards Apphud Rules UI lifecycle events to Dart.
 /// Gates always auto-allow (events-only bridge).
-public class ApphudUIDelegateHandler: NSObject, FlutterPlugin, @MainActor ApphudUIDelegate {
-    private var isListeningStarted: Bool = false
-    private var channel: FlutterMethodChannel
+///
+/// Does not conform to `ApphudUIDelegate` itself — that protocol is `@MainActor`,
+/// and conforming would MainActor-isolate this FlutterPlugin type (breaking
+/// construction during `register`). The real delegate is `ApphudUIDelegateProxy`,
+/// created on the main actor in `startListening`.
+public class ApphudUIDelegateHandler: NSObject, FlutterPlugin {
+    fileprivate var isListeningStarted: Bool = false
+    fileprivate var channel: FlutterMethodChannel
+    /// Retains the MainActor UI delegate (type-erased for isolation boundaries).
+    private var uiDelegateProxy: NSObject?
 
     internal init(channel: FlutterMethodChannel) {
         self.channel = channel
@@ -37,11 +44,31 @@ public class ApphudUIDelegateHandler: NSObject, FlutterPlugin, @MainActor Apphud
 
     private func start() {
         isListeningStarted = true
-        Apphud.setUIDelegate(self)
+        Task { @MainActor in
+            let proxy = ApphudUIDelegateProxy(handler: self)
+            self.uiDelegateProxy = proxy
+            Apphud.setUIDelegate(proxy)
+        }
     }
 
     private func stop() {
+        // `Apphud.setUIDelegate` is non-optional; gate events and drop our retain.
         isListeningStarted = false
+        uiDelegateProxy = nil
+    }
+
+    fileprivate func invoke(_ method: String, arguments: [String: Any?]?) {
+        guard isListeningStarted else { return }
+        channel.invokeMethod(method, arguments: arguments)
+    }
+}
+
+@MainActor
+final class ApphudUIDelegateProxy: NSObject, ApphudUIDelegate {
+    private weak var handler: ApphudUIDelegateHandler?
+
+    init(handler: ApphudUIDelegateHandler) {
+        self.handler = handler
     }
 
     private func currentRuleMap(screenName: String?) -> [String: Any?] {
@@ -58,22 +85,21 @@ public class ApphudUIDelegateHandler: NSObject, FlutterPlugin, @MainActor Apphud
     }
 
     private func invoke(_ method: String, arguments: [String: Any?]?) {
-        guard isListeningStarted else { return }
-        channel.invokeMethod(method, arguments: arguments)
+        handler?.invoke(method, arguments: arguments)
     }
 
     // MARK: - Gates (always allow)
 
-    public func apphudShouldPerformRule(rule: ApphudRule) -> Bool {
+    func apphudShouldPerformRule(rule: ApphudRule) -> Bool {
         return true
     }
 
-    public func apphudShouldShowScreen(screenName: String) -> Bool {
+    func apphudShouldShowScreen(screenName: String) -> Bool {
         return true
     }
 
 #if os(iOS)
-    public func apphudScreenDismissAction(
+    func apphudScreenDismissAction(
         screenName: String,
         controller: UIViewController
     ) -> ApphudScreenDismissAction {
@@ -82,7 +108,7 @@ public class ApphudUIDelegateHandler: NSObject, FlutterPlugin, @MainActor Apphud
 #endif
 
 #if os(iOS)
-    public func apphudRuleWithoutPaywallScreen(rule: ApphudRule, paywall: ApphudPaywall) {
+    func apphudRuleWithoutPaywallScreen(rule: ApphudRule, paywall: ApphudPaywall) {
         invoke("apphudRulePaywallWithoutScreen", arguments: [
             "rule": rule.toMap(),
             "paywall": paywall.toMap(),
@@ -92,13 +118,13 @@ public class ApphudUIDelegateHandler: NSObject, FlutterPlugin, @MainActor Apphud
 
     // MARK: - Lifecycle events
 
-    public func apphudScreenDidAppear(screenName: String) {
+    func apphudScreenDidAppear(screenName: String) {
         invoke("apphudRuleScreenDidAppear", arguments: [
             "rule": currentRuleMap(screenName: screenName),
         ])
     }
 
-    public func apphudWillPurchase(product: SKProduct, offerID: String?, screenName: String) {
+    func apphudWillPurchase(product: SKProduct, offerID: String?, screenName: String) {
         let productMap: [String: Any?] = [
             "productId": product.productIdentifier,
             "store": "app_store",
@@ -111,7 +137,7 @@ public class ApphudUIDelegateHandler: NSObject, FlutterPlugin, @MainActor Apphud
         ])
     }
 
-    public func apphudDidPurchase(product: SKProduct, offerID: String?, screenName: String) {
+    func apphudDidPurchase(product: SKProduct, offerID: String?, screenName: String) {
         invoke("apphudRulePurchaseCompleted", arguments: [
             "rule": currentRuleMap(screenName: screenName),
             "result": [
@@ -121,7 +147,7 @@ public class ApphudUIDelegateHandler: NSObject, FlutterPlugin, @MainActor Apphud
         ])
     }
 
-    public func apphudDidFailPurchase(
+    func apphudDidFailPurchase(
         product: SKProduct,
         offerID: String?,
         errorCode: SKError.Code,
@@ -140,7 +166,7 @@ public class ApphudUIDelegateHandler: NSObject, FlutterPlugin, @MainActor Apphud
         ])
     }
 
-    public func apphudScreenWillDismiss(screenName: String, error: Error?) {
+    func apphudScreenWillDismiss(screenName: String, error: Error?) {
         invoke("apphudRuleScreenWillDismiss", arguments: [
             "rule": currentRuleMap(screenName: screenName),
             "error": error?.localizedDescription,
@@ -148,20 +174,20 @@ public class ApphudUIDelegateHandler: NSObject, FlutterPlugin, @MainActor Apphud
     }
 
 #if os(iOS)
-    public func apphudDidDismissScreen(controller: UIViewController, screenName: String?) {
+    func apphudDidDismissScreen(controller: UIViewController, screenName: String?) {
         invoke("apphudRuleScreenDidDismiss", arguments: [
             "rule": currentRuleMap(screenName: screenName),
         ])
     }
 
-    public func apphudDidDismissScreen(controller: UIViewController) {
+    func apphudDidDismissScreen(controller: UIViewController) {
         invoke("apphudRuleScreenDidDismiss", arguments: [
             "rule": currentRuleMap(screenName: nil),
         ])
     }
 #endif
 
-    public func apphudDidSelectSurveyAnswer(question: String, answer: String, screenName: String) {
+    func apphudDidSelectSurveyAnswer(question: String, answer: String, screenName: String) {
         invoke("apphudRuleDidSelectSurveyAnswer", arguments: [
             "rule": currentRuleMap(screenName: screenName),
             "question": question,

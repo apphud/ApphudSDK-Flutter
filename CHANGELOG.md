@@ -9,8 +9,8 @@
 - [Android] Rules bridge via `ApphudRuleCallback` passed into `Apphud.start()` (auto-perform / auto-show).
 - Example app: Rules debug menu actions, Android FCM forwarding (`ExampleFirebaseMessagingService`, post-start token submit), and rule listener logging.
 - Dependencies of Native SDK's were updated to:
-  - [Android] 3.4.1
-  - [iOS] 4.4.5
+  - [Android] 3.4.2
+  - [iOS] 4.4.7
 
 ## 3.3.0
 - [Dart] Direct and deferred deep link attribution support:

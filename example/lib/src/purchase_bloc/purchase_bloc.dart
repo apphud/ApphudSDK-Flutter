@@ -40,6 +40,8 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
 
   static const MethodChannel _fcmChannel =
       MethodChannel('com.apphud.demo/fcm');
+  static const MethodChannel _iosPushChannel =
+      MethodChannel('apphud_example/push');
 
   final AppSecretsBase _appSecrets;
   ApphudUser? _apphudUser;
@@ -257,6 +259,18 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     }
   }
 
+  /// Re-submit APNs token after [Apphud.start] (parity with Android FCM submit).
+  Future<void> _submitIosPushTokenIfNeeded() async {
+    if (!Platform.isIOS) return;
+    try {
+      final success =
+          await _iosPushChannel.invokeMethod<bool>('resubmitApnsToken');
+      printAsJson('APNs.resubmitApnsToken', {'success': success});
+    } catch (error) {
+      printAsJson('APNs.resubmitApnsToken', {'error': error.toString()});
+    }
+  }
+
   Future<void> _handleStartedEvent(
     PurchaseStartedEvent event,
     Emitter<PurchaseState> emit,
@@ -286,8 +300,9 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
       emit(PurchaseState.initialization(isStartSuccess: true));
       printAsJson('user registered', 'success');
 
-      // Submit FCM token after start (Android). iOS uses AppDelegate APNs.
+      // Submit push token after start (Android FCM / iOS APNs).
       await _submitAndroidPushTokenIfNeeded();
+      await _submitIosPushTokenIfNeeded();
 
       // Request deferred deep link attribution after the SDK has started.
       // The result is delivered via the handler registered with

@@ -22,6 +22,11 @@ dev_dependencies:
   analyzer: ^6.4.1
   pedantic: ^1.11.1
 
+# Example Firebase config for Rules/FCM demos. Client keys are restricted by
+# applicationId; allow publish validation to treat them as non-secrets.
+false_secrets:
+  - /example/android/app/google-services.json
+
 flutter:
   plugin:
     platforms:
