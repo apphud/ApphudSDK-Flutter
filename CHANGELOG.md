@@ -1,4 +1,4 @@
-## Unreleased
+## 3.3.0
 - [Dart] Apphud Rules support (Figma rule paywalls and legacy rule screens):
   - `Apphud.setRuleListener()` / `ApphudRuleListener` for screen appear, purchase, dismiss, survey, and Android `apphudRulePaywallWithoutScreen`.
   - `Apphud.checkRules()`, `Apphud.pendingRule()`, `Apphud.showPendingRuleScreen()`.
@@ -7,22 +7,16 @@
   - `apphudRulePaywallWithoutScreen` on both iOS and Android.
 - [iOS] Rules bridge via `ApphudUIDelegate` (auto-perform / auto-show) and `ApphudUtils.checkRules()`.
 - [Android] Rules bridge via `ApphudRuleCallback` passed into `Apphud.start()` (auto-perform / auto-show).
-- Example app: Rules debug menu actions, Android FCM forwarding (`ExampleFirebaseMessagingService`, post-start token submit), and rule listener logging.
-- Dependencies of Native SDK's were updated to:
-  - [Android] 3.4.2
-  - [iOS] 4.4.7
-
-## 3.3.0
 - [Dart] Direct and deferred deep link attribution support:
   - `Apphud.setDeeplinkHandler()` to receive deep link attribution updates (`ApphudDeeplinkAttribution` with `attribution`, `kind` (`direct` / `deferred`), and `url`).
   - `Apphud.requestDeferredDeeplinkAttribution()` to trigger deferred attribution.
 - **BREAKING** [Dart] Removed `Apphud.attributeFromDeeplink()`. Use `Apphud.setDeeplinkHandler()` and `Apphud.requestDeferredDeeplinkAttribution()` instead.
 - [iOS] Direct deep links (`open url`, universal links via `continue userActivity`, and launch options) are captured automatically through the Flutter app delegate plugin. This requires the host `AppDelegate` to subclass `FlutterAppDelegate` and to not override those lifecycle methods without calling `super`.
 - [Android] Forward incoming links from your `Activity`'s `onCreate` and `onNewIntent` to the native SDK via `Apphud.handleIntent(intent)` (see the updated example app).
-- Example app updated with deep link handling examples (Android intent forwarding, deferred attribution trigger, and handler output).
+- Example app: Rules debug menu actions, Android FCM / iOS APNs push token submit, deep link handling examples, and rule/deeplink listener logging.
 - Dependencies of Native SDK's were updated to:
-  - [Android] 3.4.0
-  - [iOS] 4.4.2
+  - [Android] 3.4.2
+  - [iOS] 4.4.7
 
 ## 3.2.5
 - [Android] Fixed a bug that could lead to a crash when upgrading SDK from older versions to newer.
