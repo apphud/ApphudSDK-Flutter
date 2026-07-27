@@ -112,6 +112,9 @@ enum AppHudMethod {
         case showPendingScreen
         case pendingScreenController
         case pendingRule
+        case checkRules
+        case submitPushNotificationsToken
+        case handlePushNotification
     }
 
     enum Attribution: String, CaseIterable {
@@ -120,7 +123,6 @@ enum AppHudMethod {
         case addAttribution
         case collectSearchAdsAttribution
         case attributeFromWeb
-        case attributeFromDeeplink
     }
 
     enum EligibilityChecks: String, CaseIterable {

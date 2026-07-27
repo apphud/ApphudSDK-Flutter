@@ -14,10 +14,17 @@ final class StartManuallyRequest: Request {
         if let baseUrl = arguments.baseUrl {
             ApphudHttpClient.shared.domainUrlString = baseUrl
         }
+        if let user = Apphud.currentUser() {
+            result(user.toMap())
+            return
+        }
         Apphud.startManually(apiKey: arguments.apiKey,
                                  userID: arguments.userID,
                                  deviceID: arguments.deviceID,
                              observerMode: arguments.observerMode) { (user) in result(user.toMap()) }
+        // `Apphud.startManually` resets deeplinkHandler to nil when omitted;
+        // restore the Flutter-registered handler.
+        ApphudDeeplinkBridge.reapplyHandlerIfNeeded()
     }
 }
 

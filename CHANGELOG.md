@@ -1,3 +1,24 @@
+## 3.3.0
+- [Dart] Apphud Rules support (Figma rule paywalls and legacy rule screens):
+  - `Apphud.setRuleListener()` / `ApphudRuleListener` for screen appear, purchase, dismiss and survey events.
+  - `Apphud.checkRules()`, `Apphud.pendingRule()`, `Apphud.showPendingRuleScreen()`.
+  - `Apphud.submitPushNotificationsToken()` and `Apphud.handlePushNotification()` for push-triggered rules.
+  - `ApphudRule` exposes `screenId`, `paywallId`, and `paywallIdentifier` on both platforms.
+  - `apphudRulePaywallWithoutScreen` on both iOS and Android.
+  - `apphudRulePurchaseCompleted` delivers the purchased `subscription` / `nonRenewingPurchase`, the `transaction` (iOS, when the purchase was not made via StoreKit 2) and `purchase` (Android).
+- [iOS] Rules bridge via `ApphudUIDelegate` (auto-perform / auto-show) and `ApphudUtils.checkRules()`.
+- [Android] Rules bridge via `ApphudRuleCallback` passed into `Apphud.start()` (auto-perform / auto-show).
+- [Dart] Direct and deferred deep link attribution support:
+  - `Apphud.setDeeplinkHandler()` to receive deep link attribution updates (`ApphudDeeplinkAttribution` with `attribution`, `kind` (`direct` / `deferred`), and `url`).
+  - `Apphud.requestDeferredDeeplinkAttribution()` to trigger deferred attribution.
+- **BREAKING** [Dart] Removed `Apphud.attributeFromDeeplink()`. Use `Apphud.setDeeplinkHandler()` and `Apphud.requestDeferredDeeplinkAttribution()` instead.
+- [iOS] Direct deep links (`open url`, universal links via `continue userActivity`, and launch options) are captured automatically through the Flutter app delegate plugin. This requires the host `AppDelegate` to subclass `FlutterAppDelegate` and to not override those lifecycle methods without calling `super`. Only universal links hosted on Apphud's `aphd.cc` domain are consumed by the plugin, so other deep link SDKs (Firebase Dynamic Links, OneSignal, Branch) keep receiving their own links.
+- [Android] Forward incoming links from your `Activity`'s `onCreate` and `onNewIntent` to the native SDK via `Apphud.handleIntent(intent)` (see the updated example app).
+- Example app: Rules debug menu actions, Android FCM / iOS APNs push token submit, deep link handling examples, and rule/deeplink listener logging.
+- Dependencies of Native SDK's were updated to:
+  - [Android] 3.4.2
+  - [iOS] 4.4.8
+
 ## 3.2.5
 - [Android] Fixed a bug that could lead to a crash when upgrading SDK from older versions to newer.
 - Dependencies of Native SDK's were updated to:

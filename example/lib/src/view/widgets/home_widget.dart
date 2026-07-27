@@ -152,8 +152,20 @@ class _HomeWidgetState extends State<HomeWidget> {
         ),
       ),
       PopupMenuItem(
-        child: Text('Attribute Deeplink'),
-        onTap: () => _onAttributeDeeplinkTap(context),
+        child: Text('Request Deferred Deeplink'),
+        onTap: () => _onRequestDeferredDeeplinkTap(context),
+      ),
+      PopupMenuItem(
+        child: Text('Check rules'),
+        onTap: () => _onCheckRulesTap(context),
+      ),
+      PopupMenuItem(
+        child: Text('Show pending rule screen'),
+        onTap: () => _onShowPendingRuleScreenTap(context),
+      ),
+      PopupMenuItem(
+        child: Text('Pending rule'),
+        onTap: () => _onPendingRuleTap(context),
       ),
       PopupMenuItem(
         child: Text('App remote config'),
@@ -162,15 +174,74 @@ class _HomeWidgetState extends State<HomeWidget> {
     ];
   }
 
-  void _onAttributeDeeplinkTap(BuildContext context) {
+  void _onRequestDeferredDeeplinkTap(BuildContext context) {
     Future.microtask(() async {
       try {
-        final result = await Apphud.attributeFromDeeplink();
+        // Result is delivered asynchronously to the deep link handler registered
+        // in PurchaseBloc (Apphud.setDeeplinkHandler).
+        await Apphud.requestDeferredDeeplinkAttribution();
         if (!context.mounted) return;
-        showPrettyJsonDialog(context, 'Attribute Deeplink', result);
+        showPrettyJsonDialog(context, 'Request Deferred Deeplink', {
+          'status': 'requested',
+          'note': 'Attribution will arrive via the deep link handler.',
+        });
       } catch (e) {
         if (!context.mounted) return;
-        showPrettyJsonDialog(context, 'Attribute Deeplink', {
+        showPrettyJsonDialog(context, 'Request Deferred Deeplink', {
+          'error': e.toString(),
+        });
+      }
+    });
+  }
+
+  void _onCheckRulesTap(BuildContext context) {
+    Future.microtask(() async {
+      try {
+        await Apphud.checkRules();
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Check rules', {
+          'status': 'requested',
+          'note': 'Rule screens appear automatically when available.',
+        });
+      } catch (e) {
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Check rules', {
+          'error': e.toString(),
+        });
+      }
+    });
+  }
+
+  void _onShowPendingRuleScreenTap(BuildContext context) {
+    Future.microtask(() async {
+      try {
+        final shown = await Apphud.showPendingRuleScreen();
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Show pending rule screen', {
+          'shown': shown,
+        });
+      } catch (e) {
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Show pending rule screen', {
+          'error': e.toString(),
+        });
+      }
+    });
+  }
+
+  void _onPendingRuleTap(BuildContext context) {
+    Future.microtask(() async {
+      try {
+        final rule = await Apphud.pendingRule();
+        if (!context.mounted) return;
+        showPrettyJsonDialog(
+          context,
+          'Pending rule',
+          rule?.toJson() ?? {'rule': null},
+        );
+      } catch (e) {
+        if (!context.mounted) return;
+        showPrettyJsonDialog(context, 'Pending rule', {
           'error': e.toString(),
         });
       }

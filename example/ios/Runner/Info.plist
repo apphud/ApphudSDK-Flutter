@@ -4,6 +4,13 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<!--
+	  Flutter deep linking is enabled by default. For https Universal Links with
+	  no matching Dart route, the engine relays the URL to Safari via openURL
+	  after ~1–2s. Apphud handles attribution natively, so disable Flutter DL.
+	-->
+	<key>FlutterDeepLinkingEnabled</key>
+	<false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -22,6 +29,17 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.apphud.demo.deeplink</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>apphudexample</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>

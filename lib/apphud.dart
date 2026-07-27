@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:apphud/listener/apphud_listener.dart';
+import 'package:apphud/listener/apphud_rule_listener.dart';
 import 'package:apphud/models/apphud_models/apphud_attribution_data.dart';
 import 'package:apphud/models/apphud_models/apphud_composite_model.dart';
 import 'package:apphud/models/apphud_models/apphud_debug_level.dart';
@@ -11,6 +12,7 @@ import 'package:apphud/models/apphud_models/apphud_placement.dart';
 import 'package:apphud/models/apphud_models/apphud_placements.dart';
 import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
+import 'package:apphud/models/apphud_models/apphud_rule.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
@@ -18,24 +20,43 @@ import 'package:apphud/models/apphud_models/enums/ios_animation_style.dart';
 import 'package:flutter/services.dart';
 
 import 'listener/apphud_listener_handler.dart';
+import 'listener/apphud_rule_listener_handler.dart';
 import 'models/apphud_models/apphud_attribution_provider.dart';
 import 'models/apphud_models/apphud_error.dart';
 import 'models/apphud_models/composite/apphud_product_composite.dart';
 import 'models/apphud_models/composite/apphud_purchase_result.dart';
 import 'models/apphud_models/composite/apphud_paywall_screen_show_result.dart';
+import 'models/apphud_deeplink_attribution.dart';
 import 'models/extensions.dart';
 export 'listener/apphud_listener.dart';
+export 'listener/apphud_rule_listener.dart';
+export 'models/apphud_models/apphud_rule.dart';
 export 'models/apphud_models/enums/ios_animation_style.dart';
+export 'models/apphud_deeplink_attribution.dart';
 
 class Apphud {
   static const MethodChannel _channel = MethodChannel('apphud');
   static const MethodChannel _listenerChannel =
       MethodChannel('apphud/listener');
+  static const MethodChannel _ruleListenerChannel =
+      MethodChannel('apphud/rule_listener');
+  static const MethodChannel _deeplinkChannel =
+      MethodChannel('apphud/deeplink');
   static ApphudListenerHandler? _apphudListenerHandler;
+  static ApphudRuleListenerHandler? _apphudRuleListenerHandler;
+  static ApphudDeeplinkHandler? _deeplinkHandler;
+
+  /// In-flight [start] / [startManually] futures, so concurrent callers share
+  /// one native initialization instead of racing.
+  static Future<ApphudUser>? _startInFlight;
 
   // Initialization
 
   /// Initializes Apphud SDK. You should call it during app launch.
+  ///
+  /// Safe to call again after Flutter engine recreate: if the native SDK is
+  /// already initialized in this process, the existing [ApphudUser] is returned.
+  /// Concurrent callers share a single in-flight initialization.
   ///
   /// - parameter [apiKey] is required. Your api key.
   /// - parameter [userID] is optional. You can provide your own unique user identifier. If null passed then UUID will be generated instead.
@@ -49,14 +70,23 @@ class Apphud {
     String? userID,
     bool? observerMode,
     String? baseUrl,
-  }) async {
-    final json = await _channel.invokeMethod('start', {
+  }) {
+    final inFlight = _startInFlight;
+    if (inFlight != null) {
+      return inFlight;
+    }
+    final future = _channel.invokeMethod('start', {
       'apiKey': apiKey,
       'userID': userID,
       'observerMode': observerMode ?? false,
       'baseUrl': baseUrl,
+    }).then((json) => ApphudUser.fromJson(json));
+    _startInFlight = future;
+    return future.whenComplete(() {
+      if (identical(_startInFlight, future)) {
+        _startInFlight = null;
+      }
     });
-    return ApphudUser.fromJson(json);
   }
 
   /// Initializes Apphud SDK with User ID & Device ID pair. Not recommended for use unless you know what you are doing.
@@ -76,15 +106,24 @@ class Apphud {
     String? deviceID,
     bool? observerMode,
     String? baseUrl,
-  }) async {
-    final json = await _channel.invokeMethod('startManually', {
+  }) {
+    final inFlight = _startInFlight;
+    if (inFlight != null) {
+      return inFlight;
+    }
+    final future = _channel.invokeMethod('startManually', {
       'apiKey': apiKey,
       'deviceID': deviceID,
       'userID': userID,
       'observerMode': observerMode ?? false,
       'baseUrl': baseUrl,
+    }).then((json) => ApphudUser.fromJson(json));
+    _startInFlight = future;
+    return future.whenComplete(() {
+      if (identical(_startInFlight, future)) {
+        _startInFlight = null;
+      }
     });
-    return ApphudUser.fromJson(json);
   }
 
   /// Updates user ID value.
@@ -125,7 +164,10 @@ class Apphud {
   /// If previous user had active subscription, the new logged-in user
   /// can still restore purchases on this device and both users will be merged
   /// under the previous paid one, because Apple ID is tied to a device.
-  static Future<void> logout() => _channel.invokeMethod('logout');
+  static Future<void> logout() async {
+    _startInFlight = null;
+    await _channel.invokeMethod('logout');
+  }
 
   /// Set listener
   ///
@@ -141,6 +183,78 @@ class Apphud {
         listener: listener,
       );
     }
+  }
+
+  /// Sets the Rules lifecycle listener.
+  ///
+  /// Rule screens (including Figma rule paywalls) are presented automatically.
+  /// Pass `null` to remove the previous listener. Only one rule listener may
+  /// be active at a time.
+  static Future<void> setRuleListener({ApphudRuleListener? listener}) async {
+    _apphudRuleListenerHandler?.dispose();
+    _apphudRuleListenerHandler = null;
+    if (listener != null) {
+      _apphudRuleListenerHandler = ApphudRuleListenerHandler(
+        channel: _ruleListenerChannel,
+        listener: listener,
+      );
+    }
+  }
+
+  // === Rules ===
+
+  /// Manually polls the backend for unread Apphud Rules and presents a screen
+  /// when one is available.
+  ///
+  /// The SDK also checks for rules automatically after user registration and
+  /// when the app becomes active. Use this to force a refresh.
+  static Future<void> checkRules() => _channel.invokeMethod('checkRules');
+
+  /// Returns the Apphud rule whose screen is currently pending or displayed, if any.
+  static Future<ApphudRule?> pendingRule() async {
+    final json = await _channel.invokeMethod('pendingRule');
+    if (json == null) {
+      return null;
+    }
+    return ApphudRule.fromJson(json as Map<dynamic, dynamic>);
+  }
+
+  /// Presents a previously delayed rule screen.
+  ///
+  /// With the default events-only bridge, screens are shown automatically, so
+  /// this is mainly useful if you integrate custom native delay logic.
+  /// Returns `true` when a pending screen was shown.
+  static Future<bool> showPendingRuleScreen() async {
+    final shown = await _channel.invokeMethod<bool>('showPendingScreen');
+    return shown ?? false;
+  }
+
+  /// Submits the device push notification token to Apphud.
+  ///
+  /// Required for push-triggered Rules. Call after [start] / [startManually].
+  ///
+  /// - [iOS]: pass the APNs device token as a hex string (or use the native
+  ///   `Apphud.submitPushNotificationsToken` from your `AppDelegate`).
+  /// - [Android]: pass the FCM registration token string.
+  static Future<bool> submitPushNotificationsToken(String token) async {
+    final result = await _channel.invokeMethod<bool>(
+      'submitPushNotificationsToken',
+      {'token': token},
+    );
+    return result ?? false;
+  }
+
+  /// Forwards a push notification payload to Apphud so Rules can be delivered.
+  ///
+  /// Returns `true` when Apphud handled the payload as a rule notification.
+  /// On Android, pass the FCM `message.data` map (must include `rule_id` for rules).
+  /// On iOS, pass the notification `userInfo` map (or handle natively in AppDelegate).
+  static Future<bool> handlePushNotification(Map<String, dynamic> data) async {
+    final result = await _channel.invokeMethod<bool>(
+      'handlePushNotification',
+      data,
+    );
+    return result ?? false;
   }
 
   // === Placements, Paywalls and Products ===
@@ -793,14 +907,70 @@ class Apphud {
     return (wasSuccessful, user);
   }
 
-  /// Attempts to attribute the user using a recently opened deep link, if available.
+  /// Sets or updates the deep link attribution handler.
   ///
-  /// If a matching deep link click is found, returns the associated attribution data.
-  /// Otherwise returns `null`.
-  static Future<Map<String, dynamic>?> attributeFromDeeplink() async {
-    final Map<dynamic, dynamic>? result =
-        await _channel.invokeMethod('attributeFromDeeplink');
-    return result?.cast<String, dynamic>();
+  /// The [handler] may be invoked multiple times for both direct (link open)
+  /// and deferred (install) attribution flows. Pass `null` to remove the
+  /// current handler. When no attribution match is found, the handler receives
+  /// an [ApphudDeeplinkAttribution] with an empty `attribution` map.
+  ///
+  /// Platform integration requirements:
+  ///
+  /// - **[iOS]**: direct deep links are captured automatically through Flutter's
+  ///   default app delegate plugin forwarding. This requires that your host
+  ///   `AppDelegate` subclasses `FlutterAppDelegate` and does **not** override
+  ///   `application(_:open:options:)`,
+  ///   `application(_:continue:restorationHandler:)` or
+  ///   `application(_:didFinishLaunchingWithOptions:)` without calling `super`.
+  ///   If you must override them without calling `super`, links will not be
+  ///   captured automatically — either call `super`, or forward them manually
+  ///   to the native SDK via `Apphud.handleOpen(url:)`,
+  ///   `Apphud.continueUserActivity(_:)` and
+  ///   `Apphud.handleLaunchOptions(launchOptions:)`.
+  ///
+  ///   Universal links are reported as handled by the plugin only when they are
+  ///   hosted on Apphud's `aphd.cc` domain, so links belonging to other deep
+  ///   link SDKs (Firebase Dynamic Links, OneSignal, Branch) still reach them.
+  ///
+  ///   Also set `FlutterDeepLinkingEnabled` to `false` in your iOS `Info.plist`
+  ///   unless you intentionally use Flutter's built-in route deep linking for
+  ///   the same Universal Links. When Flutter deep linking stays enabled and
+  ///   no Dart route matches the https URL, the engine opens that URL in Safari
+  ///   after ~1–2 seconds (app opens, then bounces out to the browser).
+  /// - **[Android]**: forward incoming links from your `Activity`'s `onCreate`
+  ///   and `onNewIntent` to the native SDK via `Apphud.handleIntent(intent)`.
+  static void setDeeplinkHandler(ApphudDeeplinkHandler? handler) {
+    _deeplinkHandler = handler;
+    if (handler != null) {
+      _deeplinkChannel.setMethodCallHandler(_handleDeeplinkCall);
+      _deeplinkChannel.invokeMethod('setDeeplinkHandler', {'enabled': true});
+    } else {
+      _deeplinkChannel.invokeMethod('setDeeplinkHandler', {'enabled': false});
+      _deeplinkChannel.setMethodCallHandler(null);
+    }
+  }
+
+  /// Requests deferred deep link attribution for the current app installation.
+  ///
+  /// The result is delivered through the handler registered via
+  /// [setDeeplinkHandler] with kind [ApphudDeeplinkAttributionKind.deferred].
+  /// When no match is found, the handler receives an empty `attribution` map.
+  /// Call this after SDK initialization, typically once on first launch.
+  ///
+  /// Platform integration requirements are the same as described in
+  /// [setDeeplinkHandler]. On [iOS], capturing direct deep links relies on the
+  /// default Flutter app delegate plugin not being overridden in your
+  /// `AppDelegate`.
+  static Future<void> requestDeferredDeeplinkAttribution() =>
+      _deeplinkChannel.invokeMethod('requestDeferredDeeplinkAttribution');
+
+  static Future<void> _handleDeeplinkCall(MethodCall call) async {
+    if (call.method == 'onDeeplinkAttribution') {
+      final args = call.arguments;
+      if (args is Map) {
+        _deeplinkHandler?.call(ApphudDeeplinkAttribution.fromMap(args));
+      }
+    }
   }
 
   // Other

@@ -16,9 +16,18 @@ final class StartRequest: Request {
         if let baseUrl = arguments.baseUrl {
             ApphudHttpClient.shared.domainUrlString = baseUrl
         }
+        // Flutter engine can recreate while the process-scoped native SDK is
+        // still initialized. Return the existing user instead of calling start again.
+        if let user = Apphud.currentUser() {
+            result(user.toMap())
+            return
+        }
         Apphud.start(apiKey: arguments.apiKey,
                                userID: arguments.userID,
                                observerMode: arguments.observerMode) { (user) in result(user.toMap()) }
+        // `Apphud.start` resets deeplinkHandler to nil when omitted; restore the
+        // Flutter-registered handler so direct/deferred attribution can notify Dart.
+        ApphudDeeplinkBridge.reapplyHandlerIfNeeded()
 #if os(iOS)
         Apphud.setDeviceIdentifiers(idfa: nil, idfv: UIDevice.current.identifierForVendor?.uuidString)
 #endif

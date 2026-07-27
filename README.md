@@ -53,12 +53,21 @@ Test different in-app purchases and [paywalls](https://apphud.com/blog/best-perf
 <img src="https://1612099904-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-LpcBgCSJyU0DTawIxFp%2Fuploads%2FY9kRJOi4QaGn2Rp0Wksz%2Fweb-to-app.png?alt=media&token=9d851fc0-34a3-4035-8a3d-03b728e313e0"  width="50%" height="50%" />
 </p>
 
-## Rules (iOS)
+## Rules (iOS & Android)
 
-Apphud may win back lapsed subscribers, [reduce churn rate](https://apphud.com/blog/reduce-churn), get cancellation insights, send push notifications and many more using the mechanics below. This mechanics are called Rules. Choose between manual, scheduled and automated rule. Manual rules will be performed manually, scheduled rule will be performed on a certain time, automated rule will be triggered after certain event. Use our visual web editor to create you custom screen or screen sequence for Rule, and analyze user stats from every created screen.
+Apphud may win back lapsed subscribers, [reduce churn rate](https://apphud.com/blog/reduce-churn), get cancellation insights, send push notifications and many more using the mechanics below. This mechanics are called Rules. Choose between manual, scheduled and automated rule. Manual rules will be performed manually, scheduled rule will be performed on a certain time, automated rule will be triggered after certain event. Rules can present Figma paywall screens or legacy HTML screens.
 <p align="center">
 <img src="https://apphud.com/images/rules.webp"  width="35%" height="35%" />
 </p>
+
+### Flutter integration
+
+1. Call `Apphud.setRuleListener(...)` to receive rule lifecycle events (appear, purchase, dismiss, survey). Screens are shown automatically.
+2. Optionally call `Apphud.checkRules()` to poll for unread rules immediately.
+3. Submit the push token after `Apphud.start()` via `Apphud.submitPushNotificationsToken(...)`, and forward push payloads with `Apphud.handlePushNotification(...)`.
+   - **iOS**: APNs token / `userInfo` (see the example `AppDelegate`).
+   - **Android**: FCM token / `message.data` (must include `rule_id` for Apphud rules; see the example `ExampleFirebaseMessagingService`).
+4. Use `Apphud.pendingRule()` / `Apphud.showPendingRuleScreen()` when you need pending-rule metadata or to present a delayed screen.
 
 ## Why Apphud?
 

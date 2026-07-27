@@ -23,8 +23,22 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
         let instance = SwiftApphudPlugin()
         setHeaders()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        // Receive UIApplicationDelegate lifecycle callbacks (open url, continue
+        // user activity, launch options) so direct deep links are captured
+        // automatically without requiring native code in the host app.
+        registrar.addApplicationDelegate(instance)
         let delegateChanell = FlutterMethodChannel(name: "apphud/listener", binaryMessenger: registrar.messenger())
         registrar.addMethodCallDelegate(ApphudDelegateHandler(channel: delegateChanell), channel: delegateChanell)
+        let ruleListenerChannel = FlutterMethodChannel(
+            name: "apphud/rule_listener",
+            binaryMessenger: registrar.messenger()
+        )
+        registrar.addMethodCallDelegate(
+            ApphudUIDelegateHandler(channel: ruleListenerChannel),
+            channel: ruleListenerChannel
+        )
+        let deeplinkChannel = FlutterMethodChannel(name: "apphud/deeplink", binaryMessenger: registrar.messenger())
+        registrar.addMethodCallDelegate(ApphudDeeplinkBridge(channel: deeplinkChannel), channel: deeplinkChannel)
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -35,6 +49,62 @@ public class SwiftApphudPlugin: NSObject, FlutterPlugin {
                 $0.tryToHandle(method: method, args: arguments, result: result)
                 : ()
         }
+    }
+
+    // MARK: - Deep link capture (UIApplicationDelegate lifecycle)
+    //
+    // Signatures must match FlutterApplicationLifeCycleDelegate (NSDictionary /
+    // NSArray bridged as [AnyHashable: Any] and [Any]). Using UIKit-only
+    // types like [UIApplication.LaunchOptionsKey: Any] or
+    // [UIUserActivityRestoring]? means respondsToSelector: fails and Flutter
+    // never invokes these methods — so direct Universal Links are silently
+    // dropped.
+    //
+    // Universal Links hosted on an Apphud domain return true once forwarded, so
+    // Flutter's own deep-link router does not also process (and potentially
+    // bounce) them. Links from any other host are forwarded but not consumed,
+    // so Firebase Dynamic Links, OneSignal, Branch, etc. still receive them.
+
+    /// Domain used by Apphud tracking links.
+    private static let apphudLinkDomain = "aphd.cc"
+
+    private static func isApphudLink(_ url: URL) -> Bool {
+        guard let host = url.host?.lowercased() else { return false }
+        return host == apphudLinkDomain || host.hasSuffix(".\(apphudLinkDomain)")
+    }
+
+    public func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [AnyHashable: Any] = [:]
+    ) -> Bool {
+        Apphud.handleLaunchOptions(
+            launchOptions: launchOptions as? [UIApplication.LaunchOptionsKey: Any]
+        )
+        return true
+    }
+
+    public func application(
+        _ application: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey: Any] = [:]
+    ) -> Bool {
+        Apphud.handleOpen(url: url)
+        // Do not consume custom-scheme opens; other plugins may also need them.
+        return false
+    }
+
+    public func application(
+        _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([Any]) -> Void
+    ) -> Bool {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let url = userActivity.webpageURL else {
+            return false
+        }
+        Apphud.continueUserActivity(userActivity)
+        // Consume only Apphud links; anything else belongs to another SDK.
+        return Self.isApphudLink(url)
     }
 
     private static func setHeaders() {

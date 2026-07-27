@@ -1,13 +1,13 @@
 PODS:
-  - apphud (3.2.0):
-    - ApphudSDK (= 4.2.2)
+  - apphud (3.3.0):
+    - ApphudSDK (= 4.4.8)
     - Flutter
-  - ApphudSDK (4.2.2)
+  - ApphudSDK (4.4.8)
   - Flutter (1.0.0)
 
 DEPENDENCIES:
   - apphud (from `.symlinks/plugins/apphud/ios`)
-  - ApphudSDK (from `https://github.com/apphud/ApphudSDK.git`, tag `4.2.2`)
+  - ApphudSDK (from `https://github.com/apphud/ApphudSDK.git`, tag `4.4.8`)
   - Flutter (from `Flutter`)
 
 EXTERNAL SOURCES:
@@ -15,20 +15,20 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/apphud/ios"
   ApphudSDK:
     :git: https://github.com/apphud/ApphudSDK.git
-    :tag: 4.2.2
+    :tag: 4.4.8
   Flutter:
     :path: Flutter
 
 CHECKOUT OPTIONS:
   ApphudSDK:
     :git: https://github.com/apphud/ApphudSDK.git
-    :tag: 4.2.2
+    :tag: 4.4.8
 
 SPEC CHECKSUMS:
-  apphud: 9c65960208211eaeb1a8ed21019929f991866581
-  ApphudSDK: 43495fd34077f7772bcfe2ea3afbefeaecec2eac
+  apphud: eed2934fc7b59b5058c79bacdeb7bda89a812467
+  ApphudSDK: e765078f639901cd54ed8229e907b00079a0d3cc
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
 
-PODFILE CHECKSUM: 1e8a9e7e2abf4ffec9ff44acb1ae5a4c82baa2ab
+PODFILE CHECKSUM: 2413a8027da563b9eddbde2d32afc40d1acb5a89
 
 COCOAPODS: 1.16.2

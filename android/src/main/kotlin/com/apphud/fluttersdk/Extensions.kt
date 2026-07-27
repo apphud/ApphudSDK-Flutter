@@ -3,6 +3,7 @@ package com.apphud.fluttersdk
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.apphud.sdk.ApphudError
+import com.apphud.sdk.ApphudPurchaseResult
 import com.apphud.sdk.domain.*
 import java.util.*
 import kotlin.collections.HashMap
@@ -186,5 +187,25 @@ fun ApphudUser.toMap(): HashMap<String, Any?> {
         "variationName" to variationName,
         "targetingName" to targetingName,
         "remoteConfigString" to remoteConfigString,
+    )
+}
+
+fun Rule.toMap(): HashMap<String, Any?> {
+    return hashMapOf(
+        "ruleName" to (ruleName ?: ""),
+        "screenName" to (screenName ?: ""),
+        "screenId" to screenId,
+        "paywallId" to paywallId,
+        "paywallIdentifier" to paywallIdentifier,
+    )
+}
+
+fun ApphudPurchaseResult.toMap(): HashMap<String, Any?> {
+    return hashMapOf(
+        "subscription" to subscription?.toMap(),
+        "nonRenewingPurchase" to nonRenewingPurchase?.toMap(),
+        "purchase" to purchase?.toMap(),
+        "error" to error?.toMap(),
+        "isRestore" to false,
     )
 }

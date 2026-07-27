@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:apphud/apphud.dart';
 import 'package:apphud/models/apphud_models/android/android_purchase_wrapper.dart';
@@ -9,14 +10,19 @@ import 'package:apphud/models/apphud_models/apphud_non_renewing_purchase.dart';
 import 'package:apphud/models/apphud_models/apphud_paywall.dart';
 import 'package:apphud/models/apphud_models/apphud_paywalls.dart';
 import 'package:apphud/models/apphud_models/apphud_placement.dart';
+import 'package:apphud/models/apphud_models/apphud_product.dart';
 import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/composite/apphud_product_composite.dart';
+import 'package:apphud/models/apphud_models/composite/apphud_purchase_result.dart';
+import 'package:apphud_example/src/common/app_navigator.dart';
 import 'package:apphud_example/src/common/app_secrets_base.dart';
 import 'package:apphud_example/src/common/debug_print_mixin.dart';
 import 'package:apphud_example/src/common/env_config.dart';
 import 'package:apphud_example/src/purchase_bloc/purchase_user_message.dart';
+import 'package:apphud_example/src/view/widgets/pretty_json_dialog.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/services.dart';
 
 import 'purchase_event.dart';
 export 'purchase_event.dart';
@@ -26,7 +32,17 @@ export 'purchase_state.dart';
 
 class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     with DebugPrintMixin
-    implements ApphudListener {
+    implements ApphudListener, ApphudRuleListener {
+  /// Survives widget-tree recreation within the same Dart isolate so we do not
+  /// call [Apphud.start] twice. Across Flutter engine recreate, the native
+  /// plugin returns the existing user instead of aborting.
+  static bool _sdkStarted = false;
+
+  static const MethodChannel _fcmChannel =
+      MethodChannel('com.apphud.demo/fcm');
+  static const MethodChannel _iosPushChannel =
+      MethodChannel('apphud_example/push');
+
   final AppSecretsBase _appSecrets;
   ApphudUser? _apphudUser;
 
@@ -38,6 +54,50 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         super(PurchaseState.initialization()) {
     on<PurchaseEvent>(_handlePurchaseEvent);
     Apphud.setListener(listener: this);
+    Apphud.setRuleListener(listener: this);
+    Apphud.setDeeplinkHandler(_onDeeplinkAttribution);
+  }
+
+  void _onDeeplinkAttribution(ApphudDeeplinkAttribution attribution) {
+    final payload = {
+      'kind': attribution.kind.name,
+      'url': attribution.url,
+      'attribution': attribution.attribution,
+    };
+    printAsJson('Apphud.deeplinkHandler', payload);
+
+    // Only surface a successful match (skip match_type null / "none").
+    final matchType = _deeplinkMatchType(attribution.attribution);
+    if (matchType != 'deterministic' && matchType != 'probabilistic') {
+      return;
+    }
+
+    final context = appNavigatorKey.currentContext;
+    if (context != null) {
+      showPrettyJsonDialog(context, 'Non-organic deeplink match', payload);
+    }
+  }
+
+  /// Reads `data.results.raw.match_type` from the API envelope, with fallbacks
+  /// if the native layer already unwrapped part of the payload.
+  String? _deeplinkMatchType(Map<String, dynamic> attribution) {
+    dynamic raw = attribution['raw'];
+    final data = attribution['data'];
+    if (data is Map) {
+      final results = data['results'];
+      if (results is Map) {
+        raw = results['raw'];
+      }
+    } else {
+      final results = attribution['results'];
+      if (results is Map) {
+        raw = results['raw'];
+      }
+    }
+    if (raw is Map) {
+      return raw['match_type']?.toString();
+    }
+    return attribution['match_type']?.toString();
   }
 
   Future<void> _handlePurchaseEvent(
@@ -104,11 +164,126 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
     printAsJson('ApphudListener.apphudDidReceivePurchase', 'success');
   }
 
+  // --- ApphudRuleListener ---
+
+  @override
+  Future<void> apphudRuleScreenDidAppear(ApphudRule rule) async {
+    printAsJson('ApphudRuleListener.apphudRuleScreenDidAppear', rule.toJson());
+  }
+
+  @override
+  Future<void> apphudRuleWillPurchase(
+    ApphudRule rule,
+    ApphudProduct? product,
+  ) async {
+    printAsJson('ApphudRuleListener.apphudRuleWillPurchase', {
+      'rule': rule.toJson(),
+      'product': product?.toJson(),
+    });
+  }
+
+  @override
+  Future<void> apphudRulePurchaseCompleted(
+    ApphudRule rule,
+    ApphudPurchaseResult result,
+  ) async {
+    printAsJson('ApphudRuleListener.apphudRulePurchaseCompleted', {
+      'rule': rule.toJson(),
+      'result': result.toString(),
+    });
+  }
+
+  @override
+  Future<void> apphudRuleScreenWillDismiss(
+    ApphudRule rule,
+    String? error,
+  ) async {
+    printAsJson('ApphudRuleListener.apphudRuleScreenWillDismiss', {
+      'rule': rule.toJson(),
+      'error': error,
+    });
+  }
+
+  @override
+  Future<void> apphudRuleScreenDidDismiss(ApphudRule rule) async {
+    printAsJson(
+      'ApphudRuleListener.apphudRuleScreenDidDismiss',
+      rule.toJson(),
+    );
+  }
+
+  @override
+  Future<void> apphudRuleDidSelectSurveyAnswer(
+    ApphudRule rule,
+    String question,
+    String answer,
+  ) async {
+    printAsJson('ApphudRuleListener.apphudRuleDidSelectSurveyAnswer', {
+      'rule': rule.toJson(),
+      'question': question,
+      'answer': answer,
+    });
+  }
+
+  @override
+  Future<void> apphudRulePaywallWithoutScreen(
+    ApphudRule rule,
+    ApphudPaywall paywall,
+  ) async {
+    printAsJson('ApphudRuleListener.apphudRulePaywallWithoutScreen', {
+      'rule': rule.toJson(),
+      'paywall': paywall.identifier,
+    });
+    // Present the paywall with the existing Figma show API.
+    try {
+      final showResult = await Apphud.showPaywall(paywall);
+      printAsJson(
+        'ApphudRuleListener.showPaywall (without screen)',
+        showResult.toString(),
+      );
+    } catch (error) {
+      printAsJson('ApphudRuleListener.showPaywall (without screen)', {
+        'error': error.toString(),
+      });
+    }
+  }
+
+  Future<void> _submitAndroidPushTokenIfNeeded() async {
+    if (!Platform.isAndroid) return;
+    try {
+      final success =
+          await _fcmChannel.invokeMethod<bool>('submitCurrentToken');
+      printAsJson('FCM.submitCurrentToken', {'success': success});
+    } catch (error) {
+      printAsJson('FCM.submitCurrentToken', {'error': error.toString()});
+    }
+  }
+
+  /// Re-submit APNs token after [Apphud.start] (parity with Android FCM submit).
+  Future<void> _submitIosPushTokenIfNeeded() async {
+    if (!Platform.isIOS) return;
+    try {
+      final success =
+          await _iosPushChannel.invokeMethod<bool>('resubmitApnsToken');
+      printAsJson('APNs.resubmitApnsToken', {'success': success});
+    } catch (error) {
+      printAsJson('APNs.resubmitApnsToken', {'error': error.toString()});
+    }
+  }
+
   Future<void> _handleStartedEvent(
     PurchaseStartedEvent event,
     Emitter<PurchaseState> emit,
   ) async {
     try {
+      if (_sdkStarted) {
+        printAsJson('Apphud.start', 'skipped (already started)');
+        emit(PurchaseState.initialization(isStartSuccess: true));
+        final placements = await Apphud.placements();
+        add(PurchaseEvent.placementsFetched(placements));
+        return;
+      }
+
       await Apphud.enableDebugLogs(level: ApphudDebugLevel.high);
 
       final apphudHost = EnvConfig.apphudHost;
@@ -121,8 +296,24 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState>
         observerMode: _appSecrets.observeMode,
         baseUrl: apphudHost,
       );
+      _sdkStarted = true;
       emit(PurchaseState.initialization(isStartSuccess: true));
       printAsJson('user registered', 'success');
+
+      // Submit push token after start (Android FCM / iOS APNs).
+      await _submitAndroidPushTokenIfNeeded();
+      await _submitIosPushTokenIfNeeded();
+
+      // Request deferred deep link attribution after the SDK has started.
+      // The result is delivered via the handler registered with
+      // Apphud.setDeeplinkHandler in this bloc's constructor.
+      try {
+        await Apphud.requestDeferredDeeplinkAttribution();
+      } catch (error) {
+        printAsJson('Apphud.requestDeferredDeeplinkAttribution', {
+          'error': error.toString(),
+        });
+      }
 
       final placements = await Apphud.placements();
       add(PurchaseEvent.placementsFetched(placements));
