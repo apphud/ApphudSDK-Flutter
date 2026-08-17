@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 import StoreKit
 
 final class PlacementsRequest: Request {

@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class SubscriptionsRequest: Request {
     typealias ArgumentProvider = SubscriptionsArgumentParser

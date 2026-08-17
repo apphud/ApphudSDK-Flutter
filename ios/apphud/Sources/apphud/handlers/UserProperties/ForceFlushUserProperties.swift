@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class ForceFlushUserPropertiesRequest: Request {
     typealias ArgumentProvider = ForceFlushUserPropertiesArgumentParser

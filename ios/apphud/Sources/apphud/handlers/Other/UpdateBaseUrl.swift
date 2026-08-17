@@ -1,4 +1,5 @@
 import ApphudSDK
+import Flutter
 
 final class UpdateBaseUrlRequest: Request {
     typealias ArgumentProvider = UpdateBaseUrlArgumentParser

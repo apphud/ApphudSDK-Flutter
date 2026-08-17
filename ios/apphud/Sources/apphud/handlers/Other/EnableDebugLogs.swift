@@ -1,4 +1,5 @@
 import ApphudSDK
+import Flutter
 
 final class EnableDebugLogsRequest: Request {
     typealias ArgumentProvider = EnableDebugLogsArgumentParser

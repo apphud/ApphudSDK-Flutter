@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Foundation
 import StoreKit
 
 extension String {

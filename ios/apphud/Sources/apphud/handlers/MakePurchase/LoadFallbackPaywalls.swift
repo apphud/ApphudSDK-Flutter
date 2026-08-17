@@ -4,6 +4,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class LoadFallbackPaywallsRequest: @MainActor Request {
     typealias ArgumentProvider = LoadFallbackPaywallsArgumentParser

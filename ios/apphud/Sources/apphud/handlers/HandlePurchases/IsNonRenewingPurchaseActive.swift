@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class IsNonRenewingPurchaseActiveRequest: Request {
     typealias ArgumentProvider = IsNonRenewingPurchaseActiveArgumentParser

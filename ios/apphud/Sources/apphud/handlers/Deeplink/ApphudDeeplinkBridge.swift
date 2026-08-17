@@ -6,6 +6,7 @@
 //  `apphud/deeplink` method channel.
 //
 
+import Flutter
 import Foundation
 import ApphudSDK
 

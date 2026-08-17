@@ -7,6 +7,7 @@
 
 
 import ApphudSDK
+import Flutter
 
 final class PlacementRequest: Request {
     typealias ArgumentProvider = PlacementArgumentParser

@@ -3,6 +3,7 @@
 //  apphud
 //
 
+import Flutter
 import Foundation
 import ApphudSDK
 import StoreKit

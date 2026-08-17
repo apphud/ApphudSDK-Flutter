@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 import Foundation
 import UIKit
 import ObjectiveC

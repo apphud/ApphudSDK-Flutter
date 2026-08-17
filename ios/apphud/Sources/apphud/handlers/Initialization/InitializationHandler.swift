@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 class InitializationHandler: Handler {
     typealias AssociatedEnum = AppHudMethod.Initialization

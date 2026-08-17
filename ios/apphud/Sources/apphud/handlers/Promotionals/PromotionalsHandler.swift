@@ -5,6 +5,7 @@
 //  Created by Nikolay on 07.10.2021.
 //
 
+import Flutter
 import Foundation
 
 class PromotionalsHandler: Handler {

@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class StartManuallyRequest: Request {
     typealias ArgumentProvider = StartManuallyArgumentParser

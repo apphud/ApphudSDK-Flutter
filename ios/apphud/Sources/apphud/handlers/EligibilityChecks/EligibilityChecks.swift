@@ -6,6 +6,7 @@
 //  `Apphud.checkEligibilitiesFor*` methods.
 //
 
+import Flutter
 import Foundation
 import StoreKit
 import ApphudSDK

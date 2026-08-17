@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class LogoutRequest: Request {
     typealias ArgumentProvider = LogoutRequestArgumentParser

@@ -5,6 +5,7 @@
 //  Created by Nikolay on 11.06.2021.
 //
 
+import Flutter
 import Foundation
 
 class PaywallLogsHandler: Handler {

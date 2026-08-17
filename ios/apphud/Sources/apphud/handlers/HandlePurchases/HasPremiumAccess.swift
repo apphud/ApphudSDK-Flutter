@@ -5,6 +5,7 @@
 //  Created by Nikolay on 03.05.2022.
 //
 import ApphudSDK
+import Flutter
 
 final class HasPremiumAccessRequest: Request {
     typealias ArgumentProvider = HasPremiumAccessArgumentParser

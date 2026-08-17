@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Foundation
 
 extension ApphudPaywall {
     func toMap() -> [String: Any?] {

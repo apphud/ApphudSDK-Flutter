@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class ProductRequest: Request {
     typealias ArgumentProvider = ProductArgumentParser

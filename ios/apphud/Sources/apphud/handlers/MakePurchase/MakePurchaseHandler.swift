@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 class MakePurchaseHandler: Handler {
     typealias AssociatedEnum = AppHudMethod.MakePurchase

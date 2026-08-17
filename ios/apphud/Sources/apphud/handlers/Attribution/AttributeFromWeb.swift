@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class AttributeFromWebRequest: @MainActor Request {
     typealias ArgumentProvider = AttributeFromWebArgumentParser

@@ -7,6 +7,7 @@
 
 import ApphudSDK
 #if canImport(UIKit)
+import Flutter
 import UIKit
 #endif
 

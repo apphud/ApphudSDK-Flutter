@@ -1,4 +1,5 @@
 import ApphudSDK
+import Flutter
 
 final class IncrementUserPropertyRequest: Request {
     typealias ArgumentProvider = IncrementUserPropertyArgumentParser

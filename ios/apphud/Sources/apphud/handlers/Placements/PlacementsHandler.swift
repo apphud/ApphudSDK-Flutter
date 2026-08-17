@@ -5,6 +5,8 @@
 //  Created by Nikolay Ivanov on 28.01.2024.
 //
 
+import Flutter
+
 class PlacementsHandler: Handler {
     typealias AssociatedEnum = AppHudMethod.Placements
 

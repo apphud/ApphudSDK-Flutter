@@ -6,6 +6,8 @@
 //
 
 import ApphudSDK
+import Flutter
+import Foundation
 
 final class AddAttributionRequest: Request {
     typealias ArgumentProvider = AddAttributionArgumentParser

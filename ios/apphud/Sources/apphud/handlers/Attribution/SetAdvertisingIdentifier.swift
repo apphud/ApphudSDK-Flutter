@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class SetAdvertisingIdentifierRequest: Request {
     typealias ArgumentProvider = SetAdvertisingIdentifierArgumentParser

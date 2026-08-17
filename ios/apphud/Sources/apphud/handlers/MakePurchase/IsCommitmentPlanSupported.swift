@@ -4,6 +4,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class IsCommitmentPlanSupportedRequest: Request {
     typealias ArgumentProvider = IsCommitmentPlanSupportedArgumentParser

@@ -1,5 +1,7 @@
 import ApphudSDK
 import AdServices
+import Flutter
+import Foundation
 
 final class CollectSearchAdsAttributionRequest: Request {
     typealias ArgumentProvider = CollectSearchAdsAttributionParser

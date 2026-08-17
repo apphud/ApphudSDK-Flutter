@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class DeviceIDRequest: Request {
     typealias ArgumentProvider = DeviceIDArgumentParser

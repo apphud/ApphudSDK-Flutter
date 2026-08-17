@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class UpdateUserIDRequest: Request {
     typealias ArgumentProvider = UpdateUserIDArgumentParser

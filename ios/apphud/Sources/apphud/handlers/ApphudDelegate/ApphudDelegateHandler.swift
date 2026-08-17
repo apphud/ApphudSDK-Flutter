@@ -5,6 +5,7 @@
 //  Created by Nikolay on 28.01.2022.
 //
 
+import Flutter
 import Foundation
 import ApphudSDK
 import StoreKit

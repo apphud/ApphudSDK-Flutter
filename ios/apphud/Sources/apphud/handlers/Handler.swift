@@ -5,6 +5,7 @@
 //  Created by Stanislav on 05.02.2021.
 //
 
+import Flutter
 import Foundation
 
 protocol BaseHandler {

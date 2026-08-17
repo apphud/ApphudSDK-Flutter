@@ -6,6 +6,7 @@
 //
 
 import ApphudSDK
+import Flutter
 
 final class RestorePurchasesRequest: @preconcurrency Request {
     typealias ArgumentProvider = RestorePurchasesArgumentParser
