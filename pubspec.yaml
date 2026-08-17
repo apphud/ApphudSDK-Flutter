@@ -34,4 +34,4 @@ flutter:
         package: com.apphud.fluttersdk
         pluginClass: ApphudPlugin
       ios:
-        pluginClass: ApphudPlugin
+        pluginClass: SwiftApphudPlugin

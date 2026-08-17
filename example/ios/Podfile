@@ -32,9 +32,6 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-  # Pin GitHub tag when CocoaPods trunk lags behind the latest ApphudSDK release.
-  pod 'ApphudSDK', :git => 'https://github.com/apphud/ApphudSDK.git', :tag => '4.4.8'
-
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
