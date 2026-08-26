@@ -23,6 +23,15 @@ public class ApphudUIDelegateHandler: NSObject, FlutterPlugin {
     /// Retains the MainActor UI delegate (type-erased for isolation boundaries).
     private var uiDelegateProxy: NSObject?
 
+    /// Modal presentation style for Rules screens, set via
+    /// `setScreenPresentationStyle`. `nil` means "never set": the delegate
+    /// selector stays hidden and the SDK keeps its default behavior.
+    ///
+    /// Static on purpose: read synchronously from the proxy's nonisolated
+    /// `responds(to:)`, where instance properties of a `@MainActor` type are
+    /// not accessible in the Swift 5.9 language mode.
+    fileprivate static var presentationStyle: UIModalPresentationStyle?
+
     internal init(channel: FlutterMethodChannel) {
         self.channel = channel
     }
@@ -37,6 +46,11 @@ public class ApphudUIDelegateHandler: NSObject, FlutterPlugin {
         case "stopListening":
             stop()
             result(nil)
+        case "setScreenPresentationStyle":
+            let styleString = (call.arguments as? [String: Any])?["style"] as? String
+            setPresentationStyle(styleString) {
+                result(nil)
+            }
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -45,16 +59,52 @@ public class ApphudUIDelegateHandler: NSObject, FlutterPlugin {
     private func start() {
         isListeningStarted = true
         Task { @MainActor in
-            let proxy = ApphudUIDelegateProxy(handler: self)
-            self.uiDelegateProxy = proxy
-            Apphud.setUIDelegate(proxy)
+            self.installProxyIfNeeded()
         }
     }
 
     private func stop() {
         // `Apphud.setUIDelegate` is non-optional; gate events and drop our retain.
         isListeningStarted = false
-        uiDelegateProxy = nil
+        // When a presentation style is set, the proxy stays installed so the
+        // style keeps applying; lifecycle events remain gated by
+        // `isListeningStarted` above.
+        if Self.presentationStyle == nil {
+            uiDelegateProxy = nil
+        }
+    }
+
+    private func setPresentationStyle(_ styleString: String?, completion: @escaping () -> Void) {
+        // Only two supported values; anything else is ignored, state unchanged.
+        let style: UIModalPresentationStyle?
+        switch styleString {
+        case "fullScreen":
+            style = .fullScreen
+        case "pageSheet":
+            style = .pageSheet
+        default:
+            style = nil
+        }
+        guard let style else {
+            NSLog("[Apphud] setScreenPresentationStyle: unsupported style '\(styleString ?? "nil")', ignoring")
+            completion()
+            return
+        }
+        Self.presentationStyle = style
+        // The style must apply even when the rule listener was never started,
+        // so the Dart future completes only after the proxy is installed.
+        Task { @MainActor in
+            self.installProxyIfNeeded()
+            completion()
+        }
+    }
+
+    @MainActor
+    private func installProxyIfNeeded() {
+        guard uiDelegateProxy == nil else { return }
+        let proxy = ApphudUIDelegateProxy(handler: self)
+        uiDelegateProxy = proxy
+        Apphud.setUIDelegate(proxy)
     }
 
     fileprivate func invoke(_ method: String, arguments: [String: Any?]?) {
@@ -70,6 +120,25 @@ final class ApphudUIDelegateProxy: NSObject, ApphudUIDelegate {
     init(handler: ApphudUIDelegateHandler) {
         self.handler = handler
     }
+
+    /// While no presentation style is set, hide the optional delegate selector
+    /// so the native SDK behaves exactly as if the method was never
+    /// implemented (its `apphudScreenPresentationStyle?(...)` optional call
+    /// resolves to `nil` and the controller keeps the system default).
+    public override func responds(to aSelector: Selector!) -> Bool {
+        if aSelector == #selector(ApphudUIDelegate.apphudScreenPresentationStyle(controller:)) {
+            return ApphudUIDelegateHandler.presentationStyle != nil
+        }
+        return super.responds(to: aSelector)
+    }
+
+#if os(iOS)
+    func apphudScreenPresentationStyle(controller: UIViewController) -> UIModalPresentationStyle {
+        // `responds(to:)` above guarantees this is only reached when a style
+        // is set; the fallback keeps the compiler satisfied.
+        return ApphudUIDelegateHandler.presentationStyle ?? .pageSheet
+    }
+#endif
 
     private func currentRuleMap(screenName: String?) -> [String: Any?] {
         if let rule = Apphud.pendingRule() {

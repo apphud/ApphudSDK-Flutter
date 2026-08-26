@@ -17,6 +17,7 @@ import 'package:apphud/models/apphud_models/apphud_subscription.dart';
 import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
 import 'package:apphud/models/apphud_models/enums/ios_animation_style.dart';
+import 'package:apphud/models/apphud_models/enums/ios_screen_presentation_style.dart';
 import 'package:flutter/services.dart';
 
 import 'listener/apphud_listener_handler.dart';
@@ -32,6 +33,7 @@ export 'listener/apphud_listener.dart';
 export 'listener/apphud_rule_listener.dart';
 export 'models/apphud_models/apphud_rule.dart';
 export 'models/apphud_models/enums/ios_animation_style.dart';
+export 'models/apphud_models/enums/ios_screen_presentation_style.dart';
 export 'models/apphud_deeplink_attribution.dart';
 
 class Apphud {
@@ -202,6 +204,22 @@ class Apphud {
   }
 
   // === Rules ===
+
+  /// Sets the iOS modal presentation style for Apphud Rules screens
+  /// (including Figma rule paywalls).
+  ///
+  /// Applies to all Rules screens presented after this call. An active rule
+  /// listener is not required. If this method is never called, screens keep
+  /// the SDK's default presentation.
+  ///
+  /// iOS only: on Android the call is a safe no-op.
+  static Future<void> setScreenPresentationStyle(
+    IOSScreenPresentationStyle style,
+  ) =>
+      _ruleListenerChannel.invokeMethod<void>(
+        'setScreenPresentationStyle',
+        {'style': style.stringValue},
+      );
 
   /// Manually polls the backend for unread Apphud Rules and presents a screen
   /// when one is available.
