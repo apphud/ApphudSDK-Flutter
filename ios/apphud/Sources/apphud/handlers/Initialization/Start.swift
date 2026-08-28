@@ -1,0 +1,55 @@
+//
+//  Start.swift
+//  appHud
+//
+//  Created by Stanislav on 08.02.2021.
+//
+
+import ApphudSDK
+#if canImport(UIKit)
+import Flutter
+import UIKit
+#endif
+
+final class StartRequest: Request {
+    typealias ArgumentProvider = StartArgumentParser
+    @MainActor func startRequest(arguments: (apiKey: String, userID: String?, observerMode: Bool, baseUrl: String?), result: @escaping FlutterResult) {
+        if let baseUrl = arguments.baseUrl {
+            ApphudHttpClient.shared.domainUrlString = baseUrl
+        }
+        // Flutter engine can recreate while the process-scoped native SDK is
+        // still initialized. Return the existing user instead of calling start again.
+        if let user = Apphud.currentUser() {
+            result(user.toMap())
+            return
+        }
+        Apphud.start(apiKey: arguments.apiKey,
+                               userID: arguments.userID,
+                               observerMode: arguments.observerMode) { (user) in result(user.toMap()) }
+        // `Apphud.start` resets deeplinkHandler to nil when omitted; restore the
+        // Flutter-registered handler so direct/deferred attribution can notify Dart.
+        ApphudDeeplinkBridge.reapplyHandlerIfNeeded()
+#if os(iOS)
+        Apphud.setDeviceIdentifiers(idfa: nil, idfv: UIDevice.current.identifierForVendor?.uuidString)
+#endif
+    }
+}
+
+final class StartArgumentParser: Parser {
+
+    typealias ArgumentType = (apiKey: String, userID: String?, observerMode: Bool, baseUrl: String?)
+
+    func parse(args: [String : Any]?) throws -> ArgumentType {
+        guard let args = args, let apiKey = args["apiKey"] as? String else {
+            throw(InternalError(code: "400", message: "apiKey is required argument"))
+        }
+        let userID = args["userID"] as? String
+        let observerMode = args["observerMode"] as? Bool
+        let baseUrl = args["baseUrl"] as? String
+
+        return (apiKey,
+                userID,
+                observerMode ?? false,
+                baseUrl)
+    }
+}

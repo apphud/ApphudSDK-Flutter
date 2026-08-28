@@ -85,6 +85,10 @@ Apphud may win back lapsed subscribers, [reduce churn rate](https://apphud.com/b
 
 Create your account at [Apphud for free](https://app.apphud.com/sign_up?utm_source=github&utm_medium=article&utm_campaign=github). Please feel free to read our [SDK Integration Guide](https://docs.apphud.com/docs/quickstart).
 
+### iOS: CocoaPods and Swift Package Manager
+
+The iOS part of the plugin supports both CocoaPods and Swift Package Manager, no extra setup required. On Flutter 3.24+ with Swift Package Manager enabled (the default since Flutter 3.44) the native ApphudSDK dependency resolves via SPM; on older Flutter versions or with SPM disabled, CocoaPods is used as before.
+
 ## Having a question?
 
 If you have any questions or troubles with SDK integration feel free to contact us. We are online.
