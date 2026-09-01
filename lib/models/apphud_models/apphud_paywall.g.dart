@@ -19,6 +19,7 @@ ApphudPaywall _$ApphudPaywallFromJson(Map json) => ApphudPaywall(
       variationName: json['variationName'] as String?,
       parentPaywallIdentifier: json['parentPaywallIdentifier'] as String?,
       hasScreen: json['hasScreen'] as bool? ?? false,
+      screenName: json['screenName'] as String?,
     );
 
 Map<String, dynamic> _$ApphudPaywallToJson(ApphudPaywall instance) =>
@@ -31,4 +32,5 @@ Map<String, dynamic> _$ApphudPaywallToJson(ApphudPaywall instance) =>
       'variationName': instance.variationName,
       'parentPaywallIdentifier': instance.parentPaywallIdentifier,
       'hasScreen': instance.hasScreen,
+      'screenName': instance.screenName,
     };

@@ -17,7 +17,8 @@ extension ApphudPaywall {
                 "placementIdentifier" : placementIdentifier,
                 "variationName" : variationName,
                 "parentPaywallIdentifier" : parentPaywallIdentifier,
-                "hasScreen": screen != nil
+                "hasScreen": screen != nil,
+                "screenName": screenName
         ]
     }
 }
