@@ -1,3 +1,11 @@
+## 3.4.0
+- [Dart] Added `screenName` to `ApphudPaywall` — the name of the paywall's visual Screen from the Apphud Dashboard, populated on both platforms.
+- [iOS] Added Swift Package Manager support for the plugin's iOS part. CocoaPods keeps working; no integration changes required.
+- [iOS] Added `Apphud.setScreenPresentationStyle()` to control how Rules screens are presented (sheet or fullscreen).
+- Dependencies of Native SDK's were updated to:
+  - [Android] 3.4.3
+  - [iOS] 4.4.9
+
 ## 3.3.0
 - [Dart] Apphud Rules support (Figma rule paywalls and legacy rule screens):
   - `Apphud.setRuleListener()` / `ApphudRuleListener` for screen appear, purchase, dismiss and survey events.
