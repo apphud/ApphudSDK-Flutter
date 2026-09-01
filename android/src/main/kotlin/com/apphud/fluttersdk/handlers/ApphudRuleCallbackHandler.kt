@@ -50,6 +50,12 @@ object ApphudRuleCallbackHandler : ApphudRuleCallback, MethodChannel.MethodCallH
                 result.success(null)
             }
 
+            // iOS-only feature: succeed as a no-op so cross-platform Dart code
+            // can call it unconditionally.
+            "setScreenPresentationStyle" -> {
+                result.success(null)
+            }
+
             else -> result.notImplemented()
         }
     }

@@ -1,0 +1,22 @@
+//
+//  Subscription.swift
+//  appHud
+//
+//  Created by Stanislav on 17.02.2021.
+//
+
+import ApphudSDK
+import Flutter
+
+final class SubscriptionRequest: Request {
+    typealias ArgumentProvider = SubscriptionArgumentParser
+
+    @MainActor func startRequest(arguments: SubscriptionArgumentParser.ArgumentType, result: @escaping FlutterResult) {
+        let response = Apphud.subscription()
+        result(response?.toMap())
+    }
+}
+
+final class SubscriptionArgumentParser: Parser {
+    typealias ArgumentType = ()
+}
