@@ -88,7 +88,8 @@ final class ShowPaywallRequest: @preconcurrency Request {
                         controller.onTransactionCompleted = { purchaseResult in
                             // The SDK also closes the paywall after a StoreKit purchase that Apphud
                             // didn't confirm (transactionV2 without success): Dart gets it with the error.
-                            if purchaseResult.success || purchaseResult.transactionV2 != nil {
+                            // A purchase awaiting approval keeps the paywall open.
+                            if !purchaseResult.isPending && (purchaseResult.success || purchaseResult.transactionV2 != nil) {
                                 var map = [String: Any]()
                                 map["success"] = purchaseResult.success
                                 map["userClosed"] = false
