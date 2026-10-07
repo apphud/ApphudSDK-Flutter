@@ -15,13 +15,18 @@ final class FetchPlacementsRequest: Request {
 
     @MainActor func startRequest(arguments: Bool, result: @escaping FlutterResult) {
         Apphud.fetchPlacements(forceRefresh: arguments) { placements, error in
-            var resultMap: [String: Any?] = [
-                "placements": placements.map({ p in p.toMap() }),
-            ]
-            if let error = error {
-                resultMap["error"] = error.toApphudErrorMap()
+            Task { @MainActor in
+                if error == nil {
+                    await ApphudSKProducts.waitUntilLoaded(for: placements)
+                }
+                var resultMap: [String: Any?] = [
+                    "placements": placements.map({ p in p.toMap() }),
+                ]
+                if let error = error {
+                    resultMap["error"] = error.toApphudErrorMap()
+                }
+                result(resultMap)
             }
-            result(resultMap)
         }
     }
 }

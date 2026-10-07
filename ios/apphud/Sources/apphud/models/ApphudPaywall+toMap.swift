@@ -31,7 +31,7 @@ extension ApphudProduct {
             "store": store,
             "paywallIdentifier": paywallIdentifier,
             "placementIdentifier": placementIdentifier,
-            "skProduct": skProduct?.toMap(),
+            "skProduct": ApphudSKProducts.skProduct(for: self)?.toMap(),
             "variationIdentifier": variationIdentifier,
             "experimentId": experimentId,
         ]
