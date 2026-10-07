@@ -78,10 +78,19 @@ final class ShowPaywallRequest: @preconcurrency Request {
                         }
 
                         self.presentController(controller, with: arguments.iOSAnimationStyle)
+                        // Dart gets one reply: a purchase that closes the paywall, or the close button.
+                        var replied = false
+                        let reply: ([String: Any]) -> Void = { map in
+                            guard !replied else { return }
+                            replied = true
+                            result(map)
+                        }
                         controller.onTransactionCompleted = { purchaseResult in
-                            if purchaseResult.success {
+                            // The SDK also closes the paywall after a StoreKit purchase that Apphud
+                            // didn't confirm (transactionV2 without success): Dart gets it with the error.
+                            if purchaseResult.success || purchaseResult.transactionV2 != nil {
                                 var map = [String: Any]()
-                                map["success"] = true
+                                map["success"] = purchaseResult.success
                                 map["userClosed"] = false
                                 if let sub = purchaseResult.subscription {
                                     map["subscription"] = sub.toMap()
@@ -89,16 +98,19 @@ final class ShowPaywallRequest: @preconcurrency Request {
                                 if let purch = purchaseResult.nonRenewingPurchase {
                                     map["nonRenewingPurchase"] = purch.toMap()
                                 }
-                                if let trx = purchaseResult.transaction {
-                                    map["transaction"] = trx.toMap()
+                                if let trx = purchaseResult.transactionMap() {
+                                    map["transaction"] = trx
                                 }
-                                result(map)
+                                if let error = purchaseResult.error {
+                                    map["error"] = error.toApphudErrorMap()
+                                }
+                                reply(map)
                             } else {
                                 // do not handle unsuccessful transaction results, since paywall remains visible
                             }
                         }
                         controller.onCloseButtonTapped = {
-                            result([
+                            reply([
                                 "success": false,
                                 "userClosed": true,
                             ])
