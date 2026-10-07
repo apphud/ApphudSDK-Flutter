@@ -76,8 +76,11 @@ public class ApphudDelegateHandler: NSObject, FlutterPlugin, @MainActor ApphudDe
         }
     }
     public func placementsDidFullyLoad(placements: [ApphudPlacement]) {
-        if(isListeningStarted){
-            channel.invokeMethod("placementsDidFullyLoad", arguments: placements.map{p in p.toMap()})
+        Task { @MainActor in
+            await ApphudSKProducts.waitUntilLoaded(for: placements, canGiveUp: false)
+            if(isListeningStarted){
+                channel.invokeMethod("placementsDidFullyLoad", arguments: placements.map{p in p.toMap()})
+            }
         }
     }
 }

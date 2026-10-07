@@ -11,14 +11,19 @@ final class LoadFallbackPaywallsRequest: @MainActor Request {
 
     @MainActor func startRequest(arguments: (), result: @escaping FlutterResult) {
         Apphud.loadFallbackPaywalls { paywalls, error in
-            var resultMap: [String: Any?] = [:]
-            
-            resultMap["paywalls"] = (paywalls?.map { $0.toMap() }) ?? []
-            if let error = error {
-                resultMap["error"] = error.toApphudErrorMap()
+            Task { @MainActor in
+                if error == nil {
+                    await ApphudSKProducts.waitUntilLoaded(for: paywalls?.flatMap(\.products) ?? [])
+                }
+                var resultMap: [String: Any?] = [:]
+
+                resultMap["paywalls"] = (paywalls?.map { $0.toMap() }) ?? []
+                if let error = error {
+                    resultMap["error"] = error.toApphudErrorMap()
+                }
+
+                result(resultMap)
             }
-            
-             result(resultMap)
         }
     }
 }

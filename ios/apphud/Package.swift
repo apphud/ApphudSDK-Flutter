@@ -11,7 +11,7 @@ let package = Package(
     ],
     dependencies: [
         // Keep in sync with the ApphudSDK pin in ../apphud.podspec.
-        .package(url: "https://github.com/apphud/ApphudSDK.git", exact: "4.4.9")
+        .package(url: "https://github.com/apphud/ApphudSDK.git", exact: "4.6.0")
     ],
     targets: [
         .target(

@@ -29,9 +29,39 @@ extension ApphudPurchaseResult {
     func toMap() -> [String: Any?] {
         return ["subscription" : subscription?.toMap(),
                 "nonRenewingPurchase" : nonRenewingPurchase?.toMap(),
-                "error": error?.toApphudErrorMap(),
-                "transaction": transaction?.toMap(),
+                "error": errorMap(),
+                "transaction": transactionMap(),
                 "isRestore": isRestoreResult
+        ]
+    }
+
+    /// A purchase awaiting approval (Ask to Buy) reports no error, so Dart gets one: the
+    /// purchase hasn't happened. The approved transaction arrives later as a subscription update.
+    func errorMap() -> [String: Any?]? {
+        if let error {
+            return error.toApphudErrorMap()
+        }
+        guard isPending else { return nil }
+        return [
+            "message": "Purchase is pending approval",
+            "errorCode": nil,
+            "networkIssue": false,
+            "billingResponseCode": nil,
+            "billingErrorTitle": nil,
+        ]
+    }
+
+    /// SDK purchases run on StoreKit 2 and leave the StoreKit 1 `transaction` empty: Dart gets
+    /// the same fields from the StoreKit 2 transaction.
+    func transactionMap() -> [String: Any?]? {
+        if let transaction {
+            return transaction.toMap()
+        }
+        guard let transactionV2 else { return nil }
+        return ["transactionIdentifier": String(transactionV2.id),
+                "transactionDate": transactionV2.purchaseDate.timeIntervalSince1970,
+                "productIdentifier": transactionV2.productID,
+                "state": SKPaymentTransactionState.purchased.rawValue
         ]
     }
 }
@@ -59,12 +89,54 @@ extension Error {
         }
         return [
             "message": localizedDescription,
-            "errorCode": nsError.code,
+            "errorCode": storeKit1ErrorCode(for: self)?.rawValue ?? nsError.code,
             "networkIssue": isNetworkIssue,
             "billingResponseCode": nil,
             "billingErrorTitle": nil,
         ]
     }
+}
+
+/// SDK purchases run on StoreKit 2: its errors get the StoreKit 1 codes Dart got before, so a
+/// cancel is still `SKError.paymentCancelled`. Nil for errors that don't come from StoreKit 2.
+fileprivate func storeKit1ErrorCode(for error: Error) -> SKError.Code? {
+    if let storeKitError = error as? StoreKitError {
+        switch storeKitError {
+        case .userCancelled:
+            return .paymentCancelled
+        case .networkError:
+            return .cloudServiceNetworkConnectionFailed
+        case .notAvailableInStorefront:
+            return .storeProductNotAvailable
+        case .systemError(let underlyingError):
+            return (underlyingError as? SKError)?.code ?? .unknown
+        default:
+            return .unknown
+        }
+    }
+    if let purchaseError = error as? Product.PurchaseError {
+        switch purchaseError {
+        case .invalidQuantity:
+            return .paymentInvalid
+        case .productUnavailable:
+            return .storeProductNotAvailable
+        case .purchaseNotAllowed:
+            return .paymentNotAllowed
+        case .ineligibleForOffer:
+            return .ineligibleForOffer
+        case .invalidOfferIdentifier:
+            return .invalidOfferIdentifier
+        case .invalidOfferPrice:
+            return .invalidOfferPrice
+        case .invalidOfferSignature:
+            return .invalidSignature
+        case .missingOfferParameters:
+            return .missingOfferParams
+        default:
+            return .unknown
+        }
+    }
+    return nil
 }
 
 extension ApphudSubscription {

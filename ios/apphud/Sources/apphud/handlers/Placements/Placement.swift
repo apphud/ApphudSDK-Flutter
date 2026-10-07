@@ -14,7 +14,7 @@ final class PlacementRequest: Request {
 
     func startRequest(arguments: (String), result: @escaping FlutterResult) {
         Task{@MainActor in
-            let placement = await Apphud.placement(arguments)
+            let placement = await ApphudSKProducts.placements().first(where: { $0.identifier == arguments })
             result(placement?.toMap())
         }
     }
