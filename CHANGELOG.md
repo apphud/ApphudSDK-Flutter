@@ -1,3 +1,10 @@
+## 3.5.0
+- Internal improvements to request handling.
+- [Android] Requires compileSdk 35 or higher in your app (Google Play Billing Library 9).
+- Dependencies of Native SDK's were updated to:
+  - [Android] 3.6.0
+  - [iOS] 4.6.0
+
 ## 3.4.0
 - [Dart] Added `screenName` to `ApphudPaywall` — the name of the paywall's visual Screen from the Apphud Dashboard, populated on both platforms.
 - [iOS] Added Swift Package Manager support for the plugin's iOS part. CocoaPods keeps working; no integration changes required.
