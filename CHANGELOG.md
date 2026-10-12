@@ -1,3 +1,8 @@
+## 3.5.1
+- [iOS] Fixed promotional offer purchases failing with an invalid signature.
+- Dependencies of Native SDK's were updated to:
+  - [iOS] 4.6.1
+
 ## 3.5.0
 - Internal improvements to request handling.
 - [Android] Requires compileSdk 35 or higher in your app (Google Play Billing Library 9).
