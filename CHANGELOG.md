@@ -1,3 +1,9 @@
+## Unreleased
+- Add opt-in Identity V2 (`identityVersion`, default V1) and native-owned installation/anonymous ID getters.
+- Deprecate `deviceID()` in favour of `installationId()` for V2.
+- In V2, a reinstall creates a new anonymous customer; Restore recovers previous subscriptions. Only Restore transfers a subscription between accounts. Log out before switching users.
+- Native dependencies: iOS 4.7.0 / Android 3.7.0.
+
 ## 3.5.1
 - [iOS] Fixed promotional offer purchases failing with an invalid signature.
 - Dependencies of Native SDK's were updated to:

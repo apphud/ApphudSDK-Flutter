@@ -28,6 +28,7 @@ import 'models/apphud_models/composite/apphud_product_composite.dart';
 import 'models/apphud_models/composite/apphud_purchase_result.dart';
 import 'models/apphud_models/composite/apphud_paywall_screen_show_result.dart';
 import 'models/apphud_deeplink_attribution.dart';
+import 'models/apphud_identity_version.dart';
 import 'models/extensions.dart';
 export 'listener/apphud_listener.dart';
 export 'listener/apphud_rule_listener.dart';
@@ -35,6 +36,7 @@ export 'models/apphud_models/apphud_rule.dart';
 export 'models/apphud_models/enums/ios_animation_style.dart';
 export 'models/apphud_models/enums/ios_screen_presentation_style.dart';
 export 'models/apphud_deeplink_attribution.dart';
+export 'models/apphud_identity_version.dart';
 
 class Apphud {
   static const MethodChannel _channel = MethodChannel('apphud');
@@ -67,11 +69,14 @@ class Apphud {
   ///
   /// - Returns `ApphudUser` object after the SDK initialization is complete.
   /// __Note__: Do not store `ApphudUser` instance in your own code, since it may change at runtime.
+  /// [identityVersion] defaults to V1. V2 IDs are generated and stored by the
+  /// native SDK; changing the model takes effect on the next app launch.
   static Future<ApphudUser> start({
     required String apiKey,
     String? userID,
     bool? observerMode,
     String? baseUrl,
+    ApphudIdentityVersion identityVersion = ApphudIdentityVersion.v1,
   }) {
     final inFlight = _startInFlight;
     if (inFlight != null) {
@@ -82,6 +87,7 @@ class Apphud {
       'userID': userID,
       'observerMode': observerMode ?? false,
       'baseUrl': baseUrl,
+      'identityVersion': identityVersion.name,
     }).then((json) => ApphudUser.fromJson(json));
     _startInFlight = future;
     return future.whenComplete(() {
@@ -102,13 +108,21 @@ class Apphud {
   ///
   /// - Returns `ApphudUser` object after the SDK initialization is complete.
   /// __Note__: Do not store `ApphudUser` instance in your own code, since it may change at runtime.
+  /// In V2, omit [deviceID]: wrappers use native-owned IDs only.
+  /// [identityVersion] defaults to V1 for existing integrations.
   static Future<ApphudUser> startManually({
     required String apiKey,
     String? userID,
     String? deviceID,
     bool? observerMode,
     String? baseUrl,
+    ApphudIdentityVersion identityVersion = ApphudIdentityVersion.v1,
   }) {
+    if (identityVersion == ApphudIdentityVersion.v2 && deviceID != null) {
+      return Future.error(ArgumentError(
+        'deviceID is only supported in V1. In V2 the native SDK creates its IDs.',
+      ));
+    }
     final inFlight = _startInFlight;
     if (inFlight != null) {
       return inFlight;
@@ -119,6 +133,7 @@ class Apphud {
       'userID': userID,
       'observerMode': observerMode ?? false,
       'baseUrl': baseUrl,
+      'identityVersion': identityVersion.name,
     }).then((json) => ApphudUser.fromJson(json));
     _startInFlight = future;
     return future.whenComplete(() {
@@ -151,21 +166,31 @@ class Apphud {
     return (await _channel.invokeMethod<String>('userID'))!;
   }
 
-  /// Returns current device ID.
-  ///
-  /// You should use it only if you want to implement custom logout/login flow by saving User ID & Device ID pair for each app user.
+  /// Returns the native installation ID in V2, or null in V1/before start.
+  /// It is kept across logout and changes after a reinstall.
+  static Future<String?> installationId() =>
+      _channel.invokeMethod<String>('installationId');
+
+  /// Returns the native anonymous ID in V2, or null in V1/before start.
+  /// Logout changes it; identifying a user keeps it.
+  static Future<String?> anonymousId() =>
+      _channel.invokeMethod<String>('anonymousId');
+
+  /// Legacy device ID in V1; an alias of the installation ID in V2.
+  @Deprecated('Use installationId() with Identity V2.')
   static Future<String> deviceID() async {
     return (await _channel.invokeMethod('deviceID'))!;
   }
 
-  /// Logs out current user, clears all saved data and resets SDK to uninitialized state.
+  /// Logs out the current user and resets the SDK to an uninitialized state.
   ///
   /// You will need to call `Apphud.start()` or `Apphud.startManually()` again to initialize SDK with a new user.
   /// This might be useful if you have your custom logout/login flow and
   /// you want to take control of each logged-in user's subscription status.
-  /// If previous user had active subscription, the new logged-in user
-  /// can still restore purchases on this device and both users will be merged
-  /// under the previous paid one, because Apple ID is tied to a device.
+  /// In V2 the native SDK keeps the installation ID, creates a new anonymous ID
+  /// and clears the identified user. Log out before switching users. Automatic
+  /// purchase checks do not transfer another account's subscription; only an
+  /// explicit restore can transfer it. V1 keeps its previous behaviour.
   static Future<void> logout() async {
     _startInFlight = null;
     await _channel.invokeMethod('logout');
@@ -402,13 +427,15 @@ class Apphud {
   /// - **Error**: When the paywall cannot be preloaded or is not ready to be displayed
   ///   - `success` is set to `false`
   ///   - `error` contains the error message
-  static Future<Map<String, dynamic>>preloadPaywall(String placementIdentifier, {double? maxTimeout}) async {
+  static Future<Map<String, dynamic>> preloadPaywall(String placementIdentifier,
+      {double? maxTimeout}) async {
     final json = await _channel.invokeMethod('preloadPaywall', {
       'placementIdentifier': placementIdentifier,
       'maxTimeout': maxTimeout,
       'isPreload': true,
     });
-    return Map<String, dynamic>.from(json ?? {'success': false, 'error': 'Unknown error'});
+    return Map<String, dynamic>.from(
+        json ?? {'success': false, 'error': 'Unknown error'});
   }
 
   /// Displays a Figma paywall screen for the given paywall.
@@ -449,7 +476,8 @@ class Apphud {
         'maxTimeout': maxTimeout,
         'iOSAnimationStyle': iOSAnimationStyle?.stringValue,
       });
-      return ApphudPaywallScreenShowResult.fromJson(Map<String, dynamic>.from(json ?? {}));
+      return ApphudPaywallScreenShowResult.fromJson(
+          Map<String, dynamic>.from(json ?? {}));
     } catch (e) {
       // Handle platform exceptions (when native side calls result.error())
       return ApphudPaywallScreenShowResult(
@@ -461,7 +489,7 @@ class Apphud {
   }
 
   /// Call this method when your paywall screen is displayed to the user.
-  /// This is required for A/B testing analysis. 
+  /// This is required for A/B testing analysis.
   /// Note: you don't need to call this method for Figma paywalls.
   static Future<void> paywallShown(ApphudPaywall paywall) =>
       _channel.invokeMethod(
@@ -471,7 +499,7 @@ class Apphud {
           'placementIdentifier': paywall.placementIdentifier,
         },
       );
-      
+
   /// Explicitly loads fallback paywalls from the json file, if it was added to the project assets.
   ///
   /// By default, SDK automatically tries to load paywalls from the JSON file, if possible.

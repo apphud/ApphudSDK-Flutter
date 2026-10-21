@@ -25,6 +25,10 @@ class InitializationHandler: Handler {
             Action<UserIDRequest,UserIDArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.deviceID.rawValue:
             Action<DeviceIDRequest,DeviceIDArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.installationId.rawValue:
+            Action<InstallationIDRequest,IdentityIDArgumentParser>(args: args, result: result).startFlow()
+        case AssociatedEnum.anonymousId.rawValue:
+            Action<AnonymousIDRequest,IdentityIDArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.logout.rawValue:
             Action<LogoutRequest,LogoutRequestArgumentParser>(args: args, result: result).startFlow()
         case AssociatedEnum.setDelegate.rawValue:

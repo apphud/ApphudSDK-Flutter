@@ -65,10 +65,11 @@ android {
 }
 
 dependencies {
+    testImplementation 'junit:junit:4.13.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.android.billingclient:billing:8.3.0'
     // Exposed as `api` so host apps can call Apphud.handleIntent / handleUri
     // from Activity lifecycle methods (required for direct deeplink attribution).
-    api 'com.github.apphud:ApphudSDK-Android:3.6.0'
+    api 'com.github.apphud:ApphudSDK-Android:3.7.0'
     implementation 'com.google.code.gson:gson:2.13.1'
 }
