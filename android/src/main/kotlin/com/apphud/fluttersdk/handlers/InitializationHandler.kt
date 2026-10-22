@@ -3,6 +3,7 @@ package com.apphud.fluttersdk.handlers
 import android.content.Context
 import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
+import com.apphud.sdk.ApphudIdentityVersion
 import com.apphud.sdk.ApphudUtils
 //import com.apphud.sdk.client.HttpUrlConnectionExecutor
 import io.flutter.plugin.common.MethodChannel
@@ -21,12 +22,12 @@ class InitializationHandler(
         result: MethodChannel.Result
     ) {
         when (method) {
-            InitializationRoutes.start.name -> StartParser(result).parse(args) { apiKey, userId, observer, baseUrl ->
-                start(apiKey, userId, observerMode = observer, baseUrl = baseUrl, result)
+            InitializationRoutes.start.name -> StartParser(result).parse(args) { apiKey, userId, observer, baseUrl, identityVersion ->
+                start(apiKey, userId, observerMode = observer, baseUrl = baseUrl, identityVersion = identityVersion, result = result)
             }
 
-            InitializationRoutes.startManually.name -> StartManuallyParser(result).parse(args) { apiKey, userId, deviceId, observer, baseUrl ->
-                startManually(apiKey, userId, deviceId, observerMode = observer, baseUrl = baseUrl, result)
+            InitializationRoutes.startManually.name -> StartManuallyParser(result).parse(args) { apiKey, userId, deviceId, observer, baseUrl, identityVersion ->
+                startManually(apiKey, userId, deviceId, observerMode = observer, baseUrl = baseUrl, identityVersion = identityVersion, result = result)
             }
 
             InitializationRoutes.updateUserID.name -> UpdateUserIDParser(result).parse(args) { userId ->
@@ -35,11 +36,13 @@ class InitializationHandler(
 
             InitializationRoutes.userID.name -> userID(result)
             InitializationRoutes.deviceID.name -> deviceID(result)
+            InitializationRoutes.installationId.name -> handleOnMainThread { result.success(Apphud.installationId()) }
+            InitializationRoutes.anonymousId.name -> handleOnMainThread { result.success(Apphud.anonymousId()) }
             InitializationRoutes.logout.name -> logout(result)
         }
     }
 
-    private fun start(apiKey: String, userId: String?, observerMode: Boolean, baseUrl: String?, result: MethodChannel.Result) {
+    private fun start(apiKey: String, userId: String?, observerMode: Boolean, baseUrl: String?, identityVersion: ApphudIdentityVersion, result: MethodChannel.Result) {
         if (baseUrl != null) {
             ApphudUtils.overrideBaseUrl(baseUrl)
         }
@@ -54,6 +57,7 @@ class InitializationHandler(
             apiKey = apiKey,
             userId = userId,
             observerMode = observerMode,
+            identityVersion = identityVersion,
             ruleCallback = ApphudRuleCallbackHandler,
         ) { user ->
             handleOnMainThread { result.success(user.toMap()) }
@@ -66,6 +70,7 @@ class InitializationHandler(
         deviceId: String?,
         observerMode: Boolean,
         baseUrl: String?,
+        identityVersion: ApphudIdentityVersion,
         result: MethodChannel.Result
     ) {
         if (baseUrl != null) {
@@ -80,6 +85,7 @@ class InitializationHandler(
             userId = userId,
             deviceId = deviceId,
             observerMode = observerMode,
+            identityVersion = identityVersion,
             ruleCallback = ApphudRuleCallbackHandler,
         ) { user ->
             handleOnMainThread { result.success(user.toMap()) }
@@ -138,7 +144,7 @@ class InitializationHandler(
 
     class StartParser(val result: MethodChannel.Result) {
 
-        fun parse(args: Map<String, Any>?, callback: (apiKey: String, userId: String?, observerMode: Boolean, baseUrl: String?) -> Unit) {
+        fun parse(args: Map<String, Any>?, callback: (apiKey: String, userId: String?, observerMode: Boolean, baseUrl: String?, identityVersion: ApphudIdentityVersion) -> Unit) {
             try {
                 args ?: throw IllegalArgumentException("apiKey is required argument")
                 val apiKey = args["apiKey"] as? String
@@ -146,7 +152,7 @@ class InitializationHandler(
                 val userId = args["userID"] as? String
                 val observerMode = args["observerMode"] as? Boolean
                 val baseUrl = args["baseUrl"] as? String
-                callback(apiKey, userId, observerMode ?: false, baseUrl)
+                callback(apiKey, userId, observerMode ?: false, baseUrl, identityVersionFromArgument(args["identityVersion"]))
             } catch (e: IllegalArgumentException) {
                 result.error("400", e.message, "")
             }
@@ -156,7 +162,7 @@ class InitializationHandler(
     class StartManuallyParser(val result: MethodChannel.Result) {
         fun parse(
             args: Map<String, Any>?,
-            callback: (apiKey: String, userId: String?, deviceId: String?, observerMode: Boolean, baseUrl: String?) -> Unit
+            callback: (apiKey: String, userId: String?, deviceId: String?, observerMode: Boolean, baseUrl: String?, identityVersion: ApphudIdentityVersion) -> Unit
         ) {
             try {
                 args ?: throw IllegalArgumentException("apiKey is required argument")
@@ -166,7 +172,11 @@ class InitializationHandler(
                 val deviceId = args["deviceID"] as? String
                 val observerMode = args["observerMode"] as? Boolean
                 val baseUrl = args["baseUrl"] as? String
-                callback(apiKey, userId, deviceId, observerMode ?: false, baseUrl)
+                val identityVersion = identityVersionFromArgument(args["identityVersion"])
+                require(identityVersion != ApphudIdentityVersion.V2 || deviceId == null) {
+                    "deviceID is only supported in V1; V2 uses native SDK IDs"
+                }
+                callback(apiKey, userId, deviceId, observerMode ?: false, baseUrl, identityVersion)
             } catch (e: IllegalArgumentException) {
                 result.error("400", e.message, "")
             }
@@ -194,6 +204,8 @@ enum class InitializationRoutes {
     updateUserID,
     userID,
     deviceID,
+    installationId,
+    anonymousId,
     logout,
     setDelegate,
     setUIDelegate;

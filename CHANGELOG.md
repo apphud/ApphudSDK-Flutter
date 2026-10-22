@@ -1,3 +1,9 @@
+## 3.6.0 — 2026-10-22
+
+- Improved user session management.
+- Improved purchase and subscription restoration handling.
+- Updated native dependencies to iOS 4.7.0 and Android 3.7.1.
+
 ## 3.5.1
 - [iOS] Fixed promotional offer purchases failing with an invalid signature.
 - Dependencies of Native SDK's were updated to:

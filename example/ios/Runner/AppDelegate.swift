@@ -8,11 +8,16 @@ import ApphudSDK
     /// Last APNs token received; used to (re)submit after Apphud.start.
     private static var apnsToken: Data?
 
+    // A single explicit engine keeps plugin registration before didFinishLaunching,
+    // including on Flutter versions predating FlutterImplicitEngineDelegate.
+    lazy var exampleFlutterEngine = FlutterEngine(name: "apphud-example")
+
     override func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        GeneratedPluginRegistrant.register(with: self)
+        guard exampleFlutterEngine.run() else { return false }
+        GeneratedPluginRegistrant.register(with: exampleFlutterEngine)
         let ok = super.application(application, didFinishLaunchingWithOptions: launchOptions)
         registerForNotifications()
         // Flutter view / window may not be ready synchronously.
@@ -145,5 +150,60 @@ import ApphudSDK
                 )
             }
         }
+    }
+}
+
+
+// UIKit requires a scene-based window on iOS 27 when linking the current SDK.
+// Keep the existing FlutterAppDelegate responsible for push and plugin callbacks.
+final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    var window: UIWindow?
+
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = scene as? UIWindowScene,
+              let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let controller = FlutterViewController(engine: appDelegate.exampleFlutterEngine,
+                                               nibName: nil, bundle: nil)
+        let sceneWindow = UIWindow(windowScene: windowScene)
+        sceneWindow.rootViewController = controller
+        window = sceneWindow
+        appDelegate.window = sceneWindow
+        sceneWindow.makeKeyAndVisible()
+        self.scene(scene, openURLContexts: connectionOptions.urlContexts)
+        for activity in connectionOptions.userActivities {
+            self.scene(scene, continue: activity)
+        }
+    }
+
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        UIApplication.shared.delegate?.applicationDidBecomeActive?(UIApplication.shared)
+    }
+    func sceneWillResignActive(_ scene: UIScene) {
+        UIApplication.shared.delegate?.applicationWillResignActive?(UIApplication.shared)
+    }
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        UIApplication.shared.delegate?.applicationWillEnterForeground?(UIApplication.shared)
+    }
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        UIApplication.shared.delegate?.applicationDidEnterBackground?(UIApplication.shared)
+    }
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        _ = UIApplication.shared.delegate?.application?(UIApplication.shared,
+            continue: userActivity, restorationHandler: { _ in })
+    }
+    func scene(_ scene: UIScene, openURLContexts contexts: Set<UIOpenURLContext>) {
+        for context in contexts {
+            var options: [UIApplication.OpenURLOptionsKey: Any] = [.openInPlace: context.options.openInPlace]
+            if let source = context.options.sourceApplication { options[.sourceApplication] = source }
+            if let annotation = context.options.annotation { options[.annotation] = annotation }
+            _ = UIApplication.shared.delegate?.application?(UIApplication.shared,
+                open: context.url, options: options)
+        }
+    }
+    func sceneDidDisconnect(_ scene: UIScene) {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+           appDelegate.window === window { appDelegate.window = nil }
+        window = nil
     }
 }

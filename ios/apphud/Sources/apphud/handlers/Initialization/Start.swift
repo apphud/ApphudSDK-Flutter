@@ -13,7 +13,7 @@ import UIKit
 
 final class StartRequest: Request {
     typealias ArgumentProvider = StartArgumentParser
-    @MainActor func startRequest(arguments: (apiKey: String, userID: String?, observerMode: Bool, baseUrl: String?), result: @escaping FlutterResult) {
+    @MainActor func startRequest(arguments: (apiKey: String, userID: String?, observerMode: Bool, baseUrl: String?, identityVersion: ApphudIdentityVersion), result: @escaping FlutterResult) {
         if let baseUrl = arguments.baseUrl {
             ApphudHttpClient.shared.domainUrlString = baseUrl
         }
@@ -25,7 +25,8 @@ final class StartRequest: Request {
         }
         Apphud.start(apiKey: arguments.apiKey,
                                userID: arguments.userID,
-                               observerMode: arguments.observerMode) { (user) in result(user.toMap()) }
+                               observerMode: arguments.observerMode,
+                             identityVersion: arguments.identityVersion) { (user) in result(user.toMap()) }
         // `Apphud.start` resets deeplinkHandler to nil when omitted; restore the
         // Flutter-registered handler so direct/deferred attribution can notify Dart.
         ApphudDeeplinkBridge.reapplyHandlerIfNeeded()
@@ -37,19 +38,21 @@ final class StartRequest: Request {
 
 final class StartArgumentParser: Parser {
 
-    typealias ArgumentType = (apiKey: String, userID: String?, observerMode: Bool, baseUrl: String?)
+    typealias ArgumentType = (apiKey: String, userID: String?, observerMode: Bool, baseUrl: String?, identityVersion: ApphudIdentityVersion)
 
     func parse(args: [String : Any]?) throws -> ArgumentType {
         guard let args = args, let apiKey = args["apiKey"] as? String else {
             throw(InternalError(code: "400", message: "apiKey is required argument"))
         }
         let userID = args["userID"] as? String
+        let identityVersion = try IdentityVersionArgument.parse(args["identityVersion"])
         let observerMode = args["observerMode"] as? Bool
         let baseUrl = args["baseUrl"] as? String
 
         return (apiKey,
                 userID,
                 observerMode ?? false,
-                baseUrl)
+                baseUrl,
+                identityVersion)
     }
 }

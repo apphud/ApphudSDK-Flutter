@@ -73,6 +73,8 @@ enum AppHudMethod {
         case updateUserID
         case userID
         case deviceID
+        case installationId
+        case anonymousId
         case logout
         case setDelegate
         case setUIDelegate
