@@ -89,6 +89,51 @@ Create your account at [Apphud for free](https://app.apphud.com/sign_up?utm_sour
 
 The iOS part of the plugin supports both CocoaPods and Swift Package Manager, no extra setup required. On Flutter 3.24+ with Swift Package Manager enabled (the default since Flutter 3.44) the native ApphudSDK dependency resolves via SPM; on older Flutter versions or with SPM disabled, CocoaPods is used as before.
 
+## Identity V2
+
+The plugin uses native iOS SDK 4.7.0 and Android SDK 3.7.1. Existing calls keep
+**V1 by default**. Opt in to V2 explicitly:
+
+```dart
+await Apphud.start(
+  apiKey: 'YOUR_API_KEY',
+  identityVersion: ApphudIdentityVersion.v2,
+);
+final installation = await Apphud.installationId();
+final anonymous = await Apphud.anonymousId();
+await Apphud.updateUserID('signed-in-user');
+```
+
+The native SDK creates and stores the IDs. `installationId()` stays the same
+across logout; `anonymousId()` changes on logout and is kept during Identify.
+Both getters return null in V1 and before initialization. The identity model is
+read once per launch: changing it requires restarting the app.
+
+Wrappers use standalone identity only. They do not accept host-supplied
+installation or anonymous IDs, or a replacement anonymous ID on logout.
+`startManually(deviceID: ...)` remains available for legacy V1 integrations;
+V2 rejects a supplied `deviceID`. To adopt V2, use `start` without custom device
+IDs and let the native SDK migrate its saved legacy identity.
+
+In V2 a reinstall creates a new anonymous customer. Recover previous
+subscriptions with `restorePurchases()`. Purchases and automatic checks do not
+transfer subscriptions between accounts; only an explicit Restore does.
+**Log out before switching users** and start again with V2:
+
+```dart
+await Apphud.logout();
+await Apphud.start(
+  apiKey: 'YOUR_API_KEY',
+  userID: 'next-user',
+  identityVersion: ApphudIdentityVersion.v2,
+);
+// User-initiated action: the result includes the transferred entitlement.
+final restored = await Apphud.restorePurchases();
+```
+
+`deviceID()` is deprecated. It remains the legacy device ID in V1 and an alias
+of the installation ID in V2. Prefer `installationId()` for new V2 integrations.
+
 ## Having a question?
 
 If you have any questions or troubles with SDK integration feel free to contact us. We are online.
