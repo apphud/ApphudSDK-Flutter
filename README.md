@@ -91,7 +91,7 @@ The iOS part of the plugin supports both CocoaPods and Swift Package Manager, no
 
 ## Identity V2
 
-The plugin uses native iOS SDK 4.7.0 and Android SDK 3.7.0. Existing calls keep
+The plugin uses native iOS SDK 4.7.0 and Android SDK 3.7.1. Existing calls keep
 **V1 by default**. Opt in to V2 explicitly:
 
 ```dart
