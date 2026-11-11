@@ -1,3 +1,9 @@
+## 3.7.0 — 2026-11-12
+
+- [Android] Added `Apphud.consumePurchase(purchaseToken)`. It consumes a one-time Google Play purchase that was acknowledged but not consumed, so the product can be bought again. On iOS it returns an error.
+- Deferred deep link attribution no longer uses a hidden web view. This avoids a rare crash on first launch on iOS 27; on Android the call no longer needs a visible screen. Set the handler with `Apphud.setDeeplinkHandler()` before calling `Apphud.requestDeferredDeeplinkAttribution()`: a result that arrives while no handler is set is not delivered.
+- Updated native dependencies to iOS 4.7.2 and Android 3.7.2.
+
 ## 3.6.0 — 2026-10-22
 
 - Improved user session management.
