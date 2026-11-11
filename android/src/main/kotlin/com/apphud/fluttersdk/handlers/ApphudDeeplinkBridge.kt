@@ -1,6 +1,5 @@
 package com.apphud.fluttersdk.handlers
 
-import android.app.Activity
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudDeeplinkAttributionKind
 import io.flutter.plugin.common.MethodCall
@@ -19,7 +18,6 @@ class ApphudDeeplinkBridge(handleOnMainThreadP: HandleOnMainThread) :
 
     private var handleOnMainThread = handleOnMainThreadP
     private var channel: MethodChannel? = null
-    var activity: Activity? = null
 
     fun setMethodCallHandler(channel: MethodChannel?) {
         this.channel?.setMethodCallHandler(null)
@@ -69,19 +67,8 @@ class ApphudDeeplinkBridge(handleOnMainThreadP: HandleOnMainThread) :
     }
 
     private fun requestDeferredDeeplinkAttribution(result: MethodChannel.Result) {
-        val activity = this.activity
-        if (activity == null) {
-            handleOnMainThread {
-                result.error(
-                    "no_activity",
-                    "Deferred deep link attribution requires an attached Activity. " +
-                        "Call requestDeferredDeeplinkAttribution() while the app is in the foreground.",
-                    null,
-                )
-            }
-            return
-        }
-        Apphud.requestDeferredDeeplinkAttribution(activity)
+        // Android SDK 3.7.2+ needs no Activity: the request goes out after registration.
+        Apphud.requestDeferredDeeplinkAttribution()
         handleOnMainThread { result.success(null) }
     }
 }

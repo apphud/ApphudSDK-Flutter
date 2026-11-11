@@ -1003,6 +1003,11 @@ class Apphud {
   /// When no match is found, the handler receives an empty `attribution` map.
   /// Call this after SDK initialization, typically once on first launch.
   ///
+  /// The request goes out right after the user is registered and needs no
+  /// visible screen. Set the handler with [setDeeplinkHandler] before calling
+  /// this method: a result that arrives while no handler is set is not
+  /// delivered.
+  ///
   /// Platform integration requirements are the same as described in
   /// [setDeeplinkHandler]. On [iOS], capturing direct deep links relies on the
   /// default Flutter app delegate plugin not being overridden in your
