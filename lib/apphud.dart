@@ -807,12 +807,15 @@ class Apphud {
   /// ```dart
   /// final purchases = await Apphud.nonRenewingPurchases();
   /// for (final p in purchases.where((p) =>
-  ///     p.productId == 'coins_100' && p.isConsumable != true && p.purchaseToken != null)) {
+  ///     p.productId == 'coins_100' && (p.purchaseToken?.isNotEmpty ?? false))) {
   ///   // grant the content, if it is not granted yet
   ///   await Apphud.consumePurchase(p.purchaseToken!);
+  ///   // ITEM_NOT_OWNED means it was already consumed and is safe to ignore
   /// }
   /// ```
   static Future<ApphudError?> consumePurchase(String purchaseToken) async {
+    // The iOS plugin has no consumePurchase route and never completes calls it
+    // doesn't handle, so the platform check has to stay on the Dart side.
     if (defaultTargetPlatform != TargetPlatform.android) {
       return ApphudError(
         message: 'consumePurchase is available on Android only',
