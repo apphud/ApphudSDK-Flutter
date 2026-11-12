@@ -4,7 +4,11 @@ import com.apphud.fluttersdk.toMap
 import com.apphud.sdk.Apphud
 import com.apphud.sdk.ApphudPurchasesRestoreResult
 import io.flutter.plugin.common.MethodChannel
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
+@OptIn(DelicateCoroutinesApi::class)
 class HandlePurchasesHandler(
     override val routes: List<String>,
     handleOnMainThreadP: HandleOnMainThread
@@ -29,6 +33,11 @@ class HandlePurchasesHandler(
             HandlePurchasesRoutes.isNonRenewingPurchaseConsumable.name ->
                 IsNonRenewingPurchaseConsumableParser(result).parse(args) { productId ->
                     isNonRenewingPurchaseConsumable(productId, result)
+                }
+
+            HandlePurchasesRoutes.consumePurchase.name ->
+                ConsumePurchaseParser(result).parse(args) { purchaseToken ->
+                    consumePurchase(purchaseToken, result)
                 }
 
             HandlePurchasesRoutes.restorePurchases.name -> restorePurchases(result)
@@ -86,6 +95,13 @@ class HandlePurchasesHandler(
     private fun isNonRenewingPurchaseConsumable(productId: String, result: MethodChannel.Result) {
         val purchase = Apphud.nonRenewingPurchases().firstOrNull { it.productId == productId }
         handleOnMainThread { result.success(purchase?.isConsumable) }
+    }
+
+    private fun consumePurchase(purchaseToken: String, result: MethodChannel.Result) {
+        GlobalScope.launch {
+            val error = Apphud.consumePurchase(purchaseToken)
+            handleOnMainThread { result.success(error?.toMap()) }
+        }
     }
 
     private fun restorePurchases(result: MethodChannel.Result) {
@@ -147,6 +163,20 @@ class IsNonRenewingPurchaseConsumableParser(val result: MethodChannel.Result) {
     }
 }
 
+class ConsumePurchaseParser(val result: MethodChannel.Result) {
+    fun parse(args: Map<String, Any>?, callback: (purchaseToken: String) -> Unit) {
+        try {
+            args ?: throw IllegalArgumentException("purchaseToken is required argument")
+            val purchaseToken = args["purchaseToken"] as? String
+                ?: throw IllegalArgumentException("purchaseToken is required argument")
+
+            callback(purchaseToken)
+        } catch (e: IllegalArgumentException) {
+            result.error("400", e.message, "")
+        }
+    }
+}
+
 enum class HandlePurchasesRoutes {
     hasActiveSubscription,
     subscription,
@@ -154,6 +184,7 @@ enum class HandlePurchasesRoutes {
     nonRenewingPurchases,
     isNonRenewingPurchaseActive,
     isNonRenewingPurchaseConsumable,
+    consumePurchase,
     restorePurchases,
     hasPremiumAccess,
     refreshUserData;
