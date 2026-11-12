@@ -18,6 +18,7 @@ import 'package:apphud/models/apphud_models/apphud_user.dart';
 import 'package:apphud/models/apphud_models/apphud_user_property_key.dart';
 import 'package:apphud/models/apphud_models/enums/ios_animation_style.dart';
 import 'package:apphud/models/apphud_models/enums/ios_screen_presentation_style.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'listener/apphud_listener_handler.dart';
@@ -783,6 +784,51 @@ class Apphud {
     );
   }
 
+  /// Android only. Consumes a one-time Google Play purchase with given [purchaseToken],
+  /// so the same product can be purchased again.
+  ///
+  /// Sometimes Google Play leaves a consumable purchase acknowledged but not consumed
+  /// (for example, the app was killed before consumption or the purchase completed while
+  /// the app was not running). A new purchase of the same product then fails with
+  /// `ITEM_ALREADY_OWNED`. Call this method on app launch to consume such stuck purchases.
+  /// Take the token from Apphud SDK, for example [ApphudNonRenewingPurchase.purchaseToken].
+  ///
+  /// Consumption is irreversible: Google Play no longer reports the purchase as owned.
+  /// Grant the content to the user before you call this method.
+  ///
+  /// Call this method after `Apphud.start()`, otherwise it returns an error.
+  ///
+  /// Returns `null` on success. Returns [ApphudError] on failure, with the Google Play
+  /// `BillingResponseCode` in [ApphudError.billingResponseCode]. On iOS and other platforms
+  /// returns [ApphudError] without a call to native code: StoreKit finishes consumable
+  /// transactions itself.
+  ///
+  /// Example:
+  /// ```dart
+  /// final purchases = await Apphud.nonRenewingPurchases();
+  /// for (final p in purchases.where((p) =>
+  ///     p.productId == 'coins_100' && (p.purchaseToken?.isNotEmpty ?? false))) {
+  ///   // grant the content, if it is not granted yet
+  ///   await Apphud.consumePurchase(p.purchaseToken!);
+  ///   // ITEM_NOT_OWNED means it was already consumed and is safe to ignore
+  /// }
+  /// ```
+  static Future<ApphudError?> consumePurchase(String purchaseToken) async {
+    // The iOS plugin has no consumePurchase route and never completes calls it
+    // doesn't handle, so the platform check has to stay on the Dart side.
+    if (defaultTargetPlatform != TargetPlatform.android) {
+      return ApphudError(
+        message: 'consumePurchase is available on Android only',
+      );
+    }
+    final Map<dynamic, dynamic>? json =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>(
+      'consumePurchase',
+      {'purchaseToken': purchaseToken},
+    );
+    return json != null ? ApphudError.fromJson(json) : null;
+  }
+
   /// Implements `Restore Purchases` mechanism. Basically it just sends current
   /// App Store Receipt (iOS) or Google Play Purchase Tokens (Android) to Apphud and returns subscriptions info.
   ///
@@ -1002,6 +1048,11 @@ class Apphud {
   /// [setDeeplinkHandler] with kind [ApphudDeeplinkAttributionKind.deferred].
   /// When no match is found, the handler receives an empty `attribution` map.
   /// Call this after SDK initialization, typically once on first launch.
+  ///
+  /// The request goes out right after the user is registered and needs no
+  /// visible screen. Set the handler with [setDeeplinkHandler] before calling
+  /// this method: a result that arrives while no handler is set is not
+  /// delivered.
   ///
   /// Platform integration requirements are the same as described in
   /// [setDeeplinkHandler]. On [iOS], capturing direct deep links relies on the
